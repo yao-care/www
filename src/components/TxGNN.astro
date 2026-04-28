@@ -1,0 +1,64 @@
+---
+import { SITE } from '../site.config';
+
+const stats = [
+  { num: 191, suffix: ' 種', label: '健保藥物', desc: '涵蓋 TFDA 核准藥品，整合健保資訊與許可證狀態' },
+  { num: 142328, suffix: ' 個', label: '預測候選', desc: '整合臨床試驗、PubMed 文獻、藥物交互作用等六大資料來源' },
+  { num: 5, suffix: ' 級', label: '證據分類', desc: '從 Phase 3 臨床試驗（L1）到模型預測（L5），系統化分級' },
+];
+---
+<section id="twtxgnn" class="py-20 md:py-28 bg-gradient-to-b from-orange-50/40 to-white">
+  <div class="max-w-7xl mx-auto px-4 lg:px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold">
+      公益開源<span class="text-[color:var(--color-brand)]">老藥新用</span>驗證平台
+    </h2>
+    <p class="mt-4 text-[color:var(--color-ink-soft)] max-w-2xl mx-auto">
+      基於哈佛大學 TxGNN 深度學習模型，針對台灣健保藥物進行老藥新用預測與多源證據驗證。
+    </p>
+
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      {stats.map((s) => (
+        <div class="p-8 rounded-xl bg-white border border-neutral-200 shadow-sm">
+          <div class="text-5xl font-bold text-[color:var(--color-brand)] tabular-nums" data-counter={s.num}>0</div>
+          <div class="mt-1 text-sm text-[color:var(--color-ink-soft)]">{s.suffix}{s.label}</div>
+          <p class="mt-4 text-[color:var(--color-ink)] text-sm leading-relaxed">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <a href={SITE.txgnnLink} target="_blank" rel="noopener" class="mt-10 btn-brand">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      前往老藥新用平台
+    </a>
+  </div>
+</section>
+
+<script>
+  import * as d3 from 'd3';
+
+  const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
+  const animate = (el: HTMLElement) => {
+    const target = Number(el.dataset.counter);
+    const fmt = d3.format(',');
+    d3.select(el)
+      .transition()
+      .duration(1600)
+      .ease(d3.easeCubicOut)
+      .tween('text', () => {
+        const i = d3.interpolateNumber(0, target);
+        return (t) => { el.textContent = fmt(Math.round(i(t))); };
+      });
+  };
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          animate(e.target as HTMLElement);
+          obs.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+  counters.forEach((c) => obs.observe(c));
+</script>

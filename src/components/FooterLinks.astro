@@ -1,0 +1,63 @@
+---
+const lineLinks = [
+  { href: 'https://www.linebiz.com/tw/service/line-account-connect/', label: 'LINE Account Connect 官方帳號介紹' },
+  { href: 'https://manager.line.biz/', label: '登入 LINE 官方帳號管理後台' },
+  { href: 'https://developers.line.biz/console/', label: '登入 LINE 官方帳號開發者平台' },
+  { href: 'https://now.line.me/', label: 'LINE NOW 服務介紹' },
+];
+const tgLinks = [{ href: 'https://core.telegram.org/api', label: 'Bot API' }];
+---
+<section class="bg-neutral-200/60">
+  <div class="grid md:grid-cols-2">
+    <div class="p-10 md:p-14">
+      <p class="flex items-center gap-2 font-medium mb-4">
+        <img src="/assets/images/lineicon.png" alt="" class="w-6 h-6" /> 使用「LINE 官方帳號」串連
+      </p>
+      <ul class="space-y-2 text-sm">
+        {lineLinks.map((l) => (
+          <li><a href={l.href} target="_blank" rel="noopener" class="text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div class="p-10 md:p-14">
+      <p class="flex items-center gap-2 font-medium mb-4">
+        <img src="/assets/images/telegram.png" alt="" class="w-6 h-6" /> 使用「Telegram Bot 帳號」串連
+      </p>
+      <ul class="space-y-2 text-sm">
+        {tgLinks.map((l) => (
+          <li><a href={l.href} target="_blank" rel="noopener" class="text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<button
+  type="button"
+  id="back-to-top"
+  class="fixed bottom-6 right-6 w-11 h-11 rounded-full bg-[color:var(--color-brand)] text-white shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition"
+  aria-label="回到頂部"
+>
+  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</button>
+
+<footer class="bg-white border-t border-neutral-200">
+  <div class="max-w-7xl mx-auto px-4 lg:px-6 py-6 text-center text-sm text-[color:var(--color-ink-soft)]">
+    Copyright © 2020-2026 yao.care. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    if (!btn) return;
+    if (window.scrollY > 400) {
+      btn.classList.remove('opacity-0', 'pointer-events-none');
+      btn.classList.add('opacity-100');
+    } else {
+      btn.classList.add('opacity-0', 'pointer-events-none');
+      btn.classList.remove('opacity-100');
+    }
+  });
+  btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
