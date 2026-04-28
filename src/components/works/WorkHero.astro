@@ -1,0 +1,29 @@
+---
+import type { Work } from '../../works.config';
+
+interface Props {
+  work: Work;
+  /** Optional override for what shows above the title */
+  kicker?: string;
+}
+
+const { work, kicker } = Astro.props;
+const displayKicker = kicker ?? work.cardKicker;
+---
+<section class="relative pt-10 pb-12 md:pt-14 md:pb-16 overflow-hidden bg-gradient-to-b from-orange-50/40 to-white">
+  <div class="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-orange-200/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 lg:px-6">
+    <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+      {displayKicker}
+    </p>
+    <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">
+      {work.title}
+    </h1>
+    <p class="mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+      {work.tagline}
+    </p>
+    <slot name="hero-extras" />
+  </div>
+</section>

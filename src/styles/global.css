@@ -15,6 +15,10 @@
 html { scroll-behavior: smooth; }
 body { font-family: var(--font-sans); color: var(--color-ink); }
 
+/* hide native disclosure marker on <summary> for design control */
+summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }
+
 .section-title {
   @apply text-3xl md:text-4xl font-bold text-center mb-3 text-[color:var(--color-brand)];
 }

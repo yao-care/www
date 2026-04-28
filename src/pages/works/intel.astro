@@ -1,0 +1,388 @@
+---
+import WorkLayout from '../../layouts/WorkLayout.astro';
+import WorkHero from '../../components/works/WorkHero.astro';
+import WorkCta from '../../components/works/WorkCta.astro';
+import { WORK_BY_SLUG } from '../../works.config';
+
+const work = WORK_BY_SLUG.intel;
+
+const headlineStats = [
+  { value: '23', unit: '條', label: '產業供應鏈' },
+  { value: '500+', unit: '家', label: '上中下游公司' },
+  { value: '每日', unit: '', label: '自動跑完全流程' },
+  { value: '$0', unit: '', label: '基礎設施成本' },
+];
+
+// 23 supply chains for the topology visualization
+const supplyChains = [
+  '記憶體', '太陽能', '電池', '顯示器', '鋼鐵', '水泥',
+  '玻璃', '航運', '氫能', '國防', '汽車', '紡織',
+  '製藥', '農業', '食品', '回收', '石化包材', '礦產',
+  '營建', '機械', '電信', '面板', '太空',
+];
+const supplyChainsJson = JSON.stringify(supplyChains);
+
+// Core capabilities: 4 columns
+const capabilities = [
+  {
+    kicker: 'Intelligence',
+    title: '情報追蹤',
+    items: [
+      { name: '新聞爬蟲', body: 'RSS + HTTP + Playwright 三種模式，涵蓋公司官網、IR 頁面、產業媒體' },
+      { name: '事件標註', body: '自動匹配主題關鍵字 / 情緒分析 / 重要性評分' },
+      { name: '異常偵測', body: '新聞量突增、情緒突變、沉寂主題復現' },
+    ],
+  },
+  {
+    kicker: 'Financial',
+    title: '財務監控',
+    items: [
+      { name: '季度財報', body: 'AR / 庫存的 QoQ 變化，超過 ±20% 自動告警' },
+      { name: '機構持倉', body: '追蹤法人持股變動' },
+      { name: 'ETF 資金流向', body: '半導體 ETF（SMH / SOXX / SOXQ）資金進出' },
+    ],
+  },
+  {
+    kicker: 'Investment',
+    title: '投資分析',
+    items: [
+      { name: '回測', body: '任意時間區間，計算報酬率與 MDD，疊加 AR/庫存基本面標記' },
+      { name: '報酬分布', body: '6/12/24 個月的 20 日持有期報酬率分布、勝率、極端風險' },
+      { name: '回撤恢復', body: '跌到谷底後平均多久回到買入價' },
+    ],
+  },
+  {
+    kicker: 'Visualization',
+    title: '視覺化 Dashboard',
+    items: [
+      { name: '供應鏈拓撲圖', body: '節點依報酬率上色，看出族群連動' },
+      { name: '股價 + 熱力圖', body: '全部連動時間 brush，互動式探索' },
+      { name: '事件時間軸', body: '正面 / 中性 / 負面，AI 摘要與訊號燈' },
+    ],
+  },
+];
+
+const features = [
+  { icon: '⚡', title: '全自動', body: '設定好就不用管，每天 16:00（台灣時間）自動跑完全流程' },
+  { icon: '⏱️', title: '零成本', body: '全部跑在 GitHub Actions 免費方案上，無基礎設施維運' },
+  { icon: '🔁', title: '可擴展', body: '新增一條供應鏈只要定義公司和主題，程式碼自動複製' },
+  { icon: '📊', title: '看圖說故事', body: '股價走勢上疊加庫存/AR 變化，一眼看出基本面與股價的連動' },
+];
+---
+<WorkLayout slug="intel">
+  <WorkHero work={work}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {headlineStats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              {s.unit && <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>}
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-3 text-xs text-[color:var(--color-ink-soft)]">
+        以下以「產業供應鏈情報追蹤系統」為參考實例，呈現我們的資訊搜集自動化能力
+      </div>
+    </Fragment>
+  </WorkHero>
+
+  <!-- Intro -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
+      <p class="text-base md:text-lg">
+        資訊密集的產業 — 投資、產業研究、競爭情報、政策監控、合規追蹤 ——
+        最大的痛點是「資料散落各處 + 人力處理跟不上更新速度」。
+        我們的做法是
+        <strong class="text-[color:var(--color-brand)]">把整條情報生產線拆成可自動化的節點</strong>，
+        從爬取、清洗、標註、分析到視覺化，全部交給排程系統自動完成。
+      </p>
+      <p class="mt-4 text-base md:text-lg">
+        以下案例為「產業供應鏈情報追蹤系統」 ——
+        每天自動監控全球 23 條供應鏈、超過 500 家上中下游公司，產出情報報告與投資分析。
+        同樣的能力可移植到任何資訊密集領域：
+        <strong>政策追蹤、競爭情報、價格監控、研究綜述</strong>，新增一個主題只要定義關鍵字與資料源。
+      </p>
+    </div>
+  </section>
+
+  <!-- Supply chain topology -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Coverage</p>
+        <h2 class="section-title mt-2">追蹤的 23 條供應鏈</h2>
+        <p class="section-subtitle">每條供應鏈包含 10–30 家上中下游公司，每天自動更新</p>
+      </div>
+
+      <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-10 shadow-sm">
+        <div id="topology" class="flex justify-center" data-chains={supplyChainsJson}></div>
+        <p class="text-center text-xs text-[color:var(--color-ink-soft)] mt-6">
+          每個節點代表一條供應鏈 · 互動：滑鼠移到節點查看名稱
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core capabilities -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Capabilities</p>
+        <h2 class="section-title mt-2">核心功能模組</h2>
+        <p class="section-subtitle">情報、財務、投資、視覺化 · 一條完整的自動化管線</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {capabilities.map((cap) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">
+              {cap.kicker}
+            </div>
+            <h3 class="font-bold text-base md:text-lg mb-4">{cap.title}</h3>
+            <ul class="space-y-3">
+              {cap.items.map((item) => (
+                <li>
+                  <div class="text-sm font-medium text-[color:var(--color-ink)]">{item.name}</div>
+                  <div class="text-xs text-[color:var(--color-ink-soft)] leading-relaxed mt-0.5">{item.body}</div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Daily Pipeline</p>
+        <h2 class="section-title mt-2">自動化每日流程</h2>
+        <p class="section-subtitle">每天台灣時間 16:00 全自動跑完，無人介入</p>
+      </div>
+
+      <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
+        <ol class="relative border-l-2 border-[color:var(--color-brand)] ml-4 space-y-6">
+          <li class="ml-6">
+            <span class="absolute -left-3 w-5 h-5 rounded-full bg-[color:var(--color-brand)] text-white text-xs font-bold flex items-center justify-center">1</span>
+            <div class="text-sm font-mono text-[color:var(--color-brand)]">16:00</div>
+            <h3 class="font-medium text-[color:var(--color-ink)] mt-1">新聞爬取啟動</h3>
+            <p class="text-xs text-[color:var(--color-ink-soft)] mt-1">RSS / HTTP / Playwright 三模式並行，覆蓋 23 條供應鏈的所有公司源</p>
+          </li>
+          <li class="ml-6">
+            <span class="absolute -left-3 w-5 h-5 rounded-full bg-[color:var(--color-brand)] text-white text-xs font-bold flex items-center justify-center">2</span>
+            <div class="text-sm font-mono text-[color:var(--color-brand)]">~16:30</div>
+            <h3 class="font-medium text-[color:var(--color-ink)] mt-1">事件標註與情緒分析</h3>
+            <p class="text-xs text-[color:var(--color-ink-soft)] mt-1">關鍵字匹配 → 情緒打分（正/中/負）→ 重要性評分</p>
+          </li>
+          <li class="ml-6">
+            <span class="absolute -left-3 w-5 h-5 rounded-full bg-[color:var(--color-brand)] text-white text-xs font-bold flex items-center justify-center">3</span>
+            <div class="text-sm font-mono text-[color:var(--color-brand)]">~17:00</div>
+            <h3 class="font-medium text-[color:var(--color-ink)] mt-1">財務 + ETF 資料抓取</h3>
+            <p class="text-xs text-[color:var(--color-ink-soft)] mt-1">最新季度財報、機構持倉、ETF 資金流向</p>
+          </li>
+          <li class="ml-6">
+            <span class="absolute -left-3 w-5 h-5 rounded-full bg-[color:var(--color-brand)] text-white text-xs font-bold flex items-center justify-center">4</span>
+            <div class="text-sm font-mono text-[color:var(--color-brand)]">~17:30</div>
+            <h3 class="font-medium text-[color:var(--color-ink)] mt-1">異常偵測 + AI 摘要</h3>
+            <p class="text-xs text-[color:var(--color-ink-soft)] mt-1">新聞量突增、AR / 庫存超過 ±20% 自動產出告警</p>
+          </li>
+          <li class="ml-6">
+            <span class="absolute -left-3 w-5 h-5 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center">✓</span>
+            <div class="text-sm font-mono text-emerald-600">~18:00</div>
+            <h3 class="font-medium text-[color:var(--color-ink)] mt-1">Dashboard 更新完成</h3>
+            <p class="text-xs text-[color:var(--color-ink-soft)] mt-1">情報報告、投資分析、視覺化圖表全部刷新</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features highlight -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Why It Works</p>
+        <h2 class="section-title mt-2">為什麼這套系統可持續</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {features.map((f) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+            <div class="text-3xl mb-3">{f.icon}</div>
+            <h3 class="font-bold text-[color:var(--color-ink)] mb-2">{f.title}</h3>
+            <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Use cases hint -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Beyond Supply Chain</p>
+        <h2 class="section-title mt-2">同樣的能力可以做什麼？</h2>
+        <p class="section-subtitle">「資訊搜集自動化」是底層能力，供應鏈情報只是其中一個應用</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+        <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6">
+          <h3 class="font-bold text-[color:var(--color-ink)] mb-2">政策 / 法規追蹤</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">追蹤政府公報、立法院公告、各國法規變動，自動產出影響評估與行動建議</p>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6">
+          <h3 class="font-bold text-[color:var(--color-ink)] mb-2">競爭情報</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">每日監控競品的官網、社群、新聞、招聘訊息，異常變動自動提醒</p>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6">
+          <h3 class="font-bold text-[color:var(--color-ink)] mb-2">研究文獻綜述</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">自動追蹤 PubMed、arXiv、Google Scholar 新發表，AI 自動產出主題綜述報告</p>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6">
+          <h3 class="font-bold text-[color:var(--color-ink)] mb-2">價格 / 庫存監控</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">電商、市集、原物料報價自動爬取，價差異常自動告警</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <WorkCta
+    work={work}
+    headline="想用一套自動化系統解決你的資訊問題？"
+    description="不論是投資情報、政策監控、競品追蹤，還是任何需要每天自動產出報告的場景 —— 用 LINE 私訊您的需求，最快 1 個工作天回覆。"
+  />
+</WorkLayout>
+
+<script>
+  import * as d3 from 'd3';
+
+  function drawTopology() {
+    const host = document.getElementById('topology');
+    if (!host) return;
+    const chains: string[] = JSON.parse(host.getAttribute('data-chains') || '[]');
+    host.innerHTML = '';
+    const tooltip = d3.select(host)
+      .append('div')
+      .style('position', 'absolute')
+      .style('pointer-events', 'none')
+      .style('background', 'rgba(34, 32, 48, 0.95)')
+      .style('color', '#fff')
+      .style('border-radius', '6px')
+      .style('padding', '4px 8px')
+      .style('font-size', '12px')
+      .style('opacity', '0')
+      .style('transition', 'opacity 0.15s')
+      .style('white-space', 'nowrap');
+
+    const containerWidth = host.clientWidth || 800;
+    const width = Math.min(800, containerWidth);
+    const height = Math.min(440, width * 0.6);
+
+    const svg = d3.select(host)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .style('max-width', '100%')
+      .style('height', 'auto');
+
+    // Hub-and-spoke layout: a central "supply chain intelligence" node, 23 satellites
+    const cx = width / 2;
+    const cy = height / 2;
+    const r = Math.min(width, height) * 0.36;
+    const nodes = chains.map((name, i) => {
+      const angle = (i / chains.length) * 2 * Math.PI - Math.PI / 2;
+      return { name, x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r };
+    });
+
+    // Edges: from center to each satellite
+    svg.selectAll('line.edge')
+      .data(nodes)
+      .join('line')
+      .attr('class', 'edge')
+      .attr('x1', cx)
+      .attr('y1', cy)
+      .attr('x2', (d) => d.x)
+      .attr('y2', (d) => d.y)
+      .attr('stroke', '#fbd5c0')
+      .attr('stroke-width', 1)
+      .attr('opacity', 0.7);
+
+    // Center node
+    svg.append('circle')
+      .attr('cx', cx)
+      .attr('cy', cy)
+      .attr('r', 36)
+      .attr('fill', '#c6461c')
+      .attr('opacity', 0.9);
+    svg.append('text')
+      .attr('x', cx)
+      .attr('y', cy - 4)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('fill', '#fff')
+      .attr('font-size', 11)
+      .attr('font-weight', 'bold')
+      .text('Intel Hub');
+    svg.append('text')
+      .attr('x', cx)
+      .attr('y', cy + 10)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('fill', '#fff')
+      .attr('font-size', 9)
+      .attr('opacity', 0.8)
+      .text('23 chains');
+
+    // Satellite nodes
+    const sats = svg.selectAll<SVGGElement, typeof nodes[number]>('g.sat')
+      .data(nodes)
+      .join('g')
+      .attr('class', 'sat')
+      .attr('transform', (d) => `translate(${d.x},${d.y})`)
+      .style('cursor', 'pointer');
+
+    sats.append('circle')
+      .attr('r', 14)
+      .attr('fill', '#fff')
+      .attr('stroke', '#c6461c')
+      .attr('stroke-width', 1.5)
+      .on('mouseover', function (event, d) {
+        d3.select(this).attr('fill', '#c6461c');
+        d3.select((this.parentNode as SVGGElement).querySelector('text')).attr('fill', '#fff');
+        tooltip.html(`<strong>${d.name}</strong>`)
+          .style('opacity', '1');
+      })
+      .on('mousemove', function (event) {
+        const rect = host.getBoundingClientRect();
+        tooltip.style('left', (event.clientX - rect.left + 12) + 'px')
+          .style('top', (event.clientY - rect.top - 10) + 'px');
+      })
+      .on('mouseout', function () {
+        d3.select(this).attr('fill', '#fff');
+        d3.select((this.parentNode as SVGGElement).querySelector('text')).attr('fill', '#c6461c');
+        tooltip.style('opacity', '0');
+      });
+    sats.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('font-size', 10)
+      .attr('font-weight', '500')
+      .attr('fill', '#c6461c')
+      .style('pointer-events', 'none')
+      .text((d) => d.name);
+  }
+
+  drawTopology();
+  let rt: number | undefined;
+  window.addEventListener('resize', () => {
+    if (rt) window.clearTimeout(rt);
+    rt = window.setTimeout(drawTopology, 200);
+  });
+</script>

@@ -1,0 +1,56 @@
+---
+import type { Work } from '../../works.config';
+
+interface Props {
+  work: Work;
+  /** Card variant: "hub" (taller, descriptive) or "preview" (compact homepage) */
+  variant?: 'hub' | 'preview';
+}
+
+const { work, variant = 'hub' } = Astro.props;
+const href = `/works/${work.slug}`;
+---
+<a
+  href={href}
+  class:list={[
+    'group block rounded-2xl border border-neutral-200 bg-white shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all overflow-hidden',
+    variant === 'hub' ? 'p-7 md:p-8' : 'p-6',
+  ]}
+>
+  <!-- visual ribbon -->
+  <div class="flex items-center gap-3 mb-4">
+    <span class="inline-flex w-8 h-8 rounded-lg items-center justify-center bg-orange-50 text-[color:var(--color-brand)] font-bold tabular-nums">
+      {work.ogStat}
+    </span>
+    <span class="text-xs font-medium tracking-widest uppercase text-[color:var(--color-ink-soft)]">
+      {work.cardKicker}
+    </span>
+  </div>
+
+  <h3 class:list={[
+    'font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors',
+    variant === 'hub' ? 'text-xl md:text-2xl' : 'text-lg md:text-xl',
+  ]}>
+    {work.title}
+  </h3>
+
+  <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+    {work.tagline}
+  </p>
+
+  {variant === 'hub' && (
+    <ul class="mt-5 space-y-2">
+      {work.cardBullets.map((b) => (
+        <li class="flex items-start gap-2 text-sm text-[color:var(--color-ink)]">
+          <svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>{b}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <div class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)]">
+    了解詳情
+    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </div>
+</a>

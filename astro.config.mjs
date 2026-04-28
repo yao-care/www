@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://www.yao.care',
-  trailingSlash: 'never',
-  build: { format: 'file' },
+  trailingSlash: 'ignore',
+  build: { format: 'directory' },
   integrations: [sitemap()],
   vite: { plugins: [tailwindcss()] },
 });

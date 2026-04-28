@@ -16,12 +16,12 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { href: '#about', label: '智慧醫療' },
-  { href: '#feature', label: '潛在優勢' },
-  { href: '#sixbig', label: '優質服務' },
-  { href: '#twtxgnn', label: '老藥新用' },
-  { href: '#blog', label: '簡易驗證方式' },
-  { href: '#screenshots', label: '案例範例' },
-  { href: '#cta', label: '與工程師聯絡' },
-  { href: '#contact', label: '聯絡我們' },
+  { href: '/#about', label: '智慧醫療' },
+  { href: '/#feature', label: '潛在優勢' },
+  { href: '/#sixbig', label: '優質服務' },
+  { href: '/#twtxgnn', label: '老藥新用' },
+  { href: '/works', label: '作品' },
+  { href: '/#blog', label: '簡易驗證' },
+  { href: '/#screenshots', label: '案例範例' },
+  { href: '/#contact', label: '聯絡我們' },
 ] as const;

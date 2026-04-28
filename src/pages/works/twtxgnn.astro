@@ -1,0 +1,528 @@
+---
+import WorkLayout from '../../layouts/WorkLayout.astro';
+import WorkHero from '../../components/works/WorkHero.astro';
+import WorkCta from '../../components/works/WorkCta.astro';
+import { WORK_BY_SLUG } from '../../works.config';
+
+const work = WORK_BY_SLUG.twtxgnn;
+
+// 8 phases data
+const phases = [
+  {
+    n: '1',
+    title: '資料準備階段',
+    summary: '下載並處理所有必要的原始資料：TxGNN 知識圖譜 + 各國 FDA 詞彙表',
+    items: [
+      { kind: '資料來源', title: 'TxGNN 知識圖譜', body: 'node.csv（129,375 節點） + kg.csv（~8.0M 關係）' },
+      { kind: '處理流程', title: '詞彙表提取 (prepare_external_data.py)', body: '提取 DrugBank 藥品詞彙、疾病詞彙表、藥物-疾病關係' },
+      { kind: '輸出', title: 'External 資料', body: 'drugbank_vocab.csv / disease_vocab.csv / drug_disease_relations.csv' },
+      { kind: '子流程', title: '各國 FDA 資料處理 (process_fda_data.py)', body: 'TFDA / PMDA / EMA / FDA …→ {country}_fda_drugs.json' },
+    ],
+  },
+  {
+    n: '2',
+    title: '預測執行階段',
+    summary: '雙引擎並行：知識圖譜（快速）+ 深度學習（精準）',
+    items: [
+      { kind: 'KG 引擎', title: '知識圖譜方法（5 步驟，快速）', body: '載入 FDA → 過濾有效藥品 → 成分映射到 DrugBank → 適應症映射到疾病 → 找老藥新用候選' },
+      { kind: 'KG 結果', title: 'repurposing_candidates.csv', body: '~4,889 候選 / 1,507 藥物 / 166 疾病' },
+      { kind: 'DL 引擎', title: '深度學習方法（5 步驟，精準）', body: 'Conda + PyTorch/DGL → 載入 model.pt → 建構圖 → 推論 → 過濾 score ≥ 0.5' },
+      { kind: 'DL 結果', title: 'txgnn_dl_predictions.csv', body: '~3.1M 候選 / 1,507 藥物 / 166 疾病' },
+    ],
+  },
+  {
+    n: '3',
+    title: '整合階段',
+    summary: '合併兩種預測方法的結果，計算複合信心度',
+    items: [
+      { kind: '處理流程', title: '預測整合 (integrate_predictions.py)', body: '合併 KG + DL 結果、計算複合信心度、標記預測來源' },
+      { kind: '輸出', title: 'integrated_predictions.csv', body: 'very_high (KG+DL, score≥0.9): 2,995 筆 · high (KG+DL 支持): ~940.9K 筆 · medium / low' },
+    ],
+  },
+  {
+    n: '4',
+    title: '輸出生成階段',
+    summary: '產生網站、FHIR 資源和搜尋索引',
+    items: [
+      { kind: 'FHIR', title: 'generate_fhir_resources.py', body: 'MedicationKnowledge / ClinicalUseDefinition' },
+      { kind: '頁面', title: 'generate_drug_pages.py', body: '每藥物一頁 Markdown，產出 16.7K 藥物頁面' },
+      { kind: '搜尋', title: 'generate_search_index.py', body: 'search-index.json（給站內搜尋使用）' },
+      { kind: '交互作用', title: '藥物交互作用資料整合', body: 'DDI ~302.5K · DFI 857 · DHI 35 · DDSI 8,359' },
+    ],
+  },
+  {
+    n: '5',
+    title: '證據收集與驗證',
+    summary: '從外部資料源收集支持預測的證據',
+    items: [
+      { kind: '資料源', title: 'PubMed (check_pubmed.py)', body: '搜尋相關醫學文獻，~386.8K 筆引用' },
+      { kind: '資料源', title: 'ClinicalTrials (check_clinicaltrials.py)', body: '搜尋進行中/已完成的臨床試驗，~242.9K 筆' },
+      { kind: '處理', title: 'batch_collect_bundles.py', body: '為每個藥物建立證據包' },
+      { kind: '輸出', title: 'Evidence Bundle', body: 'data/bundles/{drug}/drug_bundle.json，共 28.6K 個證據包' },
+    ],
+  },
+  {
+    n: '6',
+    title: '監控與自動更新',
+    summary: 'GitHub Actions 自動化工作流程',
+    items: [
+      { kind: '排程', title: 'news-monitor.yml', body: '每小時抓取健康新聞，關鍵字匹配藥物/疾病' },
+      { kind: '排程', title: 'check-new-evidence.yml', body: '定期檢查 PubMed/CT，發現新證據自動更新' },
+      { kind: '部署', title: 'deploy-jekyll.yml', body: '自動建構 Jekyll，部署到 GitHub Pages，30/30 Actions OK' },
+    ],
+  },
+  {
+    n: '7',
+    title: 'SMART on FHIR 整合',
+    summary: '與電子病歷系統（Epic / Cerner）整合，提供臨床決策支援',
+    items: [
+      { kind: 'EHR', title: 'OAuth 啟動 (launch.html)', body: 'PKCE 認證流程，相容 Epic、Cerner 等主流 EHR' },
+      { kind: '讀取', title: '讀取病人用藥', body: 'MedicationRequest / MedicationStatement' },
+      { kind: '映射', title: '藥物映射 (smart-fhir-mapper.js)', body: 'RxNorm → DrugBank' },
+      { kind: '輸出', title: '老藥新用建議', body: '依病患現有用藥，顯示潛在新適應症與證據' },
+    ],
+  },
+  {
+    n: '8',
+    title: '在地化 (i18n)',
+    summary: '15 種語言、30 個國家',
+    items: [
+      { kind: '偵測', title: '語言偵測', body: '自動檢查 lang 標籤（首頁、藥物頁、免責聲明）' },
+      { kind: '翻譯', title: '批次翻譯', body: '7,000+ 藥物頁面 × 15 種語言' },
+      { kind: '驗證', title: 'p8_i18n_check.sh', body: '在地化驗證 29/30 OK' },
+    ],
+  },
+];
+
+// 30 country × 9 phase status
+const heatmapData = {
+  ARTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  AuTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
+  BrTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'WARN',P7:'OK',P8:'OK'},
+  CHTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  COTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  CaTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  DETxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  DkTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  ESTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  EuTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  FITxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  FRTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  HkTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  ITTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  InTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  JpTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'WARN',P7:'OK',P8:'OK'},
+  KrTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  MyTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  NOTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  NZTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  NlTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  PhTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  SATxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  SETxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  SgTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  ThTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
+  TwTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'WARN',P7:'OK',P8:'ERR'},
+  UkTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  UsTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+  ZaTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'ERR',P6:'OK',P7:'OK',P8:'OK'},
+};
+
+const heatmapJson = JSON.stringify(heatmapData);
+
+// SMART on FHIR Gallery search URL
+const smartGallerySearch =
+  'https://apps.smarthealthit.org/apps/search?q=%E8%97%A5%E6%8F%90%E9%86%92%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&organization=%E8%97%A5%E6%8F%90%E9%86%92%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8';
+
+const stats = [
+  { value: '30', unit: '國', label: 'FDA 藥品涵蓋' },
+  { value: '~3.1M', unit: '筆', label: 'DL 預測候選' },
+  { value: '16.7K', unit: '頁', label: '藥物頁面 / FHIR 資源' },
+  { value: '~28.6K', unit: '個', label: '證據包' },
+];
+---
+<WorkLayout slug="twtxgnn">
+  <WorkHero work={work}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {stats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="btn-brand">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          瀏覽 TxGNN 平台
+        </a>
+        <a href={smartGallerySearch} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-[color:var(--color-brand)] text-[color:var(--color-brand)] hover:bg-[color:var(--color-brand)] hover:text-white transition">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          SMART on FHIR Gallery 上架
+        </a>
+      </div>
+    </Fragment>
+  </WorkHero>
+
+  <!-- Intro / context -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
+      <p class="text-base md:text-lg">
+        老藥新用（Drug Repurposing）是把已上市的藥物用於原本未核准的新適應症 ——
+        因為已通過安全性驗證，研發成本與時間遠低於開發新藥。
+        我們以哈佛大學 TxGNN 模型為基礎，
+        <strong class="text-[color:var(--color-brand)]">把它從台灣擴展到 30 個國家</strong>，
+        並把預測流程與 EHR 系統打通，讓臨床端能在病患用藥當下即時看到老藥新用建議。
+      </p>
+      <p class="mt-4 text-base md:text-lg">
+        本平台已上架 SMART on FHIR App Gallery，由 SMART Health IT（哈佛醫學院孵化的開源組織）審核，
+        相容 Epic、Cerner 等主流電子病歷系統。
+      </p>
+    </div>
+  </section>
+
+  <!-- KG vs DL dual engines -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Dual Engines</p>
+        <h2 class="section-title mt-2">雙引擎方法論</h2>
+        <p class="section-subtitle">知識圖譜走快、深度學習走準，兩條結果再融合成複合信心度</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        <!-- KG -->
+        <div class="rounded-2xl bg-white border-l-4 border-[#3b82f6] p-6 md:p-8 shadow-sm">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="inline-flex w-8 h-8 rounded-md items-center justify-center bg-blue-50 text-[#3b82f6] font-bold">KG</span>
+            <h3 class="text-lg md:text-xl font-bold">知識圖譜方法 — 快速</h3>
+          </div>
+          <ol class="space-y-3 text-sm">
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">1</span><span>載入 FDA 藥品資料</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">2</span><span>過濾有效藥品（移除已撤銷、停產）</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">3</span><span>成分映射到 DrugBank（synonym_map 標準化）</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">4</span><span>適應症映射到標準疾病代碼</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">5</span><span>基於知識圖譜關係，找出未核准但有潛力的藥物-疾病配對</span></li>
+          </ol>
+          <div class="mt-5 pt-5 border-t border-neutral-200 grid grid-cols-3 gap-3 text-center">
+            <div><div class="text-xl font-bold text-[#3b82f6] tabular-nums">~4,889</div><div class="text-xs text-[color:var(--color-ink-soft)]">候選</div></div>
+            <div><div class="text-xl font-bold text-[#3b82f6] tabular-nums">1,507</div><div class="text-xs text-[color:var(--color-ink-soft)]">藥物</div></div>
+            <div><div class="text-xl font-bold text-[#3b82f6] tabular-nums">166</div><div class="text-xs text-[color:var(--color-ink-soft)]">疾病</div></div>
+          </div>
+        </div>
+
+        <!-- DL -->
+        <div class="rounded-2xl bg-white border-l-4 border-[#a855f7] p-6 md:p-8 shadow-sm">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="inline-flex w-8 h-8 rounded-md items-center justify-center bg-purple-50 text-[#a855f7] font-bold">DL</span>
+            <h3 class="text-lg md:text-xl font-bold">深度學習方法 — 精準</h3>
+          </div>
+          <ol class="space-y-3 text-sm">
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">1</span><span>啟動 Conda 環境（PyTorch + DGL）</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">2</span><span>載入 TxGNN 預訓練圖神經網路模型</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">3</span><span>建構藥物-疾病圖結構</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">4</span><span>對所有藥物-疾病組合推論，計算 0-1 信心分數</span></li>
+            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">5</span><span>過濾保留 score ≥ 0.5 的高分候選</span></li>
+          </ol>
+          <div class="mt-5 pt-5 border-t border-neutral-200 grid grid-cols-3 gap-3 text-center">
+            <div><div class="text-xl font-bold text-[#a855f7] tabular-nums">~3.1M</div><div class="text-xs text-[color:var(--color-ink-soft)]">候選</div></div>
+            <div><div class="text-xl font-bold text-[#a855f7] tabular-nums">1,507</div><div class="text-xs text-[color:var(--color-ink-soft)]">藥物</div></div>
+            <div><div class="text-xl font-bold text-[#a855f7] tabular-nums">166</div><div class="text-xs text-[color:var(--color-ink-soft)]">疾病</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Confidence levels -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Confidence Levels</p>
+        <h2 class="section-title mt-2">信心度分級</h2>
+        <p class="section-subtitle">合併 KG + DL 結果後，每筆預測獲得四級信心標記</p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4 md:gap-6">
+        <div class="rounded-xl border-2 border-emerald-500/30 bg-white p-5 md:p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            <span class="text-xs font-bold tracking-wider text-emerald-600 uppercase">very_high</span>
+          </div>
+          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">2,995</div>
+          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">KG + DL 雙方支持，且 score ≥ 0.9</p>
+        </div>
+        <div class="rounded-xl border-2 border-blue-500/30 bg-white p-5 md:p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+            <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">high</span>
+          </div>
+          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">~940.9K</div>
+          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">KG + DL 雙方支持的候選</p>
+        </div>
+        <div class="rounded-xl border-2 border-amber-500/30 bg-white p-5 md:p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+            <span class="text-xs font-bold tracking-wider text-amber-600 uppercase">medium</span>
+          </div>
+          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">—</div>
+          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">僅 KG 或僅 DL 單方支持</p>
+        </div>
+        <div class="rounded-xl border-2 border-neutral-300 bg-white p-5 md:p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-neutral-400"></span>
+            <span class="text-xs font-bold tracking-wider text-neutral-500 uppercase">low</span>
+          </div>
+          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">—</div>
+          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">分數較低，僅作為參考</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 30-country radial heatmap -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Coverage Map</p>
+        <h2 class="section-title mt-2">30 國 × 9 Phase 即時健康狀態</h2>
+        <p class="section-subtitle">由 check_all.sh 自動更新，每環為一個 Phase，每色塊為一國</p>
+      </div>
+
+      <div class="rounded-2xl bg-white border border-neutral-200 p-4 md:p-8 shadow-sm">
+        <div id="radial-heatmap" class="flex justify-center relative" data-heatmap={heatmapJson}></div>
+        <div class="mt-4 flex justify-center gap-4 md:gap-6 flex-wrap text-xs text-[color:var(--color-ink-soft)]">
+          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-emerald-500"></span> OK</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-amber-500"></span> 進行中 / 警告</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-red-500"></span> 錯誤</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-neutral-300"></span> 未啟動</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 phases accordion -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Pipeline</p>
+        <h2 class="section-title mt-2">完整 8 階段流程</h2>
+        <p class="section-subtitle">從原始 FDA 資料到 EHR 系統整合，全流程自動化</p>
+      </div>
+
+      <div class="space-y-3">
+        {phases.map((p) => (
+          <details class="group rounded-xl bg-white border border-neutral-200 shadow-sm overflow-hidden">
+            <summary class="cursor-pointer p-5 md:p-6 flex items-start gap-4 list-none">
+              <span class="shrink-0 w-9 h-9 rounded-lg bg-[color:var(--color-brand)] text-white flex items-center justify-center font-bold tabular-nums">
+                {p.n}
+              </span>
+              <div class="flex-1">
+                <h3 class="font-bold text-[color:var(--color-ink)]">{p.title}</h3>
+                <p class="mt-1 text-sm text-[color:var(--color-ink-soft)]">{p.summary}</p>
+              </div>
+              <svg class="shrink-0 w-5 h-5 mt-2 text-[color:var(--color-ink-soft)] transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-5 md:px-6 pb-5 md:pb-6 pt-0 border-t border-neutral-100">
+              <div class="grid md:grid-cols-2 gap-3 mt-4">
+                {p.items.map((item) => (
+                  <div class="rounded-lg bg-neutral-50 px-4 py-3">
+                    <div class="text-[10px] font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-1">{item.kind}</div>
+                    <div class="font-medium text-sm text-[color:var(--color-ink)]">{item.title}</div>
+                    <div class="text-xs text-[color:var(--color-ink-soft)] mt-1 leading-relaxed">{item.body}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Evidence -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Evidence</p>
+        <h2 class="section-title mt-2">不只預測，每一筆都有證據</h2>
+        <p class="section-subtitle">PubMed 文獻 + ClinicalTrials 試驗自動關聯，每個藥物頁面都附帶證據包</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+        <div class="rounded-xl bg-white border border-neutral-200 p-6 text-center">
+          <div class="text-4xl font-bold text-[color:var(--color-brand)] tabular-nums">~386.8K</div>
+          <div class="mt-2 font-medium">PubMed 文獻</div>
+          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">每日自動檢索新發表，與預測藥物-疾病對自動匹配</p>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 p-6 text-center">
+          <div class="text-4xl font-bold text-[color:var(--color-brand)] tabular-nums">~242.9K</div>
+          <div class="mt-2 font-medium">ClinicalTrials 試驗</div>
+          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">追蹤進行中與已完成的臨床試驗，提供強佐證</p>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 p-6 text-center">
+          <div class="text-4xl font-bold text-[color:var(--color-brand)] tabular-nums">~28.6K</div>
+          <div class="mt-2 font-medium">Evidence Bundle</div>
+          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">每藥物一個證據包，含 drug_bundle.json + 文獻摘要</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <WorkCta
+    work={work}
+    headline="想討論技術合作？"
+    description="老藥新用、TxGNN 模型在地化、EHR / FHIR 整合 — 任何技術討論都歡迎透過 LINE 私訊。"
+  />
+</WorkLayout>
+
+<script>
+  import * as d3 from 'd3';
+
+  function renderHeatmap() {
+    const container = document.getElementById('radial-heatmap');
+    if (!container) return;
+    const dataAttr = container.getAttribute('data-heatmap');
+    if (!dataAttr) return;
+    const data = JSON.parse(dataAttr) as Record<string, Record<string, string>>;
+    const phases = ['P0', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'];
+    const countries = Object.keys(data).sort();
+
+    const colorMap: Record<string, string> = {
+      OK: '#10b981',
+      WARN: '#f59e0b',
+      ERR: '#ef4444',
+      NONE: '#d4d4d4',
+    };
+
+    // Sizing for both desktop & mobile
+    const width = Math.min(700, container.clientWidth || 700);
+    const height = width;
+    const innerRadius = width * 0.13;
+    const outerRadius = width * 0.45;
+    const labelRadius = outerRadius + width * 0.025;
+
+    // clear
+    container.innerHTML = '';
+    const tooltip = d3.select(container)
+      .append('div')
+      .style('position', 'absolute')
+      .style('pointer-events', 'none')
+      .style('background', 'rgba(34, 32, 48, 0.95)')
+      .style('color', '#fff')
+      .style('border-radius', '8px')
+      .style('padding', '6px 10px')
+      .style('font-size', '12px')
+      .style('opacity', '0')
+      .style('transition', 'opacity 0.15s')
+      .style('white-space', 'nowrap')
+      .style('z-index', '10');
+
+    const svg = d3.select(container)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .style('max-width', '100%')
+      .style('height', 'auto');
+
+    const g = svg.append('g').attr('transform', `translate(${width / 2}, ${height / 2})`);
+
+    const angleScale = d3.scaleBand<string>()
+      .domain(countries)
+      .range([0, 2 * Math.PI])
+      .padding(0.04);
+
+    const radiusScale = d3.scaleBand<string>()
+      .domain(phases)
+      .range([innerRadius, outerRadius])
+      .padding(0.08);
+
+    type Cell = { country: string; phase: string; status: string };
+    const flatData: Cell[] = [];
+    countries.forEach((c) => {
+      phases.forEach((p) => {
+        flatData.push({ country: c, phase: p, status: data[c][p] || 'NONE' });
+      });
+    });
+
+    const arc = d3.arc<Cell>()
+      .innerRadius((d) => radiusScale(d.phase) ?? innerRadius)
+      .outerRadius((d) => (radiusScale(d.phase) ?? innerRadius) + radiusScale.bandwidth())
+      .startAngle((d) => angleScale(d.country) ?? 0)
+      .endAngle((d) => (angleScale(d.country) ?? 0) + angleScale.bandwidth())
+      .padAngle(0.008)
+      .padRadius(innerRadius);
+
+    g.selectAll<SVGPathElement, Cell>('path.cell')
+      .data(flatData)
+      .join('path')
+      .attr('class', 'cell')
+      .attr('fill', (d) => colorMap[d.status] || colorMap.NONE)
+      .attr('opacity', 0.92)
+      .attr('d', arc)
+      .style('cursor', 'pointer')
+      .on('mouseover', function (event, d) {
+        d3.select(this).attr('stroke', '#222').attr('stroke-width', 1.5).attr('opacity', 1);
+        const cc = d.country.replace('TxGNN', '');
+        const statusText: Record<string, string> = { OK: '✓ OK', WARN: '⚠ Warning', ERR: '✗ Error', NONE: '— N/A' };
+        tooltip.html(`<strong>${cc}</strong> · ${d.phase}<br>${statusText[d.status] || d.status}`)
+          .style('opacity', '1');
+      })
+      .on('mousemove', function (event) {
+        const rect = container.getBoundingClientRect();
+        tooltip.style('left', (event.clientX - rect.left + 12) + 'px')
+          .style('top', (event.clientY - rect.top - 10) + 'px');
+      })
+      .on('mouseout', function () {
+        d3.select(this).attr('stroke', null).attr('opacity', 0.92);
+        tooltip.style('opacity', '0');
+      });
+
+    // country labels
+    g.selectAll('text.country')
+      .data(countries)
+      .join('text')
+      .attr('class', 'country')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('font-size', '10px')
+      .attr('fill', '#666')
+      .attr('transform', (d) => {
+        const angle = (angleScale(d) ?? 0) + angleScale.bandwidth() / 2;
+        const x = Math.sin(angle) * labelRadius;
+        const y = -Math.cos(angle) * labelRadius;
+        const rot = (angle * 180) / Math.PI;
+        const flip = rot > 90 && rot < 270 ? rot + 180 : rot;
+        return `translate(${x},${y}) rotate(${flip})`;
+      })
+      .text((d) => d.replace('TxGNN', ''));
+
+    // phase labels (centered)
+    g.selectAll('text.phase')
+      .data(phases)
+      .join('text')
+      .attr('class', 'phase')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('font-size', '9px')
+      .attr('fill', 'rgba(0,0,0,0.35)')
+      .attr('transform', (d) => {
+        const r = (radiusScale(d) ?? innerRadius) + radiusScale.bandwidth() / 2;
+        return `translate(0,${-r})`;
+      })
+      .text((d) => d);
+  }
+
+  renderHeatmap();
+  // re-render on resize for responsive
+  let rt: number | undefined;
+  window.addEventListener('resize', () => {
+    if (rt) window.clearTimeout(rt);
+    rt = window.setTimeout(renderHeatmap, 200);
+  });
+</script>

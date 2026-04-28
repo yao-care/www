@@ -1,0 +1,531 @@
+---
+import WorkLayout from '../../layouts/WorkLayout.astro';
+import WorkHero from '../../components/works/WorkHero.astro';
+import WorkCta from '../../components/works/WorkCta.astro';
+import { WORK_BY_SLUG } from '../../works.config';
+
+const work = WORK_BY_SLUG.marketing;
+
+// Top-level stats from the April 2026 campaign
+const headlineStats = [
+  { value: '4,634', unit: '筆', label: 'Qualified Leads（表單）' },
+  { value: '$2.19', unit: '', label: '平均 CPL（業界 4–7 倍效率）' },
+  { value: '5', unit: '產業', label: '跨類別實戰（醫療外）' },
+];
+
+// Three category cards
+const categories = [
+  {
+    name: '美妝保養類',
+    note: '38 則廣告 · 進行中',
+    cpa: '$2.99',
+    color: '#1A3A6B',
+    leads: 1772,
+    impressions: 473161,
+    reach: 177439,
+  },
+  {
+    name: '親子類',
+    note: '46 則廣告 · 已關閉',
+    cpa: '$1.94',
+    color: '#0F6E56',
+    leads: 2138,
+    impressions: 649223,
+    reach: 222583,
+  },
+  {
+    name: '旅遊類',
+    note: '4 則廣告 · 已關閉',
+    cpa: '$1.00',
+    color: '#BA7517',
+    leads: 724,
+    impressions: 127149,
+    reach: 68248,
+  },
+];
+
+// CPA ranking table (de-identified, sorted by CPA ascending)
+const cpaTable = [
+  { rank: 1, cat: '旅遊', name: 'Travel Ad-01', cpa: 0.89, leads: 343, spend: 305 },
+  { rank: 2, cat: '旅遊', name: 'Travel Ad-02', cpa: 0.99, leads: 345, spend: 343 },
+  { rank: 3, cat: '親子', name: 'Parenting Ad-01', cpa: 1.49, leads: 501, spend: 748 },
+  { rank: 4, cat: '親子', name: 'Parenting Ad-03', cpa: 1.67, leads: 467, spend: 781 },
+  { rank: 5, cat: '親子', name: 'Parenting Ad-02', cpa: 1.89, leads: 374, spend: 706 },
+  { rank: 6, cat: '旅遊', name: 'Travel Ad-03', cpa: 1.96, leads: 36, spend: 71 },
+  { rank: 7, cat: '親子', name: 'Parenting Ad-04', cpa: 1.99, leads: 313, spend: 622 },
+  { rank: 8, cat: '美妝', name: 'Beauty Ad-01', cpa: 2.14, leads: 150, spend: 322 },
+  { rank: 9, cat: '美妝', name: 'Beauty Ad-02', cpa: 2.19, leads: 405, spend: 889 },
+  { rank: 10, cat: '親子', name: 'Parenting Ad-05', cpa: 2.61, leads: 97, spend: 253 },
+  { rank: 11, cat: '美妝', name: 'Beauty Ad-03', cpa: 2.93, leads: 110, spend: 322 },
+  { rank: 12, cat: '美妝', name: 'Beauty Ad-04', cpa: 2.97, leads: 760, spend: 2259 },
+  { rank: 13, cat: '親子', name: 'Parenting Ad-06', cpa: 3.23, leads: 173, spend: 560 },
+  { rank: 14, cat: '美妝', name: 'Beauty Ad-05', cpa: 9.53, leads: 5, spend: 48 },
+];
+const cpaTableJson = JSON.stringify(cpaTable);
+const categoriesJson = JSON.stringify(categories);
+
+// Style categories for portfolio showcase
+const portfolioCats = [
+  { name: '植栽生活', style: '自然系 · 情境導向', leads: 1500, cpa: '$2.50' },
+  { name: '兒童教育', style: '規格導向 · 品牌感', leads: 2138, cpa: '$1.94' },
+  { name: '餐飲飲品', style: '氛圍感 · 情感共鳴', leads: 760, cpa: '$2.97' },
+  { name: '親子寢具', style: '溫暖感 · 信任導向', leads: 467, cpa: '$1.67' },
+  { name: '親子旅遊', style: '體驗感 · 活動導向', leads: 724, cpa: '$1.00' },
+];
+
+// Pricing tiers
+const pricingTiers = [
+  {
+    label: '單張購買',
+    qty: '1 張起，彈性最高',
+    price: 'NT$ 500',
+    perImage: 'NT$ 500 / 張',
+    body: '適合初次合作、測試風格或急件補充。彈性最高，隨時可下單。',
+    saving: null,
+    featured: false,
+  },
+  {
+    label: '買斷方案',
+    qty: '一次買斷 50 張',
+    price: 'NT$ 400',
+    perImage: 'NT$ 400 × 50 = NT$ 20,000',
+    body: '50 張足以支撐完整 A/B 測試計畫。版權完整買斷，無限次使用。',
+    saving: '省下 NT$ 5,000（vs 單張）',
+    featured: true,
+  },
+  {
+    label: '大量買斷方案',
+    qty: '一次買斷 100 張',
+    price: 'NT$ 300',
+    perImage: 'NT$ 300 × 100 = NT$ 30,000',
+    body: '單張成本最低，適合大量投放或代理商批量採購。',
+    saving: '省下 NT$ 20,000（vs 單張）',
+    featured: false,
+  },
+];
+---
+<WorkLayout slug="marketing">
+  <WorkHero work={work}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-3 gap-3 md:gap-5">
+        {headlineStats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              {s.unit && <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>}
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-3 text-xs text-[color:var(--color-ink-soft)]">
+        資料來源：2026.04.01 — 2026.04.28 Meta Ads Manager 後台匯出（去識別化）
+      </div>
+    </Fragment>
+  </WorkHero>
+
+  <!-- Differentiator -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
+      <div class="rounded-2xl border border-orange-200 bg-orange-50/40 p-6 md:p-8">
+        <p class="text-base md:text-lg">
+          我們和一般行銷公司不一樣的地方，是
+          <strong class="text-[color:var(--color-brand)]">與通過醫師、藥師、營養師等國家考試的師級夥伴合作</strong>，
+          把專業知識帶進廣告素材的論述、視覺與投放策略。
+        </p>
+        <p class="mt-4 text-base md:text-lg">
+          這也讓我們同時擁有兩種少見的能力：
+          <strong>看得懂專業內容的素材設計</strong> + <strong>盯得緊投放表現的數據思維</strong>。
+          兩件事在同一個團隊內無縫接軌，廣告才能真正帶單。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance evidence -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Performance Evidence</p>
+        <h2 class="section-title mt-2">投放實證 · 跨類別 CPA 表現</h2>
+        <p class="section-subtitle">三大類別整合 · 美妝保養 × 親子 × 旅遊 · 全部為表單成果</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 md:gap-6 mb-12">
+        {categories.map((c) => (
+          <div class="rounded-2xl p-6 md:p-7 text-white shadow-sm" style={`background: ${c.color}`}>
+            <div class="text-xs font-medium tracking-wider uppercase opacity-80 mb-2">{c.name}</div>
+            <div class="text-xs opacity-70 mb-4">{c.note}</div>
+            <div class="text-4xl font-bold tabular-nums">{c.cpa}</div>
+            <div class="text-xs opacity-70 mt-1 mb-5">平均每次成果成本</div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div><div class="opacity-70">成果數</div><div class="font-medium tabular-nums">{c.leads.toLocaleString()}</div></div>
+              <div><div class="opacity-70">觸及人數</div><div class="font-medium tabular-nums">{c.reach.toLocaleString()}</div></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+        <!-- Bar chart: CPA comparison -->
+        <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+          <h3 class="text-sm font-bold tracking-wider uppercase text-[color:var(--color-ink-soft)] mb-1">各類別 CPA 對比</h3>
+          <p class="text-xs text-[color:var(--color-ink-soft)] mb-4">越低越好</p>
+          <div id="chart-cpa" class="w-full" data-categories={categoriesJson}></div>
+        </div>
+
+        <!-- Bar chart: leads vs spend dual axis -->
+        <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+          <h3 class="text-sm font-bold tracking-wider uppercase text-[color:var(--color-ink-soft)] mb-1">成果數 vs 花費</h3>
+          <p class="text-xs text-[color:var(--color-ink-soft)] mb-4">親子成果最多 · 美妝花費最高</p>
+          <div id="chart-leads" class="w-full" data-categories={categoriesJson}></div>
+        </div>
+
+        <!-- Reach efficiency -->
+        <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+          <h3 class="text-sm font-bold tracking-wider uppercase text-[color:var(--color-ink-soft)] mb-1">觸及效率</h3>
+          <p class="text-xs text-[color:var(--color-ink-soft)] mb-4">觸及人數 ÷ 曝光次數</p>
+          <div id="chart-reach" class="w-full" data-categories={categoriesJson}></div>
+        </div>
+      </div>
+
+      <!-- CPA ranking table -->
+      <div class="mt-10 rounded-xl bg-white border border-neutral-200 p-5 md:p-7 shadow-sm">
+        <h3 class="text-sm font-bold tracking-wider uppercase text-[color:var(--color-ink-soft)] mb-4">各主要廣告 CPA 完整排名（由低至高）</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-[color:var(--color-ink-soft)] border-b border-neutral-200 text-xs uppercase tracking-wider">
+                <th class="text-left py-2 pr-3 font-medium">#</th>
+                <th class="text-left py-2 pr-3 font-medium">類別</th>
+                <th class="text-left py-2 pr-3 font-medium">廣告組</th>
+                <th class="text-right py-2 pr-3 font-medium">CPA</th>
+                <th class="py-2 pr-3 font-medium" style="width:30%">成本視覺化</th>
+                <th class="text-right py-2 pr-3 font-medium">成果數</th>
+                <th class="text-right py-2 font-medium">花費</th>
+              </tr>
+            </thead>
+            <tbody id="cpa-table-body" data-table={cpaTableJson}></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Qualified leads banner -->
+      <div class="mt-10 rounded-2xl bg-[#1A3A6B] text-white p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div class="shrink-0 w-12 h-12 rounded-lg bg-amber-400 text-[#1A3A6B] flex items-center justify-center text-xl font-extrabold">★</div>
+        <div class="flex-1">
+          <h3 class="font-bold text-base md:text-lg mb-2">
+            核心優勢：4,634 筆成果均為潛在顧客主動填寫表單，絕非單純曝光
+          </h3>
+          <p class="text-sm opacity-85 leading-relaxed">
+            每一筆成果都是對產品或服務有真實意圖的潛在顧客主動留下聯繫資訊，
+            可直接整合 CRM 進行受眾分群、實現精準後續行銷 ——
+            而不是一般廣告常見的虛胖曝光數據。
+          </p>
+        </div>
+        <div class="shrink-0 rounded-lg bg-amber-400 text-[#1A3A6B] px-5 py-3 text-center">
+          <div class="font-bold">100% Qualified</div>
+          <div class="text-xs">表單 · 可追蹤 · 可行動</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross-category portfolio -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Cross-Category Portfolio</p>
+        <h2 class="section-title mt-2">5 大產業跨類別實戰</h2>
+        <p class="section-subtitle">每個賽道都有完整視覺語言掌握，不受限於單一風格</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+        {portfolioCats.map((p, i) => (
+          <div class="rounded-xl bg-white border border-neutral-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div class="aspect-square flex items-center justify-center text-white text-2xl font-bold tabular-nums" style={`background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-soft) 100%); opacity: ${0.85 - i*0.04}`}>
+              {p.cpa}
+            </div>
+            <div class="p-3 md:p-4">
+              <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-1">{p.name}</div>
+              <div class="text-xs text-[color:var(--color-ink-soft)] mb-2">{p.style}</div>
+              <div class="flex justify-between text-xs">
+                <span class="text-[color:var(--color-ink-soft)]">表單成果</span>
+                <span class="font-medium tabular-nums">{p.leads.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Service offering -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-orange-50/40 to-white">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Our Services</p>
+        <h2 class="section-title mt-2">我們提供的服務</h2>
+        <p class="section-subtitle">投放 + 素材，一條龍交付</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-16">
+        <!-- Investing service -->
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
+          <h3 class="text-lg md:text-xl font-bold mb-4">新媒體廣告投放</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed mb-5">
+            師級夥伴 + 投放團隊一體服務。從受眾規劃、素材策略、A/B 測試到 CRM 對接，全流程協作。
+          </p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>跨類別投放策略（醫療、美妝、親子、旅遊…）</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>每筆 leads 可追蹤、可進 CRM</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>每月成效報告 + 後續優化建議</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>師級夥伴內容審核（醫療類產品適用）</li>
+          </ul>
+          <a href={work.cta.href} target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand)] hover:underline">
+            聊聊您的投放需求 →
+          </a>
+        </div>
+
+        <!-- Creative service -->
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
+          <h3 class="text-lg md:text-xl font-bold mb-4">廣告素材製作</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed mb-5">
+            業界數倍產圖效率 + 投放思維融入設計。每張素材以投放成效為核心製作，不只「好看」。
+          </p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>業界 5× 產圖速度，A/B 測試永遠有彈藥</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>構圖、文案層次、CTA 位置基於 Meta 廣告邏輯</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>5 大產業視覺語言（自然、規格、氛圍、信任、體驗）</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>單張或大量買斷皆可，版權完整移交</li>
+          </ul>
+          <a href="#pricing" class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand)] hover:underline">
+            查看素材定價 →
+          </a>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div id="pricing" class="scroll-mt-24">
+        <div class="text-center mb-10">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Pricing</p>
+          <h2 class="section-title mt-2">素材方案與定價</h2>
+          <p class="section-subtitle">張數越多、單價越低</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+          {pricingTiers.map((tier) => (
+            <div class:list={[
+              'relative rounded-2xl p-6 md:p-7 shadow-sm',
+              tier.featured
+                ? 'bg-[#1A3A6B] text-white border-2 border-amber-400'
+                : 'bg-white border border-neutral-200',
+            ]}>
+              {tier.featured && (
+                <div class="absolute top-0 right-5 -translate-y-1/2 bg-amber-400 text-[#1A3A6B] text-xs font-bold tracking-wider uppercase px-3 py-1 rounded-md">最受歡迎</div>
+              )}
+              <div class:list={['text-xs font-bold tracking-wider uppercase mb-2', tier.featured ? 'text-amber-300' : 'text-[color:var(--color-ink-soft)]']}>
+                {tier.label}
+              </div>
+              <div class:list={['text-sm font-medium mb-3', tier.featured ? 'text-amber-300' : 'text-[color:var(--color-brand)]']}>
+                {tier.qty}
+              </div>
+              <div class="text-4xl md:text-5xl font-bold tabular-nums">{tier.price}</div>
+              <div class:list={['text-xs mt-1 mb-2', tier.featured ? 'opacity-70' : 'text-[color:var(--color-ink-soft)]']}>
+                {tier.perImage}
+              </div>
+              {tier.saving && (
+                <div class:list={['inline-block mt-2 mb-3 text-xs font-medium px-2.5 py-1 rounded-md', tier.featured ? 'bg-amber-400/20 text-amber-200' : 'bg-amber-50 text-amber-700']}>
+                  {tier.saving}
+                </div>
+              )}
+              <p class:list={['text-sm leading-relaxed', tier.featured ? 'opacity-85' : 'text-[color:var(--color-ink-soft)]']}>
+                {tier.body}
+              </p>
+              <a
+                href={work.cta.href}
+                target="_blank"
+                rel="noopener"
+                class:list={[
+                  'mt-6 block text-center px-5 py-2.5 rounded-md text-sm font-medium transition',
+                  tier.featured
+                    ? 'bg-amber-400 text-[#1A3A6B] hover:bg-amber-300'
+                    : 'border-2 border-[color:var(--color-brand)] text-[color:var(--color-brand)] hover:bg-[color:var(--color-brand)] hover:text-white',
+                ]}
+              >
+                立即諮詢
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <WorkCta
+    work={work}
+    headline="準備好讓行銷真正帶單了嗎？"
+    description="告訴我們您的產品類別與廣告目標，我們為您規劃投放策略 + 素材方案。最快 1 個工作天回覆。"
+  />
+</WorkLayout>
+
+<script>
+  import * as d3 from 'd3';
+
+  const BRAND = '#c6461c';
+  const TEAL = '#0F6E56';
+  const NAVY = '#1A3A6B';
+  const AMBER = '#BA7517';
+  const MUTED = '#6B7A99';
+
+  type Cat = { name: string; cpa: string; color: string; leads: number; impressions: number; reach: number };
+
+  function parseCats(id: string): Cat[] {
+    const el = document.getElementById(id);
+    return JSON.parse(el?.getAttribute('data-categories') || '[]');
+  }
+
+  // ----- chart-cpa -----
+  function drawCpaChart() {
+    const host = document.getElementById('chart-cpa');
+    if (!host) return;
+    const cats = parseCats('chart-cpa');
+    host.innerHTML = '';
+    const margin = { top: 8, right: 8, bottom: 24, left: 36 };
+    const width = host.clientWidth || 280;
+    const height = 180;
+    const svg = d3.select(host).append('svg').attr('width', width).attr('height', height).attr('viewBox', `0 0 ${width} ${height}`).style('max-width', '100%');
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const w = width - margin.left - margin.right;
+    const h = height - margin.top - margin.bottom;
+    const data = cats.map((c) => ({ name: c.name, value: parseFloat(c.cpa.replace('$', '')), color: c.color }));
+    const x = d3.scaleBand().domain(data.map((d) => d.name)).range([0, w]).padding(0.3);
+    const y = d3.scaleLinear().domain([0, 3.5]).range([h, 0]);
+    g.append('g').attr('transform', `translate(0,${h})`).call(d3.axisBottom(x).tickSize(0)).attr('font-size', 10).attr('color', MUTED);
+    g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat((d) => `$${d}`)).attr('font-size', 9).attr('color', MUTED);
+    g.selectAll('rect').data(data).join('rect')
+      .attr('x', (d) => x(d.name) || 0)
+      .attr('y', (d) => y(d.value))
+      .attr('width', x.bandwidth())
+      .attr('height', (d) => h - y(d.value))
+      .attr('rx', 3)
+      .attr('fill', (d) => d.color)
+      .attr('opacity', 0.85);
+    g.selectAll('text.lbl').data(data).join('text')
+      .attr('class', 'lbl')
+      .attr('x', (d) => (x(d.name) || 0) + x.bandwidth() / 2)
+      .attr('y', (d) => y(d.value) - 6)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', 11)
+      .attr('font-weight', 'bold')
+      .attr('fill', (d) => d.color)
+      .text((d) => `$${d.value.toFixed(2)}`);
+  }
+
+  // ----- chart-leads -----
+  function drawLeadsChart() {
+    const host = document.getElementById('chart-leads');
+    if (!host) return;
+    const cats = parseCats('chart-leads');
+    host.innerHTML = '';
+    const margin = { top: 8, right: 36, bottom: 24, left: 36 };
+    const width = host.clientWidth || 280;
+    const height = 180;
+    const svg = d3.select(host).append('svg').attr('width', width).attr('height', height).attr('viewBox', `0 0 ${width} ${height}`).style('max-width', '100%');
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const w = width - margin.left - margin.right;
+    const h = height - margin.top - margin.bottom;
+    type Row = { name: string; leads: number; spend: number; color: string };
+    const data: Row[] = cats.map((c) => ({ name: c.name.replace('類', ''), leads: c.leads, spend: Math.round(c.leads * parseFloat(c.cpa.replace('$', ''))), color: c.color }));
+    const x = d3.scaleBand().domain(data.map((d) => d.name)).range([0, w]).padding(0.4);
+    const xSub = d3.scaleBand().domain(['leads', 'spend']).range([0, x.bandwidth()]).padding(0.05);
+    const yLeads = d3.scaleLinear().domain([0, d3.max(data, (d) => d.leads) || 0]).range([h, 0]);
+    const ySpend = d3.scaleLinear().domain([0, d3.max(data, (d) => d.spend) || 0]).range([h, 0]);
+    g.append('g').attr('transform', `translate(0,${h})`).call(d3.axisBottom(x).tickSize(0)).attr('font-size', 10).attr('color', MUTED);
+    g.append('g').call(d3.axisLeft(yLeads).ticks(4).tickFormat((d) => d3.format('~s')(d as number))).attr('font-size', 9).attr('color', MUTED);
+    g.append('g').attr('transform', `translate(${w},0)`).call(d3.axisRight(ySpend).ticks(4).tickFormat((d) => `$${d3.format('~s')(d as number)}`)).attr('font-size', 9).attr('color', MUTED);
+    data.forEach((d) => {
+      const grp = g.append('g').attr('transform', `translate(${x(d.name)},0)`);
+      grp.append('rect').attr('x', xSub('leads') || 0).attr('y', yLeads(d.leads)).attr('width', xSub.bandwidth()).attr('height', h - yLeads(d.leads)).attr('rx', 3).attr('fill', d.color).attr('opacity', 0.85);
+      grp.append('rect').attr('x', xSub('spend') || 0).attr('y', ySpend(d.spend)).attr('width', xSub.bandwidth()).attr('height', h - ySpend(d.spend)).attr('rx', 3).attr('fill', d.color).attr('opacity', 0.4);
+    });
+  }
+
+  // ----- chart-reach -----
+  function drawReachChart() {
+    const host = document.getElementById('chart-reach');
+    if (!host) return;
+    const cats = parseCats('chart-reach');
+    host.innerHTML = '';
+    const margin = { top: 8, right: 8, bottom: 24, left: 36 };
+    const width = host.clientWidth || 280;
+    const height = 180;
+    const svg = d3.select(host).append('svg').attr('width', width).attr('height', height).attr('viewBox', `0 0 ${width} ${height}`).style('max-width', '100%');
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const w = width - margin.left - margin.right;
+    const h = height - margin.top - margin.bottom;
+    const data = cats.map((c) => ({ name: c.name.replace('類', ''), value: c.impressions ? +(c.reach / c.impressions * 100).toFixed(1) : 0, color: c.color }));
+    const x = d3.scaleBand().domain(data.map((d) => d.name)).range([0, w]).padding(0.3);
+    const y = d3.scaleLinear().domain([0, 65]).range([h, 0]);
+    g.append('g').attr('transform', `translate(0,${h})`).call(d3.axisBottom(x).tickSize(0)).attr('font-size', 10).attr('color', MUTED);
+    g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat((d) => `${d}%`)).attr('font-size', 9).attr('color', MUTED);
+    g.selectAll('rect').data(data).join('rect')
+      .attr('x', (d) => x(d.name) || 0)
+      .attr('y', (d) => y(d.value))
+      .attr('width', x.bandwidth())
+      .attr('height', (d) => h - y(d.value))
+      .attr('rx', 3)
+      .attr('fill', (d) => d.color)
+      .attr('opacity', 0.85);
+    g.selectAll('text.lbl').data(data).join('text')
+      .attr('class', 'lbl')
+      .attr('x', (d) => (x(d.name) || 0) + x.bandwidth() / 2)
+      .attr('y', (d) => y(d.value) - 6)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', 11)
+      .attr('font-weight', 'bold')
+      .attr('fill', (d) => d.color)
+      .text((d) => `${d.value.toFixed(1)}%`);
+  }
+
+  // ----- CPA table -----
+  function renderCpaTable() {
+    const tbody = document.getElementById('cpa-table-body');
+    if (!tbody) return;
+    type Row = { rank: number; cat: string; name: string; cpa: number; leads: number; spend: number };
+    const rows: Row[] = JSON.parse(tbody.getAttribute('data-table') || '[]');
+    const max = d3.max(rows, (r) => r.cpa) || 1;
+    const colorMap: Record<string, string> = { 旅遊: AMBER, 親子: TEAL, 美妝: NAVY };
+    const tagBg: Record<string, string> = { 旅遊: 'bg-amber-50 text-amber-700', 親子: 'bg-emerald-50 text-emerald-700', 美妝: 'bg-blue-50 text-blue-700' };
+    const html = rows.map((r) => {
+      const pct = ((r.cpa / max) * 100).toFixed(0);
+      const c = colorMap[r.cat] || BRAND;
+      return `
+        <tr class="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
+          <td class="py-2.5 pr-3 text-xs text-neutral-400 font-mono">${String(r.rank).padStart(2, '0')}</td>
+          <td class="py-2.5 pr-3"><span class="text-xs px-1.5 py-0.5 rounded ${tagBg[r.cat] || 'bg-neutral-100'}">${r.cat}</span></td>
+          <td class="py-2.5 pr-3 text-sm">${r.name}</td>
+          <td class="py-2.5 pr-3 text-right font-medium tabular-nums" style="color: ${c}">$${r.cpa.toFixed(2)}</td>
+          <td class="py-2.5 pr-3"><div class="h-1.5 rounded-full bg-neutral-100 overflow-hidden"><div class="h-full" style="width:${pct}%;background:${c}"></div></div></td>
+          <td class="py-2.5 pr-3 text-right tabular-nums text-sm">${r.leads.toLocaleString()}</td>
+          <td class="py-2.5 text-right tabular-nums text-sm">$${r.spend.toLocaleString()}</td>
+        </tr>
+      `;
+    }).join('');
+    tbody.innerHTML = html;
+  }
+
+  function renderAll() {
+    drawCpaChart();
+    drawLeadsChart();
+    drawReachChart();
+    renderCpaTable();
+  }
+
+  renderAll();
+  let rt: number | undefined;
+  window.addEventListener('resize', () => {
+    if (rt) window.clearTimeout(rt);
+    rt = window.setTimeout(renderAll, 200);
+  });
+</script>
