@@ -16,12 +16,9 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { href: '/#about', label: '智慧醫療' },
-  { href: '/#feature', label: '潛在優勢' },
-  { href: '/#sixbig', label: '優質服務' },
+  { href: '/#product', label: '產品' },
   { href: '/#twtxgnn', label: '老藥新用' },
   { href: '/works', label: '作品' },
-  { href: '/#blog', label: '簡易驗證' },
-  { href: '/#screenshots', label: '案例範例' },
-  { href: '/#contact', label: '聯絡我們' },
+  { href: '/cases', label: '案例' },
+  { href: '/#contact', label: '聯絡' },
 ] as const;

@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import FooterLinks from '../components/FooterLinks.astro';
+import Verification from '../components/Verification.astro';
+import Screenshots from '../components/Screenshots.astro';
+import { SITE } from '../site.config';
+
+const pageTitle = '案例 · 藥提醒 yao.care';
+const pageDescription =
+  '藥提醒以病人為中心的驗證流程與實際案例：用藥提醒、慢箋領藥、檢驗衛教、病房智慧呼叫四大主題的真實畫面。';
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Nav />
+  <main class="pt-16">
+    <!-- breadcrumb -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
+      <span class="mx-1.5">›</span>
+      <span class="text-[color:var(--color-ink)]">案例</span>
+    </div>
+
+    <!-- hero -->
+    <section class="relative pt-10 pb-14 md:pt-14 md:pb-16 overflow-hidden bg-gradient-to-b from-orange-50/40 to-white">
+      <div class="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-orange-200/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 lg:px-6">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+          Cases
+        </p>
+        <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">
+          病人為核心的<br class="md:hidden" />驗證流程與實機畫面
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+          每一條訊息、每一張圖、每一個按鈕，都繞著「病人能不能照做」設計。
+          下方為真實服務畫面與驗證流程示意。
+        </p>
+      </div>
+    </section>
+
+    <Verification />
+    <Screenshots />
+
+    <!-- CTA -->
+    <section class="py-16 md:py-20 bg-neutral-50">
+      <div class="max-w-3xl mx-auto px-4 lg:px-6 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold">
+          想看更多細節？<span class="text-[color:var(--color-brand)]">線上諮詢</span>
+        </h2>
+        <p class="mt-3 text-[color:var(--color-ink-soft)]">
+          我們可以根據您的場景（醫院、診所、長照、藥局）提供對應的整合方式。
+        </p>
+        <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+          <a href={SITE.lineLink} target="_blank" rel="noopener" class="btn-line">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.74c0 4.32 3.55 7.94 8.35 8.62l1.06.15.13-.97-.07-.71c.08-.47-.31-.91-.78-.97l-.16-.02C5.83 16.27 3 13.81 3 10.74 3 6.48 7.03 3 12 3s9 3.48 9 7.74c0 4.26-4.03 7.74-9 7.74h-.5l-3.83 2.41a.5.5 0 0 1-.74-.55l.84-3.07A9.06 9.06 0 0 0 22 10.74C22 5.92 17.52 2 12 2z"/></svg>
+            加入 LINE 諮詢
+          </a>
+          <a href="/works" class="btn-brand">
+            看完整作品
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <FooterLinks />
+</BaseLayout>
