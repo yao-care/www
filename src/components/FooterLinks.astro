@@ -1,36 +1,107 @@
 ---
-const lineLinks = [
-  { href: 'https://www.linebiz.com/tw/service/line-account-connect/', label: 'LINE Account Connect 官方帳號介紹' },
-  { href: 'https://manager.line.biz/', label: '登入 LINE 官方帳號管理後台' },
-  { href: 'https://developers.line.biz/console/', label: '登入 LINE 官方帳號開發者平台' },
-  { href: 'https://now.line.me/', label: 'LINE NOW 服務介紹' },
+import { SITE } from '../site.config';
+import { WORKS, LINE_PERSONAL, LINE_TEAM } from '../works.config';
+
+const productLinks = [
+  { href: '/#product', label: '智慧醫療整合' },
+  { href: '/#twtxgnn', label: '老藥新用 AI' },
+  { href: '/cases', label: '驗證流程與實機案例' },
 ];
-const tgLinks = [{ href: 'https://core.telegram.org/api', label: 'Bot API' }];
+const contactLinks = [
+  { href: `mailto:${SITE.email}`, label: SITE.email },
+  { href: SITE.lineLink, label: 'LINE：與工程師聯絡', external: true },
+  { href: LINE_TEAM, label: 'LINE：與團隊聯絡', external: true },
+  { href: SITE.mapsLink, label: SITE.address, external: true },
+];
+const year = new Date().getFullYear();
 ---
-<section class="bg-neutral-200/60">
-  <div class="grid md:grid-cols-2">
-    <div class="p-10 md:p-14">
-      <p class="flex items-center gap-2 font-medium mb-4">
-        <img src="/assets/images/lineicon.png" alt="" class="w-6 h-6" /> 使用「LINE 官方帳號」串連
-      </p>
-      <ul class="space-y-2 text-sm">
-        {lineLinks.map((l) => (
-          <li><a href={l.href} target="_blank" rel="noopener" class="text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">{l.label}</a></li>
-        ))}
-      </ul>
+<footer class="bg-neutral-50 border-t border-neutral-200">
+  <div class="max-w-7xl mx-auto px-4 lg:px-6 py-14 md:py-20">
+    <div class="grid gap-10 md:gap-12 md:grid-cols-12">
+      <!-- brand block -->
+      <div class="md:col-span-5">
+        <a href="/" class="inline-flex items-center" aria-label="藥提醒首頁">
+          <img
+            src="/assets/images/logo.png"
+            srcset="/assets/images/logo_2x.png 2x"
+            alt="藥提醒 logo"
+            class="h-10 w-auto"
+            width="132" height="40"
+          />
+        </a>
+        <p class="mt-5 max-w-md text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+          以病人為中心，依循藥品使用標準碼與 ATC 編碼，
+          透過 LINE、Telegram 等通訊軟體提供用藥提醒；
+          同時提供醫療 AI、行銷投放、合規自動化、情報追蹤等延伸服務。
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={SITE.lineLink} target="_blank" rel="noopener" class="btn-line">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.74c0 4.32 3.55 7.94 8.35 8.62l1.06.15.13-.97-.07-.71c.08-.47-.31-.91-.78-.97l-.16-.02C5.83 16.27 3 13.81 3 10.74 3 6.48 7.03 3 12 3s9 3.48 9 7.74c0 4.26-4.03 7.74-9 7.74h-.5l-3.83 2.41a.5.5 0 0 1-.74-.55l.84-3.07A9.06 9.06 0 0 0 22 10.74C22 5.92 17.52 2 12 2z"/></svg>
+            加入 LINE
+          </a>
+          <a href={`mailto:${SITE.email}`} class="btn-brand">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            來信詢問
+          </a>
+        </div>
+      </div>
+
+      <!-- product / cases -->
+      <div class="md:col-span-3">
+        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">產品</p>
+        <ul class="space-y-3">
+          {productLinks.map((l) => (
+            <li>
+              <a href={l.href} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- works -->
+      <div class="md:col-span-2">
+        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">作品</p>
+        <ul class="space-y-3">
+          {WORKS.map((w) => (
+            <li>
+              <a href={`/works/${w.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+                {w.ogTitle}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="/works" class="text-base font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- contact -->
+      <div class="md:col-span-2">
+        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">聯絡</p>
+        <ul class="space-y-3">
+          {contactLinks.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                {...l.external ? { target: '_blank', rel: 'noopener' } : {}}
+                class="text-sm text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors leading-snug"
+              >{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-    <div class="p-10 md:p-14">
-      <p class="flex items-center gap-2 font-medium mb-4">
-        <img src="/assets/images/telegram.png" alt="" class="w-6 h-6" /> 使用「Telegram Bot 帳號」串連
+
+    <!-- bottom -->
+    <div class="mt-12 pt-6 border-t border-neutral-200 flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-sm text-[color:var(--color-ink-muted)]">
+      <p>© 2020–{year} yao.care · 藥提醒. All rights reserved.</p>
+      <p>
+        Built with
+        <span class="text-[color:var(--color-ink-soft)]">Astro · Tailwind · D3</span>
       </p>
-      <ul class="space-y-2 text-sm">
-        {tgLinks.map((l) => (
-          <li><a href={l.href} target="_blank" rel="noopener" class="text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">{l.label}</a></li>
-        ))}
-      </ul>
     </div>
   </div>
-</section>
+</footer>
 
 <button
   type="button"
@@ -40,12 +111,6 @@ const tgLinks = [{ href: 'https://core.telegram.org/api', label: 'Bot API' }];
 >
   <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
 </button>
-
-<footer class="bg-white border-t border-neutral-200">
-  <div class="max-w-7xl mx-auto px-4 lg:px-6 py-6 text-center text-sm text-[color:var(--color-ink-soft)]">
-    Copyright © 2020-2026 yao.care. All rights reserved.
-  </div>
-</footer>
 
 <script>
   const btn = document.getElementById('back-to-top');
