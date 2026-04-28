@@ -1,0 +1,21 @@
+# 備份檔
+*.bak
+*.bak.*
+assets/pug-scss-backup.*.tar.gz
+
+# Node / Astro
+node_modules/
+dist/
+.astro/
+.cache/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# 環境
+.env
+.env.local
