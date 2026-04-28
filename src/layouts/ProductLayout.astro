@@ -1,23 +1,22 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../site.config';
-import { WORK_BY_SLUG, type Work } from '../works.config';
+import { PRODUCT_BY_SLUG, CATEGORY_BY_SLUG, type Product } from '../products.config';
 import Nav from '../components/Nav.astro';
 import FooterLinks from '../components/FooterLinks.astro';
 
 interface Props {
-  slug: Work['slug'];
-  /** Override title shown in <title>; defaults to "{work.title} · 藥提醒" */
+  slug: Product['slug'];
   title?: string;
-  /** Override description meta */
   description?: string;
 }
 
 const { slug, title, description } = Astro.props;
-const work = WORK_BY_SLUG[slug];
+const product = PRODUCT_BY_SLUG[slug];
+const category = CATEGORY_BY_SLUG[product.category];
 
-const pageTitle = title ?? `${work.title} · 藥提醒 yao.care`;
-const pageDescription = description ?? work.description;
+const pageTitle = title ?? `${product.title} · 藥提醒 yao.care`;
+const pageDescription = description ?? product.description;
 
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const ogImage = new URL(`/assets/images/og/${slug}.png`, SITE.url).toString();
@@ -25,8 +24,8 @@ const ogImage = new URL(`/assets/images/og/${slug}.png`, SITE.url).toString();
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CreativeWork',
-  name: work.title,
-  description: work.description,
+  name: product.title,
+  description: product.description,
   url: canonical,
   publisher: {
     '@type': 'Organization',
@@ -66,21 +65,21 @@ const jsonLd = {
       <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
         <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
         <span class="mx-1.5">›</span>
-        <a href="/works" class="hover:text-[color:var(--color-brand)]">作品</a>
+        <a href={category.href} class="hover:text-[color:var(--color-brand)]">{category.label}</a>
         <span class="mx-1.5">›</span>
-        <span class="text-[color:var(--color-ink)]">{work.title}</span>
+        <span class="text-[color:var(--color-ink)]">{product.title}</span>
       </div>
 
       <slot />
 
-      <!-- back to all works -->
+      <!-- back to category hub -->
       <div class="max-w-7xl mx-auto px-4 lg:px-6 py-12 border-t border-neutral-200/70">
         <a
-          href="/works"
+          href={category.href}
           class="inline-flex items-center gap-2 text-sm text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]"
         >
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-          回作品列表
+          回 {category.label}
         </a>
       </div>
     </main>

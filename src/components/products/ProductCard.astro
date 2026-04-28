@@ -1,14 +1,15 @@
 ---
-import type { Work } from '../../works.config';
+import type { Product } from '../../products.config';
+import { CATEGORY_BY_SLUG } from '../../products.config';
 
 interface Props {
-  work: Work;
-  /** Card variant: "hub" (taller, descriptive) or "preview" (compact homepage) */
+  product: Product;
+  /** "hub" = full bullets, "preview" = compact homepage card */
   variant?: 'hub' | 'preview';
 }
 
-const { work, variant = 'hub' } = Astro.props;
-const href = `/works/${work.slug}`;
+const { product, variant = 'hub' } = Astro.props;
+const href = `${CATEGORY_BY_SLUG[product.category].href}/${product.slug}`;
 ---
 <a
   href={href}
@@ -17,30 +18,35 @@ const href = `/works/${work.slug}`;
     variant === 'hub' ? 'p-7 md:p-8' : 'p-6',
   ]}
 >
-  <!-- visual ribbon -->
   <div class="flex items-center gap-3 mb-4">
     <span class="inline-flex w-8 h-8 rounded-lg items-center justify-center bg-orange-50 text-[color:var(--color-brand)] font-bold tabular-nums">
-      {work.ogStat}
+      {product.ogStat}
     </span>
     <span class="text-xs font-medium tracking-widest uppercase text-[color:var(--color-ink-soft)]">
-      {work.cardKicker}
+      {product.cardKicker}
     </span>
+    {product.externalUrl && (
+      <span class="ml-auto inline-flex items-center gap-1 text-xs font-medium text-[color:var(--color-brand)]">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Live
+      </span>
+    )}
   </div>
 
   <h3 class:list={[
     'font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors',
     variant === 'hub' ? 'text-xl md:text-2xl' : 'text-lg md:text-xl',
   ]}>
-    {work.title}
+    {product.title}
   </h3>
 
   <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
-    {work.tagline}
+    {product.tagline}
   </p>
 
   {variant === 'hub' && (
     <ul class="mt-5 space-y-2">
-      {work.cardBullets.map((b) => (
+      {product.cardBullets.map((b) => (
         <li class="flex items-start gap-2 text-sm text-[color:var(--color-ink)]">
           <svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           <span>{b}</span>

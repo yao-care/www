@@ -8,4 +8,12 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [sitemap()],
   vite: { plugins: [tailwindcss()] },
+  redirects: {
+    '/works': '/',
+    '/works/twtxgnn': '/medical/txgnn',
+    '/works/intel': '/ai/intel',
+    '/works/siqc': '/ai/siqc',
+    '/works/marketing': '/marketing',
+    '/cases': '/medical/yaocare',
+  },
 });

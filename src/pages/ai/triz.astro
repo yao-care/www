@@ -1,0 +1,166 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
+
+const product = PRODUCT_BY_SLUG.triz;
+
+const headlineStats = [
+  { value: '40', unit: '', label: '發明原則 (含 169 副原則)' },
+  { value: '39', unit: '', label: '工程參數' },
+  { value: '263', unit: '', label: '矛盾矩陣對應' },
+  { value: '6', unit: '組', label: '完整向量資料' },
+];
+
+const knowledgeModules = [
+  {
+    kicker: 'Principles',
+    title: '40 發明原則',
+    body: 'Altshuller 從 200 萬筆專利中萃取的解題模板。每條原則含 169 個副原則 + 應用案例，讓 AI 能精準推薦對應問題的解法。',
+  },
+  {
+    kicker: 'Parameters',
+    title: '39 工程參數',
+    body: '描述系統的可量化屬性 — 重量、強度、穩定性、能耗、可靠性…等，是發現矛盾的基本詞彙。',
+  },
+  {
+    kicker: 'Matrix',
+    title: '263 矛盾矩陣',
+    body: '當改善 A 參數會惡化 B 參數時，矩陣告訴你最常用哪幾個發明原則來解。是 TRIZ 的核心查表工具。',
+  },
+  {
+    kicker: 'Separation',
+    title: '4 分離原理',
+    body: '物理矛盾的 4 種拆解：時間分離、空間分離、條件分離、系統層級分離。',
+  },
+  {
+    kicker: 'Effects',
+    title: 'Oxford Effects',
+    body: '科學效應資料庫 — 把物理 / 化學 / 生物效應對應到工程功能，跨領域借力。',
+  },
+  {
+    kicker: 'Cases',
+    title: 'AutoTRIZ Cases',
+    body: '自動化案例庫，AI 可從歷史案例中學習解題模式並遷移到新問題。',
+  },
+];
+
+const flow = [
+  { n: '1', title: '描述問題', body: '使用者用自然語言敘述工程或設計問題' },
+  { n: '2', title: '識別矛盾', body: 'AI 抽取技術矛盾或物理矛盾，映射到 39 工程參數' },
+  { n: '3', title: '推薦原則', body: '查 263 矛盾矩陣，推薦 2–4 條最相關發明原則' },
+  { n: '4', title: '生成解法', body: '多角色 AI 套用原則 + Effects 庫，產出可行解法方案' },
+];
+
+const stack = [
+  { layer: 'Web', body: 'React + Vite + Tailwind (port 10150)' },
+  { layer: 'API', body: 'Express (port 10160) — auth / chat / search 三條路由' },
+  { layer: 'Data', body: 'SQLite (better-sqlite3) + 6 組向量資料' },
+  { layer: 'Pipeline', body: 'crawl → chunk → embed → vectors/*.json' },
+  { layer: 'AI', body: '多角色 SYSTEM_PROMPT + onStep callback 即時回報' },
+  { layer: 'Sources', body: '6 個資料來源爬蟲 + 7 個共用 libs' },
+];
+---
+<ProductLayout slug="triz">
+  <ProductHero product={product}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {headlineStats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              {s.unit && <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>}
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </Fragment>
+  </ProductHero>
+
+  <!-- Intro -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
+      <p class="text-base md:text-lg">
+        TRIZ（Theory of Inventive Problem Solving）是俄國工程師 Altshuller
+        從 200 萬筆專利中歸納出的發明問題解決理論 ——
+        <strong class="text-[color:var(--color-brand)]">所有重大發明都遵循少數幾種解題模式</strong>。
+        這套理論在傳統製造業（豐田、三星、現代）行之有年，但傳統 TRIZ 工具操作門檻高、需專家陪伴。
+      </p>
+      <p class="mt-4 text-base md:text-lg">
+        我們把整套 TRIZ 知識體系（40 原則、39 參數、263 矩陣、4 分離原理、Oxford Effects、AutoTRIZ Cases）
+        建成 RAG 向量庫，再以多角色 AI Agent 協作完成
+        <strong>「描述問題 → 識別矛盾 → 推薦原則 → 生成解法」</strong>四階段，
+        把專家門檻降到一段對話。
+      </p>
+    </div>
+  </section>
+
+  <!-- Knowledge modules -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Knowledge Base</p>
+        <h2 class="section-title mt-2">六大知識模組</h2>
+        <p class="section-subtitle">完整 TRIZ 體系，6 組向量資料、可即時檢索</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {knowledgeModules.map((m) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">{m.kicker}</div>
+            <h3 class="font-bold text-base md:text-lg mb-3">{m.title}</h3>
+            <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{m.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Multi-role flow -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Multi-Role AI Flow</p>
+        <h2 class="section-title mt-2">4 階段多角色協作</h2>
+        <p class="section-subtitle">每個角色獨立 SYSTEM_PROMPT、由主協調函數 onStep callback 即時回報進度</p>
+      </div>
+      <ol class="grid md:grid-cols-4 gap-4 md:gap-5">
+        {flow.map((s) => (
+          <li class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm relative">
+            <div class="text-3xl font-bold text-[color:var(--color-brand)] tabular-nums mb-2">{s.n}</div>
+            <h3 class="font-bold text-base mb-2">{s.title}</h3>
+            <p class="text-xs text-[color:var(--color-ink-soft)] leading-relaxed">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Tech stack -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Architecture</p>
+        <h2 class="section-title mt-2">技術堆疊</h2>
+        <p class="section-subtitle">React + Vite 前端 / Express + SQLite 後端 / 三階段 RAG 管線</p>
+      </div>
+      <div class="rounded-2xl bg-white border border-neutral-200 overflow-hidden shadow-sm">
+        {stack.map((s, i) => (
+          <div class:list={['flex items-center gap-4 md:gap-6 px-5 md:px-7 py-4 md:py-5', i > 0 ? 'border-t border-neutral-100' : '']}>
+            <span class="shrink-0 inline-flex items-center justify-center w-20 h-7 rounded-md bg-[color:var(--color-brand)] text-white text-xs font-bold tracking-wider uppercase">
+              {s.layer}
+            </span>
+            <span class="text-sm text-[color:var(--color-ink)]">{s.body}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ProductCta
+    product={product}
+    headline="想把 TRIZ 用到自家產品開發？"
+    description="無論是製造業、IT 產品設計、商業模式創新 — 我們可以為您客製專屬的 TRIZ 知識庫與 AI 工作流。"
+  />
+</ProductLayout>

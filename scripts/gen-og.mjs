@@ -30,20 +30,28 @@ const INK_SOFT = '#555';
 
 const WORKS = [
   {
-    slug: 'twtxgnn',
+    slug: 'yaocare',
+    kicker: 'Patient-First Medication Reminder',
+    stat: 'LINE',
+    statLabel: 'TELEGRAM · ATC',
+    title: 'yao.care',
+    tagline: 'No app needed · ATC standard · NHI integration',
+  },
+  {
+    slug: 'huatuo',
+    kicker: 'Traditional Chinese Medicine AI',
+    stat: '128',
+    statLabel: 'TCM RULES · L1·L2·L3',
+    title: 'AI Hua Tuo',
+    tagline: 'GPT-4o Vision/Audio · rPPG · TWCM FHIR · CDSS',
+  },
+  {
+    slug: 'txgnn',
     kicker: 'Drug Repurposing AI · SMART on FHIR',
     stat: '30',
     statLabel: 'COUNTRIES',
     title: 'TxGNN',
     tagline: 'Knowledge Graph + Deep Learning · 3.1M predictions',
-  },
-  {
-    slug: 'marketing',
-    kicker: 'Performance Marketing · Medical Expertise',
-    stat: '$2.19',
-    statLabel: 'AVG · CPL',
-    title: 'Marketing',
-    tagline: '4,634 qualified leads · 5 industries · 4–7× efficiency',
   },
   {
     slug: 'intel',
@@ -60,6 +68,22 @@ const WORKS = [
     statLabel: '27001 · AUTOMATED',
     title: 'SIQC',
     tagline: '12 workflows · 64 ISMS docs · AI audit assistant',
+  },
+  {
+    slug: 'triz',
+    kicker: 'TRIZ AI · Multi-Role Agent',
+    stat: '263',
+    statLabel: 'CONTRADICTION MATRIX',
+    title: 'triz-ai',
+    tagline: '40 principles · 39 parameters · RAG + agent flow',
+  },
+  {
+    slug: 'marketing',
+    kicker: 'Digital Marketing · Medical KOL × Solar Terms',
+    stat: '$2.19',
+    statLabel: 'AVG · CPL',
+    title: 'Marketing',
+    tagline: '4,634 qualified leads · 5 industries · 4–7× efficiency',
   },
 ];
 

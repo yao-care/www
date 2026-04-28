@@ -1,10 +1,10 @@
 ---
-import WorkLayout from '../../layouts/WorkLayout.astro';
-import WorkHero from '../../components/works/WorkHero.astro';
-import WorkCta from '../../components/works/WorkCta.astro';
-import { WORK_BY_SLUG } from '../../works.config';
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
 
-const work = WORK_BY_SLUG.siqc;
+const product = PRODUCT_BY_SLUG.siqc;
 
 const headlineStats = [
   { value: '12', unit: '', label: 'GitHub Actions Workflows' },
@@ -96,8 +96,8 @@ const techStack = [
   { kind: 'Runtime', items: ['Node.js', 'Shell scripts'] },
 ];
 ---
-<WorkLayout slug="siqc">
-  <WorkHero work={work}>
+<ProductLayout slug="siqc">
+  <ProductHero product={product}>
     <Fragment slot="hero-extras">
       <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
         {headlineStats.map((s) => (
@@ -111,7 +111,7 @@ const techStack = [
         ))}
       </div>
     </Fragment>
-  </WorkHero>
+  </ProductHero>
 
   <!-- Pain points & solution -->
   <section class="py-12 md:py-16">
@@ -253,9 +253,9 @@ const techStack = [
     </div>
   </section>
 
-  <WorkCta
-    work={work}
+  <ProductCta
+    product={product}
     headline="想要這套合規自動化？"
     description="不論您是準備 ISO 27001 認證、想擺脫人工維護 ISMS 的痛苦，或是需要為 AI 系統做合規對照 —— 用 LINE 私訊您的需求，我們可以協助評估與導入。"
   />
-</WorkLayout>
+</ProductLayout>

@@ -1,12 +1,9 @@
 ---
 import { SITE } from '../site.config';
-import { WORKS, LINE_PERSONAL, LINE_TEAM } from '../works.config';
+import { CATEGORIES, productsByCategory, LINE_TEAM } from '../products.config';
 
-const productLinks = [
-  { href: '/#product', label: '智慧醫療整合' },
-  { href: '/#twtxgnn', label: '老藥新用 AI' },
-  { href: '/cases', label: '驗證流程與實機案例' },
-];
+const medicalProducts = productsByCategory('medical');
+const aiProducts = productsByCategory('ai');
 const contactLinks = [
   { href: `mailto:${SITE.email}`, label: SITE.email },
   { href: SITE.lineLink, label: 'LINE：與工程師聯絡', external: true },
@@ -46,31 +43,46 @@ const year = new Date().getFullYear();
         </div>
       </div>
 
-      <!-- product / cases -->
-      <div class="md:col-span-3">
-        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">產品</p>
-        <ul class="space-y-3">
-          {productLinks.map((l) => (
-            <li>
-              <a href={l.href} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">{l.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- works -->
+      <!-- 智慧醫療 -->
       <div class="md:col-span-2">
-        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">作品</p>
+        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">智慧醫療</p>
         <ul class="space-y-3">
-          {WORKS.map((w) => (
+          {medicalProducts.map((p) => (
             <li>
-              <a href={`/works/${w.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
-                {w.ogTitle}
+              <a href={`/medical/${p.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+                {p.ogTitle}
               </a>
             </li>
           ))}
           <li>
-            <a href="/works" class="text-base font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+            <a href="/medical" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- AI 系統 -->
+      <div class="md:col-span-2">
+        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">AI 系統</p>
+        <ul class="space-y-3">
+          {aiProducts.map((p) => (
+            <li>
+              <a href={`/ai/${p.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+                {p.ogTitle}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="/ai" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 數位行銷 -->
+      <div class="md:col-span-1">
+        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">行銷</p>
+        <ul class="space-y-3">
+          <li>
+            <a href="/marketing" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">數位行銷服務</a>
           </li>
         </ul>
       </div>

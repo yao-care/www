@@ -1,10 +1,10 @@
 ---
-import WorkLayout from '../../layouts/WorkLayout.astro';
-import WorkHero from '../../components/works/WorkHero.astro';
-import WorkCta from '../../components/works/WorkCta.astro';
-import { WORK_BY_SLUG } from '../../works.config';
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
 
-const work = WORK_BY_SLUG.twtxgnn;
+const product = PRODUCT_BY_SLUG.txgnn;
 
 // 8 phases data
 const phases = [
@@ -141,8 +141,8 @@ const stats = [
   { value: '~28.6K', unit: '個', label: '證據包' },
 ];
 ---
-<WorkLayout slug="twtxgnn">
-  <WorkHero work={work}>
+<ProductLayout slug="txgnn">
+  <ProductHero product={product}>
     <Fragment slot="hero-extras">
       <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
         {stats.map((s) => (
@@ -167,7 +167,7 @@ const stats = [
         </a>
       </div>
     </Fragment>
-  </WorkHero>
+  </ProductHero>
 
   <!-- Intro / context -->
   <section class="py-12 md:py-16">
@@ -373,12 +373,12 @@ const stats = [
     </div>
   </section>
 
-  <WorkCta
-    work={work}
+  <ProductCta
+    product={product}
     headline="想討論技術合作？"
     description="老藥新用、TxGNN 模型在地化、EHR / FHIR 整合 — 任何技術討論都歡迎透過 LINE 私訊。"
   />
-</WorkLayout>
+</ProductLayout>
 
 <script>
   import * as d3 from 'd3';

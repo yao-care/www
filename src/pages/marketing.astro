@@ -1,10 +1,101 @@
 ---
-import WorkLayout from '../../layouts/WorkLayout.astro';
-import WorkHero from '../../components/works/WorkHero.astro';
-import WorkCta from '../../components/works/WorkCta.astro';
-import { WORK_BY_SLUG } from '../../works.config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import FooterLinks from '../components/FooterLinks.astro';
+import { LINE_TEAM, CATEGORY_BY_SLUG } from '../products.config';
+import { SITE } from '../site.config';
 
-const work = WORK_BY_SLUG.marketing;
+const category = CATEGORY_BY_SLUG.marketing;
+const pageTitle = '數位行銷 — 醫友 × 節氣 × 合規 · 藥提醒 yao.care';
+const pageDescription =
+  '與 GCM 預防醫學發展協會 900+ 醫療專業合作的整合行銷服務 — 從策略診斷、內容製作、KOL 操盤、廣告投放到法規合規一條龍。';
+const ctaHref = LINE_TEAM;
+
+// 5 環閉環：醫友節氣閉環的方法論
+const closedLoop = [
+  {
+    n: '01',
+    kicker: 'Strategy',
+    title: '策略診斷',
+    body: '社群現況、SWOT、競品定位、KPI 規劃 — 把品牌與市場的距離量化下來。',
+  },
+  {
+    n: '02',
+    kicker: 'Content',
+    title: '內容製作',
+    body: '高規格影片、Reels 短影音、靜態圖文、carousel — 一條完整的素材生產線。',
+  },
+  {
+    n: '03',
+    kicker: 'KOL',
+    title: '醫友操盤',
+    body: '與 GCM 預防醫學發展協會 900+ 醫療專業合作；用真實的專業背書取代品牌硬廣。',
+  },
+  {
+    n: '04',
+    kicker: 'Ads',
+    title: '廣告投放',
+    body: 'Meta / Google / LINE 三平台投放 + A/B 測試 + 受眾優化，導購與品牌曝光分軌操作。',
+  },
+  {
+    n: '05',
+    kicker: 'Compliance',
+    title: '法規合規',
+    body: '律師團隊把關酒類 / 食品 / 醫療法規，內容發布前合規審查 SOP，降低裁罰風險。',
+  },
+];
+
+// 4 類試作模板
+const trialTemplates = [
+  {
+    label: '產品導購型',
+    body: '醫友以專業視角拆解產品成分 / 用法 / 適用情境，搭配 ASMR 料理或試用畫面，UGC 挑戰賽放大互動。',
+  },
+  {
+    label: '節慶送禮型',
+    body: '醫友以「送禮指南」角度開箱禮盒，搭配長輩可轉發的養生圖卡 + Threads 話題串。',
+  },
+  {
+    label: '生活場景型',
+    body: '節氣調飲、居家料理、下班放鬆 — 把產品融入真實情境，30 秒 Reels + 食譜卡 + 討論串。',
+  },
+  {
+    label: '節氣餐桌型',
+    body: '醫友策劃完整一桌餐，串起品牌全產線（食品、調味、保健、酒類），展現品牌多元性。',
+  },
+];
+
+// 24 節氣方法論的 6 個代表性主題
+const solarTerms = [
+  { name: '夏至', date: '6/21', theme: '消暑沁涼' },
+  { name: '中秋', date: '9/22', theme: '送禮節慶' },
+  { name: '冬至', date: '12/21', theme: '進補暖身' },
+  { name: '春節', date: '2/3', theme: '年節送禮' },
+  { name: '清明', date: '4/4', theme: '祭祖追念' },
+  { name: '端午', date: '6/5', theme: '創意料理' },
+];
+
+// 危機處理 SOP — L1/L2/L3
+const crisisSop = [
+  {
+    level: 'L1',
+    label: '一般留言',
+    sla: '上班日每日一次',
+    body: '小編依 SOP 處理：正面感謝、提問回覆、負面同理。',
+  },
+  {
+    level: 'L2',
+    label: '客訴 / 負評',
+    sla: '2 小時內回應',
+    body: '初步回應 → 私訊溝通 → 通報客戶窗口 → PM 追蹤至結案 → 記入月報。',
+  },
+  {
+    level: 'L3',
+    label: '重大危機',
+    sla: '即時處理',
+    body: '下架爭議內容 → 緊急通報公關室 → 協助擬聲明稿 → 監測輿情 72 小時 → 事後檢討報告。',
+  },
+];
 
 // Top-level stats from the April 2026 campaign
 const headlineStats = [
@@ -104,25 +195,173 @@ const pricingTiers = [
   },
 ];
 ---
-<WorkLayout slug="marketing">
-  <WorkHero work={work}>
-    <Fragment slot="hero-extras">
-      <div class="mt-6 grid grid-cols-3 gap-3 md:gap-5">
-        {headlineStats.map((s) => (
-          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
-            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
-              {s.value}
-              {s.unit && <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>}
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Nav />
+  <main class="pt-20">
+    <!-- breadcrumb -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
+      <span class="mx-1.5">›</span>
+      <span class="text-[color:var(--color-ink)]">數位行銷</span>
+    </div>
+
+    <!-- hero -->
+    <section class="relative pt-10 pb-12 md:pt-14 md:pb-16 overflow-hidden bg-gradient-to-b from-orange-50/40 to-white">
+      <div class="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-orange-200/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 lg:px-6">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+          {category.kicker}
+        </p>
+        <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">
+          數位行銷
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+          醫友 × 節氣 × 合規 — 不靠硬廣的整合行銷閉環
+        </p>
+
+        <div class="mt-6 grid grid-cols-3 gap-3 md:gap-5">
+          {headlineStats.map((s) => (
+            <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+              <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+                {s.value}
+                {s.unit && <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>}
+              </div>
+              <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
             </div>
-            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          ))}
+        </div>
+        <div class="mt-3 text-xs text-[color:var(--color-ink-soft)]">
+          資料來源：2026.04.01 — 2026.04.28 Meta Ads Manager 後台匯出（去識別化）
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 環閉環 -->
+    <section class="py-14 md:py-20 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="text-center mb-10">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Closed-Loop Methodology</p>
+          <h2 class="section-title mt-2">5 環閉環方法論</h2>
+          <p class="section-subtitle">每一環都緊扣下一環，素材 → 醫友 → 投放 → 數據共用、結果可追蹤</p>
+        </div>
+        <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
+          {closedLoop.map((s) => (
+            <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+              <div class="flex items-baseline gap-2 mb-3">
+                <span class="text-2xl font-bold text-[color:var(--color-brand)] tabular-nums">{s.n}</span>
+                <span class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-ink-soft)]">{s.kicker}</span>
+              </div>
+              <h3 class="font-bold text-base text-[color:var(--color-ink)] mb-2">{s.title}</h3>
+              <p class="text-xs text-[color:var(--color-ink-soft)] leading-relaxed">{s.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 醫友資源 -->
+    <section class="py-14 md:py-20">
+      <div class="max-w-5xl mx-auto px-4 lg:px-6">
+        <div class="rounded-2xl bg-gradient-to-br from-[color:var(--color-brand)] to-[color:var(--color-brand-deep)] text-white p-8 md:p-12 shadow-md">
+          <p class="text-xs md:text-sm font-bold tracking-widest uppercase opacity-80 mb-3">醫友資源池</p>
+          <h2 class="text-2xl md:text-4xl font-bold leading-tight mb-5">
+            與 GCM 預防醫學發展協會合作 ——<br class="hidden md:inline" />
+            900+ 醫療專業人員的內容池
+          </h2>
+          <p class="text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">
+            該協會會員須具備國家醫師、營養師、藥師、護理師等醫療專業資格方可加入。
+            從中遴選具社群經營基礎（粉絲數 1,000+）的醫療專業人士擔任「醫友」，
+            內容兼具<strong class="text-amber-300">專業公信力</strong>與<strong class="text-amber-300">社群傳播力</strong>，
+            遠勝一般 KOL/KOC 的安全性與說服力。
+          </p>
+          <div class="mt-7 grid grid-cols-3 gap-4 max-w-2xl">
+            <div>
+              <div class="text-3xl md:text-4xl font-bold tabular-nums">900+</div>
+              <div class="text-xs opacity-80 mt-1">醫療專業會員</div>
+            </div>
+            <div>
+              <div class="text-3xl md:text-4xl font-bold tabular-nums">5+</div>
+              <div class="text-xs opacity-80 mt-1">專業類別</div>
+            </div>
+            <div>
+              <div class="text-3xl md:text-4xl font-bold tabular-nums">1K+</div>
+              <div class="text-xs opacity-80 mt-1">粉絲基礎門檻</div>
+            </div>
           </div>
-        ))}
+        </div>
       </div>
-      <div class="mt-3 text-xs text-[color:var(--color-ink-soft)]">
-        資料來源：2026.04.01 — 2026.04.28 Meta Ads Manager 後台匯出（去識別化）
+    </section>
+
+    <!-- 24 節氣 + 4 類試作 -->
+    <section class="py-14 md:py-20 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+          <!-- 24 節氣 -->
+          <div>
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Solar Terms × 24</p>
+            <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-3">節氣為內容週期</h2>
+            <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed mb-6">
+              24 節氣是台灣民眾熟悉的生活節奏，每 15 天一個節氣，自然形成 24 個內容週期。
+              節氣與飲食、養生緊密相關，產品配對邏輯成立、長輩傳播力強。
+            </p>
+            <div class="grid grid-cols-2 gap-3">
+              {solarTerms.map((t) => (
+                <div class="rounded-lg bg-white border border-neutral-200 px-4 py-3">
+                  <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)]">{t.name} · {t.date}</div>
+                  <div class="text-xs text-[color:var(--color-ink-soft)] mt-1">{t.theme}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <!-- 4 類試作 -->
+          <div>
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Content Templates</p>
+            <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-3">4 類試作模板</h2>
+            <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed mb-6">
+              針對不同產品類別與節慶情境，預先設計 4 種試作模板，加速內容生產、降低跨案複製成本。
+            </p>
+            <ul class="space-y-3">
+              {trialTemplates.map((t, i) => (
+                <li class="rounded-lg bg-white border border-neutral-200 p-4">
+                  <div class="flex items-baseline gap-3">
+                    <span class="text-lg font-bold text-[color:var(--color-brand)] tabular-nums shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                    <div class="flex-1">
+                      <div class="font-bold text-sm text-[color:var(--color-ink)]">{t.label}</div>
+                      <p class="text-xs text-[color:var(--color-ink-soft)] mt-1 leading-relaxed">{t.body}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-    </Fragment>
-  </WorkHero>
+    </section>
+
+    <!-- 合規 SOP -->
+    <section class="py-14 md:py-20">
+      <div class="max-w-5xl mx-auto px-4 lg:px-6">
+        <div class="text-center mb-10">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Compliance · Legal Review</p>
+          <h2 class="section-title mt-2">律師團隊合規審查機制</h2>
+          <p class="section-subtitle">酒類 / 食品 / 醫療廣告法規，內容發布前合規審查 SOP</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+          {crisisSop.map((s) => (
+            <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+              <div class="flex items-baseline gap-3 mb-3">
+                <span class="inline-flex items-center justify-center w-12 h-7 rounded-md bg-[color:var(--color-brand)] text-white text-sm font-bold">{s.level}</span>
+                <span class="text-sm font-medium text-[color:var(--color-ink)]">{s.label}</span>
+              </div>
+              <div class="text-xs font-medium tracking-wider uppercase text-[color:var(--color-brand)] mb-2">SLA · {s.sla}</div>
+              <p class="text-xs text-[color:var(--color-ink-soft)] leading-relaxed">{s.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
   <!-- Differentiator -->
   <section class="py-12 md:py-16">
@@ -282,7 +521,7 @@ const pricingTiers = [
             <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>每月成效報告 + 後續優化建議</li>
             <li class="flex gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>師級夥伴內容審核（醫療類產品適用）</li>
           </ul>
-          <a href={work.cta.href} target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand)] hover:underline">
+          <a href={ctaHref} target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand)] hover:underline">
             聊聊您的投放需求 →
           </a>
         </div>
@@ -343,7 +582,7 @@ const pricingTiers = [
                 {tier.body}
               </p>
               <a
-                href={work.cta.href}
+                href={ctaHref}
                 target="_blank"
                 rel="noopener"
                 class:list={[
@@ -362,12 +601,24 @@ const pricingTiers = [
     </div>
   </section>
 
-  <WorkCta
-    work={work}
-    headline="準備好讓行銷真正帶單了嗎？"
-    description="告訴我們您的產品類別與廣告目標，我們為您規劃投放策略 + 素材方案。最快 1 個工作天回覆。"
-  />
-</WorkLayout>
+    <!-- CTA -->
+    <section class="py-16 md:py-20 bg-gradient-to-b from-white to-orange-50/40">
+      <div class="max-w-3xl mx-auto px-4 lg:px-6 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-[color:var(--color-ink)]">
+          準備好讓行銷真正帶單了嗎？
+        </h2>
+        <p class="mt-4 text-[color:var(--color-ink-soft)] leading-relaxed">
+          告訴我們您的產品類別與廣告目標，我們為您規劃投放策略 + 素材方案。最快 1 個工作天回覆。
+        </p>
+        <a href={ctaHref} target="_blank" rel="noopener" class="mt-8 btn-line">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.74c0 4.32 3.55 7.94 8.35 8.62l1.06.15.13-.97-.07-.71c.08-.47-.31-.91-.78-.97l-.16-.02C5.83 16.27 3 13.81 3 10.74 3 6.48 7.03 3 12 3s9 3.48 9 7.74c0 4.26-4.03 7.74-9 7.74h-.5l-3.83 2.41a.5.5 0 0 1-.74-.55l.84-3.07A9.06 9.06 0 0 0 22 10.74C22 5.92 17.52 2 12 2z"/></svg>
+          聊聊您的行銷需求
+        </a>
+      </div>
+    </section>
+  </main>
+  <FooterLinks />
+</BaseLayout>
 
 <script>
   import * as d3 from 'd3';

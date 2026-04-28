@@ -1,0 +1,237 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
+
+const product = PRODUCT_BY_SLUG.huatuo;
+
+const headlineStats = [
+  { value: '128', unit: '條', label: '辨證規則 (八綱 16 + 臟腑 112)' },
+  { value: '215', unit: '', label: '症狀編碼 (按四診分類)' },
+  { value: '128', unit: '', label: '證型編碼 (含 ICD-11 TM 對應)' },
+  { value: '336', unit: '', label: '治則 + 方劑編碼' },
+];
+
+const layers = [
+  {
+    n: 'L1',
+    label: '四診收集',
+    title: '望 / 聞 / 問 / 切',
+    bullets: [
+      { kind: '望', body: '舌診拍照 — GPT-4o Vision 辨識舌質、舌苔、舌形、舌色' },
+      { kind: '聞', body: '語聲錄音 — GPT-4o Audio 分析音強、音調、咳喘、噯氣' },
+      { kind: '問', body: '對話引導收集症狀，老中醫人設「老夫」「小友」' },
+      { kind: '切', body: 'rPPG 指尖攝影測脈，含六部脈位（左右寸關尺）' },
+    ],
+  },
+  {
+    n: 'L2',
+    label: '混合引擎辨證',
+    title: '規則 × 0.6 + LLM × 0.4',
+    bullets: [
+      { kind: '八綱', body: '16 條表裡 / 寒熱 / 虛實 / 陰陽 規則' },
+      { kind: '臟腑', body: '112 條臟腑歸經規則' },
+      { kind: 'LLM', body: 'LLM 分析作為輔助、共同融合輸出' },
+      { kind: '矩陣', body: '48 筆症狀→證型加權映射' },
+    ],
+  },
+  {
+    n: 'L3',
+    label: 'RAG 處方',
+    title: '從向量庫匹配經方',
+    bullets: [
+      { kind: '方劑', body: '6,000 筆方劑 + 台灣基準方劑 200 方' },
+      { kind: '中藥', body: '中藥飲片 23,517 + TCMBank 9,192 藥材' },
+      { kind: '加減', body: '依辨證結果推薦方劑加減法' },
+      { kind: '禁忌', body: '提醒禁忌、配伍十八反、十九畏' },
+    ],
+  },
+];
+
+const codingFiles = [
+  { file: 'symptoms.json', code: 'Sx-{W/H/A/P}-xxx', count: '215', desc: '症狀編碼（按望聞問切分類）' },
+  { file: 'syndromes.json', code: 'Sd-{體系}-xxx', count: '128', desc: '證型編碼（含 ICD-11 TM 對應）' },
+  { file: 'treatments.json', code: 'Tx-{ZZ/FJ}-xxx', count: '336', desc: '治則 + 方劑編碼' },
+  { file: 'symptom-syndrome-matrix.json', code: '—', count: '48', desc: '症狀→證型加權映射' },
+];
+
+const vectors = [
+  { db: 'syndromes', use: 'L2 辨證', src: '醫案 3,500 筆、知識圖譜、SymMap 1,717 症狀' },
+  { db: 'formulas', use: 'L3 處方', src: '方劑 6,000 筆、台灣基準方劑 200 方' },
+  { db: 'herbs', use: 'L3 處方', src: '中藥飲片 23,517、TCMBank 9,192 藥材' },
+  { db: 'terminology', use: '全流程', src: 'TCM-MKG 術語 17,850+' },
+  { db: 'dialogues', use: 'L1 問診', src: 'ShenNong QA 對話 112K 筆' },
+  { db: 'acupoints', use: '擴充用', src: '穴位經絡知識' },
+];
+
+const fhirProfiles = [
+  { kind: 'Profile', name: 'Condition' },
+  { kind: 'Profile', name: 'Encounter' },
+  { kind: 'Profile', name: 'MedicationRequest' },
+  { kind: 'Profile', name: 'Observation' },
+  { kind: 'Profile', name: 'Procedure' },
+  { kind: 'Extension', name: '穴位' },
+  { kind: 'Extension', name: '方劑基底' },
+  { kind: 'Extension', name: '四診' },
+  { kind: 'Extension', name: '經絡' },
+  { kind: 'Extension', name: '炮製法' },
+  { kind: 'Extension', name: '證型' },
+];
+---
+<ProductLayout slug="huatuo">
+  <ProductHero product={product}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {headlineStats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              {s.unit && <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>}
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </Fragment>
+  </ProductHero>
+
+  <!-- Intro / 老夫人設 -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6">
+      <div class="rounded-2xl border border-orange-200 bg-orange-50/40 p-6 md:p-8">
+        <p class="text-base md:text-lg text-[color:var(--color-ink)] leading-relaxed">
+          AI 華佗的人設是一位
+          <strong class="text-[color:var(--color-brand)]">溫暖的老中醫</strong>，
+          自稱「老夫」、稱患者「小友」，偶爾用自然意象描述病機。
+          民眾以對話方式與華佗互動，系統模擬傳統四診流程，最終給出結構化的辨證分析與經方推薦。
+        </p>
+        <p class="mt-4 text-base md:text-lg text-[color:var(--color-ink)] leading-relaxed">
+          另設 <code class="text-sm bg-white px-2 py-0.5 rounded border border-orange-200">/clinician</code> 臨床工作站，
+          供中醫師輸入結構化四診表單（含六部脈位：左右寸關尺），
+          跳過對話直接送入 L2 辨證引擎 ——
+          <strong>CDSS（臨床決策支援系統）定位</strong>。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 三層架構 -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Three-Layer Architecture</p>
+        <h2 class="section-title mt-2">三層分析架構</h2>
+        <p class="section-subtitle">L1 四診收集 → L2 混合引擎辨證 → L3 RAG 處方推薦</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+        {layers.map((l) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-7 shadow-sm">
+            <div class="flex items-baseline gap-3 mb-3">
+              <span class="inline-flex items-center justify-center w-12 h-8 rounded-md bg-[color:var(--color-brand)] text-white text-sm font-bold">
+                {l.n}
+              </span>
+              <span class="text-xs font-medium tracking-widest uppercase text-[color:var(--color-ink-soft)]">{l.label}</span>
+            </div>
+            <h3 class="font-bold text-base md:text-lg mb-4">{l.title}</h3>
+            <ul class="space-y-2.5">
+              {l.bullets.map((b) => (
+                <li class="text-sm">
+                  <span class="inline-block w-12 text-xs font-bold text-[color:var(--color-brand)]">{b.kind}</span>
+                  <span class="text-[color:var(--color-ink-soft)]">{b.body}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Coding system -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Coding System</p>
+        <h2 class="section-title mt-2">自建中醫編碼體系</h2>
+        <p class="section-subtitle">四檔聯動，從症狀到方劑全程結構化</p>
+      </div>
+      <div class="rounded-2xl bg-white border border-neutral-200 overflow-hidden shadow-sm">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-neutral-50 border-b border-neutral-200 text-xs uppercase tracking-wider text-[color:var(--color-ink-soft)]">
+              <th class="text-left py-3 px-5 font-medium">檔案</th>
+              <th class="text-left py-3 px-5 font-medium">代碼</th>
+              <th class="text-right py-3 px-5 font-medium">項目數</th>
+              <th class="text-left py-3 px-5 font-medium">說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            {codingFiles.map((f, i) => (
+              <tr class:list={[i > 0 ? 'border-t border-neutral-100' : '']}>
+                <td class="py-3 px-5 font-mono text-xs">{f.file}</td>
+                <td class="py-3 px-5 font-mono text-xs text-[color:var(--color-brand)]">{f.code}</td>
+                <td class="py-3 px-5 text-right font-bold tabular-nums">{f.count}</td>
+                <td class="py-3 px-5 text-[color:var(--color-ink-soft)]">{f.desc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vector DB -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Vector Stores</p>
+        <h2 class="section-title mt-2">六組向量庫資料管線</h2>
+        <p class="section-subtitle">sources.yaml 定義 40 個資料源（23 啟用），分流到 6 組向量庫</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {vectors.map((v) => (
+          <div class="rounded-xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <div class="flex items-center gap-3 mb-2">
+              <code class="text-sm font-mono font-bold text-[color:var(--color-brand)]">{v.db}</code>
+              <span class="text-xs px-2 py-0.5 rounded bg-neutral-100 text-[color:var(--color-ink-soft)]">{v.use}</span>
+            </div>
+            <p class="text-xs text-[color:var(--color-ink-soft)] leading-relaxed">{v.src}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FHIR / TWCM -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">FHIR Interop</p>
+        <h2 class="section-title mt-2">TWCM Implementation Guide</h2>
+        <p class="section-subtitle">用 FSH 定義 5 Profile + 6 Extension，診斷結果可輸出為標準 FHIR R4 Bundle</p>
+      </div>
+      <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
+        <div class="flex flex-wrap gap-2">
+          {fhirProfiles.map((p) => (
+            <span class:list={[
+              'inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium border',
+              p.kind === 'Profile'
+                ? 'bg-orange-50 border-[color:var(--color-brand)]/30 text-[color:var(--color-brand)]'
+                : 'bg-blue-50 border-blue-300 text-blue-700',
+            ]}>
+              <span class="font-mono text-[10px] uppercase opacity-70">{p.kind}</span>
+              {p.name}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ProductCta
+    product={product}
+    headline="想體驗 AI 華佗，或客製給自家診所？"
+    description="患者可直接到 huatuo.ai.yao.care 對話體驗；中醫師工作站、診所客製、TWCM FHIR 整合請透過 LINE 私訊討論。"
+  />
+</ProductLayout>

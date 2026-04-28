@@ -1,25 +1,151 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import SmartHealthcare from '../components/SmartHealthcare.astro';
-import Advantages from '../components/Advantages.astro';
-import SixServices from '../components/SixServices.astro';
-import TxGNN from '../components/TxGNN.astro';
-import Works from '../components/Works.astro';
+import ProductCard from '../components/products/ProductCard.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import ContactMap from '../components/ContactMap.astro';
 import FooterLinks from '../components/FooterLinks.astro';
+import { CATEGORIES, productsByCategory } from '../products.config';
+import { SITE } from '../site.config';
+
+const medicalProducts = productsByCategory('medical');
+const aiProducts = productsByCategory('ai');
+const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
 ---
 <BaseLayout>
   <Nav />
   <main>
-    <Hero />
-    <SmartHealthcare />
-    <Advantages />
-    <SixServices />
-    <TxGNN />
-    <Works />
+    <!-- Hero — company-level intro -->
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-orange-50/40 to-white">
+      <div class="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-orange-200/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute top-40 right-0 w-96 h-96 rounded-full bg-orange-100/60 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="max-w-7xl mx-auto px-4 lg:px-6 relative">
+        <img
+          src="/assets/images/logoimage.png"
+          srcset="/assets/images/logoimage_2x.png 2x"
+          alt="藥提醒"
+          class="h-12 w-auto mb-6"
+          width="200" height="48"
+        />
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight max-w-4xl">
+          <span class="text-neutral-700">yao.care</span>
+          <span class="block mt-2">用 AI 把<span class="text-[color:var(--color-brand)]">硬問題</span>變成可重複的系統</span>
+        </h1>
+        <p class="mt-7 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+          從基層用藥提醒到中醫診斷推理、從產業情報到 ISO 合規、從醫友 KOL 到節氣行銷 ——
+          我們把 AI、自動化、醫療專業綁成三條線，每件作品都能持續產出價值。
+        </p>
+
+        <!-- 3 capability anchors -->
+        <div class="mt-10 grid grid-cols-3 gap-3 md:gap-5 max-w-3xl">
+          {CATEGORIES.map((c) => (
+            <a
+              href={c.href}
+              class="group rounded-xl bg-white/80 backdrop-blur border border-neutral-200 hover:border-[color:var(--color-brand)] hover:bg-white px-4 py-3 md:px-5 md:py-4 shadow-sm hover:shadow-md transition-all"
+            >
+              <div class="text-xs font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+                {c.kicker}
+              </div>
+              <div class="text-base md:text-lg font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors mt-0.5">
+                {c.label}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 智慧醫療 -->
+    <section class="py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+          <div>
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              Smart Healthcare
+            </p>
+            <h2 class="mt-2 text-3xl md:text-4xl font-bold">智慧醫療</h2>
+            <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] max-w-2xl leading-relaxed">
+              以病人為中心，從用藥提醒到診斷推理。對齊 ATC、SMART on FHIR、TWCM 等國際標準，與既有醫療系統互通。
+            </p>
+          </div>
+          <a href="/medical" class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline whitespace-nowrap">
+            瀏覽智慧醫療全部
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+          {medicalProducts.map((p) => <ProductCard product={p} variant="preview" />)}
+        </div>
+      </div>
+    </section>
+
+    <!-- AI 系統 -->
+    <section class="py-16 md:py-24 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+          <div>
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              AI Systems
+            </p>
+            <h2 class="mt-2 text-3xl md:text-4xl font-bold">AI 系統</h2>
+            <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] max-w-2xl leading-relaxed">
+              把專業領域裡老手才會的判斷，改寫成可重複、可監測、可改進的 AI 系統。情報、合規、創新方法 — 三條線都能持續跑。
+            </p>
+          </div>
+          <a href="/ai" class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline whitespace-nowrap">
+            瀏覽 AI 系統全部
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+          {aiProducts.map((p) => <ProductCard product={p} variant="preview" />)}
+        </div>
+      </div>
+    </section>
+
+    <!-- 數位行銷 -->
+    <section class="py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+          <div>
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              Digital Marketing
+            </p>
+            <h2 class="mt-2 text-3xl md:text-4xl font-bold">數位行銷</h2>
+            <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] max-w-2xl leading-relaxed">
+              {marketingCategory.tagline}。{marketingCategory.description}
+            </p>
+          </div>
+          <a href="/marketing" class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline whitespace-nowrap">
+            了解整合行銷服務
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <!-- 5 環閉環 preview -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+          {[
+            { kicker: 'Strategy', title: '策略診斷' },
+            { kicker: 'Content', title: '內容製作' },
+            { kicker: 'KOL', title: '醫友操盤' },
+            { kicker: 'Ads', title: '廣告投放' },
+            { kicker: 'Compliance', title: '法規合規' },
+          ].map((s, i) => (
+            <a href="/marketing" class="group rounded-xl border border-neutral-200 bg-white hover:border-[color:var(--color-brand)] p-4 md:p-5 transition-colors">
+              <div class="flex items-baseline gap-2 mb-2">
+                <span class="text-xl font-bold text-[color:var(--color-brand)] tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                <span class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-ink-soft)]">{s.kicker}</span>
+              </div>
+              <h3 class="font-bold text-sm text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors">
+                {s.title}
+              </h3>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <ContactCTA />
     <ContactMap />
   </main>

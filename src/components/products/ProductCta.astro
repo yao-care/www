@@ -1,22 +1,18 @@
 ---
-import type { Work } from '../../works.config';
+import type { Product } from '../../products.config';
 
 interface Props {
-  work: Work;
-  /** Optional override for the headline above the button */
+  product: Product;
   headline?: string;
-  /** Optional override for the supporting description */
   description?: string;
 }
 
-const { work, headline, description } = Astro.props;
+const { product, headline, description } = Astro.props;
 
-const defaultHeadline = '對這套有興趣？聊聊吧';
-const defaultDescription =
+const finalHeadline = headline ?? '對這套有興趣？聊聊吧';
+const finalDescription =
+  description ??
   '把您的需求或想法用 LINE 私訊給我們，最快 1 個工作天內回覆，可安排線上 demo 或評估。';
-
-const finalHeadline = headline ?? defaultHeadline;
-const finalDescription = description ?? defaultDescription;
 ---
 <section class="py-16 md:py-20 bg-gradient-to-b from-white to-orange-50/40">
   <div class="max-w-3xl mx-auto px-4 lg:px-6 text-center">
@@ -27,13 +23,13 @@ const finalDescription = description ?? defaultDescription;
       {finalDescription}
     </p>
     <a
-      href={work.cta.href}
+      href={product.cta.href}
       target="_blank"
       rel="noopener"
       class="mt-8 btn-line"
     >
       <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.74c0 4.32 3.55 7.94 8.35 8.62l1.06.15.13-.97-.07-.71c.08-.47-.31-.91-.78-.97l-.16-.02C5.83 16.27 3 13.81 3 10.74 3 6.48 7.03 3 12 3s9 3.48 9 7.74c0 4.26-4.03 7.74-9 7.74h-.5l-3.83 2.41a.5.5 0 0 1-.74-.55l.84-3.07A9.06 9.06 0 0 0 22 10.74C22 5.92 17.52 2 12 2z"/></svg>
-      {work.cta.label}
+      {product.cta.label}
     </a>
   </div>
 </section>

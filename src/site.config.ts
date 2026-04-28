@@ -16,9 +16,8 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { href: '/#product', label: '產品' },
-  { href: '/#twtxgnn', label: '老藥新用' },
-  { href: '/works', label: '作品' },
-  { href: '/cases', label: '案例' },
+  { href: '/medical', label: '智慧醫療' },
+  { href: '/ai', label: 'AI 系統' },
+  { href: '/marketing', label: '數位行銷' },
   { href: '/#contact', label: '聯絡' },
 ] as const;

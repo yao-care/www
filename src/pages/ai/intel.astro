@@ -1,10 +1,10 @@
 ---
-import WorkLayout from '../../layouts/WorkLayout.astro';
-import WorkHero from '../../components/works/WorkHero.astro';
-import WorkCta from '../../components/works/WorkCta.astro';
-import { WORK_BY_SLUG } from '../../works.config';
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
 
-const work = WORK_BY_SLUG.intel;
+const product = PRODUCT_BY_SLUG.intel;
 
 const headlineStats = [
   { value: '23', unit: '條', label: '產業供應鏈' },
@@ -69,8 +69,8 @@ const features = [
   { icon: '📊', title: '看圖說故事', body: '股價走勢上疊加庫存/AR 變化，一眼看出基本面與股價的連動' },
 ];
 ---
-<WorkLayout slug="intel">
-  <WorkHero work={work}>
+<ProductLayout slug="intel">
+  <ProductHero product={product}>
     <Fragment slot="hero-extras">
       <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
         {headlineStats.map((s) => (
@@ -87,7 +87,7 @@ const features = [
         以下以「產業供應鏈情報追蹤系統」為參考實例，呈現我們的資訊搜集自動化能力
       </div>
     </Fragment>
-  </WorkHero>
+  </ProductHero>
 
   <!-- Intro -->
   <section class="py-12 md:py-16">
@@ -252,12 +252,12 @@ const features = [
     </div>
   </section>
 
-  <WorkCta
-    work={work}
+  <ProductCta
+    product={product}
     headline="想用一套自動化系統解決你的資訊問題？"
     description="不論是投資情報、政策監控、競品追蹤，還是任何需要每天自動產出報告的場景 —— 用 LINE 私訊您的需求，最快 1 個工作天回覆。"
   />
-</WorkLayout>
+</ProductLayout>
 
 <script>
   import * as d3 from 'd3';
