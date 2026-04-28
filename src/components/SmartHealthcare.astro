@@ -1,0 +1,128 @@
+---
+const flows = [
+  { key: '人流', icon: '/assets/images/icon1.png' },
+  { key: '物流', icon: '/assets/images/icon2.png' },
+  { key: '金流', icon: '/assets/images/icon3.png' },
+  { key: '資訊流', icon: '/assets/images/icon4.png' },
+];
+---
+<section id="about" class="py-20 md:py-28 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <h2 class="text-3xl md:text-4xl font-bold">
+        什麼是<span class="text-[color:var(--color-brand)]">智慧醫療</span>?
+      </h2>
+      <h3 class="mt-4 text-xl md:text-2xl text-neutral-700 leading-relaxed">
+        智慧醫療的關鍵在資訊流、人流、物流、金流的整合及運用
+      </h3>
+      <p class="mt-6 text-[color:var(--color-ink-soft)] leading-relaxed">
+        以<b class="text-[color:var(--color-ink)]">病人</b>為中心，透過資訊技術串連
+        <b class="text-[color:var(--color-ink)]">醫療院所、長照機構、醫護人員、病人及家屬</b>，
+        提升各層面的效率；並藉由資料庫的累積，作為後續治療的參考。
+      </p>
+
+      <ul class="mt-8 grid grid-cols-2 gap-4">
+        {flows.map((f) => (
+          <li class="flex items-center gap-3 p-4 rounded-lg border border-neutral-200 bg-white shadow-sm hover:shadow-md transition">
+            <img src={f.icon} alt={f.key} class="w-12 h-12 object-contain" width="48" height="48" />
+            <span class="font-bold text-lg text-[color:var(--color-brand)]">{f.key}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="relative">
+      <!-- D3 force-directed graph: 病人 at center, 4 flows as orbiting nodes -->
+      <div id="smart-healthcare-viz" class="w-full aspect-square max-w-md mx-auto" aria-label="智慧醫療四流整合示意圖"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import * as d3 from 'd3';
+
+  type Node = d3.SimulationNodeDatum & { id: string; group: 'center' | 'flow'; r: number };
+  type Link = d3.SimulationLinkDatum<Node>;
+
+  const init = () => {
+    const container = document.getElementById('smart-healthcare-viz');
+    if (!container) return;
+    const size = container.clientWidth || 400;
+    const W = size, H = size;
+
+    const nodes: Node[] = [
+      { id: '病人', group: 'center', r: 38 },
+      { id: '人流', group: 'flow', r: 30 },
+      { id: '物流', group: 'flow', r: 30 },
+      { id: '金流', group: 'flow', r: 30 },
+      { id: '資訊流', group: 'flow', r: 30 },
+    ];
+    const links: Link[] = nodes.slice(1).map((n) => ({ source: '病人', target: n.id }));
+
+    const svg = d3
+      .select(container)
+      .append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('width', '100%')
+      .attr('height', '100%');
+
+    const link = svg
+      .append('g')
+      .attr('stroke', '#c6461c')
+      .attr('stroke-opacity', 0.35)
+      .attr('stroke-width', 2)
+      .selectAll('line')
+      .data(links)
+      .join('line');
+
+    const node = svg
+      .append('g')
+      .selectAll('g')
+      .data(nodes)
+      .join('g');
+
+    node
+      .append('circle')
+      .attr('r', (d) => d.r)
+      .attr('fill', (d) => (d.group === 'center' ? '#c6461c' : '#fff'))
+      .attr('stroke', '#c6461c')
+      .attr('stroke-width', 2);
+
+    node
+      .append('text')
+      .text((d) => d.id)
+      .attr('text-anchor', 'middle')
+      .attr('dy', '0.35em')
+      .attr('font-size', (d) => (d.group === 'center' ? 18 : 14))
+      .attr('font-weight', 600)
+      .attr('fill', (d) => (d.group === 'center' ? '#fff' : '#c6461c'));
+
+    const sim = d3
+      .forceSimulation<Node>(nodes)
+      .force('link', d3.forceLink<Node, Link>(links).id((d) => d.id).distance(120).strength(0.6))
+      .force('charge', d3.forceManyBody().strength(-400))
+      .force('center', d3.forceCenter(W / 2, H / 2))
+      .force('collide', d3.forceCollide<Node>().radius((d) => d.r + 6))
+      .on('tick', () => {
+        link
+          .attr('x1', (d) => (d.source as Node).x!)
+          .attr('y1', (d) => (d.source as Node).y!)
+          .attr('x2', (d) => (d.target as Node).x!)
+          .attr('y2', (d) => (d.target as Node).y!);
+        node.attr('transform', (d) => `translate(${d.x},${d.y})`);
+      });
+
+    const drag = d3
+      .drag<SVGGElement, Node>()
+      .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
+      .on('end', (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; });
+    node.call(drag as never);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

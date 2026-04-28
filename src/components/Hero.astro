@@ -1,0 +1,47 @@
+---
+import { SITE } from '../site.config';
+---
+<section class="relative pt-32 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-gradient-to-b from-orange-50/40 to-white">
+  <!-- decorative blobs -->
+  <div class="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-orange-200/40 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute top-40 right-0 w-96 h-96 rounded-full bg-orange-100/60 blur-3xl" aria-hidden="true"></div>
+
+  <div class="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-2 gap-10 items-center relative">
+    <div>
+      <img
+        src="/assets/images/logoimage.png"
+        srcset="/assets/images/logoimage_2x.png 2x"
+        alt="藥提醒"
+        class="h-12 w-auto mb-6"
+        width="200" height="48"
+      />
+      <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+        <span class="text-neutral-700">yaocare</span>
+        <span class="block text-[color:var(--color-brand)] mt-2">藥提醒</span>
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-[color:var(--color-ink-soft)]">
+        用最貼近患者的方式提醒用藥
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={SITE.lineLink} target="_blank" rel="noopener" class="btn-line">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.74c0 4.32 3.55 7.94 8.35 8.62l1.06.15.13-.97-.07-.71c.08-.47-.31-.91-.78-.97l-.16-.02C5.83 16.27 3 13.81 3 10.74 3 6.48 7.03 3 12 3s9 3.48 9 7.74c0 4.26-4.03 7.74-9 7.74h-.5l-3.83 2.41a.5.5 0 0 1-.74-.55l.84-3.07A9.06 9.06 0 0 0 22 10.74C22 5.92 17.52 2 12 2z"/></svg>
+          與工程師聯絡
+        </a>
+        <a href={SITE.pptxLink} download class="btn-brand">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          簡報下載
+        </a>
+      </div>
+    </div>
+
+    <div class="relative">
+      <img
+        src="/assets/images/mobile.png"
+        alt="藥提醒手機畫面"
+        class="mx-auto max-w-sm md:max-w-md w-full h-auto drop-shadow-2xl"
+        width="500" height="700"
+      />
+    </div>
+  </div>
+</section>

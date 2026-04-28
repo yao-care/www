@@ -1,0 +1,28 @@
+---
+const services = [
+  { icon: '/assets/images/icon/01.png', text: '整合健保及醫院醫療資訊系統，無須 Keyin 藥品處方。' },
+  { icon: '/assets/images/icon/02.png', text: '以藥品外觀圖片提醒用藥，減少吃錯藥品風險。' },
+  { icon: '/assets/images/icon/03.png', text: '串聯藥品基本資料，病患可直接查詢藥品使用方式。' },
+  { icon: '/assets/images/icon/04.png', text: '埋入 LINE、Telegram 通訊軟體，無需特別下載應用程式，增加病人使用黏著度。' },
+  { icon: '/assets/images/icon/05.png', text: '直接拍照辨識血糖、血壓計，無須特殊相容連線裝置。' },
+  { icon: '/assets/images/icon/06.png', text: '鏈結病患居家醫療資訊，提供醫療人員後續回診評估。' },
+];
+---
+<section id="sixbig" class="py-20 md:py-28">
+  <div class="max-w-7xl mx-auto px-4 lg:px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">
+      可輕易整合出<span class="text-[color:var(--color-brand)]">優質服務</span>
+    </h2>
+    <p class="text-center text-[color:var(--color-brand)] tracking-wider mb-12">
+      六大服務特點．．．．．．．．
+    </p>
+    <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {services.map((s) => (
+        <li class="flex gap-4 p-6 rounded-xl bg-white border border-neutral-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition">
+          <img src={s.icon} alt="" class="w-12 h-12 object-contain shrink-0" width="48" height="48" />
+          <p class="text-[color:var(--color-ink)] leading-relaxed">{s.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

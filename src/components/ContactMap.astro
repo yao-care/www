@@ -1,0 +1,34 @@
+---
+import { SITE } from '../site.config';
+---
+<section id="contact" class="bg-white">
+  <div class="grid md:grid-cols-2">
+    <div class="p-10 md:p-16 flex items-center bg-neutral-50">
+      <ul class="space-y-6 max-w-md">
+        <li class="flex items-start gap-4">
+          <span class="shrink-0 w-11 h-11 rounded-full bg-[color:var(--color-brand)]/10 text-[color:var(--color-brand)] flex items-center justify-center">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <a href={SITE.mapsLink} target="_blank" rel="noopener" class="hover:text-[color:var(--color-brand)]">
+            {SITE.address}
+          </a>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="shrink-0 w-11 h-11 rounded-full bg-[color:var(--color-brand)]/10 text-[color:var(--color-brand)] flex items-center justify-center">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          <a href={`mailto:${SITE.email}`} class="hover:text-[color:var(--color-brand)]">{SITE.email}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="min-h-80">
+      <iframe
+        title="公司地圖 - 台中市西區台灣大道二段239號13樓"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.5398930581973!2d120.66470721536771!3d24.1527913792009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693d7632034fab%3A0x275a7c36193c13fc!2zNDAz5Y-w5Lit5biC6KW_5Y2A5Y-w54Gj5aSn6YGT5LqM5q61MjM56JmfMTM!5e0!3m2!1szh-TW!2stw!4v1597804171767!5m2!1szh-TW!2stw"
+        loading="lazy"
+        class="w-full h-full min-h-80 border-0"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</section>

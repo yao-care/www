@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #c6461c;
+  --color-brand-soft: #e85a2e;
+  --color-brand-deep: #9c3414;
+  --color-ink: #222;
+  --color-ink-soft: #555;
+  --color-line: #06c755;
+
+  --font-sans: "Poppins", "Noto Sans TC", "Microsoft JhengHei", "微軟正黑體", system-ui, sans-serif;
+  --font-display: "Poppins", "Noto Sans TC", system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); color: var(--color-ink); }
+
+.section-title {
+  @apply text-3xl md:text-4xl font-bold text-center mb-3 text-[color:var(--color-brand)];
+}
+.section-subtitle {
+  @apply text-center text-[color:var(--color-ink-soft)] mb-12;
+}
+.btn-line {
+  @apply inline-flex items-center gap-2 px-6 py-3 rounded-md text-white font-medium shadow-sm transition;
+  background: var(--color-line);
+}
+.btn-line:hover { filter: brightness(0.92); }
+.btn-brand {
+  @apply inline-flex items-center gap-2 px-6 py-3 rounded-md text-white font-medium shadow-sm transition;
+  background: var(--color-brand);
+}
+.btn-brand:hover { background: var(--color-brand-deep); }

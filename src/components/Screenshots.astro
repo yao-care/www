@@ -1,0 +1,117 @@
+---
+const groups = [
+  { id: 'medication-reminder', title: '用藥提醒案例', images: [1, 2, 3, 4] },
+  { id: 'refill-prescription', title: '慢箋領藥範例', images: [5, 6, 7, 8] },
+  { id: 'health-education', title: '檢驗衛教流程案例', images: [9, 10, 11, 12] },
+  { id: 'smart-ward-call', title: '病房智慧呼叫系統', images: [13, 14, 15, 16] },
+];
+---
+<section id="screenshots" class="py-20 md:py-28 bg-neutral-50 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 lg:px-6 space-y-20">
+    {groups.map((g) => (
+      <div id={g.id}>
+        <h3 class="text-2xl md:text-3xl font-bold text-center text-[color:var(--color-brand)] underline underline-offset-8 decoration-2 mb-10">
+          {g.title}
+        </h3>
+        <div
+          class="screenshot-carousel relative mx-auto max-w-5xl"
+          data-carousel
+          aria-roledescription="carousel"
+          aria-label={g.title}
+        >
+          <div class="overflow-hidden rounded-xl">
+            <ul class="flex transition-transform duration-500 ease-out" data-track>
+              {g.images.map((n) => (
+                <li class="shrink-0 grow-0 basis-full sm:basis-1/2 lg:basis-1/3 px-3" aria-roledescription="slide">
+                  <img
+                    src={`/assets/images/app/${n}.jpg`}
+                    alt={`${g.title} ${n}`}
+                    class="w-full h-auto rounded-lg shadow-md bg-white"
+                    loading="lazy"
+                    width="400" height="700"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <button
+            type="button"
+            class="absolute -left-2 sm:-left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-neutral-200 flex items-center justify-center text-[color:var(--color-brand)] hover:bg-orange-50"
+            data-prev aria-label="上一張"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button
+            type="button"
+            class="absolute -right-2 sm:-right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-neutral-200 flex items-center justify-center text-[color:var(--color-brand)] hover:bg-orange-50"
+            data-next aria-label="下一張"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+
+          <div class="flex justify-center gap-2 mt-4" data-dots></div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const setupCarousel = (root: HTMLElement) => {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const slides = track?.querySelectorAll<HTMLElement>(':scope > li') ?? [];
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
+    const next = root.querySelector<HTMLButtonElement>('[data-next]');
+    const dotsBox = root.querySelector<HTMLElement>('[data-dots]');
+    if (!track || !slides.length || !dotsBox) return;
+
+    let index = 0;
+    let perView = 1;
+    const computePerView = () => {
+      const w = window.innerWidth;
+      perView = w >= 1024 ? 3 : w >= 640 ? 2 : 1;
+    };
+
+    const renderDots = () => {
+      const pages = Math.max(1, slides.length - perView + 1);
+      dotsBox.innerHTML = '';
+      for (let i = 0; i < pages; i++) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'w-2.5 h-2.5 rounded-full transition-colors';
+        dot.setAttribute('aria-label', `第 ${i + 1} 頁`);
+        dot.addEventListener('click', () => go(i));
+        dotsBox.appendChild(dot);
+      }
+      paint();
+    };
+
+    const paint = () => {
+      track.style.transform = `translateX(-${index * (100 / perView)}%)`;
+      dotsBox.querySelectorAll('button').forEach((d, i) => {
+        d.className = `w-2.5 h-2.5 rounded-full transition-colors ${i === index ? 'bg-[color:var(--color-brand)]' : 'bg-neutral-300'}`;
+      });
+    };
+
+    const go = (i: number) => {
+      const max = slides.length - perView;
+      index = Math.max(0, Math.min(i, max));
+      paint();
+    };
+
+    prev?.addEventListener('click', () => go(index - 1));
+    next?.addEventListener('click', () => go(index + 1));
+
+    let resizeT: number | undefined;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeT);
+      resizeT = window.setTimeout(() => { computePerView(); renderDots(); }, 120);
+    });
+
+    computePerView();
+    renderDots();
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(setupCarousel);
+</script>
