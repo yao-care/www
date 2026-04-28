@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import FooterLinks from '../../components/FooterLinks.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
+import CapabilityCloud from '../../components/products/CapabilityCloud.astro';
 import { CATEGORY_BY_SLUG, productsByCategory } from '../../products.config';
 
 const category = CATEGORY_BY_SLUG.ai;
@@ -10,7 +11,24 @@ const products = productsByCategory('ai');
 
 const pageTitle = 'AI 系統 · 藥提醒 yao.care';
 const pageDescription =
-  '把專業知識變成自動化、可重複跑的 AI 系統 — 情報追蹤、ISO 27001 合規、TRIZ 創新方法庫。RAG + 多角色 Agent 把專業領域決策結構化。';
+  '把專業知識變成自動化、可重複跑的 AI 系統 — 情報追蹤、ISO/ESG/醫院評鑑、TRIZ 創新方法庫。RAG + 多角色 Agent 把專業領域決策結構化。';
+
+const aiCapabilities = [
+  { label: 'AI 系統設計與落地', en: 'AI System Implementation' },
+  { label: 'AI 導入企業流程', en: 'AI for Business Process' },
+  { label: 'AI Agent 設計與應用', en: 'AI Agent Design' },
+  { label: '企業知識庫 AI 化', en: 'AI-powered Knowledge Base' },
+  { label: '知識結構化與知識工程', en: 'Knowledge Engineering' },
+  { label: '工作流程設計與自動化', en: 'Workflow Automation' },
+  { label: '多來源資料整合', en: 'Data Integration / Fusion' },
+  { label: '圖譜推理 / 關聯分析', en: 'Graph-based AI / Knowledge Graph' },
+  { label: 'ISO / ESG / GRC 合規系統設計', en: 'GRC System Design' },
+  { label: '稽核與評鑑流程 AI 化', en: 'Audit Automation' },
+  { label: '複雜系統產品化', en: 'Productizing Complex Systems' },
+  { label: '系統化思維與決策建模', en: 'Systems Thinking / Decision Modeling' },
+  { label: '複雜議題拆解與結構化表達', en: 'Structured Communication' },
+  { label: 'AI 教育與學習系統設計', en: 'AI in Education / EdTech' },
+];
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
   <Nav />
@@ -51,6 +69,14 @@ const pageDescription =
         </div>
       </div>
     </section>
+
+    <!-- capability cloud -->
+    <CapabilityCloud
+      kicker="AI System Capabilities"
+      title="我們在 AI 系統能做的事"
+      description="從 AI Agent 設計、企業知識庫 AI 化，到稽核 / 評鑑流程自動化、教育學習系統 — 每一條都跑過真實案例。"
+      capabilities={aiCapabilities}
+    />
 
     <!-- philosophy -->
     <section class="py-14 md:py-20 bg-neutral-50">

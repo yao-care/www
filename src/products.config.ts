@@ -69,8 +69,10 @@ export type Product = {
   ogStatLabel: string;
   cardKicker: string;
   cardBullets: readonly string[];
-  /** 子網域 / 外部入口（有的話） */
+  /** 子網域 / 外部 demo 入口（有的話） */
   externalUrl?: string;
+  /** GitHub 開源 repo（有的話） */
+  repoUrl?: string;
   cta: { label: string; href: string };
 };
 
@@ -98,17 +100,17 @@ export const PRODUCTS: readonly Product[] = [
     slug: 'huatuo',
     category: 'medical',
     title: 'AI 華佗',
-    tagline: '中醫問診 AI · 四診合參 × 辨證論治',
+    tagline: '可驗證的中醫問診 AI — 規則 + 證據 + FHIR 三道驗證',
     description:
-      '面向民眾的中醫問診 AI 系統，模擬望聞問切流程；三層架構：L1 四診收集（GPT-4o Vision 舌診、Audio 聞診、rPPG 指尖測脈）、L2 規則 128 條 × 0.6 + LLM × 0.4 混合辨證、L3 RAG 經方推薦。/clinician 工作站供中醫師作為 CDSS 使用。',
+      '可驗證醫療推理系統：每一步辨證都能追溯到規則、證據與標準碼。三層架構：L1 四診收集（GPT-4o Vision 舌診、Audio 聞診、rPPG 指尖測脈）、L2 規則 128 條 × 0.6 + LLM × 0.4 混合辨證、L3 RAG 經方推薦。/clinician 工作站供中醫師作為 CDSS 使用，輸出 FHIR R4 Bundle、對應 ICD-11 TM。',
     ogTitle: 'AI 華佗',
     ogStat: '128',
-    ogStatLabel: 'TCM RULES · L1·L2·L3',
-    cardKicker: '中醫 AI · CDSS · TWCM IG',
+    ogStatLabel: 'VERIFIABLE TCM AI',
+    cardKicker: '可驗證醫療推理 · CDSS · TWCM',
     cardBullets: [
-      '128 條規則 + LLM 混合辨證',
-      'GPT-4o Vision/Audio + rPPG',
-      'TWCM FSH 5 Profile → FHIR R4',
+      '規則 128 + LLM 混合辨證，可審查',
+      'GPT-4o Vision/Audio + rPPG 指尖測脈',
+      'TWCM FSH 5 Profile → FHIR R4 + ICD-11 TM',
     ],
     externalUrl: 'https://huatuo.ai.yao.care/',
     cta: { label: '到 huatuo.ai.yao.care 體驗', href: 'https://huatuo.ai.yao.care/' },
@@ -117,19 +119,20 @@ export const PRODUCTS: readonly Product[] = [
     slug: 'txgnn',
     category: 'medical',
     title: 'TxGNN 老藥新用',
-    tagline: '知識圖譜 × 圖神經網路，30 國 FDA 藥品自動化預測',
+    tagline: '知識圖譜 × 圖神經網路，30+ 國 FDA 藥品自動化預測 · 開源',
     description:
-      '基於哈佛 TxGNN 模型，覆蓋 30 國 FDA 藥品，整合 PubMed、ClinicalTrials 證據，產出 16,700 + 藥物頁面與 FHIR 資源，與 Epic、Cerner 等 EHR 系統整合提供臨床決策支援。已上架 SMART on FHIR Gallery。',
+      '基於哈佛 TxGNN 模型，覆蓋 30+ 國 FDA 藥品，整合 PubMed、ClinicalTrials 證據，產出 16,700+ 藥物頁面與 FHIR 資源，與 Epic、Cerner 等 EHR 系統整合提供臨床決策支援。已上架 SMART on FHIR Gallery，原始碼在 GitHub 開源。',
     ogTitle: 'TxGNN',
-    ogStat: '30',
-    ogStatLabel: 'COUNTRIES',
-    cardKicker: '醫療 AI · 國際曝光',
+    ogStat: '30+',
+    ogStatLabel: 'COUNTRIES · OPEN SOURCE',
+    cardKicker: '醫療 AI · 開源 · 國際上架',
     cardBullets: [
-      '30 國 × 9 Phase 自動化',
-      '3.1M DL 預測 / 16.7K 藥物頁',
-      'SMART on FHIR Gallery 上架',
+      '30+ 國 × 9 Phase 自動化',
+      '142K+ AI 候選 / 16.7K 藥物頁',
+      'SMART on FHIR Gallery + GitHub 開源',
     ],
     externalUrl: 'https://twtxgnn.yao.care/',
+    repoUrl: 'https://github.com/yao-care/TwTxGNN',
     cta: { label: '討論技術合作', href: LINE_PERSONAL },
   },
   // ─── AI 系統 ────────────────────────────────────────
@@ -154,18 +157,18 @@ export const PRODUCTS: readonly Product[] = [
   {
     slug: 'siqc',
     category: 'ai',
-    title: 'SIQC ISO 27001 合規系統',
-    tagline: 'AI 驅動的安全掃描、文件管理、稽核包交付',
+    title: 'SIQC 稽核 / 評鑑 AI 系統',
+    tagline: 'AI 驅動的合規稽核、ESG 評鑑、醫院評鑑文件交付平台',
     description:
-      '以 GitHub 為核心的 ISO 27001 合規自動化系統，12 個 Actions workflow 串成一條管線：從 SAST、SBOM、CVE 到 64 份 ISMS 文件自動修復，再到離線稽核助理交付。完整對照 ISO 27001:2022 / SOC 2 / OWASP ASVS / OWASP LLM Top 10。',
+      '以 GitHub 為核心的稽核 / 評鑑自動化系統，12 個 Actions workflow 串成一條管線：從 SAST、SBOM、CVE 到 64+ 份 ISMS 文件自動修復，再到離線稽核助理交付。框架可延伸至 ISO 27001/9001/14001、ESG（GRI/TCFD/SASB）、醫院評鑑（醫策會/JCI）等多種稽核情境。',
     ogTitle: 'SIQC',
-    ogStat: 'ISO',
-    ogStatLabel: '27001 · AUTOMATION',
-    cardKicker: '合規 × 自動化',
+    ogStat: 'AUDIT',
+    ogStatLabel: 'ISO · ESG · 醫院評鑑',
+    cardKicker: '稽核 × 評鑑 × 自動化',
     cardBullets: [
-      '13 條掃描管線 / 64 份 ISMS 文件',
-      '每月稽核包自動發行',
-      'AI 稽核助理離線可用',
+      '13 條掃描管線 / 64+ 份 ISMS 文件',
+      'ISO / ESG / 醫院評鑑通用框架',
+      'AI 稽核助理離線可用、稽核包自動發行',
     ],
     cta: { label: '想要這套？聊聊', href: LINE_PERSONAL },
   },

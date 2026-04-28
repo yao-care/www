@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import FooterLinks from '../../components/FooterLinks.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
+import CapabilityCloud from '../../components/products/CapabilityCloud.astro';
 import { CATEGORY_BY_SLUG, productsByCategory } from '../../products.config';
 
 const category = CATEGORY_BY_SLUG.medical;
@@ -11,6 +12,14 @@ const products = productsByCategory('medical');
 const pageTitle = '智慧醫療 · 藥提醒 yao.care';
 const pageDescription =
   '從基層用藥提醒到醫療 AI — 藥提醒（LINE/Telegram）、AI 華佗（中醫問診）、TxGNN（30 國老藥新用 AI）一條龍對接 ATC 編碼與 SMART on FHIR 互通協定。';
+
+const medicalCapabilities = [
+  { label: '醫療 AI 系統整合', en: 'Healthcare AI Integration' },
+  { label: 'FHIR R4 / SMART on FHIR 應用開發', en: 'FHIR R4 / SMART on FHIR' },
+  { label: '臨床決策支援系統', en: 'Clinical Decision Support' },
+  { label: '醫療資料標準化與互通', en: 'Healthcare Interoperability' },
+  { label: '證據導向 / 可解釋 AI', en: 'Verifiable / Explainable AI' },
+];
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
   <Nav />
@@ -51,6 +60,14 @@ const pageDescription =
         </div>
       </div>
     </section>
+
+    <!-- capability cloud -->
+    <CapabilityCloud
+      kicker="Healthcare AI Capabilities"
+      title="我們在智慧醫療能做的事"
+      description="從基層用藥到 EHR 整合、從證據導向 AI 到可解釋推理，每一層都對齊國際醫療資訊標準。"
+      capabilities={medicalCapabilities}
+    />
 
     <!-- philosophy -->
     <section class="py-14 md:py-20 bg-neutral-50">

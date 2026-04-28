@@ -116,6 +116,43 @@ const fhirProfiles = [
     </div>
   </section>
 
+  <!-- 為什麼可驗證 -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-white to-orange-50/30">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Verifiable Medical Reasoning</p>
+        <h2 class="section-title mt-2">為什麼是可驗證的醫療推理？</h2>
+        <p class="section-subtitle">LLM 黑箱在醫療場景說不清；華佗每一步辨證都能追溯到規則、證據與標準碼</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-7 shadow-sm">
+          <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">01 · Rules</div>
+          <h3 class="font-bold text-base md:text-lg mb-3">規則明確 · 可審查</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+            128 條八綱 + 臟腑規則寫在 syndromes.json 裡，每筆規則可被中醫師逐條檢視、修正、加權。
+            LLM 只是輔助（×0.4 權重），不是決策者。
+          </p>
+        </div>
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-7 shadow-sm">
+          <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">02 · Evidence</div>
+          <h3 class="font-bold text-base md:text-lg mb-3">證據追溯 · 每步可解釋</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+            每個辨證結論都記錄完整推理路徑：哪些症狀觸發了哪些規則、哪一筆 RAG 檢索到的醫案/方劑佐證了結果。
+            診斷不是一個答案，是一條可驗證的鏈。
+          </p>
+        </div>
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-7 shadow-sm">
+          <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">03 · Standards</div>
+          <h3 class="font-bold text-base md:text-lg mb-3">標準碼輸出 · 臨床可採信</h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+            證型對應 ICD-11 TM 章節、診斷打包成 FHIR R4 Bundle，
+            和 EHR / 健保系統互通；不是一個玩具 demo，是符合臨床資訊標準的可整合系統。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 三層架構 -->
   <section class="py-14 md:py-20 bg-neutral-50">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
