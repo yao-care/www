@@ -43,11 +43,32 @@
   --color-line: #06c755;
 
   /* ──────────────────────────────────────────────────────────
-     SURFACES — warm tone, L ≈ 0.90–0.97 (matches brand hue).
+     NEUTRAL RAMP — warm tone (hue ≈ 25), overrides Tailwind's
+     cool defaults. Existing `bg-neutral-*` / `border-neutral-*`
+     usages pick up the warm palette automatically.
      ────────────────────────────────────────────────────────── */
-  --color-bg-base: #faf6f3;     /* page (warm L≈0.96) */
-  --color-bg-surface: #f1ebe6;  /* cards (warm L≈0.93) */
-  --color-bg-overlay: #e6ddd5;  /* table heads (warm L≈0.89) */
+  --color-neutral-50:  #f3ede7;  /* alt section background */
+  --color-neutral-100: #ebe3da;  /* tags, table head, progress track */
+  --color-neutral-200: #d8cec3;  /* default border */
+  --color-neutral-300: #c2b6aa;  /* emphasis border */
+  --color-neutral-400: #968a7d;  /* muted text */
+  --color-neutral-500: #756a5e;
+  --color-neutral-600: #5a5147;
+  --color-neutral-700: #423a32;
+  --color-neutral-800: #2a221c;
+  --color-neutral-900: #1a130e;
+
+  /* Brand-tinted ramp (replaces Tailwind's amber-leaning orange-*) */
+  --color-orange-50:  #fdf2eb;
+  --color-orange-100: #fbe0d2;
+  --color-orange-200: #f6c0a4;
+
+  /* ──────────────────────────────────────────────────────────
+     SURFACES — semantic aliases over the neutral ramp.
+     ────────────────────────────────────────────────────────── */
+  --color-bg-base:    #faf6f3;             /* page (warm L≈0.96) */
+  --color-bg-surface: var(--color-neutral-50);
+  --color-bg-overlay: var(--color-neutral-100);
 
   /* ──────────────────────────────────────────────────────────
      TEXT — warm slate, L ≈ 0.20–0.62. WCAG AA on bg-base.
@@ -59,7 +80,7 @@
   /* ──────────────────────────────────────────────────────────
      BORDERS
      ────────────────────────────────────────────────────────── */
-  --color-border-subtle: #d8d0c7;
+  --color-border-subtle: var(--color-neutral-200);
 
   /* ──────────────────────────────────────────────────────────
      SEVERITY / STATUS — WCAG AA 4.5:1+ on bg-base.
