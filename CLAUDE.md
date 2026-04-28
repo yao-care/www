@@ -14,24 +14,49 @@
 | NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
 
-## § 重要事實
+## § 改版 SOP（最常用）
 
-### Build → 上線流程
+從乾淨狀態開始改版的標準流程：
+
 ```bash
-npm run build      # 產生 dist/
-# 立即生效，nginx 直接從 dist/ 唯讀讀取，無需重啟容器
-curl -sI https://www.yao.care/ | head -3
+cd $WWW_SITE_DIR
+
+# 0. 確認狀態乾淨、在 main、與遠端同步
+git status               # 應該是 clean
+git pull                 # 拉同事的更新（如果有）
+
+# 1. （可選）開分支
+git checkout -b feature/<topic>
+
+# 2. 本機即時預覽（HMR，不影響線上）
+npm run dev              # http://localhost:4321
+# 編輯 src/components/*.astro 或 src/pages/index.astro
+# 改完後 Ctrl+C 結束 dev server
+
+# 3. 產生正式 build → 上線
+npm run build            # 產出 dist/，nginx 立即讀到（無需重啟容器）
+curl -sI https://www.yao.care/ | head -3   # 驗證 200
+
+# 4. Commit + push
+git add -A
+git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
+    commit -m "..."
+git push                 # main 直推，或 push -u origin <branch> + PR
 ```
 
-> nginx 容器掛載點是 `$WWW_SITE_DIR/dist`（不是 repo root）。
-> 編輯 `src/` 後**一定要 build**，否則改動不會反映到網站上。
+> ⚠ **編輯 `src/` 之後沒跑 `npm run build`，網站不會更新**。nginx 唯讀掛載的是 `dist/`，不是 `src/`。
+>
+> ⚠ **不要手動編輯 `dist/`**。它是 build 產物（gitignored），下次 build 會被覆蓋。
+>
+> ⚠ **沒設定 git global identity**。每個 commit 都要帶 `-c user.email=... -c user.name=...`，或在這個 repo 設 `git config user.email/name`。
 
-### 不要動 `dist/`
-`dist/` 是 build 產物，已在 `.gitignore`。手動編輯 `dist/` 會在下次 `npm run build` 時被覆蓋。
-要改外觀或內容，去動 `src/`。
+## § 重要事實
 
-### LFS 注意
-46MB 簡報 `public/藥提醒Line民眾服務.ppsx` 透過 Git LFS 管理。clone 後若沒看到實檔，跑 `git lfs pull`。
+### nginx 掛載點
+`$PLATFORM_DIR/docker-compose.yml` line 38 把 `$WWW_SITE_DIR/dist` 掛進 NPM 容器（唯讀）。改 mount 路徑要 `cd $PLATFORM_DIR && docker compose up -d npm` 重建容器。平時改 `src/` + build **不需動容器**。
+
+### LFS（簡報檔）
+46MB 的 `public/藥提醒Line民眾服務.ppsx` 透過 Git LFS 管理。clone 後若沒看到實檔，跑 `git lfs pull`。`.gitattributes` 已設定 `*.ppsx` 走 LFS。
 
 ## § 檔案結構
 
