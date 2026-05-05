@@ -1,11 +1,11 @@
 export const SITE = {
   name: '藥提醒 yao.care',
   url: 'https://www.yao.care',
-  title: '藥提醒 yao.care — 用最貼近患者的方式提醒用藥',
+  title: '藥提醒 yao.care — 用 AI 把硬問題變成可重複的系統',
   description:
-    '藥提醒以病人為中心，依循藥品使用標準碼與 ATC 編碼，透過 LINE、Telegram 等通訊軟體提供用藥提醒，協助藥師追蹤服藥成效。整合健保與醫院資訊系統，涵蓋智慧醫療、老藥新用驗證等服務。',
+    '從基層用藥提醒、可驗證中醫問診 AI、老藥新用知識圖譜，到產業情報自動化、ISO/ESG/醫院評鑑稽核、TRIZ 創新方法庫與整合行銷 — 智慧醫療、AI 系統、數位行銷三條業務線都能持續產出價值。',
   keywords:
-    '藥提醒,智慧醫療,用藥提醒,LINE用藥提醒,老藥新用,健保藥物,藥師,ATC編碼,服藥追蹤,居家醫療,通訊軟體,TxGNN',
+    '藥提醒,智慧醫療,AI 華佗,中醫 AI,TxGNN,老藥新用,SMART on FHIR,ATC 編碼,LINE 用藥提醒,情報自動化,GitHub Actions,ISO 27001,ESG,醫院評鑑,SIQC,TRIZ,RAG,AI Agent,知識工程,整合行銷,KOL,GCM',
   ogImage: '/assets/images/og/home.png',
   email: 'service@yao.care',
   address: '台中市西區台灣大道二段239號13樓 (遠東金融商業大樓)',
@@ -16,6 +16,7 @@ export const SITE = {
 } as const;
 
 export const NAV = [
+  { href: '/', label: '首頁' },
   { href: '/medical', label: '智慧醫療' },
   { href: '/ai', label: 'AI 系統' },
   { href: '/marketing', label: '數位行銷' },

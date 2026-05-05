@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import FooterLinks from '../../components/FooterLinks.astro';
+import ContactMap from '../../components/ContactMap.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
 import CapabilityCloud from '../../components/products/CapabilityCloud.astro';
 import { CATEGORY_BY_SLUG, productsByCategory } from '../../products.config';
@@ -21,7 +22,7 @@ const medicalCapabilities = [
   { label: '證據導向 / 可解釋 AI', en: 'Verifiable / Explainable AI' },
 ];
 ---
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/yaocare.png">
   <Nav />
   <main class="pt-20">
     <!-- breadcrumb -->
@@ -82,6 +83,8 @@ const medicalCapabilities = [
         </p>
       </div>
     </section>
+
+    <ContactMap />
   </main>
   <FooterLinks />
 </BaseLayout>

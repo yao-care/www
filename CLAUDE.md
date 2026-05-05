@@ -5,7 +5,7 @@
 | 項目 | 值 |
 |------|-----|
 | 網址 | https://www.yao.care / https://yao.care |
-| 類型 | 純靜態網站（單頁式 Landing Page） |
+| 類型 | 純靜態網站（公司級多產品 hub：智慧醫療 / AI 系統 / 數位行銷） |
 | 主機目錄 | `$WWW_SITE_DIR/`（即本目錄） |
 | 部署方式 | NPM 容器掛載 `dist/` 唯讀 → nginx 直接提供 |
 | 版本控制 | Git → https://github.com/yao-care/www（private） |
@@ -66,29 +66,48 @@ $WWW_SITE_DIR/
 ├── tsconfig.json
 ├── package.json
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
-│   ├── assets/images/         ← 所有圖片（路徑保留 /assets/images/...）
+│   ├── assets/images/         ← 所有圖片
+│   │   └── og/                ← 分產品 OG 圖（home/yaocare/huatuo/txgnn/intel/siqc/triz/marketing.png）
 │   ├── contents/              ← BMI/BP/GLU-AC 衛教圖
 │   ├── robots.txt
 │   └── 藥提醒Line民眾服務.ppsx ← LFS 管理
 ├── src/
-│   ├── site.config.ts         ← 全站設定（網址、聯絡、導覽列等）
+│   ├── site.config.ts         ← 全站設定（公司名/title/description/keywords/NAV）
+│   ├── products.config.ts     ← 三大分類 + 6 個產品定義（單一 source of truth）
 │   ├── styles/global.css      ← Tailwind 入口 + 主題變數 + 共用 class
-│   ├── layouts/BaseLayout.astro  ← <html> + meta + JSON-LD + 全域樣式
-│   ├── pages/index.astro      ← 首頁組合（按順序匯入元件）
+│   ├── layouts/
+│   │   ├── BaseLayout.astro   ← <html> + meta + JSON-LD（Organization）+ favicon
+│   │   │                         可接 ogImage / ogType / jsonLd props
+│   │   └── ProductLayout.astro ← 產品詳情頁專用：含 Nav / breadcrumb / ContactMap / FooterLinks
+│   ├── pages/
+│   │   ├── index.astro        ← 公司 Hero + 三分類預覽 + ContactCTA + ContactMap
+│   │   ├── medical/
+│   │   │   ├── index.astro    ← 智慧醫療 hub（產品卡 + capability cloud + ContactMap）
+│   │   │   ├── yaocare.astro  ← 藥提醒（保留舊版 D3 force graph、六大服務、carousel）
+│   │   │   ├── huatuo.astro   ← AI 華佗（中醫問診 AI）
+│   │   │   └── txgnn.astro    ← TxGNN 老藥新用
+│   │   ├── ai/
+│   │   │   ├── index.astro    ← AI 系統 hub
+│   │   │   ├── intel.astro    ← 情報自動化系統
+│   │   │   ├── siqc.astro     ← 稽核 / 評鑑 AI 系統
+│   │   │   └── triz.astro     ← TRIZ 創新方法 AI 知識庫
+│   │   └── marketing.astro    ← 數位行銷整頁（5 環閉環 + D3 圖表）
 │   └── components/
 │       ├── Nav.astro          ← 固定頂部導覽 + 漢堡選單
-│       ├── Hero.astro         ← Hero 區（LINE / 簡報下載按鈕）
-│       ├── SmartHealthcare.astro  ← #about（D3 force graph）
-│       ├── Advantages.astro   ← #feature（醫院 7 項潛在優勢）
-│       ├── SixServices.astro  ← #sixbig（六大服務特點）
-│       ├── TxGNN.astro        ← #twtxgnn（D3 計數動畫）
-│       ├── Verification.astro ← #blog（驗證流程圖）
-│       ├── Screenshots.astro  ← #screenshots（4 組自製 carousel）
-│       ├── ContactCTA.astro   ← #cta（LINE 加好友）
-│       ├── ContactMap.astro   ← #contact（地址 + Google Maps）
-│       └── FooterLinks.astro  ← LINE/Telegram 資源 + 回頂部 + Copyright
+│       ├── ContactCTA.astro   ← #cta（LINE 加好友 — 仍在 yaocare.astro 用）
+│       ├── ContactMap.astro   ← #contact（地址 + Google Maps；幾乎所有頁底都會放）
+│       ├── FooterLinks.astro  ← 全站 footer：四欄連結（醫療/AI/行銷/聯絡）+ 回頂部
+│       ├── products/
+│       │   ├── ProductCard.astro      ← 三大分類 hub + 首頁預覽共用的卡片
+│       │   ├── ProductHero.astro      ← 產品詳情頁 hero
+│       │   ├── ProductCta.astro       ← 產品詳情頁底部 LINE CTA
+│       │   └── CapabilityCloud.astro  ← hub 頁的能力雲標籤
+│       └── (yaocare 專屬，仍只在 medical/yaocare.astro 引用)
+│           SmartHealthcare / Advantages / SixServices / Verification / Screenshots
 └── dist/                      ← build 產物（gitignored，nginx mount 點）
 ```
+
+> 改文案優先順序：先看 `src/products.config.ts`（產品標題、描述、bullets、CTA 都在這） → 再看對應頁面 `src/pages/<category>/<slug>.astro` → 全站共用字串看 `src/site.config.ts`。
 
 ## § 常見任務
 

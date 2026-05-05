@@ -4,6 +4,7 @@ import { SITE } from '../site.config';
 import { PRODUCT_BY_SLUG, CATEGORY_BY_SLUG, type Product } from '../products.config';
 import Nav from '../components/Nav.astro';
 import FooterLinks from '../components/FooterLinks.astro';
+import ContactMap from '../components/ContactMap.astro';
 
 interface Props {
   slug: Product['slug'];
@@ -35,7 +36,7 @@ const jsonLd = {
 };
 ---
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="zh-TW">
   <head>
     <meta charset="utf-8" />
     <title>{pageTitle}</title>
@@ -45,7 +46,8 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="藥提醒" />
+    <meta property="og:site_name" content="藥提醒 yao.care" />
+    <meta property="og:locale" content="zh_TW" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
@@ -55,7 +57,9 @@ const jsonLd = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={ogImage} />
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/images/favicon.png" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body class="bg-white text-[color:var(--color-ink)] antialiased">
@@ -82,6 +86,8 @@ const jsonLd = {
           回 {category.label}
         </a>
       </div>
+
+      <ContactMap />
     </main>
     <FooterLinks />
   </body>

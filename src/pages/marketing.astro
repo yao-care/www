@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import FooterLinks from '../components/FooterLinks.astro';
+import ContactMap from '../components/ContactMap.astro';
 import { LINE_TEAM, CATEGORY_BY_SLUG } from '../products.config';
 import { SITE } from '../site.config';
 
@@ -195,7 +196,7 @@ const pricingTiers = [
   },
 ];
 ---
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/marketing.png">
   <Nav />
   <main class="pt-20">
     <!-- breadcrumb -->
@@ -616,6 +617,8 @@ const pricingTiers = [
         </a>
       </div>
     </section>
+
+    <ContactMap />
   </main>
   <FooterLinks />
 </BaseLayout>
