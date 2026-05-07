@@ -126,32 +126,50 @@ async function sleep(ms: number) {
 
 const rssParser = new Parser({
   timeout: 20_000,
-  headers: { 'User-Agent': 'yao.care-news-bot/1.0' },
+  headers: {
+    // 用真實瀏覽器 UA，避免被當 bot 擋
+    'User-Agent':
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept-Language': 'zh-TW,zh;q=0.9,en;q=0.8',
+  },
 });
 
+/** Google News 偶爾會 429/503 限流，重試 3 次（5s, 15s, 45s backoff） */
 async function fetchOneQuery(query: string): Promise<RawItem[]> {
   const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant`;
-  try {
-    const feed = await rssParser.parseURL(url);
-    const items = (feed.items ?? [])
-      .map((it) => ({
-        title: it.title?.trim() ?? '',
-        link: it.link?.trim() ?? '',
-        pubDate: it.pubDate ?? it.isoDate ?? new Date().toISOString(),
-        source:
-          typeof it.creator === 'string'
-            ? it.creator
-            : (it as any).source?.['#text'] ?? (it as any).source ?? 'Google News',
-        snippet: stripHtml((it.content ?? it.contentSnippet ?? '').toString()),
-      }))
-      .filter((it) => it.title && it.link);
-    return items
-      .sort((a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf())
-      .slice(0, PER_QUERY_LIMIT);
-  } catch (e: any) {
-    log(`  ⚠ RSS query "${query}" 失敗：${e?.message ?? e}`);
-    return [];
+  const backoffs = [5_000, 15_000, 45_000];
+  for (let attempt = 0; attempt < backoffs.length + 1; attempt++) {
+    try {
+      const feed = await rssParser.parseURL(url);
+      const items = (feed.items ?? [])
+        .map((it) => ({
+          title: it.title?.trim() ?? '',
+          link: it.link?.trim() ?? '',
+          pubDate: it.pubDate ?? it.isoDate ?? new Date().toISOString(),
+          source:
+            typeof it.creator === 'string'
+              ? it.creator
+              : (it as any).source?.['#text'] ?? (it as any).source ?? 'Google News',
+          snippet: stripHtml((it.content ?? it.contentSnippet ?? '').toString()),
+        }))
+        .filter((it) => it.title && it.link);
+      return items
+        .sort((a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf())
+        .slice(0, PER_QUERY_LIMIT);
+    } catch (e: any) {
+      const msg = e?.message ?? String(e);
+      const transient = /Status code (429|5\d\d)/.test(msg) || /timeout/i.test(msg);
+      if (transient && attempt < backoffs.length) {
+        const wait = backoffs[attempt];
+        log(`  ⚠ RSS "${query}" 暫時失敗（${msg}），${wait / 1000}s 後重試`);
+        await sleep(wait);
+        continue;
+      }
+      log(`  ⚠ RSS query "${query}" 失敗：${msg}`);
+      return [];
+    }
   }
+  return [];
 }
 
 function stripHtml(s: string): string {
