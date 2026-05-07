@@ -79,25 +79,31 @@ const NAMED_ENTITY_PATTERNS = [
 ];
 
 // R1 — 「具體數字」(designResponse only)
-// 抓任何不在 proofPoints 出現的具體數字 (排除年份 2020-2099 與月份)
+// 抓「具有單位的具體數字」（純編號 #1、(#1)、proofPoint #1 這些引用標記不算）
+// 純粹 「1、2、3」 沒單位的數字也不算（避免誤殺「兩到三層」這類描述）
 function checkSpecificNumbers(text, proofText) {
-  // 取出所有數字 token
-  const numberPattern = /\d+(?:[,.]?\d+)*\s*(?:%|％|倍|位|人|名|家|間|筆|則|篇|個|億|萬|千|公|噸|公里|公尺|分鐘|小時|天|週|個月|年|歲|床)?/g;
-  const matches = Array.from(text.matchAll(numberPattern)).map((m) => m[0]);
+  // 先把 proofPoint 引用標記從文中拿掉，避免誤判
+  const cleaned = text
+    .replace(/\(?proofPoint\s*#?\d+\)?/gi, '')
+    .replace(/\(#\d+\)/g, '')
+    .replace(/[，,、]\s*#\d+/g, '');
+
+  // 必須有「單位」才算具體數字（純數字無單位太常出現在比喻、列舉，誤殺率高）
+  const numberWithUnitPattern =
+    /\d+(?:[,.]\d+)*\s*(?:%|％|倍|位|人|名|家|間|筆|則|篇|個|億|萬|千|百|公[斤里尺克頃]|噸|分鐘|小時|天|週|個月|月|年|歲|床|床位|床數|億元|萬元|台|套|站|門|科|床|支|劑|錠|次|回|層樓|度|歐元|美元|日圓)/g;
+  const matches = Array.from(cleaned.matchAll(numberWithUnitPattern)).map((m) => m[0]);
   const violations = [];
   for (const m of matches) {
-    // 過濾日期 / 年份
     const num = parseFloat(m.replace(/[^\d.]/g, ''));
     if (Number.isNaN(num)) continue;
-    if (num >= 2020 && num <= 2099 && /年|^\d{4}$/.test(m)) continue;
+    if (num >= 2020 && num <= 2099 && /年/.test(m)) continue;
     if (num >= 1 && num <= 12 && /月/.test(m)) continue;
     if (num >= 1 && num <= 31 && /日/.test(m)) continue;
-    // 是否在 proofPoints 出現
     if (!proofText.includes(m) && !proofText.replace(/\s/g, '').includes(m.replace(/\s/g, ''))) {
       violations.push({
         rule: 'R1',
         evidence: `具體數字「${m}」未在 proofPoints 白名單中`,
-        fix: '改寫為結構性敘事，移除具體數字或改為描述性敘述',
+        fix: '改為描述性敘述（「大幅」「明顯」），或刪除這個數字',
       });
     }
   }

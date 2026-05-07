@@ -242,15 +242,37 @@ function parseClaudeOutput(stdout: string): any {
   }
   let inner = wrapper.result;
   if (typeof inner !== 'string') return inner;
-  // strip markdown code fences
-  inner = inner
-    .replace(/^\s*```(?:json)?\s*/m, '')
-    .replace(/```\s*$/m, '')
-    .trim();
+  // 嘗試直接 parse；失敗就退回截取第一個 {...} 區塊
+  inner = inner.replace(/^\s*```(?:json)?\s*/m, '').replace(/```\s*$/m, '').trim();
   try {
     return JSON.parse(inner);
-  } catch (e: any) {
-    throw new Error(`Claude inner JSON parse fail: ${inner.slice(0, 300)}`);
+  } catch {
+    // 退路：抽出第一個 { 到對應 } 的 JSON
+    const start = inner.indexOf('{');
+    if (start < 0) throw new Error(`Claude inner JSON parse fail (no '{'): ${inner.slice(0, 300)}`);
+    let depth = 0;
+    let inString = false;
+    let escape = false;
+    for (let i = start; i < inner.length; i++) {
+      const c = inner[i];
+      if (escape) { escape = false; continue; }
+      if (c === '\\') { escape = true; continue; }
+      if (c === '"') { inString = !inString; continue; }
+      if (inString) continue;
+      if (c === '{') depth++;
+      else if (c === '}') {
+        depth--;
+        if (depth === 0) {
+          const candidate = inner.slice(start, i + 1);
+          try {
+            return JSON.parse(candidate);
+          } catch (e: any) {
+            throw new Error(`Claude inner JSON parse fail: ${candidate.slice(0, 300)}`);
+          }
+        }
+      }
+    }
+    throw new Error(`Claude inner JSON unterminated: ${inner.slice(0, 300)}`);
   }
 }
 
@@ -556,6 +578,24 @@ async function main() {
     pruneOld(t);
   }
 
+  // 真實寫入分配（不是 picked，是真正成功落地的）
+  const writtenByTarget = new Map<NewsTargetSlug, number>();
+  for (const p of picked) {
+    // pickedDist - droppedDist 不易算，這裡簡單從 stats.dropReasons 推算
+    writtenByTarget.set(p.target.slug, (writtenByTarget.get(p.target.slug) ?? 0));
+  }
+  // 重算：寫入 = picked - dropped per target
+  const droppedByTarget = new Map<NewsTargetSlug, number>();
+  for (const r of stats.dropReasons) {
+    const slug = r.split(':')[0] as NewsTargetSlug;
+    droppedByTarget.set(slug, (droppedByTarget.get(slug) ?? 0) + 1);
+  }
+  for (const t of targets) {
+    const picked = distribution.get(t.slug) ?? 0;
+    const dropped = droppedByTarget.get(t.slug) ?? 0;
+    writtenByTarget.set(t.slug, picked - dropped);
+  }
+
   log(`\n══════ 每日報告 ══════`);
   log(`  fetched:     ${stats.fetched}`);
   log(`  unique:      ${stats.unique}`);
@@ -563,9 +603,11 @@ async function main() {
   log(`  picked:      ${picked.length} (cap=${totalCap})`);
   log(`  written:     ${stats.written}`);
   log(`  dropped:     ${stats.dropped}`);
-  log(`  分配：`);
+  log(`  分配（picked → written）：`);
   for (const t of targets) {
-    log(`    ${t.slug.padEnd(10)} ${distribution.get(t.slug) ?? 0} 篇`);
+    const p = distribution.get(t.slug) ?? 0;
+    const w = writtenByTarget.get(t.slug) ?? 0;
+    log(`    ${t.slug.padEnd(10)} ${p} → ${w} 篇`);
   }
   if (stats.dropReasons.length > 0) {
     log(`  drop 原因：`);
