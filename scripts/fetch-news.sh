@@ -15,6 +15,10 @@ fi
 
 cd $WWW_SITE_DIR
 
+# 若 caller 是 Claude Code session，子 claude CLI 會被擋（nested session）
+# cron 沒有這變數，但手動觸發時要清掉
+unset CLAUDECODE CLAUDE_CODE_ENTRYPOINT CLAUDE_CODE_SSE_PORT
+
 LOG=/var/log/yaocare-news.log
 {
   echo ""
