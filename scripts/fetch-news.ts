@@ -75,7 +75,7 @@ const PER_QUERY_LIMIT = 12;
 /** 送進 filter LLM 的最大 candidate 數 */
 const FILTER_BATCH_SIZE = 25;
 /** 每 target 最多寫幾篇（filter 通過再寫，超過上限的丟掉） */
-const MAX_WRITE_PER_TARGET = 5;
+const MAX_WRITE_PER_TARGET = 3;
 
 // ─── 型別 ───────────────────────────────────────────
 
