@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "比照醫院! 護理機構評鑑延長至6 年今年合格回溯適用 - MSN",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiggRBVV95cUxPS1NzaHFlRVB1VXh1UDIwQmJSMTlBZUJYYWw0dmNkcklMbWctM2FiUHVhZ3I4czlCVWE2SEpiY25NZDJKTGprMkxZeU5oZXpON29WYktISzAtRk9KQ25TMTh4dUVPSnhCV2RvZkFOYUN3VmN1a1hLUmlYMWV4RWo1d0FQbVpyb3JtWG1JeW1IRm1tV1g1dXV2NEIxTVNGbHpRMFNNbVVxeTFuUVlhbl9zQ29fUTBBWFlBaVBjbGxIN01KY3hFM1pzSjJxWGUtX2JVd3V5YUFWcGNleGYzSWVOTUJHYVI5YnJBUkdjYUJxYURsMjBQMUUzX0tlUzd4bTZXazJwRm1ET2E1S2dTVG5MMXJEemkyc19hY2o3bzZxTmwyR1pyUTNPV3lUa2pDdkNOdHQ3TDVIak5ublhOLS1BNWYxcVVsMGozRE5IaUo1ZEVVMjhfQm1fUm5zME00Ymh1NDY5bGNOQkJvNzdvaE9vd2pCM256VUFkeklNaWMyTnJJOGpPTnZucnp5Y2I1VXFxWmV0X1psTUk3VzhZZ3RRVmtHdTRPYmJib0tpMmR3Szl3MDFZTVhxQTE0WTllUi0tV3d4WS13UEtQRk92YkNORjhfdUczZmNNQ1NRYlV2ZVpCQWVPM1lhcG91V3JZc1ZfMnU1TjRmY2tmQ0poNWFfWkNn?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-04T12:03:29.000Z",
+  "fetchedAt": "2026-05-07T12:30:11.769Z",
+  "newsBrief": "衛福部宣布護理機構評鑑週期由三年延長至六年，比照醫院評鑑標準辦理，且今年度通過評鑑者可回溯適用新制。此舉意在減輕機構反覆備審的行政負擔，但也使文件完整性與持續合規追蹤更為關鍵。",
+  "issueAnalysis": "評鑑週期延長，表面上給了機構更多喘息空間，實質上卻拉長了文件版控與自我稽核的責任區間。過去三年一輪時，機構往往在評鑑前密集衝刺；六年制下，若缺乏系統性的持續合規機制，文件老化、條文對應脫鉤等問題將在週期末段集中爆發。對中小型機構而言，如何讓稽核準備從「衝刺模式」轉為「常態維運」，是政策調整後真正需要面對的管理挑戰。",
+  "designResponse": "評鑑週期拉長後，合規能力的核心不再是週期性衝刺，而是能否持續維護文件與條文的對應關係。以 64 份 ISMS 文件框架結構化管理稽核素材，每次版本異動均保持可追蹤 (proofPoint #2)；安全監控層面透過每 15 分鐘輪詢 OSV API，Critical 問題即時告警 (proofPoint #4)，無需等到評鑑前才回溯掃描。稽核包以版本快照形式封裝交付 (proofPoint #5)，確保任一時間點的合規狀態皆可重現，將六年週期的合規軌跡轉為可查可驗的常態輸出。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 2
+}

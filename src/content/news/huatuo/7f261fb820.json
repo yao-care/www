@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "【生策評論】從黑盒子到實證：AI可解釋性突破，台灣生醫如何從「護國」走向「救命」？ - 全球醫療採購網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQQlhtemFCN1hjYmd1cHJkQ3VlX2dxblhncGEtbEVwbDZMeDk3RWJBYW8yVjVMMzlBVFRpaTc5WTJPa1BqNGppNnk0cHE4RXg5ZjN2akVTaWpzbTJldkFYNkpTZ21JNEFiTnd5Um1UbDE0dEtlcjdZOVZiN2hiV1lmU3J6a3Z6dw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-20T07:00:00.000Z",
+  "fetchedAt": "2026-05-07T12:35:31.014Z",
+  "newsBrief": "台灣生醫 AI 進入臨床的核心障礙在於「可解釋性」：黑盒子模型能給出預測，卻無法讓臨床人員追溯推論依據，AI 因此仍停在展示層，難以成為實質醫療工具。",
+  "issueAnalysis": "醫療 AI 可解釋性困境源於 LLM 推理天生不透明。在中醫場景，四診資訊高度非結構化、辨證邏輯涉及多層規則，若由 LLM 直接生成辨證意見，臨床人員無法逐步審核，也難以在糾紛時追溯問責；缺乏可解釋結構的輸出亦難以對接西醫資訊系統或通過法規審查，使 AI 輔助中醫在制度上仍停於概念。",
+  "designResponse": "面對可解釋性的核心挑戰，系統設計從架構層選擇「可審查性優先」。辨證環節以結構化規則為主幹：128 條八綱與臟腑辨證規則明文寫入設定檔，可被臨床人員逐條對照驗核 (#1)；LLM 以規則 ×0.6、LLM ×0.4 的混合加權補足語義彈性，確保規則紀律不因語言模型的開放性鬆動 (#2)。每個辨證結論同時對應 ICD-11 TM 章節並輸出 FHIR R4 Bundle，讓辨證結果以標準格式流通，使每一推論節點都能被質疑與驗證 (#4)。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": false,
+  "criticPasses": 3
+}
