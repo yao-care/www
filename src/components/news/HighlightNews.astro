@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import { SHOW_HIGHLIGHT } from '../../news.config';
+import NewsCard from './NewsCard.astro';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit = SHOW_HIGHLIGHT } = Astro.props;
+
+const allNews = await getCollection('news', ({ data }) => data.highlight === true);
+const items = allNews
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
+  .slice(0, limit);
+---
+{items.length > 0 && (
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+        <div>
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+            Issue Tracking
+          </p>
+          <h2 class="mt-2 text-3xl md:text-4xl font-bold">近期議題追蹤</h2>
+          <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] max-w-2xl leading-relaxed">
+            從智慧醫療、AI 系統到數位行銷，每日自動蒐集公開新聞並對照本團隊的設計觀點。
+          </p>
+        </div>
+        <a href="/news" class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline whitespace-nowrap">
+          全部議題追蹤
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+        {items.map((entry) => <NewsCard entry={entry} showTarget={true} />)}
+      </div>
+    </div>
+  </section>
+)}

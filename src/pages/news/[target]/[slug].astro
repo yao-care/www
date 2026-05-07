@@ -1,0 +1,89 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Nav from '../../../components/Nav.astro';
+import FooterLinks from '../../../components/FooterLinks.astro';
+import ContactMap from '../../../components/ContactMap.astro';
+import NewsArticle from '../../../components/news/NewsArticle.astro';
+import { NEWS_TARGET_BY_SLUG } from '../../../news.config';
+import { SITE } from '../../../site.config';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return entries.map((entry) => {
+    const slugPath = entry.id.replace(/\.(json|yaml|yml)$/, '');
+    const lastSlash = slugPath.lastIndexOf('/');
+    const slug = lastSlash >= 0 ? slugPath.substring(lastSlash + 1) : slugPath;
+    return {
+      params: { target: entry.data.target, slug },
+      props: { entry },
+    };
+  });
+}
+
+interface Props {
+  entry: CollectionEntry<'news'>;
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+const target = NEWS_TARGET_BY_SLUG[data.target];
+
+const pageTitle = `${data.titleZh ?? data.title} · ${target.title} 議題追蹤`;
+const pageDescription = data.newsBrief;
+const canonical = new URL(Astro.url.pathname, SITE.url).toString();
+
+// NewsArticle JSON-LD — isBasedOn 標明這是對原新聞的衍生評論而非原始報導
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: data.titleZh ?? data.title,
+  description: data.newsBrief,
+  url: canonical,
+  datePublished: data.fetchedAt.toISOString(),
+  dateModified: data.fetchedAt.toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE.url}/assets/images/logo.png`,
+    },
+  },
+  isBasedOn: data.url,
+  about: target.title,
+  keywords: data.tags.join(', '),
+};
+
+const ogImage = `/assets/images/og/${data.target}.png`;
+---
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={ogImage}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <Nav />
+  <main class="pt-20">
+    <!-- breadcrumb -->
+    <div class="max-w-3xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
+      <span class="mx-1.5">›</span>
+      <a href="/news" class="hover:text-[color:var(--color-brand)]">議題追蹤</a>
+      <span class="mx-1.5">›</span>
+      <a href={target.pageUrl} class="hover:text-[color:var(--color-brand)]">{target.title}</a>
+    </div>
+
+    <NewsArticle entry={entry} />
+
+    <ContactMap />
+  </main>
+  <FooterLinks />
+</BaseLayout>

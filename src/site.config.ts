@@ -20,5 +20,6 @@ export const NAV = [
   { href: '/medical', label: '智慧醫療' },
   { href: '/ai', label: 'AI 系統' },
   { href: '/marketing', label: '數位行銷' },
+  { href: '/news', label: '議題追蹤' },
   { href: '/#contact', label: '聯絡' },
 ] as const;

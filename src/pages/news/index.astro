@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import FooterLinks from '../../components/FooterLinks.astro';
+import ContactMap from '../../components/ContactMap.astro';
+import NewsCard from '../../components/news/NewsCard.astro';
+import { getCollection } from 'astro:content';
+import { NEWS_TARGETS, NEWS_TARGET_BY_SLUG } from '../../news.config';
+import { CATEGORIES } from '../../products.config';
+
+const allNews = await getCollection('news');
+const items = allNews.sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+
+const pageTitle = '議題追蹤 — yao.care';
+const pageDescription =
+  '自動追蹤智慧醫療、AI 系統、數位行銷三大領域的相關公開新聞，並對照 yao.care 各服務的設計觀點與回應。';
+
+const totalCount = items.length;
+
+const targetCounts = NEWS_TARGETS.reduce<Record<string, number>>((acc, t) => {
+  acc[t.slug] = items.filter((e) => e.data.target === t.slug).length;
+  return acc;
+}, {});
+
+const categoryCounts = CATEGORIES.reduce<Record<string, number>>((acc, c) => {
+  acc[c.slug] = items.filter(
+    (e) => NEWS_TARGET_BY_SLUG[e.data.target].category === c.slug,
+  ).length;
+  return acc;
+}, {});
+---
+<BaseLayout title={pageTitle} description={pageDescription} ogType="website">
+  <Nav />
+  <main class="pt-20">
+    <!-- breadcrumb -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
+      <span class="mx-1.5">›</span>
+      <span class="text-[color:var(--color-ink)]">議題追蹤</span>
+    </div>
+
+    <!-- hero -->
+    <section class="pt-10 pb-8 md:pt-14 md:pb-12">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+          Issue Tracking
+        </p>
+        <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">議題追蹤</h1>
+        <p class="mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+          自動蒐集智慧醫療、AI 系統與數位行銷相關的公開新聞，
+          以本團隊的實際服務為對照寫成原創評論文。每天清晨由 AI 自動產出，
+          critic 迴圈驗證後上線，目前共 {totalCount} 篇。
+        </p>
+      </div>
+    </section>
+
+    <!-- filter chips -->
+    <section class="pb-6">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div id="news-filter" class="space-y-3">
+          <!-- category row -->
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center text-xs text-[color:var(--color-ink-muted)] mr-1">分類：</span>
+            <button
+              type="button"
+              data-filter="cat"
+              data-value="all"
+              class="news-chip news-chip-active"
+            >全部 · {totalCount}</button>
+            {CATEGORIES.map((c) => (
+              <button
+                type="button"
+                data-filter="cat"
+                data-value={c.slug}
+                class="news-chip"
+              >{c.label} · {categoryCounts[c.slug]}</button>
+            ))}
+          </div>
+          <!-- target row -->
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center text-xs text-[color:var(--color-ink-muted)] mr-1">服務：</span>
+            <button
+              type="button"
+              data-filter="target"
+              data-value="all"
+              class="news-chip news-chip-active"
+            >全部</button>
+            {NEWS_TARGETS.map((t) => (
+              <button
+                type="button"
+                data-filter="target"
+                data-value={t.slug}
+                class="news-chip"
+              >{t.title} · {targetCounts[t.slug]}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- empty state or grid -->
+    {items.length === 0 ? (
+      <section class="py-20">
+        <div class="max-w-3xl mx-auto px-4 lg:px-6 text-center">
+          <p class="text-base text-[color:var(--color-ink-soft)]">
+            議題追蹤系統首次上線中。<br />
+            自動排程啟動後，每天清晨會在這裡自動產生新一批評論文。
+          </p>
+        </div>
+      </section>
+    ) : (
+      <section class="pb-20">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+          <div id="news-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+            {items.map((entry) => {
+              const cat = NEWS_TARGET_BY_SLUG[entry.data.target].category;
+              return (
+                <div class="news-item" data-cat={cat} data-target={entry.data.target}>
+                  <NewsCard entry={entry} showTarget={true} />
+                </div>
+              );
+            })}
+          </div>
+          <p
+            id="news-empty-msg"
+            class="hidden mt-10 text-center text-sm text-[color:var(--color-ink-soft)]"
+          >此分類目前沒有議題追蹤；切換其他分類試試。</p>
+        </div>
+      </section>
+    )}
+
+    <ContactMap />
+  </main>
+  <FooterLinks />
+</BaseLayout>
+
+<style is:global>
+  .news-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+    background: #fff;
+    border: 1px solid rgb(229 229 229);
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+  .news-chip:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+  }
+  .news-chip-active {
+    background: var(--color-brand);
+    color: #fff;
+    border-color: var(--color-brand);
+  }
+  .news-chip-active:hover {
+    color: #fff;
+  }
+</style>
+
+<script>
+  type Selected = { cat: string; target: string };
+  const state: Selected = { cat: 'all', target: 'all' };
+
+  const root = document.getElementById('news-filter');
+  const grid = document.getElementById('news-grid');
+  const emptyMsg = document.getElementById('news-empty-msg');
+  if (root && grid) {
+    root.querySelectorAll<HTMLButtonElement>('button[data-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter') as 'cat' | 'target';
+        const value = btn.getAttribute('data-value') || 'all';
+        state[filter] = value;
+        // toggle active
+        root.querySelectorAll<HTMLButtonElement>(`button[data-filter="${filter}"]`).forEach((b) => {
+          b.classList.toggle('news-chip-active', b.getAttribute('data-value') === value);
+        });
+        applyFilter();
+      });
+    });
+    function applyFilter() {
+      let visible = 0;
+      grid!.querySelectorAll<HTMLDivElement>('.news-item').forEach((el) => {
+        const c = el.getAttribute('data-cat');
+        const t = el.getAttribute('data-target');
+        const ok =
+          (state.cat === 'all' || c === state.cat) &&
+          (state.target === 'all' || t === state.target);
+        el.style.display = ok ? '' : 'none';
+        if (ok) visible++;
+      });
+      if (emptyMsg) emptyMsg.classList.toggle('hidden', visible !== 0);
+    }
+  }
+</script>

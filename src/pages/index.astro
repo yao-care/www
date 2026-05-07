@@ -5,6 +5,7 @@ import ProductCard from '../components/products/ProductCard.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import ContactMap from '../components/ContactMap.astro';
 import FooterLinks from '../components/FooterLinks.astro';
+import HighlightNews from '../components/news/HighlightNews.astro';
 import { CATEGORIES, productsByCategory } from '../products.config';
 
 const medicalProducts = productsByCategory('medical');
@@ -145,6 +146,7 @@ const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
       </div>
     </section>
 
+    <HighlightNews />
     <ContactCTA />
     <ContactMap />
   </main>

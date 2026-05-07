@@ -1,0 +1,132 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { NEWS_TARGET_BY_SLUG } from '../../news.config';
+import { SITE } from '../../site.config';
+
+interface Props {
+  entry: CollectionEntry<'news'>;
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+const target = NEWS_TARGET_BY_SLUG[data.target];
+
+const dateStr = data.publishedAt.toLocaleDateString('zh-TW', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+<article class="max-w-3xl mx-auto px-4 lg:px-6 py-12 md:py-16">
+  <!-- target chip + date -->
+  <div class="flex flex-wrap items-center gap-3 mb-5">
+    <a
+      href={target.pageUrl}
+      class="inline-flex items-center px-3 py-1 rounded-md text-xs font-bold tracking-wider uppercase bg-orange-50 text-[color:var(--color-brand)] hover:bg-orange-100 transition-colors"
+    >
+      {target.title}
+    </a>
+    <span class="text-xs text-[color:var(--color-ink-muted)]">
+      {target.categoryLabel}
+    </span>
+  </div>
+
+  <!-- title -->
+  <h1 class="text-2xl md:text-3xl font-bold leading-tight mb-3">
+    {data.titleZh ?? data.title}
+  </h1>
+  {data.titleZh && data.titleZh !== data.title && (
+    <p class="text-sm text-[color:var(--color-ink-muted)] mb-3">
+      原標題：{data.title}
+    </p>
+  )}
+  <p class="text-sm text-[color:var(--color-ink-soft)] mb-8">
+    來源：{data.source} ·  {dateStr}
+  </p>
+
+  <!-- 3 sections -->
+  <div class="space-y-8 prose-block">
+    <section>
+      <h2 class="text-base md:text-lg font-bold text-[color:var(--color-brand)] mb-3 uppercase tracking-wider">
+        新聞重點
+      </h2>
+      <p class="text-base md:text-lg text-[color:var(--color-ink)] leading-relaxed">
+        {data.newsBrief}
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-base md:text-lg font-bold text-[color:var(--color-brand)] mb-3 uppercase tracking-wider">
+        議題分析
+      </h2>
+      <p class="text-base md:text-lg text-[color:var(--color-ink)] leading-relaxed">
+        {data.issueAnalysis}
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-base md:text-lg font-bold text-[color:var(--color-brand)] mb-3 uppercase tracking-wider">
+        {target.title} 的設計觀點
+      </h2>
+      <p class="text-base md:text-lg text-[color:var(--color-ink)] leading-relaxed">
+        {data.designResponse}
+      </p>
+    </section>
+  </div>
+
+  <!-- tags -->
+  {data.tags.length > 0 && (
+    <div class="mt-10 flex flex-wrap gap-2">
+      {data.tags.map((t) => (
+        <span class="text-xs text-[color:var(--color-ink-muted)] bg-neutral-100 rounded-full px-3 py-1">
+          #{t}
+        </span>
+      ))}
+    </div>
+  )}
+
+  <!-- CTA box -->
+  <div class="mt-10 rounded-2xl bg-gradient-to-br from-[color:var(--color-brand)] to-[color:var(--color-brand-deep)] text-white p-6 md:p-8 shadow-md">
+    <p class="text-xs font-bold tracking-widest uppercase opacity-80 mb-2">了解更多</p>
+    <h3 class="text-lg md:text-xl font-bold mb-3">{target.title}</h3>
+    <p class="text-sm md:text-base opacity-90 leading-relaxed mb-5">
+      {target.serviceContext}
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a href={target.pageUrl} class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-white text-[color:var(--color-brand)] font-medium text-sm hover:bg-orange-50 transition-colors">
+        看 {target.title} 完整介紹
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href={target.ctaHref} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-amber-400 text-[color:var(--color-brand-deep)] font-medium text-sm hover:bg-amber-300 transition-colors">
+        {target.ctaText}
+      </a>
+    </div>
+  </div>
+
+  <!-- source link -->
+  <div class="mt-8 pt-6 border-t border-neutral-200/70">
+    <p class="text-xs text-[color:var(--color-ink-muted)] mb-2">
+      本文為 yao.care 對公開新聞的議題評論。原始新聞由 {data.source} 報導。
+    </p>
+    <a
+      href={data.url}
+      target="_blank"
+      rel="noopener nofollow"
+      class="inline-flex items-center gap-1 text-sm text-[color:var(--color-brand)] hover:underline"
+    >
+      閱讀原始新聞
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  </div>
+
+  <!-- back to /news -->
+  <div class="mt-10">
+    <a
+      href="/news"
+      class="inline-flex items-center gap-2 text-sm text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      回議題追蹤
+    </a>
+  </div>
+</article>

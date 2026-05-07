@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import FooterLinks from '../components/FooterLinks.astro';
 import ContactMap from '../components/ContactMap.astro';
+import ProductNews from '../components/news/ProductNews.astro';
 import { LINE_TEAM, CATEGORY_BY_SLUG } from '../products.config';
 import { SITE } from '../site.config';
 
@@ -601,6 +602,8 @@ const pricingTiers = [
       </div>
     </div>
   </section>
+
+    <ProductNews target="marketing" />
 
     <!-- CTA -->
     <section class="py-16 md:py-20 bg-gradient-to-b from-white to-orange-50/40">

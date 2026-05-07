@@ -2,6 +2,7 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.triz;
@@ -163,4 +164,6 @@ const stack = [
     headline="想把 TRIZ 用到自家產品開發？"
     description="無論是製造業、IT 產品設計、商業模式創新 — 我們可以為您客製專屬的 TRIZ 知識庫與 AI 工作流。"
   />
+
+  <ProductNews slot="news" target="triz" />
 </ProductLayout>

@@ -2,6 +2,7 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
 import SmartHealthcare from '../../components/SmartHealthcare.astro';
 import Advantages from '../../components/Advantages.astro';
 import SixServices from '../../components/SixServices.astro';
@@ -55,4 +56,6 @@ const headlineStats = [
     headline="醫院、診所、藥局想導入？"
     description="我們可以根據您的場景（醫院、診所、長照、藥局）提供對應的整合方式。最快 1 個工作天回覆。"
   />
+
+  <ProductNews slot="news" target="yaocare" />
 </ProductLayout>

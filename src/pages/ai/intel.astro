@@ -2,6 +2,7 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.intel;
@@ -257,6 +258,8 @@ const features = [
     headline="想用一套自動化系統解決你的資訊問題？"
     description="不論是投資情報、政策監控、競品追蹤，還是任何需要每天自動產出報告的場景 —— 用 LINE 私訊您的需求，最快 1 個工作天回覆。"
   />
+
+  <ProductNews slot="news" target="intel" />
 </ProductLayout>
 
 <script>

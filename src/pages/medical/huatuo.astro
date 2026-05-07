@@ -2,6 +2,7 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.huatuo;
@@ -271,4 +272,6 @@ const fhirProfiles = [
     headline="想體驗 AI 華佗，或客製給自家診所？"
     description="患者可直接到 huatuo.ai.yao.care 對話體驗；中醫師工作站、診所客製、TWCM FHIR 整合請透過 LINE 私訊討論。"
   />
+
+  <ProductNews slot="news" target="huatuo" />
 </ProductLayout>

@@ -2,6 +2,7 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.txgnn;
@@ -381,6 +382,8 @@ const stats = [
     headline="想討論技術合作？"
     description="老藥新用、TxGNN 模型在地化、EHR / FHIR 整合 — 任何技術討論都歡迎透過 LINE 私訊。"
   />
+
+  <ProductNews slot="news" target="txgnn" />
 </ProductLayout>
 
 <script>

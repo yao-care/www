@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { NEWS_TARGET_BY_SLUG } from '../../news.config';
+
+interface Props {
+  entry: CollectionEntry<'news'>;
+  showTarget?: boolean;
+}
+
+const { entry, showTarget = false } = Astro.props;
+const data = entry.data;
+const target = NEWS_TARGET_BY_SLUG[data.target];
+
+// entry.id 形如 "yaocare/abc123" 或 "yaocare/abc123.json"，路由的 slug 只要最後一段
+const slugPath = entry.id.replace(/\.(json|yaml|yml)$/, '');
+const lastSlash = slugPath.lastIndexOf('/');
+const slug = lastSlash >= 0 ? slugPath.substring(lastSlash + 1) : slugPath;
+const fullUrl = `/news/${data.target}/${slug}`;
+
+const dateStr = data.publishedAt.toLocaleDateString('zh-TW', {
+  month: 'long',
+  day: 'numeric',
+});
+---
+<article class="news-card group rounded-xl bg-white border border-neutral-200 p-5 hover:border-[color:var(--color-brand)] hover:shadow-md transition-all flex flex-col h-full">
+  <div class="flex items-center justify-between gap-2 text-xs text-[color:var(--color-ink-soft)] mb-3">
+    <span class="font-medium truncate">{data.source} · {dateStr}</span>
+    {showTarget && (
+      <span class="shrink-0 inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wider uppercase bg-orange-50 text-[color:var(--color-brand)]">
+        {target.title}
+      </span>
+    )}
+  </div>
+  <h3 class="font-bold text-base text-[color:var(--color-ink)] leading-snug line-clamp-2 mb-2 group-hover:text-[color:var(--color-brand)] transition-colors">
+    <a href={fullUrl} class="stretched-link">
+      <span class="absolute inset-0" aria-hidden="true"></span>
+      {data.titleZh ?? data.title}
+    </a>
+  </h3>
+  <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed line-clamp-3 flex-1">
+    {data.newsBrief}
+  </p>
+  {data.tags.length > 0 && (
+    <div class="mt-3 flex flex-wrap gap-1.5">
+      {data.tags.map((t) => (
+        <span class="text-[11px] text-[color:var(--color-ink-muted)] bg-neutral-50 border border-neutral-200/70 rounded px-1.5 py-0.5">
+          #{t}
+        </span>
+      ))}
+    </div>
+  )}
+  <div class="mt-3 text-xs font-medium text-[color:var(--color-brand)] inline-flex items-center gap-1">
+    讀全文
+    <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </div>
+</article>
+
+<style>
+  .news-card { position: relative; }
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

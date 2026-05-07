@@ -2,6 +2,7 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.siqc;
@@ -299,4 +300,6 @@ const techStack = [
     headline="想要這套合規自動化？"
     description="不論您是準備 ISO 27001 認證、想擺脫人工維護 ISMS 的痛苦，或是需要為 AI 系統做合規對照 —— 用 LINE 私訊您的需求，我們可以協助評估與導入。"
   />
+
+  <ProductNews slot="news" target="siqc" />
 </ProductLayout>
