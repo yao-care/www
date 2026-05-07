@@ -74,8 +74,8 @@ const PER_QUERY_DELAY_MS = 400;
 const PER_QUERY_LIMIT = 12;
 /** 送進 filter LLM 的最大 candidate 數 */
 const FILTER_BATCH_SIZE = 25;
-/** 每 target 最多寫幾篇（filter 通過再寫，超過上限的丟掉） */
-const MAX_WRITE_PER_TARGET = 3;
+/** 一次 cron 全部 target 加總最多寫幾篇 — round-robin 平均分配 */
+const MAX_WRITE_TOTAL = 21;
 
 // ─── 型別 ───────────────────────────────────────────
 
@@ -398,59 +398,87 @@ function existingUrls(target: NewsTarget): Set<string> {
 
 // ─── 主流程 ─────────────────────────────────────────
 
-async function processTarget(target: NewsTarget): Promise<Stats> {
-  const stats: Stats = {
-    fetched: 0,
-    unique: 0,
-    filterKept: 0,
-    written: 0,
-    dropped: 0,
-    dropReasons: [],
-  };
-  log(`\n═══ ${target.title} (${target.slug}) ═══`);
+type KeptItem = {
+  target: NewsTarget;
+  item: RawItem;
+  relevance: number;
+  highlight: boolean;
+};
 
-  // 1) RSS
+/** Phase 1: 對單一 target 跑 RSS + filter pass，回傳 kept items（不寫檔）*/
+async function fetchAndFilter(
+  target: NewsTarget,
+  stats: Stats,
+): Promise<KeptItem[]> {
+  log(`\n═══ ${target.title} (${target.slug}) — Filter ═══`);
+
   log(`  → 抓 RSS（${target.queries.length} queries）`);
   const candidates = await fetchTargetCandidates(target);
-  stats.fetched = candidates.length;
-  stats.unique = candidates.length;
+  stats.fetched += candidates.length;
+  stats.unique += candidates.length;
   log(`  共 ${candidates.length} 筆 unique candidate`);
-  if (candidates.length === 0) return stats;
+  if (candidates.length === 0) return [];
 
-  // 1.5) 排除已存在的 URL
   const existing = existingUrls(target);
   const fresh = candidates.filter((c) => !existing.has(c.link));
   log(`  扣掉已存在 ${candidates.length - fresh.length} 筆，剩 ${fresh.length} 筆要審`);
-  if (fresh.length === 0) {
-    pruneOld(target);
-    return stats;
-  }
+  if (fresh.length === 0) return [];
 
-  // 2) Filter pass
   log(`  → Filter pass (Haiku)`);
   const kept = await filterCandidates(target, fresh);
-  stats.filterKept = kept.length;
+  stats.filterKept += kept.length;
   log(`  filter 留下 ${kept.length} 筆 (relevance ≥ ${RELEVANCE_THRESHOLD})`);
 
-  // 3) Writer + regex loop（每 target 上限 MAX_WRITE_PER_TARGET 或 CLI 指定）
-  const cap = Math.min(MAX_ITEMS, MAX_WRITE_PER_TARGET);
-  const toProcess = kept.slice(0, cap);
-  for (const k of toProcess) {
-    log(`  ▸ "${k.item.title.slice(0, 40)}..." (rel=${k.relevance.toFixed(2)})`);
-    const result = await writeOne(target, k.item, k.relevance, k.highlight);
-    if (result.ok) {
-      writeNewsFile(target, k.item, result.draft, k.relevance, k.highlight, result.passes);
-      stats.written++;
-    } else {
-      log(`    ✗ DROP: ${result.reason}`);
-      stats.dropped++;
-      stats.dropReasons.push(`${target.slug}:${result.reason}`);
-    }
-  }
+  // 依 relevance desc 排序，round-robin 才會挑到最相關的先寫
+  const sorted = [...kept].sort((a, b) => b.relevance - a.relevance);
+  return sorted.map((k) => ({
+    target,
+    item: k.item,
+    relevance: k.relevance,
+    highlight: k.highlight,
+  }));
+}
 
-  // 4) prune
-  pruneOld(target);
-  return stats;
+/**
+ * Round-robin 從每個 target 的清單中輪流挑，直到湊滿 totalCap 或全部用完。
+ * 同 target 內的順序是 relevance desc（fetchAndFilter 已排序）。
+ */
+function selectRoundRobin(
+  byTarget: Map<NewsTargetSlug, KeptItem[]>,
+  totalCap: number,
+): KeptItem[] {
+  const queues = new Map<NewsTargetSlug, KeptItem[]>();
+  for (const [slug, items] of byTarget) queues.set(slug, [...items]);
+
+  const picked: KeptItem[] = [];
+  // 每輪掃一遍所有 target，每個 target 出 1 篇，直到湊滿或全部空
+  while (picked.length < totalCap) {
+    let progressed = false;
+    for (const [slug, q] of queues) {
+      if (picked.length >= totalCap) break;
+      if (q.length === 0) continue;
+      const next = q.shift()!;
+      picked.push(next);
+      progressed = true;
+    }
+    if (!progressed) break;
+  }
+  return picked;
+}
+
+/** Phase 3: 對單一已選 item 跑 writer + regex，寫檔 */
+async function writeOneSelected(picked: KeptItem, stats: Stats) {
+  const { target, item, relevance, highlight } = picked;
+  log(`  ▸ [${target.slug}] "${item.title.slice(0, 40)}..." (rel=${relevance.toFixed(2)})`);
+  const result = await writeOne(target, item, relevance, highlight);
+  if (result.ok) {
+    writeNewsFile(target, item, result.draft, relevance, highlight, result.passes);
+    stats.written++;
+  } else {
+    log(`    ✗ DROP: ${result.reason}`);
+    stats.dropped++;
+    stats.dropReasons.push(`${target.slug}:${result.reason}`);
+  }
 }
 
 async function main() {
@@ -463,7 +491,7 @@ async function main() {
     process.exit(1);
   }
 
-  const totals: Stats = {
+  const stats: Stats = {
     fetched: 0,
     unique: 0,
     filterKept: 0,
@@ -471,25 +499,59 @@ async function main() {
     dropped: 0,
     dropReasons: [],
   };
+
+  // ─── Phase 1: 對所有 target 抓 RSS + filter ───────────
+  const byTarget = new Map<NewsTargetSlug, KeptItem[]>();
   for (const t of targets) {
-    const s = await processTarget(t);
-    totals.fetched += s.fetched;
-    totals.unique += s.unique;
-    totals.filterKept += s.filterKept;
-    totals.written += s.written;
-    totals.dropped += s.dropped;
-    totals.dropReasons.push(...s.dropReasons);
+    const kept = await fetchAndFilter(t, stats);
+    byTarget.set(t.slug, kept);
+  }
+
+  // ─── Phase 2: round-robin 選出總共要寫的 ──────────────
+  // 規則：
+  //   - 預設 cap 是 MAX_WRITE_TOTAL（全 target 加總）
+  //   - 若有 --target，cap 改用 MAX_ITEMS（單 target 模式）
+  //   - --max-items 一律 override
+  const totalCap = ONLY_TARGET
+    ? Math.min(MAX_ITEMS, byTarget.get(ONLY_TARGET)?.length ?? 0)
+    : Math.min(MAX_ITEMS, MAX_WRITE_TOTAL);
+  const picked = selectRoundRobin(byTarget, totalCap);
+
+  log(`\n══════ Phase 2: 排程 ${picked.length} 篇 ══════`);
+  const distribution = new Map<NewsTargetSlug, number>();
+  for (const p of picked) {
+    distribution.set(p.target.slug, (distribution.get(p.target.slug) ?? 0) + 1);
+  }
+  for (const t of targets) {
+    log(`  ${t.slug}: ${distribution.get(t.slug) ?? 0} 篇`);
+  }
+
+  // ─── Phase 3: 依序寫每篇 ──────────────────────────────
+  log(`\n══════ Phase 3: Writer ══════`);
+  for (const p of picked) {
+    await writeOneSelected(p, stats);
+  }
+
+  // ─── Phase 4: prune（每 target 保留最新 KEEP_PER_TARGET）─
+  log(`\n══════ Phase 4: Prune ══════`);
+  for (const t of targets) {
+    pruneOld(t);
   }
 
   log(`\n══════ 每日報告 ══════`);
-  log(`  fetched: ${totals.fetched}`);
-  log(`  unique:  ${totals.unique}`);
-  log(`  filter kept: ${totals.filterKept}`);
-  log(`  written: ${totals.written}`);
-  log(`  dropped: ${totals.dropped}`);
-  if (totals.dropReasons.length > 0) {
+  log(`  fetched:     ${stats.fetched}`);
+  log(`  unique:      ${stats.unique}`);
+  log(`  filter kept: ${stats.filterKept}`);
+  log(`  picked:      ${picked.length} (cap=${totalCap})`);
+  log(`  written:     ${stats.written}`);
+  log(`  dropped:     ${stats.dropped}`);
+  log(`  分配：`);
+  for (const t of targets) {
+    log(`    ${t.slug.padEnd(10)} ${distribution.get(t.slug) ?? 0} 篇`);
+  }
+  if (stats.dropReasons.length > 0) {
     log(`  drop 原因：`);
-    for (const r of totals.dropReasons) log(`    - ${r}`);
+    for (const r of stats.dropReasons) log(`    - ${r}`);
   }
   log(`══════════════════════`);
 }
