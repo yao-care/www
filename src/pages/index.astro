@@ -6,7 +6,6 @@ import ContactCTA from '../components/ContactCTA.astro';
 import ContactMap from '../components/ContactMap.astro';
 import FooterLinks from '../components/FooterLinks.astro';
 import { CATEGORIES, productsByCategory } from '../products.config';
-import { SITE } from '../site.config';
 
 const medicalProducts = productsByCategory('medical');
 const aiProducts = productsByCategory('ai');
@@ -52,14 +51,6 @@ const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
               </div>
             </a>
           ))}
-        </div>
-
-        <!-- contact shortcut -->
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href={SITE.lineLink} target="_blank" rel="noopener" class="btn-line">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.74c0 4.32 3.55 7.94 8.35 8.62l1.06.15.13-.97-.07-.71c.08-.47-.31-.91-.78-.97l-.16-.02C5.83 16.27 3 13.81 3 10.74 3 6.48 7.03 3 12 3s9 3.48 9 7.74c0 4.26-4.03 7.74-9 7.74h-.5l-3.83 2.41a.5.5 0 0 1-.74-.55l.84-3.07A9.06 9.06 0 0 0 22 10.74C22 5.92 17.52 2 12 2z"/></svg>
-            加入 LINE
-          </a>
         </div>
       </div>
     </section>
