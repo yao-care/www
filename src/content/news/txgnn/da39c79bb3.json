@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "抗過敏藥「老藥新用」可抗癌 毛小孩膀胱癌意外痊癒飼主致謝 - 自由健康網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1BMWVVQ0NLdHBVMVFna1NQQUxFMGl0dHI1akl6bVFLOTFqUzNLeUFrVGFLRk9iTVpkTXptWFVBT3VQV0ZxUmFXNW1oN2NkU1RDNmhsckNvMFVhU25VOHFFeHlRVWTSAWpBVV95cUxOZjZtYUw2WUJpcmQ1NUwzRTJQQWtodDl3OHZ4b2pNVjhxRHhuX0pYR1J2ZGlwLTRiMTlvbjRCdU0zdmZvcjQ4RlZsNU9VUkhDTE02aHk1dFJlV2ZsdENIcXRmNWloaklZbW13?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-03T04:12:00.000Z",
+  "fetchedAt": "2026-05-07T20:50:44.707Z",
+  "newsBrief": "一隻罹患膀胱癌的寵物狗，在接受抗過敏藥物治療後意外痊癒，飼主特地向獸醫團隊致謝。此個案引發外界對老藥新用潛力的廣泛關注：長期在架的既有藥物，或許在超出原始設計的適應症上，仍潛藏著尚未被系統性發掘的治療價值。",
+  "issueAnalysis": "老藥新用的核心挑戰，在於「意外有效」的個案通常源於偶發觀察，而非系統性探索。藥物與疾病的生物機制連結散布在龐大文獻與跨國藥品資料庫中，缺乏統一的交叉比對架構，導致大量潛在的藥物—疾病配對在資料孤島中沉默消失，難以被臨床端系統性地發現與追蹤。",
+  "designResponse": "針對老藥新用的系統性探索需求，設計邏輯從「發現」與「驗證」兩個環節切入。發現端採知識圖譜與深度學習的雙引擎架構，讓藥物與疾病的生物機制關係可被計算性地跨市場、跨適應症交叉比對 (proofPoint #1, #2)；驗證端每一筆預測輸出都附帶 PubMed 文獻與 ClinicalTrials 試驗包，讓臨床使用者能即時追溯每個建議背後的實證依據 (proofPoint #4)，使偶發的個案觀察成為可交叉比對的科學線索。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

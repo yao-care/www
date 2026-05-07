@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "源華智醫許銀雄：AI導入老藥新用仍有挑戰 多模型整合是當前解方 - 環球生技",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1hZGh2NGhPVldVQmY0cENqczVlaHFKTFhNT05lRnFyS3I3akNFTkNUTk54dmE0X0NtSzA4R0I0MFBBc3F3QkE3VjM5LTlqcF9scTN3dnBrOXdGeFpmVXZlVFgzS3hlLWNS?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-17T06:34:10.000Z",
+  "fetchedAt": "2026-05-07T20:41:36.632Z",
+  "newsBrief": "源華智醫執行長許銀雄於近期論壇指出，儘管人工智慧在老藥新用領域展現潛力，現階段導入仍面臨模型單一、資料整合不足等實務挑戰，並主張透過多模型整合策略方能提升預測可信度與臨床適用性。",
+  "issueAnalysis": "老藥新用的核心困境在於，即便 AI 模型可在藥物-疾病關係圖譜上快速推論，單一模型的預測結果往往難以取信於臨床端——原因有三：其一，不同演算法對同一候選藥物的評分邏輯差異懸殊；其二，預測結果若缺乏可查閱的外部文獻佐證，醫師或研究者無從驗證；其三，多數工具未與 EHR 系統整合，形成「孤島型 AI」，再精準的預測也難進入實際診療流程。許銀雄所提的「多模型整合」，指向的正是業界對於單一黑盒子預測的集體不信任——這不只是技術選型問題，更是可解釋性與工作流嵌入的設計問題。",
+  "designResponse": "面對單一模型可信度不足的問題，可從兩個維度切入。在預測層，採雙引擎並行架構——知識圖譜方法與深度學習方法同步運算同一候選藥物，兩者結果相互校驗，而非僅依賴單一演算法輸出 (proofPoint #1)，直接消解「黑盒子預測」的疑慮。在證據層，每筆預測附帶 PubMed 文獻索引與 ClinicalTrials 試驗紀錄 (proofPoint #4)，使研究者在評估候選適應症時有據可查，而非憑模型信心值盲目決策。兩層設計的邏輯一致：可信度來自多源交叉，透明度來自文獻連結。",
+  "tags": [],
+  "relevance": 1,
+  "highlight": true,
+  "criticPasses": 2
+}

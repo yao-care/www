@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "望聞問AI／人工智慧當「診前軍師」民眾揭優點 醫示警：仍有誤判風險 - 健康醫療網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9RYS1XalZsdE1nTW5XZ3VKaWEzcVdISWY5SHBWTE4xaFZocURrUWtLcFRYUlBFWWtXYXVKdTZpUTdxZE02X2FfTElZX0JQcWJSZFlwLXhR?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-03T02:00:00.000Z",
+  "fetchedAt": "2026-05-07T20:49:18.013Z",
+  "newsBrief": "媒體報導顯示，已有民眾將 AI 工具作為「診前軍師」，用於就診前初步整理症狀與了解可能方向，並認為有助降低就醫焦慮。然而多位醫師同步示警，強調 AI 在資訊不完整的情境下仍存在誤判風險，建議民眾將 AI 輸出視為參考工具，不應取代正式診斷。",
+  "issueAnalysis": "AI 進入診前輔助場景的核心爭議，不在於能否辨識症狀，而在於判斷過程是否可被信任與追溯。當系統輸出辨證方向卻無法說明依據，醫師接手時便缺乏可銜接的結構化資訊，誤判風險因此放大。此外，純文字問答先天缺席望色、聞聲、切脈等感官資訊，辨證完整性受限。透明度不足與四診資訊落差，才是推進此場景時真正需解決的設計命題。",
+  "designResponse": "面對黑箱輸出難以被信任的挑戰，設計上以可追溯性取代端對端黑箱。辨證架構以 128 條規則為骨幹，儲存於可逐條檢視的結構化檔案 (proofPoint #1)；LLM 作為補充層，兩者以規則優先、模型輔助的混合權重協同運作 (proofPoint #2)，每個結論均附帶完整推理路徑。在四診完整性方面，整合舌診、聞診與指尖測脈 (proofPoint #5)，縮短純文字問答與實體四診之間的資訊落差。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

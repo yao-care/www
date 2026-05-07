@@ -1,0 +1,20 @@
+{
+  "target": "siqc",
+  "title": "比照醫院! 護理機構評鑑延長至6 年今年合格回溯適用 - MSN",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxQN01JcW5xWnRxczdqN21UUHNQM3JIRjZTUHdhSzR2SkwxTUg1eExuTVhyZVZkWGcxN3lmV2tGNWtxdzdpZmhOSUNjVThSM2tGY3lSbU5WMU8tNDJvLXgwUmpCcEpMeERzWnBDMlltMUJGSldNUDdlRlNCQW04ejZQeEhqYlJhT1hiMnVFeXo2S01YSThzdDBQS3RmSkRYWlU4cnhYMkpRRXd6aTVuVEwtVXp5bUdDTjVadXJsaDVCbFZ6Rm5KWllwdXdvSGxjS3ZSa0tYUDdpMFBfYjE1eTI0LXBUWjlpNGd5aU12dU03M1dBTDFWU2JuZDR2SkhVMDZaMUpYby1lSDdVU0lmTE4yN2dTOWwwS2l2WVZ6VTNBQzduMXR2WkViWXl2LTRua0J2dFZ4NHlfRHpCZnJpaVJwa1lDakh5WGQtOThjUGVFOFRYTHJJWGY1VGlURWVEZGFaQy0wUG54eWlRQW8?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-02T04:53:39.000Z",
+  "fetchedAt": "2026-05-07T20:44:47.084Z",
+  "newsBrief": "護理機構評鑑週期比照醫院延長至六年，今年合格者即可回溯適用新制。週期拉長雖減少重複迎評的行政負擔，但也要求機構在更長時間跨度內維持合規文件的完整性與可追溯性，確保下次評鑑時仍能完成條文對應檢核。",
+  "issueAnalysis": "評鑑週期的延長，表面上是政策善意，骨子裡卻是一道隱性的門檻提升。過去每三年一輪的節奏，讓機構得以在評鑑前集中衝刺；六年制度下，若持續依賴「臨時備戰」模式，累積的文件缺口將更難填補。更深層的問題在於：護理機構普遍規模較小、資訊化程度有限，文件版本控管、條文對應與稽核軌跡的持續維護，往往仰賴少數人工作業。這種不可持續的作業模式，與六年週期所隱含的「常態合規」期待，形成結構性落差。",
+  "designResponse": "面對評鑑週期拉長所帶來的「常態合規」壓力，設計的核心命題不是加速臨時備戰，而是讓合規維護本身變得可持續。SIQC 以自動化管線串連掃描、修復、版控與稽核包交付各環節 (proofPoint #1)，機構在日常運作中便持續積累可交付的稽核證據，而非每逢評鑑前才手動彙整。在文件框架層面，系統預載安全掃描管線與完整的 ISMS 文件框架 (proofPoint #2)，讓機構能快速定位每份文件所對應的評鑑條款，減少手動翻查耗費。同一套框架亦可重組為醫院評鑑所需的文件格式 (proofPoint #6)，讓不同規模的護理機構在多種認證場景間共用基礎建設。這種「稽核設計進流程、文件隨時可交付」的架構邏輯，才是回應六年長週期制度的根本思路。",
+  "tags": [
+    "護理機構評鑑",
+    "合規文件管理",
+    "稽核自動化"
+  ],
+  "relevance": 0.7,
+  "highlight": true,
+  "criticPasses": 1
+}
