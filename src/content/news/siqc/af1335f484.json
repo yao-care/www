@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "拿到 ISO 27001 證書就安全了？林宜隆教授：四層標準架構才是資安治理正解 - informationsecurity.com.tw",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPVDYtc25LS184b1Rfel8tbDFBdXBTaEV3WXJnUk95SzRZbVlUdlBfb3VMMTg2bFNEZ3JGanFtOU9tQ0ZDazBNMl9haWdROWtGWUg4ampNN2w2bkhPNWJ6X0ZxUnZpTjVBX0E5REgyOUtabEJjUDM3bG5uanhHajRJWEtB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-08T09:15:05.000Z",
+  "fetchedAt": "2026-05-08T20:40:53.081Z",
+  "newsBrief": "林宜隆教授指出，取得 ISO 27001 認證僅是資安治理的起點而非終點。他提出四層標準架構的概念，主張組織應在認證基礎上疊加合規框架、技術控制與持續監控，方能應對真實威脅環境。單一證書無法涵蓋全面的資安風險治理需求，這對追求「拿證即畢業」心態的企業與醫療機構，提出了根本性的挑戰。",
+  "issueAnalysis": "「拿到證書就安全」的迷思，根源在於許多組織將認證視為一次性事件，而非持續運作的管理體系。ISO 27001 本身要求的是 ISMS（資訊安全管理系統）的建立與維運，但在實踐中，大量文件需要人工維護、不同掃描工具分散運行、條文對應缺乏系統性追蹤，導致「認證時完整、日常時鬆散」的困境。中小型醫療或企業團隊尤其資源有限，難以持續對應 60 份以上 ISMS 文件的版本控制與更新壓力。林宜隆教授所強調的多層架構，正是呼應這種從靜態合規走向動態治理的轉型需求。",
+  "designResponse": "認證後治理失效的癥結，在於合規管線與日常工程脫節。一種應對思路是將文件更新與弱點監控內建為持續流程：透過自動化管線維持 64 份 ISMS 文件的版本一致性 (proofPoint #2)，並以每 15 分鐘的 OSV API 輪詢取代人工審視 (proofPoint #4)。當合規可觀測性從稽核時點延伸至日常提交，治理的有效範圍才能跟上威脅的動態變化。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

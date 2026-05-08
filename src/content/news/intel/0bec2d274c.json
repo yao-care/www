@@ -1,0 +1,16 @@
+{
+  "target": "intel",
+  "title": "Claude Code 新增 Routine 功能，重新設計桌面版提升開發效率 - TechNews 科技新報",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQRlFhc2NRUmhSYmlsMFZ3dHRhc0I2WFpOZV8wZUdTVjFwZjM5eEt3X0hLa2NyeC0tWmMtYW16SE5kMFlBYVZ2bmRxTjdiUFJIcjhyOHlBZDBNQVA5bXg1cXZlR3dJZ1hOSEpiTkh5aDJka0dhMV9RWF91UkFYNjVkRzRnOFBORnZ1RGFHekhUQmx3cnF2Y3c?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-16T07:00:00.000Z",
+  "fetchedAt": "2026-05-08T20:39:58.901Z",
+  "newsBrief": "Anthropic 為 Claude Code 推出 Routine 功能，並全面重新設計桌面版介面，旨在讓開發者能更流暢地自動化重複性工程任務。此次更新聚焦於降低人工介入頻率，使 AI 輔助開發從單次對話走向可排程、可重複執行的工作流程，標誌著 AI 開發工具正朝「任務自動化」方向加速演進。",
+  "issueAnalysis": "AI 編碼工具的演進軌跡，正從「問答助手」轉向「自動化生產線」。Routine 功能的出現，揭示了一個普遍性痛點：開發與資訊工作中有大量高頻、低變化的任務，原本靠人工逐次觸發，不僅耗時更容易因遺漏而產生落差。對中小型技術團隊而言，這類「重複性作業的自動化排程」長期缺乏輕量解法——既不值得架設重型 CI/CD，又不能單靠人工記憶維持穩定性。當 AI 工具開始提供可組合、可排程的 Routine 機制，實際上是在填補這個長期被忽視的基礎設施空缺。",
+  "designResponse": "面對重複性任務難以穩定排程的痛點，關鍵在於從爬取端開始就設計為「可重複執行」。以 RSS、HTTP、Playwright 三模式並行處理不同來源結構，確保每條情報都能被穩定納入排程而非人工觸發 (#1)。事件入管線後自動標註關鍵字、情緒分數與重要性評分，消費端無需二次整理即可直接取用結構化結果 (#2)。整套機制的設計原則是「零人工觸發、排程即文件」，讓可重複自動化從開發工具延伸為各類知識工作的共同基礎設施需求。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 2
+}
