@@ -1,0 +1,20 @@
+{
+  "target": "yaocare",
+  "title": "確保春節用藥不中斷病情穩定 嘉縣衛生局提醒2月13日前可提早領藥 - 聯合新聞網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE82bGpiUjAyWDRFVGQza0YxMDNMdkFXcnpWc3FmdU9jbVV0MDZXc1htWDE4QjJYU214S05TU0hleXNrMTZEYWVtS2FhNGI0NC1z0gFWQVVfeXFMTTZ3V0dXRllmVld1Mzg5azJsbUpmU1BkVDZjaF9hSWZ6RjQ4Ym94TkhmeGlrMGVVLUlQdXgzWFN6VDBuRGFobGRkYWJlN2dZeGNVbkJUR1E?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-02-05T08:00:00.000Z",
+  "fetchedAt": "2026-05-09T21:00:42.828Z",
+  "newsBrief": "每逢春節長假，慢性病患者面臨診所休診導致用藥中斷的風險。衛生單位呼籲患者於節前提早領取慢性處方藥，以維持病情穩定。此提醒點出一個長期未解的痛點：慢性用藥管理仍高度仰賴外部機構的一次性通知，缺乏系統性的主動提醒機制。",
+  "issueAnalysis": "春節等長假期間，藥局與診所集中休診，對長期服藥的慢性病患者形成特定的「補藥時窗」壓力。此類提醒雖出於善意，卻也間接顯示：慢性處方箋管理至今仍以「告知患者記得去領」為主要策略，而非透過系統追蹤是否確實領藥、持續服藥。慢性處方箋第二、三次領藥率長期偏低的問題，正是這個結構缺口的表徵——若無主動追蹤機制，患者在假期外的日常同樣面臨中斷服藥的風險，只是缺乏新聞事件的可見性。",
+  "designResponse": "面對慢性用藥中斷這個結構性問題，藥提醒的設計思路不是在假期前發出一次性公告，而是在每個領藥週期內持續追蹤患者的實際服藥行為。在推播工具的選擇上，我們選擇以 LINE 與 Telegram 作為提醒管道，而非要求患者安裝獨立 App——對老年慢性病患者而言，這個門檻差異攸關是否真正能觸及他們 (proofPoint #2)。在處方資料的整合上，系統採用 ATC 編碼對接健保處方資料，藥師不需人工 keyin，便能掌握患者目前應服哪些藥物、何時應回診領藥 (proofPoint #1)。這樣的設計讓追蹤行為不需依賴患者的自主記憶，也不需要在節前臨時加開公告窗口——提醒在每個領藥週期自然發生，假期不過是這套機制正常運作的其中一段時間而已。",
+  "tags": [
+    "慢性處方箋",
+    "用藥連續性",
+    "服藥追蹤"
+  ],
+  "relevance": 0.65,
+  "highlight": false,
+  "criticPasses": 1
+}

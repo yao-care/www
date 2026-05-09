@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "專業照護送到家 台中市115年藥事照護計畫徵求熱血藥師投入 | 中廣新聞網 - LINE TODAY",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1FYlNsdHQ5bHdKb1pYRldIbFp3dG9HT3pPQVNPNGdBNHhjcnJBUXhBbXRqLXZqWGZYdGwySXNGQXhXdU9KNms4WEpqQ2ppM0QtWFg0TjdB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-15T07:00:00.000Z",
+  "fetchedAt": "2026-05-09T20:56:53.785Z",
+  "newsBrief": "各地衛生主管機關積極推動藥事居家照護計畫，公開徵求藥師加入，將藥事服務延伸至社區與居家場域。此一趨勢反映在機構外持續用藥管理需求日益殷切，藥師角色也從調劑者轉型為主動追蹤的照護者。",
+  "issueAnalysis": "藥事居家照護的推展揭示了傳統門診難以覆蓋的照護缺口。慢性病患者取藥後缺乏持續指導，處方第二、三次領藥率偏低，反映提醒機制的不足。年長族群面臨 App 安裝門檻，更壓縮遠端照護的可及性。藥師若缺乏系統性追蹤工具，便難以跨週期掌握個案狀況，居家多重用藥情境也增添了混淆與交互作用的風險。",
+  "designResponse": "降低患者數位門檻是居家照護場域的首要設計考量。在接觸環節，設計上採用 LINE 與 Telegram 推播提醒 (proofPoint #2)，患者無需安裝陌生 App，即可在熟悉介面接收用藥提示，對年長族群尤為友善。提醒訊息同步附上藥品外觀圖片 (proofPoint #3)，在核對環節提供視覺輔助，協助患者辨別手中藥品，降低多重用藥混淆風險。在追蹤環節，設計上採用批次總覽介面 (proofPoint #4)，藥師得以跨週期掌握各個案服藥情況，使照護投入轉換為持續可觀察的資訊脈絡，而非零散的單次服務。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": false,
+  "criticPasses": 3
+}

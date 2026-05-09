@@ -1,0 +1,16 @@
+{
+  "target": "triz",
+  "title": "ESG 最前線／ RAG 技術 提升AI應用價值 - 經濟日報",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFAzbHpkd2F3R3JSamIyVEd0Q1BMWkJOTjAyRTdTUEhzX014ZXdpYWo3WWF3bURJaGhOVTZmSUNTZVNmZGszb1JHWElmUjg3cDBLVmVQdlRUOEpzX3Nn0gFiQVVfeXFMTVlNdy1VOVBfQW01cFYyX0RMRlF2RW5kdUdVcmR1TmcwTXF1Rmh5aHdPODJUYlplc2tmLWFtVDJjV2JKYnkxM2gxUWRmZkktdHRiU0syZUJuZzFOdHRjTDFnTXc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-25T07:00:00.000Z",
+  "fetchedAt": "2026-05-09T20:50:25.353Z",
+  "newsBrief": "《經濟日報》報導，RAG（檢索增強生成）技術正成為企業 AI 升級的關鍵路徑。相較於純生成模型，RAG 透過即時檢索外部知識庫讓回應更具事實依據。知識管理與生成 AI 的整合深度，已成為各界評估 AI 工具成熟度的新標準。",
+  "issueAnalysis": "RAG 的核心價值在於將封閉的模型內建知識轉為可更新的外部知識，但落地時面臨三項現實困難：一是分塊策略直接影響檢索品質，多數團隊缺乏系統性方法論；二是向量庫建構需跨越資料工程與領域知識的雙重門檻；三是在創新方法論等高度結構化的知識領域，如何讓 RAG 精確命中矛盾類型與原則索引，而非返回泛化段落，是實務上最難突破的核心挑戰。",
+  "designResponse": "面對 RAG 落地的結構性挑戰，知識層的完備性是前提：預先建構 40 發明原則、39 工程參數、263 矛盾矩陣的完整向量庫 (proofPoint #1)，確保每次檢索命中的是精確方法論節點，而非意義模糊的段落拼接。在管線設計上，採 crawl → chunk → embed 的三階段 RAG 管線 (proofPoint #3)，針對 TRIZ 知識的固有層級結構分層切分與索引，從源頭防止跨概念混淆。多角色 SYSTEM_PROMPT 協作 (proofPoint #4) 讓推理在各環節沿方法論路徑結構化展開，使知識密集型場景的 AI 輸出從可用邁向可信。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": false,
+  "criticPasses": 2
+}

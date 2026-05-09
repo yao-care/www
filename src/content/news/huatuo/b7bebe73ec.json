@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "AI+中醫：從治病到智能健康 - 信報網站",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxQRjhpeDFoTmRZSGhGdmhZOEVib3dyWUQwbGJDOEplMG0xQnFqNWFOcGx6R1lCOUxDLVhOYWR0TlpIYU5JUmFoMmpRT1JIRmprYWY2UDVZbnhxckh2R2xEUVlQc1JrdzFLN3ZNWnhxN25XQUpVQ3p6UmJmX200NDBSRG5HRHd6XzJUcWVOUE1qMjNCd3AwQVM4OVRHaF93TWNrYm5GR2MwODdBaFdMTGFWcFU3ZHJjd2dkTVdZUjQ4VGJVN3F3alA5bEFubVlyQ0R1SGtxZWhESUR3MnpsZHNodGN1WDZiNFE?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-23T07:00:00.000Z",
+  "fetchedAt": "2026-05-09T20:54:30.456Z",
+  "newsBrief": "信報報導指出，AI 與中醫的結合正從輔助診斷延伸至更廣泛的智能健康管理領域。隨著語言模型與多模態辨識技術的成熟，業界開始探索如何將中醫四診理論轉化為可計算的數位框架，讓望聞問切步入人機協作的新階段。",
+  "issueAnalysis": "中醫智能化的核心挑戰，不在技術能力高低，而在「可信度」的建立。LLM 的黑箱特性在通用問答場景尚可接受，但進入辨證論治的臨床決策鏈後，任何無法追溯推理依據的結論，都讓醫師難以採信。此外，望聞問切本身具有高度主觀性，若缺乏標準化的採集與編碼框架，模型輸入品質難以保證；而中醫資訊若無法對應西醫電子病歷標準，整合醫療的目標便只能停留在口號層次。",
+  "designResponse": "可追溯性是核心設計原則：128 條八綱與臟腑規則寫入 syndromes.json，中醫師可逐條核查每步推論依據 (proofPoint #1)；規則 ×0.6、LLM ×0.4 的混合辨證架構，確保語言模型受規則邏輯約束而非全憑黑箱 (proofPoint #2)。四診採集整合視覺舌診、音訊聞診與 rPPG 測脈，將主觀感知轉為結構化輸入 (proofPoint #5)，再對應 ICD-11 TM 章節輸出 FHIR R4 Bundle，打通中西醫資訊互通 (proofPoint #4)。每步推論可被查驗與修正，輔助決策才能獲得臨床信任。",
+  "tags": [],
+  "relevance": 0.7,
+  "highlight": false,
+  "criticPasses": 2
+}
