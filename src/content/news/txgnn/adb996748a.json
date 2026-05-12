@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "FDA推動老藥新用 徵詢意見盼為缺乏治療選擇疾病找新解方 - 環球生技月刊",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1FUmdZbVUtYTByRjRaZmlQQ1VPMlZkMm1hdlVsUXpsNjMzQTRsVk8tQ2l1VEtxUFZjX0pyc0h3Q1lrMkVYWm9pa295NUMzX0hOTDJQV09aSS1USlRMLVl2ZllFNl9tNUROcjN5OWFuNFptQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-12T06:06:37.000Z",
+  "fetchedAt": "2026-05-12T20:39:48.526Z",
+  "newsBrief": "美國 FDA 近期徵詢意見，推動「老藥新用」策略，盼為缺乏治療選擇的疾病找新解方。此舉反映監管機構對新藥研發高成本困境的正面回應，也為藥物再利用領域注入政策動能。",
+  "issueAnalysis": "新藥從候選分子到上市耗時逾十年，成本動輒數十億，孤兒病與罕見病患者往往在這條管道中無藥可用。老藥新用的邏輯在於：已通過安全性驗證的上市藥物，若能以計算方法系統性比對疾病機制，便可大幅壓縮試驗成本。然而藥品-疾病配對空間龐大、跨國資料分散，使潛在適應症埋沒在未被探索的角落，業界對系統性工具支援的需求因此日益迫切。",
+  "designResponse": "面對老藥新用的資訊整合挑戰，平台設計從預測可信度與臨床整合兩個維度切入。在預測端，採雙引擎並行架構，以知識圖譜捕捉已知關聯、深度學習挖掘隱性規律，交叉驗證降低誤判 (proofPoint #1)；每筆預測並附帶 PubMed 文獻與 ClinicalTrials 證據包，讓研究者得以直接評估可行性 (proofPoint #4)。在整合端，以 SMART on FHIR 標準接入 EHR 生態 (proofPoint #5)，使藥物再利用洞察得以直接呈現於臨床決策介面。",
+  "tags": [],
+  "relevance": 0.95,
+  "highlight": true,
+  "criticPasses": 2
+}
