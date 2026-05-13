@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "公司治理評鑑看什麼？信義房屋連12年蟬聯前5% 董事會多元與減碳成關鍵亮點｜熱門話題 - 網路溫度計DailyView",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9JbGtDYk1lMG9fbWNpSTUyaV85NXV2M1hHdlZCUkdfYzJNM1kyakJrdGxmR24yWVZJZkRsUVY1R2FTdHAzNTBHQWNHQ1Z5bzU3em00?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-11T03:00:00.000Z",
+  "fetchedAt": "2026-05-13T20:52:10.758Z",
+  "newsBrief": "公司治理評鑑揭示，長期穩居頂尖不僅靠單一指標，而需在董事會多元、氣候揭露與減碳績效等面向持續深耕。評鑑機制對 ESG 條文對應的完整性要求逐年提升，資訊揭露的一致性與可追溯性成為企業合規文件管理的新門檻。",
+  "issueAnalysis": "公司治理評鑑所涵蓋的指標體系日益複雜，GRI、TCFD、SASB 等框架條文相互交疊，企業需逐項對應並維持文件版本一致性。對多數中小型企業而言，評鑑準備往往仰賴人工彙整大量文件，跨部門版本管控與條文對應皆耗費大量人時。更值得關注的是，評鑑機制重視年度間的連貫性，這意味著文件更新必須可追溯、可稽查，任何臨時拼湊的資料結構都難以支撐長期的評鑑競爭力。",
+  "designResponse": "面對多框架 ESG 評鑑的條文對應挑戰，設計以同一套文件骨幹同時支援 GRI、TCFD、SASB 等體系（#6），讓條文關係結構化儲存、跨框架自動複用，避免各部門分頭維護。版本控管則以 12 個 GitHub Actions workflow 串成自動化管線（#1），每次更新留下可稽查紀錄，年度評鑑所需的連貫性由流程結構支撐，而非仰賴人工彙整與臨時補件。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 2
+}

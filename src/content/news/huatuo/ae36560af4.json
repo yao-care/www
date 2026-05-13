@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "望聞問AI／中醫仍卡「資料整合」 衛福部啟動標準化計畫拚跨院串接 - PChome Online 新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOQ04xREgyNFd6bmx0OG42UG9Yck9Vd0hoYWVfYTJxOGRNZ29KRmYwaHpFYUVRQWZQQW9Ic1NZZGtPeVZfZ0FJakJjUndoQlhnWTJOSlZyUnEtM1B3bEQzTnZHSVN4SUJFSXNIMEliX19fa3JGWGFiSjkxRG5jX1FUQzNVNDRISWF4YUF4VlFKX05LWFE?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-02T07:00:00.000Z",
+  "fetchedAt": "2026-05-13T20:49:21.677Z",
+  "newsBrief": "衛福部宣布啟動中醫資料標準化計畫，目標打通跨院資料串接壁壘。業界指出，中醫四診資料格式分歧、編碼體系不統一，是目前最大瓶頸。若計畫能落地，將有望讓中醫診斷資訊在不同院所之間流通，為 AI 輔助中醫問診的規模化應用奠定基礎。",
+  "issueAnalysis": "中醫資料整合的困難，根源不在技術，而在結構性的標準缺位。四診各自產生異質資料：舌象為影像、脈象為波形、症狀為非結構化文字，三者在傳統 HIS 系統中難以統一格式存放。此外，中醫辨證術語缺乏可機讀的編碼對應，使跨院比對幾乎無從進行。衛福部此次啟動的標準化計畫，顯示政策端已意識到：若無共同的資料語言，AI 輔助問診的應用將永遠停留在單點實驗，無法形成可累積、可驗證的臨床知識體系。",
+  "designResponse": "面對四診資料格式分歧、中醫術語難以機讀的核心問題，系統設計從輸出端即採用可互通格式：辨證結論對應 ICD-11 TM 中醫章節，以 FHIR R4 Bundle 封裝輸出（#4），使診斷資訊可直接嵌入現有 HIS 架構，無須等待各院所完成私有格式轉換。在推理層，128 條八綱與臟腑規則以 syndromes.json 明文寫定，可被逐條查閱（#1），確保辨證邏輯透明可稽——標準化的根基，不只是格式統一，而是推理可見。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

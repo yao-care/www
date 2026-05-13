@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "萬泰物流首次參與EcoVadis評鑑　即獲「承諾獎章」展現ESG永續實力 - ETtoday財經雲",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9YNUR6OXVIeUo4SzZmbWRtcndOTWQtYXdFOEJwX3dtWVRyNUcybElpQlRWVHVJRjZLMTlVY2podUtlM2RGZWFoa3RkUURvaVFpOXfSAW5BVV95cUxPMG0tT2M0ZkkzNzRLUEdVVEU3c2FRbU9lTmNDb0ZwWVhaS2daLUEyTWpobXVBSnB4U1g1RFZ6SHRzX2ZoT18zSG5qdk9aNGFpZVAtel9adDEtcU85VkRxMTdrWGQxVjFrMmhndG15QQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-12T09:23:00.000Z",
+  "fetchedAt": "2026-05-13T20:58:31.562Z",
+  "newsBrief": "一家物流業者首次參與 EcoVadis 評鑑即取得「承諾獎章」，顯示中小企業主動投入 ESG 外部評鑑的趨勢升溫。EcoVadis 涵蓋環境、勞工人權、商業道德與永續採購四大面向，廣被供應鏈採購方採認。此案例說明，系統性文件整備是首次參評企業能否跨過門檻的關鍵。",
+  "issueAnalysis": "ESG 外部評鑑對中小型企業而言，最大的摩擦來自文件整備的複雜度：問卷橫跨多個部門，要求政策文件、量化指標與第三方佐證同時就位，任一環節的版控不一或條文對應錯誤，都可能拉低整體評分。更深層的挑戰是，ESG、資安與醫院評鑑等多個框架往往各自為政，企業被迫重複建制性質相近的文件，耗費大量人工維護成本。如何讓評鑑文件整備可被自動化、跨框架共用，是中小團隊真正需要解決的核心問題。",
+  "designResponse": "針對 ESG 評鑑文件整備的核心摩擦，設計思路從框架抽象層切入：以自動化管線統一版控與稽核軌跡 (#1)，讓每次文件更新都有完整版本記錄可追；同一套框架底層可重組輸出 ESG（GRI/TCFD/SASB）或醫院評鑑規範 (#6)，避免跨框架重複建制文件。這套「一次建制、多框架輸出」的設計邏輯，讓中小團隊在首次參評時能以已整備的結構應對問卷，而非臨時拼湊材料。",
+  "tags": [],
+  "relevance": 0.7,
+  "highlight": true,
+  "criticPasses": 2
+}

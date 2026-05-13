@@ -1,0 +1,16 @@
+{
+  "target": "triz",
+  "title": "向量資料庫Pinecone推出AI代理知識引擎Nexus，主打以預先編譯知識改善RAG檢索問題 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1jcU5NM29DUGhyQXJFUmJPQjVHMzg2YkhCMXo5NldBRVZCLXZLdy1uZ3FIdXltZDJ2Q01ZaDZQRkFoc3NxeHJlU3FLYlNMUQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-12T07:36:15.000Z",
+  "fetchedAt": "2026-05-13T20:44:11.497Z",
+  "newsBrief": "向量資料庫服務商 Pinecone 推出新一代 AI 代理知識引擎 Nexus，核心概念是以「預先編譯知識」取代即時向量檢索，試圖解決傳統 RAG 在多步推理任務中召回精準度不穩的痼疾。",
+  "issueAnalysis": "Pinecone Nexus 點出 RAG 系統的根本限制：當問題需要跨段落多跳推理時，純向量相似度召回往往漏失關鍵上下文。這在知識密集型應用中尤為顯著——例如 TRIZ 工程矛盾解析需橫跨工程參數、矛盾矩陣、發明原則多層節點，若檢索管線設計粗糙，AI 推薦的解法便容易脫節。如何在建庫階段就把知識結構預先編譯進索引，成為 AI 知識引擎工程的核心課題。",
+  "designResponse": "面對多跳推理的檢索挑戰，關鍵在建庫階段就完成知識結構化。透過 crawl → chunk → embed 三階段 RAG 管線 (#3)，在 chunk 拆分時保留矛盾矩陣行列關係，讓向量嵌入本身攜帶結構語意，而非單純段落文字向量。在推理層，以多角色 SYSTEM_PROMPT 協作搭配 onStep callback (#4) 分工接力，讓矛盾識別、原則推薦各在正確節點精準召回，避免單一 LLM 呼叫在長鏈推理中失焦，也無需仰賴模糊語義碰運氣。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 2
+}

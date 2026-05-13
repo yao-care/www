@@ -1,0 +1,20 @@
+{
+  "target": "intel",
+  "title": "供應鏈攻擊連環爆：OpenAI、Trivy 同期遭北韓駭客組織鎖定 - informationsecurity.com.tw",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNZ2RuWmRIaXR3N0lBT1NUOVBSWW9fWUh2VVNvRE92Q0drT2dvdmVOMUtUdzZrX0lHR2I5OHVqQkxyQnZaX3NXdUYzX09xSXJycVh2NzdkRUhkQlZDbHBxWndHZ0xOZXM0YTlGWUg3SzRONzU3WDZScnJQdks1OUJMamZ3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-15T07:00:00.000Z",
+  "fetchedAt": "2026-05-13T20:56:23.423Z",
+  "newsBrief": "資安研究社群近期揭露，北韓駭客組織同期鎖定 OpenAI 供應鏈及開源容器掃描工具 Trivy，透過植入惡意套件的手法試圖滲透下游使用者。此波攻擊顯示威脅行為者已將目標轉向 AI 工具鏈與 DevSecOps 基礎設施，使供應鏈風險從傳統硬體製造延伸至軟體依賴層。",
+  "issueAnalysis": "供應鏈攻擊的核心難題在於，威脅事件往往分散在套件倉庫公告、CVE 資料庫、資安媒體與社群回報等多個異質來源，人工跨平台彙整極易遺漏黃金應對時窗。Trivy 這類被廣泛整合進 CI/CD 流程的開源工具一旦遭入侵，波及範圍往往在事件公開數日後才能被完整評估。對中小型資安或研發團隊而言，缺乏可重複跑的情報生產線，意味著只能仰賴單一訂閱來源的被動翻閱，而無法主動偵測散落在多源頭的異常事件訊號。",
+  "designResponse": "面對供應鏈情報散落多源的結構性問題，情報自動化系統的設計思路是將爬取觸角同時延伸至 RSS 訂閱、HTTP 靜態頁面與動態渲染場景，以三種模式並行覆蓋套件安全公告、CVE 資料庫與資安媒體 (proofPoint #1)。在事件發生後的快速篩選環節，每則情報會被自動標註關鍵字、情緒傾向與重要性評分，讓分析師得以在訊號湧入的第一時間識別高風險事件，而非在龐大資訊流中被動翻閱 (proofPoint #2)。此外，這套基礎設施的設計刻意保持可重組性——相同的爬取與標註邏輯，可直接移植到政策追蹤、競品監控或研究綜述等不同場景 (proofPoint #6)，讓中小型資安團隊也能以極低維運成本，建立屬於自己的情報生產線，從被動因應轉向主動感知。",
+  "tags": [
+    "供應鏈安全",
+    "資安情報自動化",
+    "開源工具風險"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1
+}
