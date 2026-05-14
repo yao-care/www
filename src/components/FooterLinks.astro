@@ -17,19 +17,18 @@ const year = new Date().getFullYear();
     <div class="grid gap-10 md:gap-12 md:grid-cols-12">
       <!-- brand block -->
       <div class="md:col-span-5">
-        <a href="/" class="inline-flex items-center" aria-label="藥提醒首頁">
+        <a href="/" class="inline-flex items-center" aria-label="yao.care 首頁">
           <img
-            src="/assets/images/logo.png"
-            srcset="/assets/images/logo_2x.png 2x"
-            alt="藥提醒 logo"
+            src="/assets/images/logo.svg"
+            alt="yao.care logo"
             class="h-10 w-auto"
-            width="132" height="40"
+            width="167" height="40"
           />
         </a>
         <p class="mt-5 max-w-md text-base text-[color:var(--color-ink-soft)] leading-relaxed">
-          以病人為中心，依循藥品使用標準碼與 ATC 編碼，
-          透過 LINE、Telegram 等通訊軟體提供用藥提醒；
-          同時提供醫療 AI、行銷投放、合規自動化、情報追蹤等延伸服務。
+          yao.care 用 AI 與自動化把硬問題變成可重複的系統 ——
+          智慧醫療、AI 系統、數位行銷三條業務線，
+          旗下涵蓋藥提醒、AI 華佗、TxGNN、情報自動化、評鑑稽核、TRIZ、整合行銷等服務。
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href={SITE.lineLink} target="_blank" rel="noopener" class="btn-line">
@@ -109,7 +108,7 @@ const year = new Date().getFullYear();
 
     <!-- bottom -->
     <div class="mt-12 pt-6 border-t border-neutral-200 flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-sm text-[color:var(--color-ink-muted)]">
-      <p>© 2020–{year} yao.care · 藥提醒. All rights reserved.</p>
+      <p>© 2020–{year} yao.care. All rights reserved.</p>
       <p>
         Built with
         <span class="text-[color:var(--color-ink-soft)]">Astro · Tailwind · D3</span>

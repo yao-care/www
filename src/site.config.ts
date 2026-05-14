@@ -1,11 +1,11 @@
 export const SITE = {
-  name: '藥提醒 yao.care',
+  name: 'yao.care',
   url: 'https://www.yao.care',
-  title: '藥提醒 yao.care — 用 AI 把硬問題變成可重複的系統',
+  title: 'yao.care — 用 AI 把硬問題變成可重複的系統',
   description:
-    '從基層用藥提醒、可驗證中醫問診 AI、老藥新用知識圖譜，到產業情報自動化、ISO/ESG/醫院評鑑稽核、TRIZ 創新方法庫與整合行銷 — 智慧醫療、AI 系統、數位行銷三條業務線都能持續產出價值。',
+    '智慧醫療、AI 系統、數位行銷三條業務線：可驗證的中醫問診 AI、老藥新用知識圖譜、用藥提醒、產業情報自動化、ISO/ESG/醫院評鑑稽核、TRIZ 創新方法庫、整合行銷與節氣內容 — yao.care 用 AI 與自動化把硬問題變成可重複的系統。',
   keywords:
-    '藥提醒,智慧醫療,AI 華佗,中醫 AI,TxGNN,老藥新用,SMART on FHIR,ATC 編碼,LINE 用藥提醒,情報自動化,GitHub Actions,ISO 27001,ESG,醫院評鑑,SIQC,TRIZ,RAG,AI Agent,知識工程,整合行銷,KOL,GCM',
+    'yao.care,智慧醫療,AI 系統,數位行銷,藥提醒,AI 華佗,中醫 AI,TxGNN,老藥新用,SMART on FHIR,ATC 編碼,LINE 用藥提醒,情報自動化,GitHub Actions,ISO 27001,ESG,醫院評鑑,SIQC,TRIZ,RAG,AI Agent,知識工程,整合行銷,KOL,GCM',
   ogImage: '/assets/images/og/home.png',
   email: 'service@yao.care',
   address: '台中市西區台灣大道二段239號13樓 (遠東金融商業大樓)',

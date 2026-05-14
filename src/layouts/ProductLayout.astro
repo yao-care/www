@@ -16,7 +16,7 @@ const { slug, title, description } = Astro.props;
 const product = PRODUCT_BY_SLUG[slug];
 const category = CATEGORY_BY_SLUG[product.category];
 
-const pageTitle = title ?? `${product.title} · 藥提醒 yao.care`;
+const pageTitle = title ?? `${product.title} · yao.care`;
 const pageDescription = description ?? product.description;
 
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
@@ -40,13 +40,13 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <title>{pageTitle}</title>
-    <meta name="author" content="yao.care 藥提醒" />
+    <meta name="author" content="yao.care" />
     <meta name="description" content={pageDescription} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="藥提醒 yao.care" />
+    <meta property="og:site_name" content="yao.care" />
     <meta property="og:locale" content="zh_TW" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
