@@ -157,7 +157,8 @@ $WWW_SITE_DIR/
 │   │       └── [target]/[slug].astro  ← 全文頁（NewsArticle JSON-LD）
 │   └── components/
 │       ├── Nav.astro          ← 固定頂部導覽 + 漢堡選單
-│       ├── ContactCTA.astro   ← #cta（LINE 加好友 — 仍在 yaocare.astro 用）
+│       ├── ContactCTA.astro   ← #cta 首頁公司層級 LINE 加好友 + mailto（與團隊聊聊）
+│       ├── CareTag.astro      ← 三條業務線的 yao・care 同音 wordmark pill（藥/鑰/邀・X (care)）
 │       ├── ContactMap.astro   ← #contact（地址 + Google Maps；幾乎所有頁底都會放）
 │       ├── FooterLinks.astro  ← 全站 footer：四欄連結（醫療/AI/行銷/聯絡）+ 回頂部
 │       ├── products/
