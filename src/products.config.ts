@@ -7,6 +7,15 @@ export const LINE_TEAM = 'https://line.me/ti/p/zruKr3pyPK';
 
 export type CategorySlug = 'medical' | 'ai' | 'marketing';
 
+export type CareTag = {
+  /** yao 同音字（藥/鑰/邀） */
+  yao: string;
+  /** 與 care 對應的中文詞（提醒/洞察/共鳴） */
+  word: string;
+  /** 一句話延伸解釋（hub hero 副標可用） */
+  motto: string;
+};
+
 export type Category = {
   slug: CategorySlug;
   label: string;
@@ -14,6 +23,7 @@ export type Category = {
   href: string;
   tagline: string;
   description: string;
+  caretag: CareTag;
 };
 
 export const CATEGORIES: readonly Category[] = [
@@ -25,6 +35,11 @@ export const CATEGORIES: readonly Category[] = [
     tagline: '以病人為中心，AI 從用藥提醒到診斷推理',
     description:
       '結合 LINE/Telegram 通訊軟體、ATC 藥品編碼、SMART on FHIR 互通協定，從基層用藥到醫療 AI 一條龍。',
+    caretag: {
+      yao: '藥',
+      word: '提醒',
+      motto: '用藥的提醒，是最日常的照護',
+    },
   },
   {
     slug: 'ai',
@@ -34,6 +49,11 @@ export const CATEGORIES: readonly Category[] = [
     tagline: '把專業知識變成自動化、可重複跑的 AI 系統',
     description:
       '情報追蹤、合規自動化、創新方法庫 — 用 RAG + 多角色 Agent 把專業領域的決策結構化。',
+    caretag: {
+      yao: '鑰',
+      word: '洞察',
+      motto: '把專業知識解鎖成可重複的洞察',
+    },
   },
   {
     slug: 'marketing',
@@ -43,6 +63,11 @@ export const CATEGORIES: readonly Category[] = [
     tagline: '醫友 × 節氣 × 合規 — 不靠硬廣的整合行銷閉環',
     description:
       '與 GCM 預防醫學發展協會 900+ 醫療專業合作，從策略診斷、內容製作、KOL 操盤、廣告投放到法規合規一條龍。',
+    caretag: {
+      yao: '邀',
+      word: '共鳴',
+      motto: '邀請對的人，讓對的事被在乎',
+    },
   },
 ] as const;
 

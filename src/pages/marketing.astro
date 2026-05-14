@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import FooterLinks from '../components/FooterLinks.astro';
 import ContactMap from '../components/ContactMap.astro';
+import CareTag from '../components/CareTag.astro';
 import ProductNews from '../components/news/ProductNews.astro';
 import { LINE_TEAM, CATEGORY_BY_SLUG } from '../products.config';
 import { SITE } from '../site.config';
@@ -213,6 +214,7 @@ const pricingTiers = [
       <div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
 
       <div class="relative max-w-7xl mx-auto px-4 lg:px-6">
+        <CareTag caretag={category.caretag} size="lg" class="mb-4" />
         <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
           {category.kicker}
         </p>

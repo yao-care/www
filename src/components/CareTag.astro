@@ -1,0 +1,47 @@
+---
+// yao . care 三條業務線專屬 wordmark
+//   - 醫療：藥・提醒 (care)
+//   - AI：鑰・洞察 (care)
+//   - 行銷：邀・共鳴 (care)
+// 用法：<CareTag caretag={category.caretag} size="lg" />
+import type { CareTag } from '../products.config';
+
+interface Props {
+  caretag: CareTag;
+  size?: 'sm' | 'md' | 'lg';
+  /** 包在容器內當 inline pill，還是 block 標籤 */
+  variant?: 'pill' | 'inline';
+  class?: string;
+}
+
+const { caretag, size = 'md', variant = 'pill', class: extraClass = '' } = Astro.props;
+
+const sizeClasses: Record<NonNullable<Props['size']>, { wrap: string; main: string; care: string }> = {
+  sm: {
+    wrap: 'gap-1.5 px-2.5 py-1',
+    main: 'text-sm md:text-base',
+    care: 'text-[10px] md:text-xs',
+  },
+  md: {
+    wrap: 'gap-1.5 px-3 py-1.5',
+    main: 'text-base md:text-lg',
+    care: 'text-xs',
+  },
+  lg: {
+    wrap: 'gap-2 px-4 py-2',
+    main: 'text-xl md:text-2xl',
+    care: 'text-xs md:text-sm',
+  },
+};
+const c = sizeClasses[size];
+
+const wrapBase =
+  variant === 'pill'
+    ? `inline-flex items-baseline rounded-full bg-white/80 backdrop-blur border border-[color:var(--color-brand)]/30 ${c.wrap}`
+    : `inline-flex items-baseline ${c.wrap.replace(/p[xy]?-[0-9.]+/g, '').trim()}`;
+---
+<span class:list={[wrapBase, extraClass]} aria-label={`${caretag.yao}・${caretag.word} (care)`}>
+  <span class={`${c.main} font-bold leading-none text-[color:var(--color-brand)]`}>{caretag.yao}</span>
+  <span class={`${c.main} font-bold leading-none text-[color:var(--color-ink)]`}>・{caretag.word}</span>
+  <span class={`${c.care} font-medium leading-none text-[color:var(--color-ink-soft)] tracking-wide`}>(care)</span>
+</span>

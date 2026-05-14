@@ -5,12 +5,15 @@ import ProductCard from '../components/products/ProductCard.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import ContactMap from '../components/ContactMap.astro';
 import FooterLinks from '../components/FooterLinks.astro';
+import CareTag from '../components/CareTag.astro';
 import HighlightNews from '../components/news/HighlightNews.astro';
-import { CATEGORIES, productsByCategory } from '../products.config';
+import { CATEGORIES, CATEGORY_BY_SLUG, productsByCategory } from '../products.config';
 
 const medicalProducts = productsByCategory('medical');
 const aiProducts = productsByCategory('ai');
-const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
+const marketingCategory = CATEGORY_BY_SLUG.marketing;
+const medicalCategory = CATEGORY_BY_SLUG.medical;
+const aiCategory = CATEGORY_BY_SLUG.ai;
 ---
 <BaseLayout>
   <Nav />
@@ -37,13 +40,18 @@ const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
         </p>
 
         <!-- 3 capability anchors -->
-        <div class="mt-10 grid grid-cols-3 gap-3 md:gap-5 max-w-3xl">
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 max-w-4xl">
           {CATEGORIES.map((c) => (
             <a
               href={c.href}
               class="group rounded-xl bg-white/80 backdrop-blur border border-neutral-200 hover:border-[color:var(--color-brand)] hover:bg-white px-4 py-3 md:px-5 md:py-4 shadow-sm hover:shadow-md transition-all"
             >
-              <div class="text-xs font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              <div class="flex items-baseline gap-2 mb-1.5">
+                <span class="text-lg md:text-xl font-bold leading-none text-[color:var(--color-brand)]">{c.caretag.yao}</span>
+                <span class="text-lg md:text-xl font-bold leading-none text-[color:var(--color-ink)]">・{c.caretag.word}</span>
+                <span class="text-[10px] md:text-xs font-medium text-[color:var(--color-ink-soft)] tracking-wide">(care)</span>
+              </div>
+              <div class="text-xs font-medium tracking-widest uppercase text-[color:var(--color-brand)]/80">
                 {c.kicker}
               </div>
               <div class="text-base md:text-lg font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors mt-0.5">
@@ -60,6 +68,7 @@ const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
       <div class="max-w-7xl mx-auto px-4 lg:px-6">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
           <div>
+            <CareTag caretag={medicalCategory.caretag} size="md" class="mb-3" />
             <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
               Smart Healthcare
             </p>
@@ -84,6 +93,7 @@ const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
       <div class="max-w-7xl mx-auto px-4 lg:px-6">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
           <div>
+            <CareTag caretag={aiCategory.caretag} size="md" class="mb-3" />
             <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
               AI Systems
             </p>
@@ -108,6 +118,7 @@ const marketingCategory = CATEGORIES.find((c) => c.slug === 'marketing')!;
       <div class="max-w-7xl mx-auto px-4 lg:px-6">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
           <div>
+            <CareTag caretag={marketingCategory.caretag} size="md" class="mb-3" />
             <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
               Digital Marketing
             </p>
