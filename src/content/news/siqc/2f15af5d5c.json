@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "AI Agent 成資安新破口 TeamT5：企業需重建 AI 資安機制 - yesmedia.com.tw",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMingJBVV95cUxPaFFqeHhDMGFEa2xuSEh2YUNlSmYxUlNER2RvMXM5T3RKVmZEOTQ2WDNBMGpZekRzZmEyaUQyUzVWM09rSGV0YXZ3LVRmYXMxQktBV1d1LUlQRDBFN3hxTnBkRFZub2dnTk1VdnZDYzA1cjdUdWRhLTZfVmIyaDZ5RHpMa1pHMm5JcV9pc1oxX3dIb0pNbjFsNFVhdjRHN3BiQ1k1MjlBTjVJNTRRclYwMXlmendRaGRCbm9qYTBmNzFkYmZWeDVPZ3JXZ1o5N3YxcmY3ZmZ0TXEyNUp4OEt5U21PMjRFSy1DZ3M5OS0zNHNUWVZZT3k2NVBrd3ItZVcyX3Z5bTh6QlNRY2gxRnVpLVk4UFpDVlhQeW0xLWVB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-12T01:07:57.000Z",
+  "fetchedAt": "2026-05-14T20:57:05.683Z",
+  "newsBrief": "資安業者 TeamT5 示警，AI Agent 正成為企業資安體系的新型破口。隨著 AI 自動化工具深入核心流程，攻擊面大幅擴張，傳統邊界防護已難以因應。企業若未針對 AI 工具建立相應的資安管理機制，現行合規框架將出現實質性缺口。",
+  "issueAnalysis": "AI Agent 的導入從根本上改變了傳統風險模型的邊界假設。當自動化工具具備自主呼叫 API、存取資料庫、執行程式碼的能力，ISMS 中原有的「人員操作」管控邏輯便不再完整適用。問題的核心不在 AI 本身是否安全，而在現行合規框架能否即時偵測 AI 行為衍生的新型威脅——包括提示詞注入、工具鏈濫用與供應鏈間接滲透。對多數中小團隊而言，既缺乏安全掃描整合能力，又面對 ISMS 文件版控壓力，此類新興風險更難以系統性應對。",
+  "designResponse": "面對 AI Agent 引入的新型攻擊面，現有合規框架需能覆蓋 LLM 特有風險。框架對齊 OWASP LLM Top 10，使提示詞注入與工具鏈濫用對應具體控制措施（#3）；以 12 個 GitHub Actions workflow 串接掃描至稽核包交付全流程（#1），確保 AI 元件受版控約束。供應鏈漏洞方面，每 15 分鐘輪詢 OSV API 並自動觸發告警（#4），讓威脅在進入工具鏈前即被截獲。",
+  "tags": [],
+  "relevance": 0.7,
+  "highlight": true,
+  "criticPasses": 2
+}

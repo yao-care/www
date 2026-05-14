@@ -1,0 +1,16 @@
+{
+  "target": "intel",
+  "title": "證交所攜資策會、 台經院建構產業投資情報 - MSN",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi9ANBVV95cUxQcTU0UHJmRWtzTk5VVnFnRTN0UzNoZVM0SGt0T1M3QnVDX3dXS0gtYVFYMENnX3RVV3Y2eXBHcFFablVGbVFCanZ1OXY4SUwzTHlYbGlYOS1DVnI2YjV0M184WXJyWWdfSXU0TVBuTTFkamMzbzNuWi1qMUR3LVE5OXRsZTdmNDNhZTBkSVhTSURib2lFUkxLYmF2NE8xRGNWOWxRNjYtM1cyQ2hKenBKaFk1MnhDal9HcERKX0NwT3c0YW13Z3p0WGlzRkc1RmVTZWxGNjFBbXVWN3JVamxBZVdVQzBFY2Nxbm9BSXVxUUI1T2hLanhRelkwR1lVcG92X0J6LWZqaVRxQzNHa0NMVjdYUU5MVVVNNGNZN0phY2pZVHlVYmFBZGVfLWdlckJ3c09NU3dUdmc1REN1VHg3TUQwVGN5aTFTMmtQQm5TTVJTeVpObjNSTmtmeEhBZW9hSkhyalcwY2lxTXEyS2VjNGZYeXQyNm1KSFBwQktTczhWNFVzaE9GVl9QNXlncExDVHRyZTNKRXBBcmZfN3NGckxuTjN6cFU4aWZjMFl3Sl9IMkhGV3NMVkk2djhGQXk5R1NlellJS3hyUVVTM0JKcjNsQzNKUVF0d2t2MkxpdDFsdWlNdVdhcnRFSFlFZlkwcDFlZw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-27T02:50:50.000Z",
+  "fetchedAt": "2026-05-14T20:41:09.617Z",
+  "newsBrief": "證交所攜手資策會與台經院，共同推動產業投資情報整合。此合作試圖將財務數據、產業趨勢與研究報告等異質資料匯流，打造可供投資決策參考的情報平台。此舉清楚映照出：現有投資情報的生產流程仍高度依賴人工彙整，難以即時回應市場訊號的變化需求。",
+  "issueAnalysis": "產業投資情報的挑戰從來不在於「資料不夠多」，而在於資料高度分散。財務報表、法人持倉、產業報告、新聞輿情，各自散落於不同平台與格式之中，人工彙整既耗時又容易漏失關鍵訊號。更深層的問題在於：即使資料彙整完成，仍缺乏機制在「異常事件發生當下」主動推送警示，而非等待分析師事後發現。此次多方機構聯手，反映的是一個普遍困境——要建構一套可重複跑、能即時偵測的情報生產線，在中小型研究或投資團隊中幾乎付之闕如。",
+  "designResponse": "面對情報散落、更新速度跟不上決策節奏的核心問題，情報自動化系統的設計思路是：將資料取得、標註與告警整合進同一條管線。系統支援 RSS、HTTP 與 JavaScript 動態頁面三種擷取模式，確保異質來源都能納入統一流程 (#1)。每筆事件自動獲得關鍵字標記、情緒分數與重要性評分，無需人工重新解讀原始文字 (#2)。針對財務型指標，季報發布後自動比對 AR 與庫存變化，超過 ±20% 即觸發告警 (#3)，將異常偵測從被動翻閱轉為主動推送。整套基礎設施運行於 GitHub Actions 免費方案 (#4)，讓小規模團隊也能建立可重複跑的情報生產線。",
+  "tags": [],
+  "relevance": 0.82,
+  "highlight": true,
+  "criticPasses": 2
+}

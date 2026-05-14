@@ -1,0 +1,16 @@
+{
+  "target": "triz",
+  "title": "AI 幻覺有解了嗎？NotebookLM 把教室變成封閉域知識庫 - TechNews 科技新報",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOOFU2MzVScHhpT283UE9pcnlGdmEwcHozWmhDc3NsVXdjWFNOeGtDSjF6MXRFT3Ytc1ZsSTVwWU05T01tejhkSV9kXzhqOS16WHZMVlR6TWx5Z0djWWp3Z24zWDY4OFMxVXhwT3d5ODFxZHVRazdRS0ZhYjNPandiTUZqaXRoWXF4ZXJuNTdUNWNzSmdNa0E?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-13T00:12:48.000Z",
+  "fetchedAt": "2026-05-14T20:44:44.495Z",
+  "newsBrief": "Google 的 NotebookLM 透過「封閉域知識庫」設計，讓 AI 僅在使用者上傳的文件範圍內作答，藉此大幅降低 AI 幻覺的發生率。這種「先劃定知識邊界、再讓 AI 推理」的架構思路，正在教育與企業場景中引發廣泛討論，也讓知識管理的精確性重新成為 AI 工具設計的核心議題。",
+  "issueAnalysis": "AI 幻覺的根源在於大型語言模型難以區分「訓練時習得的統計模式」與「可驗證的領域事實」。封閉域知識庫的興起，本質上是將知識邊界的控制權交還給使用者——AI 只能在被授權的文件集合內尋找答案，無法憑空捏造。對 TRIZ 這類高度仰賴精確知識體系的領域而言，這個問題尤其關鍵：若 AI 在矛盾矩陣的格位對應或發明原則的引用上出現幻覺，所推薦的解法將失去可信度，甚至誤導工程決策。",
+  "designResponse": "面對 AI 幻覺挑戰，TRIZ AI 知識庫的核心設計是在架構層次控制知識邊界。知識層建構涵蓋 40 發明原則、39 工程參數與 263 矛盾矩陣的完整向量庫（#1），確保每次推薦都有明確知識來源可追溯。管線層採用 crawl → chunk → embed 三階段 RAG 管線（#3），將知識文件切分為精準語義片段後向量化，使檢索結果精確對應具體矩陣格位或原則條目，而非寬泛的主題聯想。這套設計讓系統在每個推理步驟都有結構化知識文件作為依據，大幅縮小 AI 自由發揮的空間。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 2
+}
