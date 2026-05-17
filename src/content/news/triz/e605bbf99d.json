@@ -1,0 +1,16 @@
+{
+  "target": "triz",
+  "title": "高餐大舉辦系統性創新競賽 培育中學生用 TRIZ 邏輯翻轉未來 - 環球日報社",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1pOTlZNmlqZWRRVnFFTlJJcm5HLW82R01SUG0xU2VaWEkzNjhLNkhkRjNibXRoX0xlTVg4RGxjN0tfZ3hYdEZ6aVpfYVp2STFVc1h2ZUhZblY3Q29hM0xjc0dzS2VVNmYxLXc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-17T17:37:32.000Z",
+  "fetchedAt": "2026-05-17T20:43:19.271Z",
+  "newsBrief": "高雄餐旅大學舉辦系統性創新競賽，引導中學生透過 TRIZ 邏輯方法識別問題矛盾、提出解法，藉由競賽情境讓年輕學子提前接觸結構化創新思維框架，是將 TRIZ 方法論向下扎根的具體嘗試。",
+  "issueAnalysis": "TRIZ 長期被視為「工程師的工具」，操作門檻高、需要有經驗的導師陪伴才能有效應用。高餐大以競賽形式引入中學場域，說明創新教育圈已開始正視 TRIZ 的系統性價值——但也同時暴露了一個結構性困境：當參賽者缺乏矛盾識別的自動化輔助時，光靠「教 40 條原則」並不足以讓學生在有限時間內收斂出可行解。從工程矛盾的定義、到對應矛盾矩陣的查找，每一步都需要大量背景知識，這正是傳統 TRIZ 工具普及化的最大瓶頸。",
+  "designResponse": "TRIZ 的知識密度高，查找矛盾矩陣與原則的過程往往成為應用瓶頸。針對此痛點，系統以向量庫完整收錄 40 發明原則、39 工程參數與 263 矛盾矩陣 (#1)，讓使用者只需描述問題即可自動定位原則候選，無需背誦整張矩陣。知識庫同步涵蓋 4 分離原理、Oxford Effects 與 AutoTRIZ Cases (#2)，確保跨領域場景的解法生成不受單一知識框架侷限，降低 TRIZ 在教育與組織推廣中的門檻。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

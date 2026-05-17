@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "衛福部預告 合格護理機構評鑑時效4年改6年 - MSN",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiuwJBVV95cUxOaHh6UEdWOHhRTGxacXc1N1ZGT2Y4X2RRNi1lMTRad2tkMk9KSjFka0ZucXBILXVKa2g0YnM5YjFGZlVBbEU2YmQ0ZnhVNmxULUZLeHdnTWNGQTNqRFZXUzZPaERHVjV0TFNVTW5GSlc2VDVsbWtjS184Mm9yeFRKZGZjRlVERVhLT2RJNERDd2MwS0RJUXpFeEdkbXFBdjlOYk90RmFKVlUtYWd4cGtaMXZUZXZacFlIUHJwSXJhNk5jNlFLN3VTMjFLcHByR05vR3hhb3ZpMU1ac2lId3FSUi1xWHB1MFUxOGVLTy02S0s4OVpCNFBqN21HV3ktRk41dU5GVi00VnZ0clBsajQzZ25aUXRIeFZ0eFczNXNFV1AyeUNUZTU1OVZJcmRidXRBTzJHX1ZOSC12N0U?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-17T01:29:38.000Z",
+  "fetchedAt": "2026-05-17T20:48:47.142Z",
+  "newsBrief": "衛福部預告修訂護理機構評鑑辦法，將合格機構評鑑時效從現行四年延長至六年。此舉旨在降低中小型護理之家的行政負擔，但也意味著機構需在更長週期內自主維持品質文件的完整性，合規管理的內部壓力並未因週期拉長而減輕。",
+  "issueAnalysis": "評鑑週期拉長，乍看是行政鬆綁，實則對機構的內部合規能力提出更高要求。四年改為六年，意味著機構必須在更長時間內自主維持文件版控、條文對應與稽核紀錄的連續性，無法仰賴外部評鑑壓力驅動內部整備。對資源有限的中小型護理機構而言，人工彙整文件與追蹤各項指標的成本本就偏高；週期拉長後，若缺乏系統性管理機制，文件失效、條文漂移的風險反而可能在下次評鑑前悄然累積至難以修補的程度。",
+  "designResponse": "評鑑週期延長後，合規維護的責任更多落在機構內部。文件版控與條文追蹤若靠人工處理，隨時間推移容易失真累積。以自動化管線串接日常 CI 流程（#1），讓文件掃描與版本快照成為常態，而非評鑑前夕的搶修動作。搭配 64 份 ISMS 文件框架與 13 條安全掃描管線（#2），機構得以在任何時間點產出可交付的稽核佐證，週期拉長反而成為建立常態合規節奏的契機。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 2
+}
