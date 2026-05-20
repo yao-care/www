@@ -1,0 +1,16 @@
+{
+  "target": "intel",
+  "title": "2026產業預測出爐！AI伺服器年增12％ PC、手機同步轉弱 - 自由財經",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9yQmVIQUZadEhaNkcyR09TbFl1SDhSRnJ1amttNEpVU2hKT3VFU1dsaEViSG5BOUZLdzBsRFYyZ09qVHpZRTZOU2NySXRZVEpYXzBwc2R5QV9VQW5udzFr0gFkQVVfeXFMTTJOSW9tR3o4UFloX3VqeDZna282ekpOZm1OX1ZaRjZTdmxiT2VJODM2cXBJTGpKcmxaTUU2YXpJLTJqT3ZmQ29aQXRlQlRqVklkRE1veGJHR3ZYZEV4TDNxeDlTWg?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-29T07:00:00.000Z",
+  "fetchedAt": "2026-05-20T20:47:05.618Z",
+  "newsBrief": "2026年產業預測顯示AI伺服器出貨量年增達12%，PC與手機則同步轉弱，資本支出快速向AI基礎建設集中。這波需求分化不只是終端產品消長，更代表供應鏈組成正在重構，上游零組件廠商所面臨的需求訊號日趨分歧，情報判讀難度大幅上升。",
+  "issueAnalysis": "這類產業分化報告往往每季更新一次，但市場動態的變化遠快於人工追蹤的頻率。財務數據、庫存水位、機構持倉等關鍵訊號散落在法說會逐字稿、供應商財報、研究報告等不同來源，分析師光是彙整就耗費大量時間。更棘手的是，當AI伺服器需求急升、PC需求走緩，兩條截然不同的供應鏈開始以不對稱的節奏波動，手動監控容易漏掉臨界點前的異常訊號。中小型研究團隊尤其缺乏可重複執行的情報生產線，往往只能在事件發生後被動補資料。",
+  "designResponse": "面對需求分化加速的供應鏈環境，情報系統設計的核心在於主動偵測而非被動彙報。資料蒐集環節採RSS、HTTP、Playwright三模式並行爬取（#1），確保財報附件、即時新聞等不同格式的資料源均能納入同一資料流，不因格式差異而漏接訊號。異常偵測環節針對季度財報應收帳款與庫存變化設有門檻監控，波動幅度超過±20%即自動告警（#3），讓分析師在分化拐點出現時第一時間收到通知。整套基礎設施跑在GitHub Actions免費方案（#4），中小型研究團隊毋須自建伺服器，即可建立可重複執行的情報生產線。",
+  "tags": [],
+  "relevance": 0.7,
+  "highlight": true,
+  "criticPasses": 2
+}
