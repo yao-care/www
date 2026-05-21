@@ -1,0 +1,16 @@
+{
+  "target": "triz",
+  "title": "SAP 與 Google Cloud 擴大合作夥伴關係 共同部署多代理AI系統 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9Fb2JieVdPYUJxUmFQTk5vdjV5RzE1YnVXeEw3T1FMcVpza3VUYlh0QVdJalVuV0RPT29HM0VrVXJ4TmVOSml3QzFWbw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-28T07:00:00.000Z",
+  "fetchedAt": "2026-05-21T20:55:53.269Z",
+  "newsBrief": "SAP 與 Google Cloud 宣布擴大合作夥伴關係，共同在企業環境中部署多代理 AI 系統。此舉標誌著大型平台廠商開始將多 Agent 協作架構視為主流企業 AI 基礎設施的核心元件，而非實驗性技術，進一步加速各產業將複雜知識工作自動化的進程。",
+  "issueAnalysis": "多代理 AI 系統的崛起，不只是技術架構的演進，更觸及一個關鍵問題：Agent 在執行任務時，仰賴的「知識庫品質」往往決定最終解法的可用性。以創新方法論為例，TRIZ 的核心邏輯——從矛盾識別到原則推薦——本身就是高度結構化的專業知識。若缺乏精準的向量化與語義對齊，Agent 再聰明也只是在錯誤的知識基礎上快速犯錯。AI Agent 與專業知識庫整合的工程實務，目前在業界普及度仍低，成為多代理系統真正落地的隱形瓶頸。",
+  "designResponse": "多代理系統真正落地的挑戰，在於知識庫品質而非 Agent 數量。TRIZ AI 知識庫以 40 發明原則、39 工程參數、263 矛盾矩陣建構完整向量庫 (#1)，搭配 crawl → chunk → embed 三階段 RAG 管線 (#3)，讓 Agent 推理時有精確結構性依據，而非依賴即興推斷。多角色 SYSTEM_PROMPT 與 onStep callback (#4) 使問題描述、矛盾識別、原則推薦各步驟分工明確，並保持執行狀態的即時可觀測性。知識結構化是多代理協作真正可用的前提條件。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 2
+}
