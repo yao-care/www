@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "CRA生效在即 ONEKEY攜手創提科技翻轉資安合規壓力為市場紅利 - DIGITIMES",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOWURseXEzOTJscXd0OHIteC0ya19wT3dlU2RxRWlHZWlPMF9jZnZ1V0ltUUlKbFA5RWkwdXMxNlhWdGl2VVBDYWJVQU90NjhsVzZnamJTWEJxSm1lYndfSkNXMTRXbnhLblJPVG8yUDBJQVNsRXN6czloQWo5dnluSEJUS05BOHZNZDZvWjhlNFNTMnJPbGtQYV9EeGx2UVFnQy1B?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-25T16:35:43.000Z",
+  "fetchedAt": "2026-05-25T20:44:38.468Z",
+  "newsBrief": "歐盟《網路韌性法》（CRA）即將正式生效，要求硬體與軟體產品在整個生命週期符合資安基準。ONEKEY 攜手本土業者，主張企業應將合規壓力轉化為市場優勢——主動建立可驗證的安全文件體系，既能規避罰則風險，也能在供應鏈審查中取得競爭地位。",
+  "issueAnalysis": "CRA 的合規要求橫跨漏洞揭露義務、安全更新週期、技術文件留存等層面，對中小型軟硬體廠商衝擊尤深。現行痛點在於：安全掃描散落 SAST、滲透測試、SBOM 各自為政，缺乏統一追蹤；文件版控與條文對應難以維繫，評鑑準備仰賴大量人工彙整。一旦監管機構要求提交完整稽核紀錄，臨時補件的代價往往遠高於平時維護。問題的根源不在「要不要合規」，而在「有沒有一套可持續運作的稽核架構」。",
+  "designResponse": "面對 CRA 跨層面合規要求，關鍵在於讓安全稽核成為開發節奏的一部分。在掃描層，(proofPoint #2) 13 條安全掃描管線 + 64 份 ISMS 文件框架使每次提交自動留下可查閱紀錄；在交付層，(proofPoint #5) 稽核包以 GitHub Release 打包離線交付，條文可追溯、格式可重現，讓合規文件從「臨時備料」轉為常態資產。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": false,
+  "criticPasses": 2
+}

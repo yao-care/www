@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "華安旗下源華智醫將參加輝達台北電腦展大會 展示AI老藥新用平台 - 自由財經",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1QYmktSWlDb3ZaWXNiM0wteDU4MkVtTUpBWFBlYk9kRmRKOGcxc3VDbEwtNkE2RlFLVmFoRWNrUFBoWDQ2cGFrSktZdXREcFktX1RHbnlERWdGeEFJVk9nRWpENS3SAWRBVV95cUxNUGJpLUlpQ292WllzYjNMLXg1ODJFbU1KQVhQZWJPZEZkSjhnMXN1Q2xMLTZBNkZRS1ZhaEVja1BQaFg0NnBha0pLWXV0RHBZLV9UR255REVnRnhBSVZPZ0VqRDUt?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-25T10:11:01.000Z",
+  "fetchedAt": "2026-05-25T20:40:58.327Z",
+  "newsBrief": "源華智醫宣布參加輝達主辦的台北電腦展大會，展示AI老藥新用平台。此舉顯示老藥新用技術正從學術研究走向產業展演舞台，AI驅動藥物再利用議題在全球醫療AI浪潮中熱度持續攀升。",
+  "issueAnalysis": "老藥新用的核心吸引力在於縮短開發週期、降低研發風險。然而這個領域長期面臨兩大結構性障礙：既有藥物資料分散於各國法規資料庫，缺乏跨國整合入口；AI模型的預測結果往往缺乏充分文獻佐證，難以取得臨床端信任。此次業者選擇在國際展會上展示平台，折射出市場正從「技術可行性論述」走向「臨床場景落地說服力」的關鍵轉折。",
+  "designResponse": "面對老藥新用市場「預測有餘、說服力不足」的共同痛點，核心設計思路是讓每一筆預測都能自帶可查核的證據鏈。在跨國藥品覆蓋上，平台整合多國藥品資料庫 (proofPoint #2)，確保研究者不受單一市場限制。在取信臨床端的關鍵環節，每個適應症預測附帶PubMed文獻與ClinicalTrials試驗證據包 (proofPoint #4)，讓醫師可在同一介面評估文獻支撐強度而非依賴黑盒子預測。平台亦採SMART on FHIR架構相容主流EHR系統 (proofPoint #5)，降低臨床整合摩擦。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}
