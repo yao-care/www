@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "藥師陪你「療」1／3年僅收5案　居家醫療藥師嘆「無用武之地」 - NOWnews今日新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBXR1FUNmp1ZjhYNmJWcWRpeU5uakI1MzdGeThwS3NaTV9tYmxiMzJBTTdOTFVidy1ZOGtqV2JueG1md3F0aFB3SFpqckxBaHE1YnfSAVJBVV95cUxQV0dRVDZqdWY4WDZiVnFkaXlObmpCNTM3Rnk4cEtzWk1fbWJsYjMyQU03TkxVYnctWThraldibnhtZndxdGhQd0haanJMQWhxNWJ3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-27T00:00:00.000Z",
+  "fetchedAt": "2026-05-27T20:47:46.685Z",
+  "newsBrief": "根據報導，台灣「藥師陪你療」計畫推行一年僅收案5件，居家醫療藥師感嘆「無用武之地」。制度雖已建立，但轉介機制未能暢通、收案量過低，使藥師的居家藥事服務能量遭到閒置，慢性病與高齡患者出院後的用藥支持出現明顯缺口。",
+  "issueAnalysis": "居家醫療藥師收案量極低，折射出社區藥事服務的深層困境：轉介流程缺乏標準化、藥師介入時機難以嵌入現有照護流程，加上患者與家屬對藥師居家角色的認知不足。對多重用藥的高齡患者而言，出院後的用藥銜接往往落入「三不管地帶」——醫師開完方、藥師調完劑，後續是否按時服藥卻無工具追蹤。收案量低並非需求不存在，而是主動觸及機制與跨週期追蹤工具的雙重缺失，讓藥師的專業能量難以在居家場域真正發揮。",
+  "designResponse": "居家藥師難以持續追蹤患者用藥，關鍵在於缺乏從提醒到回報的完整工具鏈。在觸及高齡患者的入口設計上，採用 LINE／Telegram 推播提醒，無需患者另安裝 App（#2），以既有通訊習慣為載體降低數位門檻；提醒訊息附藥品外觀圖片，在多重藥品易混淆的辨識環節，以視覺輔助確認取代純文字描述（#3）。在藥師端的監看設計上，採用批次總覽方式呈現各追蹤對象的服藥回報狀況（#4），讓藥師能在單一介面跨對象掌握用藥脈絡，使居家訪視與遠端追蹤形成互補，藥事服務的介入過程得以被系統性記錄、成為制度參照的依據。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": false,
+  "criticPasses": 3
+}

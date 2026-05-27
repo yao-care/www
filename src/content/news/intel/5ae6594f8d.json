@@ -1,0 +1,16 @@
+{
+  "target": "intel",
+  "title": "Mini Shai-Hulud供應鏈攻擊波及GitHub，近3800個內部儲存庫遭外洩 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFA4SnRScUJpZ1lkS3hFODVzd1BuRHltS2RfNmtNQmxzWUozQ01UUzhVem81eGtyTFhEaV9mdHFyVmZfX1hFekxrTHVkVTJjQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-21T03:26:07.000Z",
+  "fetchedAt": "2026-05-27T20:51:41.071Z",
+  "newsBrief": "名為 Mini Shai-Hulud 的供應鏈攻擊波及 GitHub，近 3,800 個內部儲存庫遭到外洩。攻擊者透過污染開源相依套件，在開發者毫無察覺的情況下滲入環境竊取機密。此事件凸顯開源生態中第三方依賴所帶來的廣泛攻擊面，以及企業情報資產在供應鏈層級的高度暴露風險。",
+  "issueAnalysis": "供應鏈攻擊之所以難以防範，根本原因在於攻擊向量分散於數千個外部套件之中，任何一個環節遭汙染，整條開發流程都可能被靜默滲透。傳統人工審查早已跟不上開源生態的更新速度，資訊量已超越人力可及的範疇。更核心的問題是：多數團隊缺乏可重複執行的情報追蹤流程，無法在事件曝光前主動偵測異常訊號，只能依賴媒體報導才驚覺已身陷其中。",
+  "designResponse": "面對多點爆發的情報危機，設計核心在於主動偵測而非被動等待。系統以 RSS、HTTP 與 Playwright 三種模式並行爬取多元來源，確保安全公告與供應鏈異動能在第一時間納入監控範圍 (#1)。取得資料後，每則事件自動進行關鍵字標註、情緒評分與重要性排序，將高風險訊號從大量雜訊中篩出，取代人工逐條翻閱的被動模式 (#2)。整套基礎設施跑在 GitHub Actions 免費方案，不需額外伺服器資源，使規模較小的情蒐團隊也能維持持續運行的情報生產線 (#4)。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": false,
+  "criticPasses": 2
+}
