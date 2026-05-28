@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "藥品不是越多越好 北市聯醫提醒多重用藥的隱藏風險 - UDN",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE00Z080ejZCczF3SU9MNUdTZ2VkTWV1ZVIwOHdDeURKOXNpN2dvX1N2cXl4NzE2QVE1cUM0Ym9uU0NlYmhGT3ZCU0VZNmJndDdy0gFWQVVfeXFMUG1sQ2NPMVFDNEoxaGdleVQzTjFoR0x5czUyQVNhV2wzUVl2aURnNy1iSkxzS1M5a3V3cW53a0VpZU1DMWVBOXRQcER2TGoyc2lZYUwwdUE?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-28T04:21:14.000Z",
+  "fetchedAt": "2026-05-28T20:46:14.456Z",
+  "newsBrief": "多重用藥在高齡慢性病族群中相當普遍，醫療機構提醒，同時服用五種以上藥物時，交互作用與副作用風險顯著上升。患者往往難以自行辨識潛在危險，藥師在跨機構處方整合上也面臨資訊斷層，如何有效追蹤患者用藥情形，已成為當前重要課題。",
+  "issueAnalysis": "多重用藥問題在慢性病高齡患者中尤為突出，同時使用五種以上藥物時，藥物交互作用的發生機率成倍增加，患者自行管理的難度也隨之攀升。現行藥事服務體系的核心困境在於：藥師往往只能在單次領藥接觸時掌握有限資訊，缺乏跨領藥週期的整體視角；加上老年患者對數位工具的接受度差異極大，如何在不增加操作負擔的前提下，持續追蹤多重用藥患者的服藥情形，是系統設計上亟需正視的結構性矛盾。",
+  "designResponse": "面對多重用藥的管理難題，藥提醒從資訊整合與觸達兩個層面回應。在整合端，系統採用 ATC 編碼對接健保處方，藥師無需人工輸入即可掌握患者完整用藥清單 (#1)；提醒訊息附帶藥品外觀圖片，讓多重用藥患者在每次服藥時能即時比對，從源頭降低混淆風險 (#3)。在觸達端，以 LINE 與 Telegram 作為推播載體，老年患者無需安裝任何 App，確保提醒能真正抵達最需要的族群 (#2)。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

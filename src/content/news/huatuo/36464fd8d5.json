@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "25 歲年青人用 AI 配中藥強身反變更虧！ 中醫警世：AI 根本睇唔出體虛成因 - ezone.hk",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMimgNBVV95cUxNeTN4YURDeEVKYjdqQUpNUHNrSXd2R1ZFaWlraURTRHhXcWxiTjV0YWxMakEtOVpCbjJKRy1PdjhZU2l5QzJEUDJWdlVteVVLVzl5YnVkUlV3OVdSdWZnckdSaTluUDRxSmNfV3pTck13RWpWa2NWVXBCMEp4dEdSYzZOektRMTZndFNfZC1Db0lSWGd3N2RYbkE5Q1QyS1VRTUg0NHJoX1dGRkhDRGZxM3BQU0VXUnJPZFJCejVHQXczaDJXY3RTMTdoOTI2M3J2R3lHSHE0a3FzbzAzQUJnaWpQVjM5NkdxZU4xRnRFOEsxcWNILTJxN3B4OTRBRzJ4WkVFdXN2STZhNXdlR3YzcUxOSy1TT3Vna1NoVTRXZG5RNkNOYUNzR1BwRjM0bmVBVlFCVFY5aFZ6OTFaWTFQeUhGR0xlT1ZKY2IyY0NXS3NIVnZsQUJta1FaSjZRT0d2TjZKUllNNld5UThHSXNKaWJxTkZCRFkzN0t2MlFVaV9VUXh0RjBEazAyLXBLTEt5T2xWQUNJY25FZw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-28T13:16:00.000Z",
+  "fetchedAt": "2026-05-28T20:37:57.796Z",
+  "newsBrief": "一名25歲年輕人依賴AI建議自行配中藥補身，結果體況反而更差。中醫師指出，體虛成因繁複，現有通用AI無法完整採集四診資訊，更無法辨別虛不受補、虛實夾雜等複雜證型，提醒民眾不宜以黑箱AI取代正規中醫問診。",
+  "issueAnalysis": "這則案例折射出中醫AI應用的核心困境：通用型大語言模型在生成建議時，無法呈現推理依據，使用者也無從驗證其辨證邏輯是否符合中醫理論。體虛症狀看似單純，背後可能涉及氣虛、陰虛、血虛乃至虛實夾雜等截然不同的證型；若缺乏完整四診資料，任何補益方案都可能南轅北轍。更深層的問題在於：中醫師缺乏結構化的決策支援工具，民眾則直接暴露在未經驗證的AI輸出之下，形成臨床安全的雙重風險。",
+  "designResponse": "面對AI黑箱辨證失準的風險，系統以128條八綱與臟腑規則作為推理主幹（#1），每條規則均寫在 syndromes.json 中，可被中醫師逐一檢視，而非封存於模型黑箱。辨證採規則×0.6、LLM×0.4的混合權重（#2），讓規則體系與語言模型相互校正，兼顧邊界情境的彈性。每個辨證結論均記錄完整推理路徑與RAG證據（#3），讓中醫師得以逐步追溯，不必面對無法解釋的輸出，從根本降低「補錯方向」的臨床安全風險。",
+  "tags": [],
+  "relevance": 0.95,
+  "highlight": true,
+  "criticPasses": 2
+}
