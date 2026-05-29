@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "藥品不是越多越好 北市聯醫提醒多重用藥的隱藏風險 - UDN",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9lQ0pqRzZIeERyWUdSLVZDclptR1RVVUdrRXFmRUNacEJJZ0NWd2ppQnNwUEZRT3JJLUVmMjF4RXNHRjFkd0d0SFhlWlZMcnJV0gFWQVVfeXFMUDZ0LTgzeUNGWWpZTmF4SHhjbWp2MklXelYydnpEQ1huNmR5eWczVUJwVVZSdDRpOGhmN3JqVHQ5QUw2Q2xNV043cVFtRi1UQ1RybzlYd2c?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-28T04:21:14.000Z",
+  "fetchedAt": "2026-05-29T20:53:49.491Z",
+  "newsBrief": "北市聯醫提醒民眾，同時服用多種藥物雖常見於慢性病管理，卻潛藏藥物交互作用、重複用藥與副作用累加等隱形風險。高齡患者尤其容易因就醫科別分散而累積不必要的處方，導致用藥安全問題被忽視。",
+  "issueAnalysis": "多重用藥問題的核心，不只是「藥太多」，而是缺乏一個能跨越科別、跨越領藥週期的整合視角。台灣慢性病患者常分散於不同科別就診，各科開立的藥物缺乏統一的藥師審視，交互作用風險便在無聲中累積。患者本身對自身完整用藥清單的掌握度往往不足，尤其是老年族群，更難以在就醫時主動揭露所有用藥資訊。這種「資訊斷裂」使潛在藥物衝突難以被及時發現，藥師的追蹤角色至關重要，卻長期缺乏足夠工具支援。",
+  "designResponse": "面對多重用藥風險，藥提醒從患者端與藥師端兩個維度著力。患者端透過 LINE 與 Telegram 推播提醒，無需安裝 App，降低高齡族群使用門檻 (proofPoint #2)；提醒訊息附帶藥品外觀圖片，減少多種藥品混淆機率 (proofPoint #3)。藥師端採用 ATC 編碼對接健保處方資料，毋需人工 keyin 即可快速掌握患者完整用藥輪廓 (proofPoint #1)，並可批次查看追蹤對象的服藥狀況，讓主動介入高風險患者成為可操作的日常工作 (proofPoint #4)。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

@@ -1,0 +1,20 @@
+{
+  "target": "yaocare",
+  "title": "雞婆藥師的送藥地圖／李世陽每周送藥三重到坪林 十年如一日和患者成老友 - 元氣網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBwWEJoUWJNSlIzN21ON2RHQTZmeUdzY0ZyYTdOZGR3eDl2RTFraURtbERfNktHOFZlZE1XTVFvUlpYZW1wWUkyQUVLWmVNQmNIMkNRckUyMUxCVUVORlFDd2l30gFiQVVfeXFMUHBYQmhRYk1KUjM3bU43ZEdBNmZ5R3NjRnJhN05kZHd4OXZFMWtpRG1sRF82S0c4VmVkTVdNUW9SWlhlbXBZSTJBRUtaZU1CY0gyQ1FyRTIxTEJVRU5GUUN3aXc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-29T01:32:43.000Z",
+  "fetchedAt": "2026-05-29T20:58:56.587Z",
+  "newsBrief": "台灣有藥師十年如一日，每週從三重驅車到坪林送藥，與偏遠地區患者建立深厚信任。這類「雞婆藥師」的故事，折射出台灣偏鄉用藥服務的真實缺口：當行動力受限的患者無法親赴藥局，送藥與追蹤的重擔落在個別藥師肩上，難以系統性規模化。",
+  "issueAnalysis": "偏鄉與行動不便患者的用藥連續性，長期依賴人情與個人奉獻維繫，而非制度化工具支撐。問題的核心在於：慢性處方箋的第二、三次領藥率偏低，部分原因正是患者缺乏穩定的提醒機制與藥師缺乏跨領藥週期的追蹤工具。當一位藥師必須親自送藥才能確保患者按時用藥，代表現有數位工具未能有效降低高齡患者的參與門檻，也未能讓藥師在不親臨現場的情況下掌握服藥狀況。這樣的結構性缺口，在人口老化加速的趨勢下將愈發明顯。",
+  "designResponse": "面對這類議題，藥提醒的設計思路從「降低任何一方的門檻」出發。對患者端，我們選擇 LINE 與 Telegram 作為提醒管道，無需安裝額外 App，對習慣用通訊軟體的高齡患者而言幾乎沒有學習成本 (proofPoint #2)。提醒訊息中附上藥品外觀圖片，讓患者即便獨自在家，也能比對手中藥品是否正確，降低多重用藥的混淆風險 (proofPoint #3)。對藥師端，設計重點在於讓追蹤工作不需要親身到場。藥師可透過批次查看介面，掌握各追蹤對象的服藥狀況，在資源有限的情況下集中關注需要介入的個案，而非對每位患者一一電話確認。這樣的設計邏輯，正是試圖將「雞婆藥師」的關懷意圖，轉化為可規模化、可持續的系統結構——讓服務品質不再只能繫於個別藥師的時間與體力。",
+  "tags": [
+    "偏鄉用藥",
+    "藥師追蹤",
+    "慢性病連續用藥"
+  ],
+  "relevance": 0.7,
+  "highlight": false,
+  "criticPasses": 1
+}

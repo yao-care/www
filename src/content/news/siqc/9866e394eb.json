@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "CRA資安監管在即 認證繼承機制與自動化SBOM助物聯網業者構築合規護城河 - DIGITIMES",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNTkxtZW5jdVVBbW50dW1IT2xReFhScmd0MGFrTzkta1oxOWFWQUtIajRxNVo5M3pjY3ZDLWlTZ2Z4ZTJqb0dReEk4OVJfM18xNm5vX0FJT3F6cW1WWjQxVzNwOVE4UjNnYkZnUzQ3V3NsbnE0Wm16YTk5MVJsSEduamVtbFByM0pXb2hXTmNB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-29T08:54:16.000Z",
+  "fetchedAt": "2026-05-29T20:43:21.245Z",
+  "newsBrief": "歐盟《網路韌性法案》（CRA）即將正式實施，物聯網設備製造商面臨強制合規壓力。認證繼承機制讓衍生產品得以免除重複驗證，而自動化 SBOM（軟體物料清單）則成為持續追蹤元件漏洞的核心工具，兩者結合被視為業者在監管浪潮中構築合規護城河的關鍵路徑。",
+  "issueAnalysis": "CRA 將 SBOM 從選擇性最佳實踐提升為強制法規要求，對中小型物聯網業者而言，意味著必須建立可持續更新的元件清單、漏洞追蹤與應對機制。然而，多數團隊的安全掃描仍分散於 SAST、滲透測試、依存套件分析等各自為政的工具之間，難以整合成稽核機關可查驗的完整紀錄。當監管單位要求提交合規文件時，臨時彙整不僅耗時，也容易造成版本缺口，難以達到法規所期待的可追溯性標準。",
+  "designResponse": "面對 CRA 強制 SBOM 合規壓力，自動化管線是取代人工彙整的核心路徑。在漏洞追蹤環節，管線串接 OSV API 持續輪詢，Critical 層級漏洞即時觸發告警 (proofPoint #4)；在稽核交付環節，每版元件清單與掃描報告皆以 GitHub Release 打包離線交付 (proofPoint #5)，讓稽核人員可隨時查驗歷史版本。整套設計對齊 OWASP ASVS 等國際標準 (proofPoint #3)，使同一份結果得以映射至多重法規條文，降低重複建置成本。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "15家上市櫃連12屆公司治理評鑑前5% 明年轉ESG評鑑 - 知新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5NVUFBQVYzRG9VMFU0MUk2a0lyMTJ6V0VMMUhkdWxWMWpWQjRjT3Axdk1UOWRmMl9ISDAyOGpfb296d0o3UHh4anIybE15Vm9iNjhUVlJ4SUFsVS1aWjRZY0IwMF9TOTUzbUg2aVNXVQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-26T11:42:00.000Z",
+  "fetchedAt": "2026-05-29T20:49:53.486Z",
+  "newsBrief": "台灣15家上市櫃連12屆蟬聯公司治理評鑑前5%，主管機關宣布明年起轉型為ESG評鑑框架。此轉型將合規文件範疇從傳統治理指標延伸至環境、社會與氣候揭露，文件複雜度與稽核門檻顯著攀升。",
+  "issueAnalysis": "公司治理評鑑轉型ESG評鑑，並非改名，而是框架的結構性升級。傳統評鑑著重董事會獨立性，ESG評鑑則須同時回應GRI準則、TCFD氣候揭露、SASB產業指標等多套國際標準。對中小型上市公司而言，合規文件範疇驟然擴大，既有人工彙整流程難以因應；跨部門文件繁瑣、條文引用錯誤風險高，讓「文件能否快速對齊新標準」成為稽核韌性的核心考驗。",
+  "designResponse": "面對評鑑框架從公司治理擴展至ESG的結構性轉型，合規管線的重組彈性成為核心考驗。以 12 個 GitHub Actions workflow 串接的自動化管線 (#1)，使文件產出具備可重組的彈性；同一框架能依評鑑類型對應不同條文索引，涵蓋 ESG 三大框架（GRI、TCFD、SASB）乃至醫院評鑑等多元場景 (#6)。稽核包以版本化方式封裝交付，確保文件在任何稽核現場都能精確還原，企業無須為每套標準另維護獨立文件集。",
+  "tags": [],
+  "relevance": 0.7,
+  "highlight": true,
+  "criticPasses": 2
+}
