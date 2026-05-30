@@ -1,0 +1,20 @@
+{
+  "target": "intel",
+  "title": "GitHub 爆「Megalodon」供應鏈攻擊！惡意自動化提交 6 小時內植入逾 5,500 個儲存庫 - TechOrange 科技報橘",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxONjEtSWNKS0ZpVHNubkFWRFlXTVNBaXJfN001cDM1OFBDT1psYlpCVnZMOHFSLVlZcGVQUFpvdDVFUnFuU0pVaVNQMHdXVHF1YW5FVDRUNzRwMzhtZEFUUm5YbDhGcXFlVG5yNzB1WjZ1dk5xRk94eFN1ZTEzMW5JSmQwUVRYS3VoMzZHVDFIWjJmUHcxcmswNDBySjR5MEU?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-26T06:40:37.000Z",
+  "fetchedAt": "2026-05-30T20:40:32.194Z",
+  "newsBrief": "GitHub 平台爆發「Megalodon」供應鏈攻擊，惡意自動化機制在 6 小時內向超過 5,500 個儲存庫植入後門提交，攻擊範圍極廣、速度驚人。此事件揭示開源生態對自動化惡意操作的脆弱性，被動式人工巡查已難以跟上攻擊節奏。",
+  "issueAnalysis": "供應鏈安全事件的核心困境在於資訊不對稱：攻擊者以自動化腳本批量操作，防禦方卻往往依賴人工定期巡查儲存庫異動，兩者之間存在巨大的速度落差。Megalodon 事件中，6 小時內 5,500 個儲存庫受波及，說明被動式翻閱已無法應對現代威脅。中小開發與維護團隊普遍缺乏可重複執行的自動化監控機制，而異常事件偵測本質上需要主動告警設計，而非等待人員察覺後才回應。",
+  "designResponse": "面對供應鏈情報監控這類高頻率、多來源的偵測需求，情報自動化系統的設計思路是將監控工作結構化為可重複執行的生產線。在資料擷取環節，我們選擇以 RSS、HTTP 與 Playwright 三種模式並行覆蓋不同類型的資料來源 (proofPoint #1)，確保無論是靜態頁面、API 端點或需要瀏覽器渲染的動態內容，都不會形成監控盲區。在事件識別環節，每筆入站資料都會經過關鍵字標註、情緒分數與重要性評分 (proofPoint #2)，讓異常訊號在人工介入之前就能被自動篩出，而非淹沒於龐大的原始資料流中。這套設計邏輯同樣可移植到儲存庫活動追蹤、套件版本異動偵測等供應鏈情資場景 (proofPoint #6)，讓規模有限的維護團隊也能建立接近企業級的監控覆蓋範圍。",
+  "tags": [
+    "供應鏈安全",
+    "自動化監控",
+    "開源生態"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1
+}

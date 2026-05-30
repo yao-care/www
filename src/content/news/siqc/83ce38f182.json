@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "GenAI 助攻資安維運，解密FortiAnalyzer自動化威脅獵捕與事件回應 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9RVF9MS21waHFmc2RjY1RDX1V4VUhLeTdsVHpGajlEc0lCSWQ5QVcwanZqdERxRW9HeEJQTEkwYS01MThPc2lHVzVvWQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-29T07:25:14.000Z",
+  "fetchedAt": "2026-05-30T20:42:00.071Z",
+  "newsBrief": "iThome 報導指出，生成式 AI 正快速融入資安維運領域，FortiAnalyzer 等平台透過 GenAI 實現自動化威脅獵捕與事件回應，大幅縮短 SOC 團隊的告警處理時間。此趨勢顯示，AI 輔助資安監控已從概念驗證走向實際落地，成為企業降低維運成本的關鍵路徑。",
+  "issueAnalysis": "隨著 GenAI 進入資安維運核心，企業面臨的挑戰不只是工具選型，更在於如何將散落各處的安全掃描結果——SAST、滲透測試、SBOM——整合為可稽核、可追溯的合規證據鏈。對中小型技術團隊而言，一方面需追上 AI 驅動的威脅演變速度，另一方面 ISMS 文件的人工維護成本依然居高不下。當資安工具愈趨智能，稽核準備流程若仍停留在手動彙整階段，兩者之間的落差將形成新的治理盲區，使合規工作反而成為數位轉型的拖累。",
+  "designResponse": "面對 GenAI 加速資安維運的浪潮，稽核架構的回應密度也需同步提升。框架以 13 條安全掃描管線整合 SAST、相依性弱點偵測與 SBOM 分析，讓每次 CI/CD 觸發即同步產出合規憑證，避免安全事件與稽核記錄脫鉤 (#2)。12 個 GitHub Actions workflow 串聯從掃描到 ISMS 文件修復的完整鏈路，中小團隊不需增加人力即可維持持續合規狀態 (#1)。框架亦對齊 OWASP LLM Top 10，使 GenAI 導入本身也納入可稽核範疇 (#3)。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}
