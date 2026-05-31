@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "威旭數據科技強攻資安！喜迎ISO 27001國際驗證，董事長張希寧：這是客戶信任的基礎 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBOWEx5LUdfZnI5d1R0T0YxeEFoaVBqOXpZS1VzZGpObWkwSTRic2VyOVZJQkcwTWM3Q3RSbHI3c19ZajBUWkc2RWpUUQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-31T16:26:28.000Z",
+  "fetchedAt": "2026-05-31T20:44:58.047Z",
+  "newsBrief": "威旭數據科技取得 ISO 27001 國際資安認證，董事長張希寧表示認證是客戶信任的基礎。此事件凸顯資安合規正成為數位服務業者的市場門檻，ISO 27001 認證不再只是技術標準，而是企業贏得客戶信任的重要憑證。",
+  "issueAnalysis": "ISO 27001 認證代表企業在資訊安全管理系統（ISMS）上的系統性承諾，但認證背後的維運挑戰往往被低估。60 份以上的 ISMS 文件需要持續維護、版本對應與條文追蹤；安全掃描工具分散於 SAST、滲透測試、SBOM 等各自為政的平台；稽核準備期的人工彙整更是消耗大量人力。對中小型團隊而言，取得認證的成本已屬不易，持續維持認證狀態所需的日常工程量，往往才是真正難以負荷的挑戰。",
+  "designResponse": "資安認證的核心難題在於持續維持，而非一次取得。(proofPoint #1) 以 12 個 GitHub Actions workflow 串成自動化管線，將掃描與 ISMS 文件修復納入日常流程；(proofPoint #2) 搭配 13 條安全掃描管線與 64 份文件框架，對齊 ISO 27001 各控制域需求，降低稽核的人工負擔。(proofPoint #4) 每 15 分鐘輪詢 OSV API 並自動告警，確保即時風險可視化。以自動化軌跡取代人工知識，是中小團隊維持認證的關鍵。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 2
+}
