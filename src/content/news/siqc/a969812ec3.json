@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "迎戰2026 ESG國際評鑑！前金管會檢察官打造「真言堂」 助企業建構第三方檢舉機制 - PChome Online 新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNU0FvTFdHSmc2TjBPQV9PeFBibGZFbV9jdTlyYUZBQmFKVFFGcWpvTmZnQTdBekxNb0JmdHNDRUxsMEEtQ3lKNGZYRlVhT2RpQWVpaXdQaHZHX2YtWklOZU9MaUJ6UjRVNWx4YVJkcURlcGFDTnRoeU9qNVpDZFN2Y2w2QmNvbUkwZjNFVGtB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-26T12:38:15.000Z",
+  "fetchedAt": "2026-06-02T20:43:21.602Z",
+  "newsBrief": "2026年ESG國際評鑑壓力升溫，企業合規要求從財務指標延伸至治理與第三方檢舉機制。有業者以獨立舉報平台切入，協助企業在評鑑前建構可查核的吹哨人管道，反映市場對「可驗證合規」需求的持續升高。",
+  "issueAnalysis": "ESG評鑑已不再只是環境指標的勾選，治理面向（G）的可問責性與員工舉報機制，正受到國際評鑑機構日益嚴格的檢視。然而，許多企業面對GRI、TCFD、SASB等多框架並行要求時，往往缺乏系統性的文件基礎與條文對應能力。單靠人工整理的合規資料，不僅版控混亂、難以追溯，更難在頻繁的評鑑週期中保持持續更新。此一趨勢清楚顯示，「臨陣準備」的應對模式，已不符合國際評鑑對可持續合規的基本要求。",
+  "designResponse": "面對ESG多框架並行要求，可行的設計路徑是讓同一套架構同時覆蓋ESG與資安評鑑——GRI、TCFD、SASB與ISO 27001、SOC 2 TSC可在單一框架下統一維護，避免各框架各自建立重複文件 (#6)。持續合規方面，每15分鐘自動輪詢漏洞資料庫，Critical問題即時觸發告警，確保合規狀態不因評鑑空窗期悄然退化 (#4)。最終稽核文件打包為離線交付包，評鑑團隊無需網路即可完整審查 (#5)。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 2
+}
