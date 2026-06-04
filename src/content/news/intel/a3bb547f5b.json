@@ -1,0 +1,16 @@
+{
+  "target": "intel",
+  "title": "投資更聰明！盈透證券串接Claude AI 實現自動化交易與投資分析 - 民視新聞網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1Qa3NwbExXZlBERlUyeW5XMWIwYjFqamJHQnpMRXhNSVNIU3QzdU84dGdIRnBMdzNZYmRycmRuUnVrYnNHNlk3aXh6aEJ6MWYtM0h4RVFfMlR6TElZU01UcQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-01T14:59:02.000Z",
+  "fetchedAt": "2026-06-04T20:47:18.857Z",
+  "newsBrief": "盈透證券（Interactive Brokers）宣布串接 Claude AI，將自然語言處理能力引入投資分析與交易決策流程，使投資人得以透過對話介面查詢持倉、解讀市場訊號並執行交易指令。此舉被視為傳統券商將生成式 AI 嵌入核心業務流程的代表性案例，引發業界對「AI 驅動投資決策」的廣泛討論。",
+  "issueAnalysis": "金融情報的整合困境長期存在：財報數據、新聞事件、機構持倉分散於不同平台，人工彙整不僅耗時，更難以即時回應市場異動。盈透此次整合顯示，業界已從「資料視覺化」跨越到「資料可對話」的新階段——但前提是底層情報必須夠乾淨、夠即時，AI 才有東西可以推理。對中小型投資機構或研究團隊而言，建立一條可重複執行的情報生產線，才是讓 AI 真正發揮效用的基礎建設，而非直接跳到對話介面。",
+  "designResponse": "面對財務情報整合需求，關鍵在資料擷取端的基礎建設，而非介面層。以 RSS、HTTP、Playwright 三模式並行處理不同來源，確保財報公告、新聞事件都能系統性納入 (proofPoint #1)。針對季度財報的 AR 與庫存變化設自動告警，偏離基準 ±20% 即主動推送，免除人工定期翻閱 (proofPoint #3)。底層資料品質與更新頻率到位後，無論上層接 LLM 對話介面或傳統儀表板，推理才有可信基礎。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 2
+}

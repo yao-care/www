@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "MaiCoin集團旗下現代財富科技、AMIS帳聯網路科技取得ISO 27001資安驗證 奠定IPO堅實基礎 - Knowing新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5vWm9FNm5mMWowY1dSUWVuV1BGM08tSXpqVm9OU1JNcDZlU1JZeFFwNDVwNGUxVE52WWxwc2pLeEtqQmM0VnpLSzQ2bk0tczdob2V1aVY5Z1NPTnJJbW9GSWlMcEpvTHVXWE9EYmtRcHdUTzBiTEE?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-03T04:30:00.000Z",
+  "fetchedAt": "2026-06-04T20:48:50.590Z",
+  "newsBrief": "MaiCoin 集團旗下現代財富科技與 AMIS 帳聯網路科技宣布取得 ISO 27001 資安管理系統認證，作為集團 IPO 上市前合規基礎建設的關鍵里程碑。金融科技業在資本市場監理壓力下，資安驗證已成為機構信任與投資人盡職調查不可缺少的門檻條件。",
+  "issueAnalysis": "ISO 27001 認證對金融科技業而言，早已不只是資安管理的「加分項」，而是 IPO 審查、客戶盡調與法遵要求的硬門檻。然而取得認證的實際挑戰往往不在制度理解，而在文件規模的可持續維護：超過 60 份 ISMS 文件的建立、版控與條文對應，對中型以下的科技團隊是相當沉重的人工負擔；安全掃描工具分散（SAST、滲透測試、SBOM 各跑各的），稽核準備前的彙整成本同樣不容忽視。當資安驗證成為進入資本市場的標配，讓認證過程本身可系統化、可重複執行，才是背後更核心的挑戰。",
+  "designResponse": "面對 ISO 27001 認證的文件與掃描兩大痛點，結構化框架可同時承接兩端：64 份 ISMS 文件框架搭配 13 條安全掃描管線，讓團隊無需從零建置合規底座 (#2)；12 個 GitHub Actions workflow 將 SAST、SBOM、依賴弱點掃描串成單一管線，Critical 弱點觸發即時告警，稽核包以 Release 格式封裝交付 (#1)(#5)。合規動作嵌入開發日常，而非臨時補件。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}
