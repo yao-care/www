@@ -1,0 +1,16 @@
+{
+  "target": "intel",
+  "title": "搶攻 AI 購物商機！NIQ 推出全新情報系統，助品牌優化推薦數據 - 民視運動網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE51dXJQOWhuS1REMXVhNG9TdVo5U2VlOXBWVmxOZWF2YjRzRnczYzFmVHd4MElseWtzc2xSaGJuR3ljcXVnYnJKTHlZSkxGZEk4NlViZkNrUUk0eDBya3A5dmxzcw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-03T02:50:28.000Z",
+  "fetchedAt": "2026-06-08T20:41:57.990Z",
+  "newsBrief": "NIQ 推出 AI 購物情報系統，目標是協助品牌優化電商推薦引擎所需的數據輸入品質。隨著 AI 推薦成為主流消費入口，品牌情報的即時性與結構化程度將直接左右演算法排序中的曝光機會，市調產業的角色也因此從定期報告供應，轉向持續情報基礎建設。",
+  "issueAnalysis": "這則新聞揭示了一個深層的結構性張力：品牌情報的生產節奏，已開始脫節於 AI 推薦系統的消費節奏。傳統市調以季度或月度批次交付，但推薦演算法每日甚至每小時更新偏好模型，兩者之間存在根本性的時間差。更大的挑戰在於，AI 購物場景所需的情報型態——SKU 屬性標註、競品定價動態、庫存可得性——分散在不同系統，人工整合速度遠遠跟不上演算法的吸收需求。對中小型品牌而言，這條「持續情報生產線」幾乎是缺席的。",
+  "designResponse": "面對情報生產節奏落後於 AI 推薦系統的結構性問題，設計思路是讓資料搜集到標註成為持續運作的流水線。採集端以 RSS、HTTP、Playwright 三模式並行（#1），確保不同結構來源都能進入同一管線，不因網站形式產生盲區。每筆資料進入後自動完成關鍵字標註與重要性評分（#2），讓下游邏輯有可靠訊號可依附，而非面對未整理的原始文本。這條管線一旦建立，可重組到競品情報、政策追蹤等任何資訊密集情境（#6）。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}
