@@ -1,0 +1,20 @@
+{
+  "target": "yaocare",
+  "title": "台灣人年吃11億顆安眠藥！長者多重用藥恐失智、骨折 健保署祭核刪新制揪不合理處方 - Yahoo新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi_gNBVV95cUxOWUkwMllObndtc3JMdVRRWHV5Y28yUjczeTM5OXB4bTgyZFJoZDloRjRBcmczeGxHZXRyWWNObllWYlotb1NJTFcwbGZXYmY4UGJZSmFjZC1rSlVzMXBtclJRSGRDajRsWXFyWDJTaGJ5Y3F0OFRQWnhBenIxNmhNV2haYWtMemcyTldqTFI2WFdiUEFkMFdKTWgzTUpsNlhBa2czS2tmd19BV3FMdDl3MHY5dVM1X0Mxcm1PMl9ILWhLd04tdW9mWWhPTzEySFhqbXZrckhRY01jSjliTElFNVVLODRVNFhXQmdvS1Jkcng5aWMzWnZCejV2cktRYUJCUlV2Nzg0a3c1SFptUU81bzBuMkRwS0Zzem0zQTIxZmR3NTVhWG1VbUNNanRISGZIdWpqM0pvV3U4a2hpNzJKNmhwVDdwbEw2aWRYcUZQQ0cxLXJ1OG8wM3NsVTVuVU16bWdTMlFaVDNiWlQ2YlpiTVA2OFhZUGVhT0l5Q0NaNVVTZ0FMQUY0VlctVzhQcHFWVWFhMWJ6bExsQ3NRMy1rWGdpNDhJN2FDajdNYy1iNWV5VHNRaVZPVFljME13dng5RV93aWlqdTJVR1NxQm1aT2d1ZHZFRm90ZmdDcWJPZl9iTVFGbjg1cy1ueDhfclF5Vm01c3BxUldEZThBVGc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-09T08:25:30.000Z",
+  "fetchedAt": "2026-06-09T20:44:22.285Z",
+  "newsBrief": "台灣人每年消耗逾11億顆安眠藥，健保署最新數據揭示長者多重用藥問題嚴峻，苯二氮平類藥物長期使用與失智、跌倒骨折風險高度相關。健保署祭出核刪新制，針對不合理重複處方加強審查，盼從源頭遏制過度用藥現象。",
+  "issueAnalysis": "多重用藥問題在台灣高齡族群中持續惡化，其核心困境不只在於「開太多藥」，更在於藥師與醫師難以即時掌握病患跨院領藥全貌。安眠藥、鎮定劑等精神科用藥具累積毒性，長者往往因認知功能下降而難以自行辨認藥品，混淆服用風險極高。另一面向是健保資源浪費：慢性病患者常因缺乏提醒機制，導致藥品領而不服、或重複領藥囤積。健保核刪政策治標有其必要，但若缺乏病患端的用藥追蹤配套，處方合理化的效益恐難完整落地。",
+  "designResponse": "面對多重用藥的混淆與追蹤缺口，藥提醒的設計思路是從「病患最容易接觸的通道」切入，而非要求病患改變習慣安裝新工具。在提醒傳遞環節，我們選擇透過 LINE 與 Telegram 發送服藥通知，無需安裝任何 App，大幅降低長者的使用門檻 (proofPoint #2)。針對多重用藥最常見的「外觀混淆」風險，提醒訊息內附藥品外觀圖片，讓病患在服藥當下能即時比對，降低誤服機率 (proofPoint #3)。在藥師端，介面設計以批次追蹤為核心邏輯，讓藥師能跨領藥週期查看服藥達成狀況，而非被動等待病患回報，使多重用藥的管理從點狀提醒升級為連續性監測。當健保核刪政策強化處方品質管控時，這類追蹤工具能補上「處方開出後、病患是否確實服用」的最後一哩，讓合理處方真正轉化為有效治療。",
+  "tags": [
+    "多重用藥",
+    "安眠藥濫用",
+    "健保核刪"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1
+}

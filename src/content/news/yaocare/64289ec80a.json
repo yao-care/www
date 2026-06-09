@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "全台76萬長者靠安眠藥入睡 醫揭減藥關鍵步驟 - 中天新聞網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBlcjJZTy0yZnRWdlF6OGJxcUpKOHV4Ykc4ZGpKbTY5TjJvb2JldEFEdjUxUGFLMnJFNXZBeGFKOVE1aFNERG84eEREZnN1MG5KNE1v?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-09T02:04:24.000Z",
+  "fetchedAt": "2026-06-09T21:01:55.292Z",
+  "newsBrief": "全台逾76萬名長者長期依賴安眠藥入睡，臨床醫師指出，苯二氮平類藥物的減藥過程需循序漸進，不可驟然停藥，否則易引發反彈性失眠與戒斷症狀。減藥關鍵在於建立穩定的用藥紀錄與回診追蹤，讓醫師得以評估調藥時機。",
+  "issueAnalysis": "安眠藥依賴問題在高齡族群中尤為普遍，其背後反映出數個結構性困境：其一，慢性處方箋的領藥率偏低，患者容易在未回診的情況下自行斷藥或囤藥；其二，老年患者對數位工具的操作門檻感到排斥，導致用藥訊息無法即時觸及；其三，藥師缺乏跨領藥週期的追蹤工具，難以掌握患者實際服藥行為。三者交疊，使得醫療端的減藥計畫往往在回診空白期失去支撐。",
+  "designResponse": "面對長者安眠藥依賴與減藥管理，核心挑戰在於填補回診空白期的追蹤斷層。透過 LINE 與 Telegram 推播提醒，無需安裝 App，大幅降低高齡族群的使用門檻 (proofPoint #2)；提醒訊息附帶藥品外觀圖片，讓長者直觀辨識安眠藥與其他慢性病用藥，減少混淆風險 (proofPoint #3)。系統採 ATC 編碼對接健保處方，藥師不需人工 keyin 即可掌握處方內容 (proofPoint #1)，讓減藥追蹤得以在日常中持續進行，而非仰賴回診當下的片段資訊。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 2
+}
