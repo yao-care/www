@@ -1,0 +1,20 @@
+{
+  "target": "intel",
+  "title": "SlowMist：Rust供應鏈惡意軟體IronWorm正攻擊開發者環境與Web3加密生態 - Bitget",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBlTDc3aHpoM1I4R080bWlSbFNSTTVfS2NzZlFsV2FudHRQNXdnTVNVX3lnNDZjdF9pNDdOU1BiYUUtNnh4MkRvcC1xZ2E3WUJ6ZzI3WTBBNlRpUXRwU1c2bmkzbGdfZ9IBa0FVX3lxTE9Bc09VbW9jMEVXVDFxMmVkbGFESVJWZ2YxVENIbzhCVlhRTG9jc0NpUmIzdjM4NjExWnlGTDF4cGx3TXdsazVOXzAtajZOZjdpWjRqUExuejU3WWQzRmw0V2pnLU56cnRuMnE0?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-03T15:53:07.000Z",
+  "fetchedAt": "2026-06-10T20:54:48.753Z",
+  "newsBrief": "資安公司 SlowMist 發出警告，一款名為 IronWorm 的 Rust 語言供應鏈惡意軟體，正鎖定開發者環境與 Web3 加密生態系。該惡意軟體偽裝成合法套件滲透開發工具鏈，可竊取憑證並植入後門，攻擊面橫跨多個主流開源生態。",
+  "issueAnalysis": "供應鏈攻擊的核心風險，在於威脅隱藏在信任鏈本身——開發者日常使用的套件管理器成為入口，惡意程式碼隨著正常的依賴安裝流程進入環境。此類事件的特點是：攻擊在被公開曝光前往往已悄然擴散數週，受害者若缺乏主動監測機制，幾乎只能在事後從外部報導中得知風險。對企業開發與資安團隊而言，如何在第一時間獲得關鍵情報並快速評估自身暴露面，成為防禦的首要課題。",
+  "designResponse": "面對供應鏈情報這類需要全天候監控的資安議題，情報自動化系統的設計思路是：讓機器持續盯盤，人只在有意義的訊號出現時才介入。在情報採集環節，系統以 RSS、HTTP、Playwright 三種模式並行爬取各大資安平台、漏洞資料庫與社群頻道，確保像 SlowMist 這類第一手警報能即時進入處理佇列 (proofPoint #1)。進入系統後，每一條事件會被自動標註關鍵字（如受影響套件名稱、攻擊向量類型）、情緒分數與重要性評分，讓團隊無需逐篇閱讀，即可依優先級分流處置 (proofPoint #2)。整套架構跑在 GitHub Actions 免費方案之上，無需額外伺服器開銷，對資源有限的中小型開發或資安團隊而言，同樣能夠部署運行，實現從情報採集到異常警示的閉環自動化。",
+  "tags": [
+    "供應鏈安全",
+    "威脅情報",
+    "開源生態"
+  ],
+  "relevance": 0.65,
+  "highlight": true,
+  "criticPasses": 1
+}
