@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "寶晶能源*取得國際ISMS認證打造高韌性資安文化- 新聞 - MoneyDJ",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQVEF4dzZIWnZpWGxuV2VPSnp0VGtaamdFSldUdkRlb1BvWmhqYnJ4TDhYcDlKLXYtWXd0dHJjSzN1eExKX3VTWXFRNGRoV094SUpfNmRicW1kYk5XaTdUV1R2Vkg0aXVZSk9SUFNTUW94aE5lWDlmUEllTGxRWmlWU3ZlNEx1cmxlc1lkbHZKT05jQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-05T09:27:00.000Z",
+  "fetchedAt": "2026-06-12T20:56:01.478Z",
+  "newsBrief": "能源產業企業取得 ISO 27001 國際 ISMS 認證，再次印證資安合規已從 IT 部門的技術議題，升格為企業整體韌性的戰略指標。寶晶能源揭露此認證歷程，顯示各產業對正式化資安治理框架的需求正快速擴散，合規能力已成為企業對外展示信任基礎的重要憑藉。",
+  "issueAnalysis": "ISMS 認證代表企業系統性地管理資訊安全風險，但這條路對中小型組織而言門檻不低。認證所需的 60 多份文件，涵蓋風險評估、控制措施、稽核紀錄等多個面向，人工逐份維護不僅耗時，更難以確保條文對應的一致性。安全掃描工具往往散落在 SAST、滲透測試、SBOM 等不同流程，缺乏統一彙整框架，使稽核準備成為高度仰賴人力的苦差事。隨著能源、醫療等非 IT 核心產業積極爭取正式認證，如何降低合規準備的成本與複雜度，成為各產業共同面對的結構性挑戰。",
+  "designResponse": "ISMS 合規的難點不在文件數量，而在條文對應的可追溯性。以 12 個 GitHub Actions workflow 串起自動化管線 (#1)，搭配 13 條掃描管線與 64 份 ISMS 文件框架 (#2)，讓每次掃描結果都能對應至具體控制條文，取代人工逐份核對。稽核包以 GitHub Release 打包離線交付 (#5)，審查現場無論有無網路，文件完整性皆可確保。合規因此從年度大掃除，轉變為工程流程的自然產出。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 2
+}
