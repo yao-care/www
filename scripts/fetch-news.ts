@@ -46,6 +46,7 @@ import {
   rewritePrompt,
 } from './news-prompts.mjs';
 import { checkRegexGuards, checkLengths, normTitle } from './news-guards.mjs';
+import { fixTerms } from './zh-tw.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(__dirname, '..');
@@ -370,18 +371,22 @@ function writeNewsFile(
   const dir = join(NEWS_DIR, target.slug);
   if (!DRY_RUN) mkdirSync(dir, { recursive: true });
   const file = join(dir, `${id}.json`);
+  // title 一律存繁體（台灣用語）：優先用 writer 改寫的 titleZh（LLM 能正確處理人名/簡繁），
+  // 沒有才退回原標題。fixTerms 再補大陸詞彙。titleZh 因此不再需要另存。
+  const twTitle =
+    draft.titleZh && draft.titleZh.trim() ? draft.titleZh.trim() : item.title;
   const data = {
     target: target.slug,
-    title: item.title,
-    titleZh: draft.titleZh,
+    title: fixTerms(twTitle),
+    titleZh: null,
     url: item.link,
     source: item.source || 'Google News',
     publishedAt: new Date(item.pubDate).toISOString(),
     fetchedAt: new Date().toISOString(),
-    newsBrief: draft.newsBrief,
-    issueAnalysis: draft.issueAnalysis,
-    designResponse: draft.designResponse,
-    tags: draft.tags,
+    newsBrief: fixTerms(draft.newsBrief),
+    issueAnalysis: fixTerms(draft.issueAnalysis),
+    designResponse: fixTerms(draft.designResponse),
+    tags: (draft.tags ?? []).map(fixTerms),
     relevance: Math.round(relevance * 100) / 100,
     highlight,
     criticPasses: passes,
