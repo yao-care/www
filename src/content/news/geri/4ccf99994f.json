@@ -1,0 +1,16 @@
+{
+  "target": "geri",
+  "title": "長輩跌倒前有警訊：居家 4 測試揭示功能退化風險",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBTeURhZEhTZlRFUWdOaURYYkFKdlhkMTBIVEVIMFpfcWppQ000QWJwTk5OTkRYdktocTdZRVNyQWs1ZHJpV0pnUXNKQTZPbmJvZTNUcVJRWUFwdXVZSVdReUNVWEplejF4YUHSAWpBVV95cUxQU3lEYWRIU2ZURVFnTmlEWGJBSnZYZDEwSFRFSDBaX3FqaUNNNEFicE5OTk5EWHZLaHE3WUVTckFrNWRyaVdKZ1FzSkE2T25ib2UzVHFSUVlBcHV1WUlXUXlDVVhKZXoxeGFB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-12T06:22:00.000Z",
+  "fetchedAt": "2026-06-13T20:59:29.345Z",
+  "newsBrief": "醫師指出，長輩跌倒前往往出現步態不穩、平衡感下降等警訊，民眾在家即可透過站立、行走等簡單測試初步評估跌倒風險。這些居家自測提醒我們，跌倒並非偶然，而是可觀察、可預防的功能退化訊號。",
+  "issueAnalysis": "跌倒是高齡者喪失自主能力的關鍵轉折，但多數家庭往往在事發後才驚覺。事實上，跌倒前的功能退化是漸進的：肌力下降、步態改變、反應遲緩，這些訊號分散在日常中，家屬難以系統辨識。更核心的問題在於：民眾即使察覺異常，也不清楚如何判斷風險等級或何時應就醫。缺乏結構化評估工具，使高風險長者的識別與轉介仍仰賴個人直覺，而非可重複的標準化流程。",
+  "designResponse": "針對跌倒風險難以即早察覺的問題，系統設計從評估結構出發。分層方面，以臨床衰弱量表 CFS 1–9 為基準 (#1)，提供家屬與臨床端共同的狀態語言。模式方面，公眾自篩與專業臨床雙模式並行 (#2)，前者讓家屬在家完成初篩，後者供醫療端取得標準化資料。行動功能測量採相機即時計時的坐站測驗 (#4)，毋需專用儀器即可客觀量化。評估完成後，紅黃綠三色分級配對轉介建議與衛教內容 (#5)，將結果轉化為具體行動指引，而非單純數字輸出。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 3
+}
