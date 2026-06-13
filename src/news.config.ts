@@ -8,7 +8,7 @@
 import type { ProductSlug } from './products.config';
 import { LINE_PERSONAL, LINE_TEAM } from './products.config';
 
-export type CategorySlug = 'medical' | 'ai' | 'marketing';
+export type CategorySlug = 'medical' | 'ai' | 'care' | 'marketing';
 export type NewsTargetSlug = ProductSlug | 'marketing';
 
 export type NewsTarget = {
@@ -131,6 +131,108 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     ctaHref: LINE_PERSONAL,
   },
   {
+    slug: 'func',
+    title: 'Smart Func 成人功能健康評估',
+    pageUrl: '/medical/func',
+    category: 'medical',
+    categoryLabel: '智慧醫療',
+    serviceContext:
+      '依 WHO 內在能力(IC)框架的成人功能健康自評工具，10–15 分鐘評估活力、行動、認知、心理、感官五大功能，紅黃綠分級給出衛教與轉介，資料留在瀏覽器、可選 SMART on FHIR 上傳。',
+    queries: [
+      '成人健康自我評估',
+      'WHO 內在能力',
+      '功能性體適能',
+      '亞健康',
+      '健康老化',
+      '預防醫學 篩檢',
+    ],
+    voicePoints: [
+      '成人在亞健康階段缺乏可量化的功能自評工具',
+      '一般健檢偏重生化數據、忽略內在功能能力',
+      '心理與認知衰退早期不易自我察覺',
+      '健康者也需要快速、低門檻的篩檢入口',
+      '篩檢後缺乏個人化的衛教與轉介銜接',
+    ],
+    proofPoints: [
+      '以 WHO 內在能力(IC) 五大功能（活力 / 行動 / 認知 / 心理 / 感官）為框架',
+      '智慧分支題型，健康者快速通過、有警訊者才深入',
+      '提供反應、配對等認知小測驗',
+      '偵測憂鬱／自傷訊號時顯示求助專線（1925 / 1995 / 119）',
+      '結果可匯出 PDF 供就醫參考',
+      '100% 瀏覽器端運算，可選擇以 SMART on FHIR 上傳合作院所或 GCM 收案',
+    ],
+    ctaText: '免費自我評估 → smart-func-cds.yao.care',
+    ctaHref: 'https://smart-func-cds.yao.care',
+  },
+  {
+    slug: 'geri',
+    title: 'Smart Geri 高齡周全性評估',
+    pageUrl: '/medical/geri',
+    category: 'medical',
+    categoryLabel: '智慧醫療',
+    serviceContext:
+      '高齡周全性評估（CGA）系統，以臨床衰弱量表（CFS 1–9）為基準延伸多面向評估，提供公眾自篩與專業臨床雙模式，紅黃綠分級轉介，可選 SMART on FHIR 上傳。',
+    queries: [
+      '高齡周全性評估',
+      '衰弱 frailty',
+      '長照2.0 預防延緩失能',
+      '跌倒風險',
+      '肌少症',
+      '失智 篩檢',
+    ],
+    voicePoints: [
+      '高齡衰弱與功能退化常被當成「正常老化」而錯過介入時機',
+      '長照據點缺乏結構化、可重複的周全性評估工具',
+      '家屬不易判斷長者該自我觀察還是就醫',
+      '跌倒、肌少、營養不良等風險分散在不同量表',
+      '評估結果難以與醫療院所資訊系統互通',
+    ],
+    proofPoints: [
+      '以臨床衰弱量表 CFS 1–9 為分層基準',
+      '提供公眾／家屬自篩與專業臨床雙模式',
+      '多面向評估涵蓋認知、情緒、營養、行動、用藥、社會支持',
+      '含五次坐站等以相機計時的功能測驗',
+      '結果以紅黃綠分級給出轉介建議並配對衛教內容',
+      '離線可用 PWA，資料留在裝置，可選擇上傳醫院 FHIR 或 GCM 收案',
+    ],
+    ctaText: '免費自我評估 → smart-geri-cds.yao.care',
+    ctaHref: 'https://smart-geri-cds.yao.care/',
+  },
+  {
+    slug: 'pedi',
+    title: 'Smart Pedi 兒童發展評估',
+    pageUrl: '/medical/pedi',
+    category: 'medical',
+    categoryLabel: '智慧醫療',
+    serviceContext:
+      '2 個月至 6 歲兒童發展篩檢工具，依年齡帶給出問卷，六大發展領域對齊國健署兒童健康手冊與 ASQ-3，以常模化分數判讀、雷達圖對比同齡，紅黃綠分級轉介。',
+    queries: [
+      '兒童發展遲緩',
+      '早期療育',
+      'ASQ 發展篩檢',
+      '兒童健康手冊',
+      '親子 發展里程碑',
+      '幼兒 語言發展',
+    ],
+    voicePoints: [
+      '發展遲緩的黃金療育期短，家長卻常太晚察覺',
+      '兒童健康手冊的發展檢核表多為紙本、缺乏判讀',
+      '家長難以判斷孩子是慢飛還是需要轉介',
+      '偏鄉與忙碌家庭缺乏低門檻的篩檢入口',
+      '篩檢結果缺乏與醫療院所銜接的標準格式',
+    ],
+    proofPoints: [
+      '涵蓋 2 月–6 歲共 7 個年齡帶',
+      '六大發展領域（粗動作 / 精細動作 / 語言理解 / 語言表達 / 認知 / 社會情緒）對齊國健署手冊與 ASQ-3',
+      '可選互動測驗：圖卡辨識、繪圖描摹、語音錄製、動作影片',
+      '以常模化分數判讀，−2SD 為紅旗',
+      '以雷達圖對比同齡基準，紅黃綠分級給出觀察或轉介建議',
+      '資料留在瀏覽器，可選擇上傳醫療院所或 GCM 收案',
+    ],
+    ctaText: '免費自我評估 → smart-pedi-cds.yao.care',
+    ctaHref: 'https://smart-pedi-cds.yao.care/',
+  },
+  {
     slug: 'intel',
     title: '情報自動化系統',
     pageUrl: '/ai/intel',
@@ -232,6 +334,40 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     ],
     ctaText: '想用在我們公司 → LINE 私訊',
     ctaHref: LINE_PERSONAL,
+  },
+  {
+    slug: 'sign',
+    title: '長者友善無接觸報到',
+    pageUrl: '/care/sign',
+    category: 'care',
+    categoryLabel: '高齡友善',
+    serviceContext:
+      '為長照據點、日照中心打造的純前端人臉辨識報到系統，零雲端、零安裝，自動語音問候與風險分級警示，並自動產出每日簽到名冊。',
+    queries: [
+      '長照科技',
+      '日照中心 報到',
+      '高齡友善',
+      '人臉辨識 長者',
+      '智慧照護 據點',
+      '長照 個資 隱私',
+    ],
+    voicePoints: [
+      '長者對觸控簽到、安裝 App 的門檻高',
+      '據點人工簽到耗時、且難產出政府要求的名冊',
+      '雲端人臉辨識引發長照場域的個資疑慮',
+      '失智、走失等高風險長者需要主動警示',
+      '中小型據點缺乏負擔得起的智慧報到方案',
+    ],
+    proofPoints: [
+      '走過鏡頭即自動辨識身分，免按鈕、免簽名、免安裝 App',
+      '依時段自動語音問候',
+      '臉部與紀錄資料 100% 留在裝置瀏覽器、零雲端傳輸',
+      '內建失蹤、失智、黑白名單、VIP 風險分級警示',
+      '自動產出每日簽到名冊，可直接複製貼上政府社政平台',
+      '離線可用 PWA',
+    ],
+    ctaText: '看線上服務站 → sign.yao.care',
+    ctaHref: 'https://sign.yao.care/',
   },
   {
     slug: 'marketing',

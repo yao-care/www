@@ -5,7 +5,7 @@
 | 項目 | 值 |
 |------|-----|
 | 網址 | https://www.yao.care / https://yao.care |
-| 類型 | 純靜態網站（公司級多產品 hub：智慧醫療 / AI 系統 / 數位行銷） |
+| 類型 | 純靜態網站（公司級多產品 hub：智慧醫療 / AI 系統 / 高齡友善 / 數位行銷） |
 | 原始碼目錄 | `$WWW_REPO_DIR/`（即本目錄；與其他專案慣例一致） |
 | 服務（產物）目錄 | `$WWW_SITE_DIR/`（NPM 唯讀掛載點；build 產物 rsync 到這） |
 | 部署方式 | `npm run deploy` → build 到本地 `dist/` → rsync 同步到服務目錄 → nginx 直接提供 |
@@ -64,7 +64,7 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 `/news/` 區塊每天自動抓 Google News、由 Claude 生成「議題分析 + 設計回應」對照文章，每篇都連回對應產品頁。**這是這個 repo 跑得最多的東西**，但 `src/` 與 `dist/` 都由 cron 自動更新，平時不用手動碰。
 
 ### 設定（單一 source of truth）
-`src/news.config.ts` — 7 個 target（6 產品 + `marketing`），每個 target 定義：
+`src/news.config.ts` — 11 個 target（10 產品 + `marketing`），每個 target 定義：
 - `queries`: Google News RSS 搜尋關鍵字
 - `voicePoints`: writer 可參考的「我們關心的痛點」
 - `proofPoints`: 白名單 — `designResponse` 段落只能引用這些事實，每條附 `#N` 索引（regex guard 會檢查）
@@ -124,14 +124,14 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   └── gen-og.mjs             ← OG 圖產生器
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
 │   ├── assets/images/         ← 所有圖片
-│   │   └── og/                ← 分產品 OG 圖（home/yaocare/huatuo/txgnn/intel/siqc/triz/marketing.png）
+│   │   └── og/                ← 分產品 OG 圖（home/yaocare/huatuo/txgnn/func/geri/pedi/sign/care/intel/siqc/triz/marketing.png）
 │   ├── contents/              ← BMI/BP/GLU-AC 衛教圖
 │   ├── robots.txt
 │   └── 藥提醒Line民眾服務.ppsx ← LFS 管理
 ├── src/
 │   ├── site.config.ts         ← 全站設定（公司名/title/description/keywords/NAV）
-│   ├── products.config.ts     ← 三大分類 + 6 個產品定義（單一 source of truth）
-│   ├── news.config.ts         ← 7 個 news target（queries / voicePoints / proofPoints / CTA）+ KEEP_PER_TARGET
+│   ├── products.config.ts     ← 四大分類 + 10 個產品定義 + medical 子分組（MEDICAL_GROUPS/group/productsByGroup）（單一 source of truth）
+│   ├── news.config.ts         ← 11 個 news target（queries / voicePoints / proofPoints / CTA）+ KEEP_PER_TARGET
 │   ├── content/
 │   │   ├── config.ts          ← news collection schema（Zod）
 │   │   └── news/<target>/*.json ← 自動產生的議題評論文章（cron 寫入）
@@ -141,17 +141,23 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   │                         可接 ogImage / ogType / jsonLd props
 │   │   └── ProductLayout.astro ← 產品詳情頁專用：含 Nav / breadcrumb / ContactMap / FooterLinks
 │   ├── pages/
-│   │   ├── index.astro        ← 公司 Hero + 三分類預覽 + ContactCTA + ContactMap
+│   │   ├── index.astro        ← 公司 Hero + 四分類預覽 + ContactCTA + ContactMap
 │   │   ├── medical/
 │   │   │   ├── index.astro    ← 智慧醫療 hub（產品卡 + capability cloud + ContactMap）
 │   │   │   ├── yaocare.astro  ← 藥提醒（保留舊版 D3 force graph、六大服務、carousel）
 │   │   │   ├── huatuo.astro   ← AI 華佗（中醫問診 AI）
-│   │   │   └── txgnn.astro    ← TxGNN 老藥新用
+│   │   │   ├── txgnn.astro    ← TxGNN 老藥新用
+│   │   │   ├── func.astro     ← Smart Func 成人功能健康評估（assessment 子分組）
+│   │   │   ├── geri.astro     ← Smart Geri 高齡周全性評估（assessment；亦跨列於 /care）
+│   │   │   └── pedi.astro     ← Smart Pedi 兒童發展評估（assessment）
 │   │   ├── ai/
 │   │   │   ├── index.astro    ← AI 系統 hub
 │   │   │   ├── intel.astro    ← 情報自動化系統
 │   │   │   ├── siqc.astro     ← 稽核 / 評鑑 AI 系統
 │   │   │   └── triz.astro     ← TRIZ 創新方法 AI 知識庫
+│   │   ├── care/             ← 高齡友善（耀・陪伴 wordmark）
+│   │   │   ├── index.astro    ← 高齡友善 hub（sign 卡 + Geri 交叉卡 + GcmClosedLoop）
+│   │   │   └── sign.astro     ← 長者友善無接觸報到
 │   │   ├── marketing.astro    ← 數位行銷整頁（5 環閉環 + D3 圖表）
 │   │   └── news/
 │   │       ├── index.astro            ← 議題追蹤總覽（依 target / category 過濾）
@@ -159,14 +165,15 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   └── components/
 │       ├── Nav.astro          ← 固定頂部導覽 + 漢堡選單
 │       ├── ContactCTA.astro   ← #cta 首頁公司層級 LINE 加好友 + mailto（與團隊聊聊）
-│       ├── CareTag.astro      ← 三條業務線的 yao・care 同音 wordmark pill（藥/鑰/邀・X (care)）
+│       ├── CareTag.astro      ← 四條業務線的 yao・care 同音 wordmark pill（藥/鑰/耀/邀・X (care)）
 │       ├── ContactMap.astro   ← #contact（地址 + Google Maps；幾乎所有頁底都會放）
-│       ├── FooterLinks.astro  ← 全站 footer：四欄連結（醫療/AI/行銷/聯絡）+ 回頂部
+│       ├── FooterLinks.astro  ← 全站 footer：多欄連結（醫療/AI/高齡友善/行銷/聯絡）+ 回頂部
 │       ├── products/
-│       │   ├── ProductCard.astro      ← 三大分類 hub + 首頁預覽共用的卡片
+│       │   ├── ProductCard.astro      ← 各分類 hub + 首頁預覽共用的卡片（href 依 product.category 解析）
 │       │   ├── ProductHero.astro      ← 產品詳情頁 hero
 │       │   ├── ProductCta.astro       ← 產品詳情頁底部 LINE CTA
-│       │   └── CapabilityCloud.astro  ← hub 頁的能力雲標籤
+│       │   ├── CapabilityCloud.astro  ← hub 頁的能力雲標籤
+│       │   └── GcmClosedLoop.astro    ← GCM SMART on FHIR 收案閉環 panel（用於 /medical 評估區塊、/care、三個 CDS 頁）
 │       ├── news/
 │       │   ├── HighlightNews.astro    ← 議題總覽頁上方精選
 │       │   ├── NewsCard.astro         ← 列表卡片

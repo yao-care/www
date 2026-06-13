@@ -5,7 +5,7 @@
 export const LINE_PERSONAL = 'https://line.me/ti/p/i0_EpxFQVc';
 export const LINE_TEAM = 'https://line.me/ti/p/zruKr3pyPK';
 
-export type CategorySlug = 'medical' | 'ai' | 'marketing';
+export type CategorySlug = 'medical' | 'ai' | 'care' | 'marketing';
 
 export type CareTag = {
   /** yao 同音字（藥/鑰/邀） */
@@ -56,6 +56,20 @@ export const CATEGORIES: readonly Category[] = [
     },
   },
   {
+    slug: 'care',
+    label: '高齡友善',
+    kicker: 'Age-Friendly Care',
+    href: '/care',
+    tagline: '面對超高齡社會，讓長者被看見、被陪伴 — 無接觸報到 × 高齡周全性評估',
+    description:
+      '台灣 2025 邁入超高齡社會。我們以「高齡友善」為核心，結合長者友善無接觸報到與高齡周全性評估，從據點報到到衰弱篩檢，串起 SMART on FHIR 預防醫學閉環，呼應 GCM 預防醫學發展協會的公益使命。',
+    caretag: {
+      yao: '耀',
+      word: '陪伴',
+      motto: '讓晚年發光，有人陪伴',
+    },
+  },
+  {
     slug: 'marketing',
     label: '數位行銷',
     kicker: 'Digital Marketing',
@@ -79,13 +93,45 @@ export type ProductSlug =
   | 'yaocare'
   | 'huatuo'
   | 'txgnn'
+  | 'func'
+  | 'geri'
+  | 'pedi'
   | 'intel'
   | 'siqc'
-  | 'triz';
+  | 'triz'
+  | 'sign';
+
+/** 智慧醫療分類下的子分組（其他分類不分組） */
+export type MedicalGroupSlug = 'clinical' | 'assessment';
+
+export type ProductGroup = {
+  slug: MedicalGroupSlug;
+  label: string;
+  kicker: string;
+  description: string;
+};
+
+export const MEDICAL_GROUPS: readonly ProductGroup[] = [
+  {
+    slug: 'clinical',
+    label: '用藥與診療',
+    kicker: 'Clinical & Medication',
+    description: '從基層用藥提醒到可驗證的診斷推理，對齊 ATC、SMART on FHIR、TWCM 等國際標準。',
+  },
+  {
+    slug: 'assessment',
+    label: '預防醫學評估生態系',
+    kicker: 'Preventive Assessment · SMART on FHIR',
+    description:
+      '成人 → 高齡 → 兒童全齡自評，紅黃綠分級與衛教轉介，最終匯流 GCM 收案後端形成預防醫學閉環。',
+  },
+] as const;
 
 export type Product = {
   slug: ProductSlug;
   category: CategorySlug;
+  /** 僅 medical 分類使用，決定在 hub 內歸入哪個子分組 */
+  group?: MedicalGroupSlug;
   title: string;
   tagline: string;
   description: string;
@@ -106,6 +152,7 @@ export const PRODUCTS: readonly Product[] = [
   {
     slug: 'yaocare',
     category: 'medical',
+    group: 'clinical',
     title: '藥提醒',
     tagline: '以病人為中心、依 ATC 編碼，從 LINE/Telegram 提醒用藥',
     description:
@@ -124,6 +171,7 @@ export const PRODUCTS: readonly Product[] = [
   {
     slug: 'huatuo',
     category: 'medical',
+    group: 'clinical',
     title: 'AI 華佗',
     tagline: '可驗證的中醫問診 AI — 規則 + 證據 + FHIR 三道驗證',
     description:
@@ -143,6 +191,7 @@ export const PRODUCTS: readonly Product[] = [
   {
     slug: 'txgnn',
     category: 'medical',
+    group: 'clinical',
     title: 'TxGNN 老藥新用',
     tagline: '知識圖譜 × 圖神經網路，30+ 國 FDA 藥品自動化預測 · 開源',
     description:
@@ -159,6 +208,69 @@ export const PRODUCTS: readonly Product[] = [
     externalUrl: 'https://twtxgnn.yao.care/',
     repoUrl: 'https://github.com/yao-care/TwTxGNN',
     cta: { label: '討論技術合作', href: LINE_PERSONAL },
+  },
+  {
+    slug: 'func',
+    category: 'medical',
+    group: 'assessment',
+    title: 'Smart Func 成人功能健康評估',
+    tagline: '依 WHO 內在能力(IC)框架，10–15 分鐘自評成人五大功能，紅黃綠分級 + 衛教轉介',
+    description:
+      '以世界衛生組織「內在能力（Intrinsic Capacity）」為框架的成人功能健康自評工具，涵蓋活力、行動、認知、心理、感官五大功能。智慧分支題型讓健康者快速通過、有警訊者才深入；結果頁以紅黃綠分級給出自我觀察或就醫建議，並附個人化衛教與轉介；偵測到憂鬱／自傷訊號時顯示求助專線。100% 在瀏覽器端運算，可選擇以 SMART on FHIR 上傳合作院所或 GCM 收案。',
+    ogTitle: 'Smart Func',
+    ogStat: '5',
+    ogStatLabel: 'IC DOMAINS · FHIR',
+    cardKicker: '成人功能評估 · WHO 內在能力',
+    cardBullets: [
+      '活力 / 行動 / 認知 / 心理 / 感官 五大功能',
+      '智慧分支題型，健康者快速通過',
+      '紅黃綠分級 + 衛教轉介，含自傷訊號安全網',
+    ],
+    externalUrl: 'https://smart-func-cds.yao.care',
+    repoUrl: 'https://github.com/yao-care/smart-func-cds',
+    cta: { label: '免費自我評估', href: 'https://smart-func-cds.yao.care' },
+  },
+  {
+    slug: 'geri',
+    category: 'medical',
+    group: 'assessment',
+    title: 'Smart Geri 高齡周全性評估',
+    tagline: 'CFS 衰弱量表 + 多面向 CGA，公眾自篩與專業臨床雙模式，SMART on FHIR',
+    description:
+      '針對高齡長者的周全性評估（CGA）系統，以臨床衰弱量表（CFS 1–9）為基準，延伸評估認知、情緒、營養、行動步態、用藥、社會支持等多個面向。提供「公眾／家屬自篩」與「專業臨床」雙模式，智慧分支由短篩到深評；含五次坐站等相機計時功能測驗，結果以紅黃綠分級給出轉介建議，並自動配對衛教內容。離線可用 PWA，資料留在裝置，可選擇上傳醫院 FHIR 或 GCM 收案。',
+    ogTitle: 'Smart Geri',
+    ogStat: 'CGA',
+    ogStatLabel: 'CFS 1–9 · FRAILTY',
+    cardKicker: '高齡周全性評估 · CFS / CGA',
+    cardBullets: [
+      'CFS 1–9 衰弱分級 + 多面向評估',
+      '公眾自篩 / 專業臨床 雙模式',
+      '五次坐站等功能測驗，紅黃綠轉介',
+    ],
+    externalUrl: 'https://smart-geri-cds.yao.care/',
+    repoUrl: 'https://github.com/yao-care/smart-geri-cds',
+    cta: { label: '免費自我評估', href: 'https://smart-geri-cds.yao.care/' },
+  },
+  {
+    slug: 'pedi',
+    category: 'medical',
+    group: 'assessment',
+    title: 'Smart Pedi 兒童發展評估',
+    tagline: '2 月–6 歲 ASQ-3 對標，六大發展領域常模化分級，3–5 分鐘篩檢',
+    description:
+      '針對 2 個月至 6 歲兒童的發展篩檢工具，依年齡帶（7 段）給出對應問卷，涵蓋粗動作、精細動作、語言理解、語言表達、認知、社會情緒六大領域，對齊國健署兒童健康手冊與 ASQ-3。可選互動測驗（圖卡辨識、繪圖描摹、語音錄製、動作影片）；以常模化分數判讀，−2SD 為紅旗，並以雷達圖對比同齡基準，紅黃綠分級給出觀察或轉介建議。資料留在瀏覽器，可選擇上傳醫療院所或 GCM 收案。',
+    ogTitle: 'Smart Pedi',
+    ogStat: '6',
+    ogStatLabel: 'DOMAINS · ASQ-3',
+    cardKicker: '兒童發展篩檢 · ASQ-3 常模',
+    cardBullets: [
+      '7 年齡帶 × 六大發展領域（對齊國健署手冊）',
+      '互動測驗：圖卡 / 語音 / 繪圖 / 動作影片',
+      '−2SD 紅旗，雷達圖對比同齡常模',
+    ],
+    externalUrl: 'https://smart-pedi-cds.yao.care/',
+    repoUrl: 'https://github.com/yao-care/smart-pedi-cds',
+    cta: { label: '免費自我評估', href: 'https://smart-pedi-cds.yao.care/' },
   },
   // ─── AI 系統 ────────────────────────────────────────
   {
@@ -215,6 +327,28 @@ export const PRODUCTS: readonly Product[] = [
     ],
     cta: { label: '想用在我們公司', href: LINE_PERSONAL },
   },
+  // ─── 高齡友善 ────────────────────────────────────────
+  {
+    slug: 'sign',
+    category: 'care',
+    title: '長者友善無接觸報到',
+    tagline: '純前端人臉辨識報到，零雲端、零安裝，自動語音問候 + 風險分級警示',
+    description:
+      '為長照據點、日照中心、社區關懷站打造的無接觸報到系統。長者走過鏡頭即自動辨識身分並依時段語音問候，免按鈕、免簽名、免安裝 App。所有臉部與紀錄資料 100% 留在裝置瀏覽器、零雲端傳輸；內建失蹤、失智、黑白名單、VIP 等風險分級警示，並自動產出每日簽到名冊，可直接複製貼上政府社政平台。離線可用 PWA。',
+    ogTitle: '長者友善無接觸報到',
+    ogStat: 'FACE',
+    ogStatLabel: 'ZERO-CLOUD PWA',
+    cardKicker: '長照場域 · 高齡友善報到',
+    cardBullets: [
+      '走過鏡頭自動辨識 + 分時段語音問候',
+      '資料 100% 留在裝置，零雲端傳輸',
+      '失蹤 / 失智 / 黑白名單風險分級警示',
+      '自動產出每日簽到名冊，可貼政府平台',
+    ],
+    externalUrl: 'https://sign.yao.care/',
+    repoUrl: 'https://github.com/yao-care/agent.facial.signature',
+    cta: { label: '看線上服務站', href: 'https://sign.yao.care/' },
+  },
 ];
 
 export const PRODUCT_BY_SLUG: Record<ProductSlug, Product> = Object.fromEntries(
@@ -223,3 +357,7 @@ export const PRODUCT_BY_SLUG: Record<ProductSlug, Product> = Object.fromEntries(
 
 export const productsByCategory = (slug: CategorySlug): readonly Product[] =>
   PRODUCTS.filter((p) => p.category === slug);
+
+/** 取得智慧醫療某子分組的產品（依 PRODUCTS 順序） */
+export const productsByGroup = (group: MedicalGroupSlug): readonly Product[] =>
+  PRODUCTS.filter((p) => p.category === 'medical' && p.group === group);

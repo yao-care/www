@@ -4,6 +4,7 @@ import { CATEGORIES, productsByCategory, LINE_TEAM } from '../products.config';
 
 const medicalProducts = productsByCategory('medical');
 const aiProducts = productsByCategory('ai');
+const careProducts = productsByCategory('care');
 const contactLinks = [
   { href: `mailto:${SITE.email}`, label: SITE.email },
   { href: SITE.lineLink, label: 'LINE：與工程師聯絡', external: true },
@@ -16,7 +17,7 @@ const year = new Date().getFullYear();
   <div class="max-w-7xl mx-auto px-4 lg:px-6 py-14 md:py-20">
     <div class="grid gap-10 md:gap-12 md:grid-cols-12">
       <!-- brand block -->
-      <div class="md:col-span-5">
+      <div class="md:col-span-3">
         <a href="/" class="inline-flex items-center" aria-label="yao.care 首頁">
           <img
             src="/assets/images/logo.svg"
@@ -27,8 +28,8 @@ const year = new Date().getFullYear();
         </a>
         <p class="mt-5 max-w-md text-base text-[color:var(--color-ink-soft)] leading-relaxed">
           yao.care 用 AI 與自動化把硬問題變成可重複的系統 ——
-          智慧醫療、AI 系統、數位行銷三條業務線，
-          旗下涵蓋藥提醒、AI 華佗、TxGNN、情報自動化、評鑑稽核、TRIZ、整合行銷等服務。
+          智慧醫療、AI 系統、高齡友善、數位行銷四條業務線，
+          旗下涵蓋藥提醒、AI 華佗、TxGNN、Smart Func/Geri/Pedi 評估、長者友善無接觸報到、情報自動化、評鑑稽核、TRIZ、整合行銷等服務。
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href={SITE.lineLink} target="_blank" rel="noopener" class="btn-line">
@@ -72,6 +73,28 @@ const year = new Date().getFullYear();
           ))}
           <li>
             <a href="/ai" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 高齡友善 -->
+      <div class="md:col-span-2">
+        <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">高齡友善</p>
+        <ul class="space-y-3">
+          {careProducts.map((p) => (
+            <li>
+              <a href={`/care/${p.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+                {p.ogTitle}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="/medical/geri" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+              Smart Geri 評估
+            </a>
+          </li>
+          <li>
+            <a href="/care" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
           </li>
         </ul>
       </div>

@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import FooterLinks from '../../components/FooterLinks.astro';
+import ContactMap from '../../components/ContactMap.astro';
+import CareTag from '../../components/CareTag.astro';
+import ProductCard from '../../components/products/ProductCard.astro';
+import CapabilityCloud from '../../components/products/CapabilityCloud.astro';
+import GcmClosedLoop from '../../components/products/GcmClosedLoop.astro';
+import { CATEGORY_BY_SLUG, productsByCategory, PRODUCT_BY_SLUG } from '../../products.config';
+
+const category = CATEGORY_BY_SLUG.care;
+const products = productsByCategory('care');
+const geri = PRODUCT_BY_SLUG.geri; // 跨列：正規頁在 /medical/geri
+
+const pageTitle = '高齡友善 · yao.care';
+const pageDescription =
+  '面對超高齡社會 — 長者友善無接觸報到 × Smart Geri 高齡周全性評估，從據點報到到衰弱篩檢，串起 SMART on FHIR 預防醫學閉環，呼應 GCM 預防醫學發展協會的公益使命。';
+
+const careCapabilities = [
+  { label: '高齡友善服務設計', en: 'Age-Friendly Service Design' },
+  { label: '長照場域數位工具', en: 'Long-Term Care Tech' },
+  { label: '隱私優先 / 零雲端', en: 'Privacy-First / On-Device' },
+  { label: '周全性評估 CGA', en: 'Comprehensive Geriatric Assessment' },
+  { label: 'SMART on FHIR 收案閉環', en: 'FHIR Enrollment Loop' },
+];
+---
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/care.png">
+  <Nav />
+  <main class="pt-20">
+    <!-- breadcrumb -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
+      <span class="mx-1.5">›</span>
+      <span class="text-[color:var(--color-ink)]">高齡友善</span>
+    </div>
+
+    <!-- hero -->
+    <section class="relative pt-10 pb-14 md:pt-14 md:pb-20 overflow-hidden bg-gradient-to-b from-orange-50/40 to-white">
+      <div class="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-orange-200/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 lg:px-6">
+        <CareTag caretag={category.caretag} size="lg" class="mb-4" />
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+          {category.kicker}
+        </p>
+        <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">
+          {category.label}
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+          {category.tagline}
+        </p>
+        <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+          {category.description}
+        </p>
+      </div>
+    </section>
+
+    <!-- products -->
+    <section class="py-12 md:py-16">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {products.map((p) => <ProductCard product={p} variant="hub" />)}
+
+          <!-- Smart Geri 跨列卡：正規頁在智慧醫療 -->
+          <div class="relative">
+            <span class="absolute z-10 top-4 right-4 inline-flex items-center gap-1 rounded-full bg-orange-50 text-[color:var(--color-brand)] text-[11px] font-medium px-2.5 py-1 border border-[color:var(--color-brand)]/20">
+              也屬智慧醫療
+            </span>
+            <ProductCard product={geri} variant="hub" />
+          </div>
+        </div>
+        <p class="mt-6 text-sm text-[color:var(--color-ink-soft)]">
+          Smart Geri 同時是「預防醫學評估生態系」的一員，完整介紹與其他全齡評估工具請見
+          <a href="/medical" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">智慧醫療</a>。
+        </p>
+      </div>
+    </section>
+
+    <!-- GCM closed loop -->
+    <GcmClosedLoop />
+
+    <!-- capability cloud -->
+    <CapabilityCloud
+      kicker="Age-Friendly Capabilities"
+      title="我們在高齡友善能做的事"
+      description="從據點報到到周全性評估，以隱私優先、零雲端的方式，讓長照場域也用得起智慧工具。"
+      capabilities={careCapabilities}
+    />
+
+    <!-- philosophy -->
+    <section class="py-14 md:py-20 bg-neutral-50">
+      <div class="max-w-3xl mx-auto px-4 lg:px-6 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)]">
+          讓晚年發光，有人陪伴
+        </h2>
+        <p class="mt-4 text-[color:var(--color-ink-soft)] leading-relaxed">
+          超高齡社會不是只有失能與照顧負擔的故事。我們相信科技該讓長者被好好看見 ——
+          走過鏡頭就被親切問候、衰弱訊號被及早接住、評估資料能串起後續陪伴。
+          以高齡友善為核心，呼應 GCM 預防醫學發展協會的公益使命。
+        </p>
+      </div>
+    </section>
+
+    <ContactMap />
+  </main>
+  <FooterLinks />
+</BaseLayout>

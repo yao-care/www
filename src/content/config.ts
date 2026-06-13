@@ -3,7 +3,7 @@ import { defineCollection, z } from 'astro:content';
 const news = defineCollection({
   type: 'data',
   schema: z.object({
-    target: z.enum(['yaocare', 'huatuo', 'txgnn', 'intel', 'siqc', 'triz', 'marketing']),
+    target: z.enum(['yaocare', 'huatuo', 'txgnn', 'func', 'geri', 'pedi', 'intel', 'siqc', 'triz', 'sign', 'marketing']),
     title: z.string(),
     titleZh: z.string().nullable().optional(),
     url: z.string().url(),

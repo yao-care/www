@@ -7,13 +7,16 @@ import ContactMap from '../components/ContactMap.astro';
 import FooterLinks from '../components/FooterLinks.astro';
 import CareTag from '../components/CareTag.astro';
 import HighlightNews from '../components/news/HighlightNews.astro';
-import { CATEGORIES, CATEGORY_BY_SLUG, productsByCategory } from '../products.config';
+import { CATEGORIES, CATEGORY_BY_SLUG, productsByCategory, PRODUCT_BY_SLUG } from '../products.config';
 
 const medicalProducts = productsByCategory('medical');
 const aiProducts = productsByCategory('ai');
+const careProducts = productsByCategory('care');
 const marketingCategory = CATEGORY_BY_SLUG.marketing;
 const medicalCategory = CATEGORY_BY_SLUG.medical;
 const aiCategory = CATEGORY_BY_SLUG.ai;
+const careCategory = CATEGORY_BY_SLUG.care;
+const geri = PRODUCT_BY_SLUG.geri; // 高齡友善 section 交叉預覽
 ---
 <BaseLayout>
   <Nav />
@@ -39,8 +42,8 @@ const aiCategory = CATEGORY_BY_SLUG.ai;
           我們把 AI、自動化、醫療專業綁成三條線，每件作品都能持續產出價值。
         </p>
 
-        <!-- 3 capability anchors -->
-        <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 max-w-4xl">
+        <!-- category anchors -->
+        <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 max-w-5xl">
           {CATEGORIES.map((c) => (
             <a
               href={c.href}
@@ -113,8 +116,34 @@ const aiCategory = CATEGORY_BY_SLUG.ai;
       </div>
     </section>
 
-    <!-- 數位行銷 -->
+    <!-- 高齡友善 -->
     <section class="py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+          <div>
+            <CareTag caretag={careCategory.caretag} size="md" class="mb-3" />
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              Age-Friendly Care
+            </p>
+            <h2 class="mt-2 text-3xl md:text-4xl font-bold">高齡友善</h2>
+            <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] max-w-2xl leading-relaxed">
+              面對超高齡社會，讓長者被看見、被陪伴 —— 從據點的無接觸報到到高齡周全性評估，以隱私優先、零雲端的方式落地。
+            </p>
+          </div>
+          <a href="/care" class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline whitespace-nowrap">
+            瀏覽高齡友善全部
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {careProducts.map((p) => <ProductCard product={p} variant="preview" />)}
+          <ProductCard product={geri} variant="preview" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 數位行銷 -->
+    <section class="py-16 md:py-24 bg-neutral-50">
       <div class="max-w-7xl mx-auto px-4 lg:px-6">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
           <div>

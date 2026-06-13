@@ -1,0 +1,126 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
+
+const product = PRODUCT_BY_SLUG.sign;
+
+const stats = [
+  { value: '0', unit: '雲端', label: '資料全留在裝置' },
+  { value: '0', unit: '安裝', label: '免裝 App，開瀏覽器即用' },
+  { value: '語音', unit: '', label: '分時段自動問候' },
+  { value: 'PWA', unit: '', label: '離線可用' },
+];
+
+const features = [
+  {
+    title: '走過就報到',
+    body: '長者走過鏡頭即自動辨識身分，免按鈕、免簽名、免安裝 App，並依時段自動語音問候。',
+  },
+  {
+    title: '隱私優先、零雲端',
+    body: '臉部特徵與報到紀錄 100% 留在裝置瀏覽器，不上傳雲端，從源頭降低長照場域的個資疑慮。',
+  },
+  {
+    title: '風險分級警示',
+    body: '可標記失蹤、失智、黑白名單、VIP 等對象，辨識到時以顏色警示，協助工作人員即時反應。',
+  },
+  {
+    title: '名冊自動產出',
+    body: '自動彙整每日簽到名冊，格式可直接複製貼上政府社政平台，省去人工謄寫。',
+  },
+];
+
+const scenarios = ['日間照顧中心', '巷弄長照站', '社區關懷據點', '課程簽到', '訪客登記', '長照機構'];
+---
+<ProductLayout slug="sign">
+  <ProductHero product={product}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {stats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={product.externalUrl} target="_blank" rel="noopener" class="btn-brand">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          看線上服務站
+        </a>
+        <a href={product.repoUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-neutral-300 text-[color:var(--color-ink)] hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-1.94c-3.2.7-3.87-1.54-3.87-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+          GitHub 開源
+        </a>
+      </div>
+    </Fragment>
+  </ProductHero>
+
+  <!-- intro -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
+      <p class="text-base md:text-lg">
+        對長者來說，觸控簽到、安裝 App 都是門檻；對據點來說，人工簽到耗時、又要應付政府要求的名冊。
+        長者友善無接觸報到把這件事變得最簡單 ——
+        <strong class="text-[color:var(--color-brand)]">走過鏡頭就完成報到</strong>，
+        系統還會親切地依時段語音問候。
+      </p>
+      <p class="mt-4 text-base md:text-lg">
+        它是純前端的 PWA，所有臉部與紀錄資料都留在裝置、零雲端傳輸，
+        讓長照場域用得安心。這也是我們「高齡友善」最直接的一張臉。
+      </p>
+    </div>
+  </section>
+
+  <!-- features -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Why It Works</p>
+        <h2 class="section-title mt-2">為長照場域而設計</h2>
+        <p class="section-subtitle">把報到變得對長者友善、對工作人員省力、對個資負責</p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5 md:gap-6">
+        {features.map((f) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-7 shadow-sm">
+            <h3 class="text-lg font-bold text-[color:var(--color-ink)]">{f.title}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- scenarios -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Use Cases</p>
+        <h2 class="section-title mt-2">適用場景</h2>
+        <p class="section-subtitle">凡是需要每日報到、登記的長照與社區場域都適用</p>
+      </div>
+      <ul class="flex flex-wrap justify-center gap-2 md:gap-3">
+        {scenarios.map((s) => (
+          <li class="inline-flex items-center px-4 md:px-5 py-2.5 rounded-full bg-white border border-neutral-200 hover:border-[color:var(--color-brand)] transition-colors text-sm font-medium text-[color:var(--color-ink)]">
+            {s}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <ProductCta
+    product={product}
+    headline="想在你的據點導入無接觸報到？"
+    description="免費先到線上服務站體驗；想客製語音、名冊格式或風險名單，歡迎 LINE 私訊我們。"
+  />
+
+  <ProductNews slot="news" target="sign" />
+</ProductLayout>

@@ -6,14 +6,16 @@ import ContactMap from '../../components/ContactMap.astro';
 import CareTag from '../../components/CareTag.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
 import CapabilityCloud from '../../components/products/CapabilityCloud.astro';
-import { CATEGORY_BY_SLUG, productsByCategory } from '../../products.config';
+import GcmClosedLoop from '../../components/products/GcmClosedLoop.astro';
+import { CATEGORY_BY_SLUG, MEDICAL_GROUPS, productsByGroup } from '../../products.config';
 
 const category = CATEGORY_BY_SLUG.medical;
-const products = productsByCategory('medical');
+const clinical = productsByGroup('clinical');
+const assessment = productsByGroup('assessment');
 
 const pageTitle = '智慧醫療 · yao.care';
 const pageDescription =
-  '從基層用藥提醒到醫療 AI — 藥提醒（LINE/Telegram）、AI 華佗（中醫問診）、TxGNN（30 國老藥新用 AI）一條龍對接 ATC 編碼與 SMART on FHIR 互通協定。';
+  '從基層用藥提醒到醫療 AI 與全齡預防醫學評估 — 藥提醒、AI 華佗、TxGNN，以及 Smart Func / Geri / Pedi 三件式自評，一條龍對接 ATC 編碼與 SMART on FHIR 互通協定。';
 
 const medicalCapabilities = [
   { label: '醫療 AI 系統整合', en: 'Healthcare AI Integration' },
@@ -55,14 +57,48 @@ const medicalCapabilities = [
       </div>
     </section>
 
-    <!-- products grid -->
-    <section class="py-12 md:py-16">
-      <div class="max-w-7xl mx-auto px-4 lg:px-6">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {products.map((p) => <ProductCard product={p} variant="hub" />)}
+    <!-- group: 用藥與診療 -->
+    {clinical.length > 0 && (
+      <section class="py-12 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+          <div class="mb-8">
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              {MEDICAL_GROUPS[0].kicker}
+            </p>
+            <h2 class="mt-2 text-2xl md:text-3xl font-bold">{MEDICAL_GROUPS[0].label}</h2>
+            <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+              {MEDICAL_GROUPS[0].description}
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {clinical.map((p) => <ProductCard product={p} variant="hub" />)}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
+
+    <!-- group: 預防醫學評估生態系 -->
+    {assessment.length > 0 && (
+      <section class="py-12 md:py-16 bg-neutral-50">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+          <div class="mb-8">
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              {MEDICAL_GROUPS[1].kicker}
+            </p>
+            <h2 class="mt-2 text-2xl md:text-3xl font-bold">{MEDICAL_GROUPS[1].label}</h2>
+            <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+              {MEDICAL_GROUPS[1].description}
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {assessment.map((p) => <ProductCard product={p} variant="hub" />)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- GCM SMART on FHIR 收案閉環 -->
+    <GcmClosedLoop tinted={false} />
 
     <!-- capability cloud -->
     <CapabilityCloud
