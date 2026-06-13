@@ -45,7 +45,7 @@ import {
   writerPrompt,
   rewritePrompt,
 } from './news-prompts.mjs';
-import { checkRegexGuards, checkLengths, normTitle } from './news-guards.mjs';
+import { checkRegexGuards, checkLengths, checkSimplified, normTitle } from './news-guards.mjs';
 import { fixTerms } from './zh-tw.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -344,6 +344,7 @@ async function writeOne(
     const regexFails = [
       ...checkRegexGuards(draft, target.proofPoints),
       ...checkLengths(draft),
+      ...checkSimplified(draft),
     ];
     if (regexFails.length === 0) {
       return { ok: true, draft, passes: attempt };

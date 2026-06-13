@@ -3,6 +3,60 @@
 // 規則 R1–R5 主要針對 designResponse（我們的觀點段）
 // newsBrief 與 issueAnalysis 因為合理引用新聞原文較寬鬆
 
+import * as OpenCC from 'opencc-js';
+
+// ── 簡體字硬擋（規則 ZH）────────────────────────────────────────────
+// 偵測法：opencc cn→t 會把「簡體字」轉成不同的繁體字（如 联→聯）。逐字比對，
+// 凡是被轉掉的字即視為簡體。但「兩岸通用、台灣繁體也合法」的同形字（台/床/余/布
+// /周…）也會被 opencc 當成簡體，故扣掉一份白名單，避免誤殺正確的繁體內容。
+// 寧可漏抓（false negative）也不可誤殺（false positive）：不確定的字一律放進白名單。
+const _cn2t = OpenCC.Converter({ from: 'cn', to: 't' });
+const SHARED_OK = new Set([
+  ...'台臺后里面松谷幾几干丑斗卜系表布才周余致制範范占準准划黨党衝冲內内困卷搜了吃核羣群污扎床僕仆兌兑著注湧涌游向鹹咸凶採采',
+]);
+
+/**
+ * 簡體字偵測（硬擋）。掃 writer 產出的所有文字欄位（含 titleZh），命中即退回重寫。
+ * @param {{titleZh?: string|null, newsBrief?: string, issueAnalysis?: string, designResponse?: string, tags?: string[]}} draft
+ * @returns {Array<{rule: string, evidence: string, fix: string}>}
+ */
+export function checkSimplified(draft) {
+  const violations = [];
+
+  // titleZh 必填（會被當作對外顯示的繁體標題）；缺漏也退回重寫
+  if (!draft.titleZh || !String(draft.titleZh).trim()) {
+    violations.push({
+      rule: 'ZH',
+      evidence: 'titleZh 未填',
+      fix: 'titleZh 必填：把原標題改寫成繁體中文（台灣用語）標題，保留人名/品牌/英文',
+    });
+  }
+
+  const fields = {
+    titleZh: draft.titleZh || '',
+    newsBrief: draft.newsBrief || '',
+    issueAnalysis: draft.issueAnalysis || '',
+    designResponse: draft.designResponse || '',
+    tags: Array.isArray(draft.tags) ? draft.tags.join(' ') : '',
+  };
+  for (const [field, text] of Object.entries(fields)) {
+    if (!text) continue;
+    const bad = new Set();
+    for (const ch of text) {
+      if (SHARED_OK.has(ch)) continue;
+      if (_cn2t(ch) !== ch) bad.add(ch);
+    }
+    if (bad.size) {
+      violations.push({
+        rule: 'ZH',
+        evidence: `${field} 出現簡體字「${[...bad].join('')}」`,
+        fix: '改為繁體中文（台灣用語），不可出現任何簡體字',
+      });
+    }
+  }
+  return violations;
+}
+
 // R3 — 戰績敘事：宣稱我們做過某事
 const ACHIEVEMENT_PATTERNS = [
   /已協助/,
