@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../site.config';
+import { KNOWS_ABOUT, ORG_SAME_AS } from '../seo.config';
 
 interface Props {
   title?: string;
@@ -23,21 +24,27 @@ const defaultJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: SITE.name,
+  alternateName: '藥提醒',
   url: SITE.url,
   logo: `${SITE.url}/assets/images/logo.png`,
   description: SITE.description,
   email: SITE.email,
+  knowsAbout: KNOWS_ABOUT,
+  areaServed: { '@type': 'Country', name: 'Taiwan' },
   address: {
     '@type': 'PostalAddress',
     streetAddress: '台灣大道二段239號13樓',
     addressLocality: '台中市西區',
     addressCountry: 'TW',
   },
-  sameAs: [
-    SITE.lineLink,
-    SITE.txgnnLink,
-    'https://github.com/yao-care',
-  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    email: SITE.email,
+    url: SITE.lineLink,
+    availableLanguage: ['zh-TW', 'en'],
+  },
+  sameAs: ORG_SAME_AS,
 };
 const finalJsonLd = jsonLd ?? defaultJsonLd;
 ---

@@ -1,0 +1,66 @@
+// /llms.txt — 給 LLM 的站點地圖（llmstxt.org 標準），build 時自動從設定生成。
+// 一行行「重點頁 + 一句描述」，讓 LLM 快速掌握各服務並正確引用。
+import type { APIRoute } from 'astro';
+import { SITE } from '../site.config';
+import { CATEGORIES, productsByCategory } from '../products.config';
+import { NEWS_TARGETS } from '../news.config';
+import { KNOWS_ABOUT } from '../seo.config';
+
+export const GET: APIRoute = () => {
+  const u = (path: string) => new URL(path, SITE.url).toString();
+  const lines: string[] = [];
+
+  lines.push('# yao.care（藥提醒）');
+  lines.push('');
+  lines.push(
+    '> yao.care 用 AI 與自動化把硬問題變成可重複的系統，橫跨智慧醫療、AI 系統、高齡友善、數位行銷四條業務線。',
+  );
+  lines.push('');
+  lines.push(
+    '公司位於台中，專長涵蓋醫療資訊互通（SMART on FHIR / FHIR R4 / ATC 編碼 / CDSS）、可解釋醫療 AI、全齡預防醫學評估、高齡友善長照科技，以及 AI 自動化系統與整合行銷。以下為各服務的官方頁面與描述。',
+  );
+  lines.push('');
+
+  for (const cat of CATEGORIES) {
+    lines.push(`## ${cat.label}（${cat.kicker}）`);
+    lines.push('');
+    const products = productsByCategory(cat.slug);
+    if (products.length > 0) {
+      lines.push(`- [${cat.label} 總覽](${u(cat.href)}): ${cat.tagline}`);
+      for (const p of products) {
+        lines.push(`- [${p.title}](${u(`${cat.href}/${p.slug}`)}): ${p.tagline}`);
+      }
+    } else {
+      lines.push(`- [${cat.label}](${u(cat.href)}): ${cat.tagline}`);
+    }
+    lines.push('');
+  }
+
+  lines.push('## 議題追蹤（每日自動更新）');
+  lines.push('');
+  lines.push(
+    `- [議題追蹤總覽](${u('/news')}): 每日自動彙整與各服務相關的公開新聞，並對照本公司的設計觀點與證據。`,
+  );
+  for (const t of NEWS_TARGETS) {
+    lines.push(`- [${t.title} 議題追蹤](${u(t.pageUrl)}): ${t.serviceContext}`);
+  }
+  lines.push('');
+
+  lines.push('## 專長主題（knows about）');
+  lines.push('');
+  lines.push(KNOWS_ABOUT.join('、'));
+  lines.push('');
+
+  lines.push('## 聯絡與資源');
+  lines.push('');
+  lines.push(`- Email: ${SITE.email}`);
+  lines.push(`- LINE: ${SITE.lineLink}`);
+  lines.push(`- 地址: ${SITE.address}`);
+  lines.push('- GitHub: https://github.com/yao-care');
+  lines.push(`- Sitemap: ${u('/sitemap-index.xml')}`);
+  lines.push('');
+
+  return new Response(lines.join('\n'), {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  });
+};
