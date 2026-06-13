@@ -6,10 +6,11 @@
 |------|-----|
 | 網址 | https://www.yao.care / https://yao.care |
 | 類型 | 純靜態網站（公司級多產品 hub：智慧醫療 / AI 系統 / 數位行銷） |
-| 主機目錄 | `$WWW_SITE_DIR/`（即本目錄） |
-| 部署方式 | NPM 容器掛載 `dist/` 唯讀 → nginx 直接提供 |
+| 原始碼目錄 | `$WWW_REPO_DIR/`（即本目錄；與其他專案慣例一致） |
+| 服務（產物）目錄 | `$WWW_SITE_DIR/`（NPM 唯讀掛載點；build 產物 rsync 到這） |
+| 部署方式 | `npm run deploy` → build 到本地 `dist/` → rsync 同步到服務目錄 → nginx 直接提供 |
 | 版本控制 | Git → https://github.com/yao-care/www（private） |
-| Build 流程 | `npm run build` 產生 `dist/`，nginx 從 `dist/` 服務 |
+| Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
 | 技術棧 | Astro 5 + Tailwind v4 + D3 v7 + TypeScript |
 | NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
@@ -19,7 +20,7 @@
 從乾淨狀態開始改版的標準流程：
 
 ```bash
-cd $WWW_SITE_DIR
+cd $WWW_REPO_DIR
 
 # 0. 確認狀態乾淨、在 main、與遠端同步
 git status               # 應該是 clean
@@ -33,8 +34,8 @@ npm run dev              # http://localhost:4321
 # 編輯 src/components/*.astro 或 src/pages/index.astro
 # 改完後 Ctrl+C 結束 dev server
 
-# 3. 產生正式 build → 上線
-npm run build            # 產出 dist/，nginx 立即讀到（無需重啟容器）
+# 3. build + 發佈 → 上線（一鍵）
+npm run deploy           # = astro build && rsync dist/ → $WWW_SITE_DIR/
 curl -sI https://www.yao.care/ | head -3   # 驗證 200
 
 # 4. Commit + push
@@ -44,16 +45,16 @@ git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
 git push                 # main 直推，或 push -u origin <branch> + PR
 ```
 
-> ⚠ **編輯 `src/` 之後沒跑 `npm run build`，網站不會更新**。nginx 唯讀掛載的是 `dist/`，不是 `src/`。
+> ⚠ **原始碼在 `$WWW_REPO_DIR`，產物在 `$WWW_SITE_DIR`**（NPM 掛載點）。兩者已分離 —— 改完 `src/` 只 `npm run build` 還不夠，要 `npm run deploy`（或 build 後 `npm run publish`）把 `dist/` rsync 到服務目錄才會上線。
 >
-> ⚠ **不要手動編輯 `dist/`**。它是 build 產物（gitignored），下次 build 會被覆蓋。
+> ⚠ **不要手動編輯產物目錄 `$WWW_SITE_DIR/`**。下次 deploy 會被 `rsync --delete` 覆蓋。本地 `dist/` 同理（gitignored）。
 >
 > ⚠ **沒設定 git global identity**。每個 commit 都要帶 `-c user.email=... -c user.name=...`，或在這個 repo 設 `git config user.email/name`。
 
 ## § 重要事實
 
 ### nginx 掛載點
-`$PLATFORM_DIR/docker-compose.yml` line 38 把 `$WWW_SITE_DIR/dist` 掛進 NPM 容器（唯讀）。改 mount 路徑要 `cd $PLATFORM_DIR && docker compose up -d npm` 重建容器。平時改 `src/` + build **不需動容器**。
+`$PLATFORM_DIR/docker-compose.yml` line 38 把 `$WWW_SITE_DIR`（整個服務目錄，**非** `dist/` 子層）掛進 NPM 容器唯讀為 `/data/static-sites/www.yao.care`。改 mount 路徑要 `cd $PLATFORM_DIR && docker compose up -d npm` 重建容器。平時 `npm run deploy`（rsync 進這個目錄）**不需動容器**。
 
 ### LFS（簡報檔）
 46MB 的 `public/藥提醒Line民眾服務.ppsx` 透過 Git LFS 管理。clone 後若沒看到實檔，跑 `git lfs pull`。`.gitattributes` 已設定 `*.ppsx` 走 LFS。
@@ -83,9 +84,9 @@ Prompt 模板在 `scripts/news-prompts.mjs`，CLI 旗標：`--target <slug>` / `
 
 ### Cron + 自動部署
 ```
-30 20 * * *  $WWW_SITE_DIR/scripts/fetch-news.sh
+30 20 * * *  $WWW_REPO_DIR/scripts/fetch-news.sh
 ```
-台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：抓新聞 → 若 `src/content/news` 有變化 → 自動 commit（作者 LightChang）+ push + `npm run build`。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。
+台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：抓新聞 → 若 `src/content/news` 有變化 → 自動 commit（作者 LightChang）+ push + `npm run build` + `rsync dist/ → $WWW_SITE_DIR/`。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。
 
 > ⚠ wrapper 一開頭會 `unset CLAUDECODE CLAUDE_CODE_ENTRYPOINT CLAUDE_CODE_SSE_PORT`，否則在 Claude Code session 內手動觸發時，子 `claude` CLI 會因為偵測到 nested session 而被擋。
 
@@ -96,7 +97,7 @@ Prompt 模板在 `scripts/news-prompts.mjs`，CLI 旗標：`--target <slug>` / `
 
 ### 手動觸發 / 除錯
 ```bash
-cd $WWW_SITE_DIR
+cd $WWW_REPO_DIR
 
 # 只跑單一 target，不寫檔，看完整 Claude I/O
 ./node_modules/.bin/tsx scripts/fetch-news.ts --target yaocare --dry-run --debug
@@ -111,7 +112,7 @@ tail -50 /var/log/yaocare-news.log
 ## § 檔案結構
 
 ```
-$WWW_SITE_DIR/
+$WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_SITE_DIR/
 ├── astro.config.mjs           ← Astro + sitemap + Tailwind v4 設定
 ├── tsconfig.json
 ├── package.json
@@ -173,7 +174,7 @@ $WWW_SITE_DIR/
 │       │   └── ProductNews.astro      ← 嵌在產品詳情頁的相關議題
 │       └── (yaocare 專屬，仍只在 medical/yaocare.astro 引用)
 │           SmartHealthcare / Advantages / SixServices / Verification / Screenshots
-└── dist/                      ← build 產物（gitignored，nginx mount 點）
+└── dist/                      ← 本地 build 產物（gitignored）；deploy 時 rsync 到 $WWW_SITE_DIR/（後者才是 nginx mount 點）
 ```
 
 > 改文案優先順序：先看 `src/products.config.ts`（產品標題、描述、bullets、CTA 都在這） → 再看對應頁面 `src/pages/<category>/<slug>.astro` → 全站共用字串看 `src/site.config.ts`。
@@ -242,8 +243,8 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 
 ### 502 / 403
 1. NPM 容器是否正常：`docker ps | grep $NPM_CONTAINER`
-2. `dist/index.html` 是否存在：`ls dist/index.html`（沒有 → 跑 `npm run build`）
-3. 掛載確認：`docker exec $NPM_CONTAINER ls /data/static-sites/www.yao.care/`
+2. 產物是否存在：`ls $WWW_SITE_DIR/index.html`（沒有 → 跑 `npm run deploy`）
+3. 掛載確認：`docker exec $NPM_CONTAINER ls /data/static-sites/www.yao.care/`（應直接看到 index.html，非 dist/ 子層）
 
 ### 想看 NPM Advanced Config
 透過 SSH tunnel 連到 NPM Web UI（見 `$HOST_RUNBOOK` 的 NPM 章節），Proxy Host #46。

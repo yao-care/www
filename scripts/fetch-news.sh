@@ -1,6 +1,6 @@
 #!/bin/bash
 # 自動議題評論引擎 — cron entry
-# crontab: 30 6 * * * $WWW_SITE_DIR/scripts/fetch-news.sh
+# crontab: 30 20 * * * $WWW_REPO_DIR/scripts/fetch-news.sh
 set -euo pipefail
 
 # cron PATH 很乾淨，需要顯式擴充
@@ -13,7 +13,7 @@ elif [ -d /root/.nvm/versions/node ]; then
   export PATH=/root/.nvm/versions/node/${NODE_VER}/bin:$PATH
 fi
 
-cd $WWW_SITE_DIR
+cd $WWW_REPO_DIR
 
 # 若 caller 是 Claude Code session，子 claude CLI 會被擋（nested session）
 # cron 沒有這變數，但手動觸發時要清掉
@@ -38,8 +38,9 @@ LOG=/var/log/yaocare-news.log
       commit -m "chore(news): auto fetch $(date '+%Y-%m-%d')"
     git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗（不阻擋 build）"
 
-    # 3) build → nginx 立即看到新 dist/
+    # 3) build → 同步產物到 NPM 掛載的服務目錄
     npm run build
+    rsync -a --delete dist/ $WWW_SITE_DIR/
   fi
 
   echo " fetch-news end: $(date '+%Y-%m-%d %H:%M:%S')"
