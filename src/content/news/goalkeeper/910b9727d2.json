@@ -1,0 +1,20 @@
+{
+  "target": "goalkeeper",
+  "title": "議員關注AI診症　盧寵茂指AI診治或遠程醫療違醫委會指引　恐犯專業失德罪",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi7gJBVV95cUxNWHpyS2h2c2RNVjdpaXcyUllfNzBXV25XWXh6YS10MVdIWlgyWWVvSDZRQWk5cFVNc251TDFFa3VJTEQ4dFBRa3hWQnFZUzJnaVR6RFVzYmt5T00yTEFXRENhYTRVVThhZUxWUTR4WlhoU1ppNDZYZk4yVS1Dd2xMNmVTX19tMnk0UFktdnpwNFJRd2Z2MmRKekg5aTRTRm41YWdwN2ZoNzB1ZkdXZlNyWERhRFB1TUZscDA2Mml4b1Ytb181U2E2Wk1oMFJPdU1Ha3BoMDJPaW9TT1R1LVY0bFNLbXloVlN0Vi1yN3J1RldFam1EUDNrTldnWWhxZXRoYXl5blZpU3hhWWJUcUNZSkxFSUhaN2JHZHZvajZMbXliQ3NPbWF0TmpfTGZiZWRzTkZ0UFlfWEhWWjA0SVFpQlJDZ1JyQ25pdmZ4R0RfeklPY3BEUk81TVpBMzhVeEhLZXAwOFpyWUg4b2VJbmc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-12T05:44:37.000Z",
+  "fetchedAt": "2026-06-14T20:53:07.813Z",
+  "newsBrief": "立法機關議員就AI診症提出關注，衛生官員表示，若AI實際執行診斷或治療，可能違反醫療專業守則，醫師恐面臨專業失德罪責。此番警示顯示，AI醫療的合規邊界正受主管機關高度關注，業者難以僅憑技術自我把關。",
+  "issueAnalysis": "AI輔助醫療場景日趨普及，但生成式AI系統一旦直接輸出診斷建議或治療方案，便觸及「執行醫療業務」的法律邊界。問題核心不在AI是否夠精準，而在於誰來確認每一次AI輸出都符合現行法規？若缺乏標準化的逐項查核機制，合規責任只能仰賴個別醫師的主觀判斷，難以形成可稽核的一致標準，也讓監管指引無從具體落地，機構面臨的法律風險反而因AI應用擴大而升高。",
+  "designResponse": "面對AI醫療內容的合規責任認定困境，goalkeeper 的設計思路是將「查核責任」與「放行決定」明確拆開。在AI輸出進入臨床流程之前，系統依序針對回報揭露免責、來源標註、越權診斷跡象、個資外洩風險與幻覺五道關卡逐一回傳符合狀態（proofPoint #1），並將每道查核結果連結至對應的台灣法源條文，讓醫師或機構能清楚看到「哪一條規定要求哪一項揭露」（proofPoint #2）。重要的是，goalkeeper 只回傳各關卡狀態，最終是否放行由使用者自行決定（proofPoint #3），避免系統「取代醫師判斷」的監管疑慮。此外，每次查核皆保留可重現的稽核軌跡，規範版本可鎖定（proofPoint #4），讓機構面對主管機關詢問時有明確的合規記錄可供佐證。",
+  "tags": [
+    "AI診症合規",
+    "越權診斷",
+    "醫療AI法規"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1
+}

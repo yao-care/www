@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "25歲男靠AI問診網購中藥自煎，用錯藥致氣血紊亂——中醫師揭AI盲點",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5MY3JTeW9SbGxCbVVEZVJSSmprWHlTTElydGlnalROYXNQQWg3S2JqNnFzTFdXdEFNbldjX1ZFM29oUm1YU0tIY3JXZnJQQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-14T00:00:02.000Z",
+  "fetchedAt": "2026-06-14T20:56:53.543Z",
+  "newsBrief": "一名25歲男性透過AI問診平台取得建議後，自行網購中藥材煎煮，因用藥方向錯誤導致氣血紊亂。中醫師指出，現有AI問診工具缺乏四診合參能力，消費者輕信建議自行抓藥存在高度醫療風險。",
+  "issueAnalysis": "這起案例揭示AI問診工具的結構性盲點：多數平台以文字問答為主，無法採集舌象、脈象等四診資料，也缺乏可追溯的辨證邏輯。中醫辨證的關鍵難題在於相同症狀可能對應截然相反的證型——同樣是疲勞，氣虛與陰虛治法南轅北轍。當AI僅輸出結論而非推理過程，使用者無從辨別可靠程度，照單全收便可能造成如本案的傷害。",
+  "designResponse": "面對AI問診缺乏可追溯性的結構性問題，設計端的回應是讓辨證邏輯對臨床工作者完全透明：128條八綱與臟腑規則寫在syndromes.json，可被逐條檢視與質疑 (#1)；採用規則×0.6、LLM×0.4的混合辨證權重，確保主幹邏輯由可驗證規則主導，而非黑箱模型全權決策 (#2)。四診採集端透過Vision舌診、Audio聞診與rPPG指尖脈象估算，在數位場域還原四診合參的客觀基礎 (#5)，讓每個推論結果都附帶完整推理路徑，而非僅輸出無從驗證的建議結論。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 3
+}

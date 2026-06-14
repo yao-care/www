@@ -1,0 +1,20 @@
+{
+  "target": "geri",
+  "title": "肌少症比骨鬆更可怕！萬芳醫院院長劉燦宏：50後就該存「肉本」，別讓人生最後10年困在床上",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBHeWJ1RHloQ0VWTTE5UWFMRXdCWGd5ZXZ6a3BxbC03dFhBQ0FPRW1nTWZLcUR1b0RMZkZGdXo1S0xfSzFuYmczYlJfMmQ1bVRKaHBUOXJpM3JwZkVXVGFhdDZfWVk?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-09T06:44:48.000Z",
+  "fetchedAt": "2026-06-14T20:47:20.054Z",
+  "newsBrief": "醫師指出，肌少症對老年生活品質的威脅甚至超過骨質疏鬆，建議 50 歲後就應積極「存肌肉本」。一旦肌肉量與肌力雙雙下滑，跌倒、失能風險大幅上升，可能讓人生最後十年困臥在床，錯失黃金預防時機。",
+  "issueAnalysis": "肌少症進展隱匿，早期症狀與「正常老化」難以區分，等到明顯虛弱或反覆跌倒才就醫，往往已錯過最佳介入時機。臨床上，肌少症常與營養不良、認知退化、憂鬱情緒共伴出現，彼此加速惡化，卻因分散在不同科別與量表，難以被系統性捕捉。對社區長者與家屬而言，缺乏整合行動能力、肌力表現與多面向風險的評估工具，使「該繼續觀察還是就醫」的判斷更加困難。",
+  "designResponse": "面對肌少症這類「慢慢發生、難以自覺」的功能退化，Smart Geri 的設計思路是讓評估具備足夠解析度，才能在早期給出有意義的訊號。\n\n在量化肌力的環節，我們選擇納入五次坐站測驗並以相機計時（proofPoint #4），讓原本需要專業場域的功能測驗也能在社區或家中進行，降低評估門檻。\n\n肌少症幾乎必然牽連營養、認知與社會支持，因此評估涵蓋認知、情緒、營養、行動、用藥、社會支持六個面向（proofPoint #3），一次捕捉常見共伴風險，結果以紅黃綠分級呈現並配對衛教內容（proofPoint #5），協助家屬直接判斷下一步行動方向。",
+  "tags": [
+    "肌少症",
+    "功能評估",
+    "高齡預防"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1
+}

@@ -1,0 +1,16 @@
+{
+  "target": "goalkeeper",
+  "title": "AI 醫療落地卡關大解密：法規、安規、資安到風險治理如何不踩雷",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5USVFJdHhobDg4djFTWGVMVmZ5RlpxVG1yTk41d0l3WWNOOEIzNkRSSm5aT2VmdkYtY2FuRGVXTTJxaWVVS3VBeDFWeWpRWEFwSjE0QWY1dXQzQ25UcmVnQ1Rxdm05LXJk?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-08T07:56:50.000Z",
+  "fetchedAt": "2026-06-14T21:04:17.655Z",
+  "newsBrief": "生成式 AI 進入醫療場域，正面臨法規合規、設備安規、資安防護與風險治理四道關卡同步施壓。業者在落地過程中往往不清楚各關卡的責任歸屬，加上主管機關指引仍在演進，導致導入計畫頻頻卡關或延宕。",
+  "issueAnalysis": "醫療 AI 落地的卡關，不只是技術問題，更是責任結構的問題。生成式 AI 產出的內容若夾帶越權診斷意見或個人識別資訊，法律責任歸屬模糊；若來源標註不清，又難以回應稽核要求。主管機關已陸續發布生成式 AI 應用指引，但許多業者仍缺乏能將指引轉化為可執行檢核的工具，合規工作停在人工逐案判斷的階段，既難重現、也難擴規模。更深層的問題在於：每一次 AI 內容輸出都可能觸及多條法規，缺乏稽核軌跡的決策，在風險治理上必然留下漏洞。",
+  "designResponse": "面對醫療 AI 落地的合規壓力，結構性的回應方向是將「法規可查核性」嵌入每次輸出環節。在架構上，以五道獨立關卡分別回傳符合狀態——涵蓋回報揭露、來源標註、越權診斷、個資外洩與幻覺查核 (proofPoint #1)——讓機構得以在自身決策框架內保留最終判斷，而非由系統代替業者做整體放行。每道關卡綁定對應的台灣法規依據，使合規責任從模糊歸屬轉為可追溯記錄 (proofPoint #2)。稽核過程採隱私優先架構，原文與個資原值不寫入稽核系統 (proofPoint #5)，確保查核軌跡可重現、可提交。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 3
+}

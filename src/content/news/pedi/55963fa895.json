@@ -1,0 +1,16 @@
+{
+  "target": "pedi",
+  "title": "有網路就能做：數位兒童發展篩檢的機會與設計要素",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9iZDlqNW1TZHVpVVAzUUNwR2lvaTJWeEpNMGZHaThhWHhCc2dpb21ZR0J1ZHZycVhDVlluU1FQc2h4QThhRlF5QmhHZEMzYkdIRDJPT2N3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-05T07:00:00.000Z",
+  "fetchedAt": "2026-06-14T21:00:53.316Z",
+  "newsBrief": "媽媽寶寶網報導，成大醫院推出「育兒成」線上評估工具，讓家長透過網路隨時掌握嬰幼兒發展狀況，反映數位化兒童發展篩檢需求持續升溫。",
+  "issueAnalysis": "兒童發展遲緩的黃金療育期有限，但傳統紙本健康手冊缺乏系統化判讀機制，加上醫療資源集中都市，偏鄉與雙薪家庭難以取得低門檻篩檢入口。此案例說明「只要有網路就能評估」已成新設計基準，同時凸顯標準化評估框架與後續醫療銜接機制的重要性。",
+  "designResponse": "篩檢可及性的核心在於讓評估發生在家長本來就有的情境裡。在年齡覆蓋上，從嬰兒期到學齡前劃分為七個年齡帶（#1），確保各階段均有對應入口；六大發展領域對齊國健署手冊與 ASQ-3（#2），以常模化分數搭配雷達圖和紅黃綠分級，直接給出觀察或轉介建議（#5），讓家長不需自行詮釋數字。資料預設留在瀏覽器端，可自主決定是否上傳醫療系統（#6），在隱私保護與醫療銜接間取得平衡。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}
