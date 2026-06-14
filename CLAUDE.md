@@ -64,7 +64,7 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 `/news/` 區塊每天自動抓 Google News、由 Claude 生成「議題分析 + 設計回應」對照文章，每篇都連回對應產品頁。**這是這個 repo 跑得最多的東西**，但 `src/` 與 `dist/` 都由 cron 自動更新，平時不用手動碰。
 
 ### 設定（單一 source of truth）
-`src/news.config.ts` — 11 個 target（10 產品 + `marketing`），每個 target 定義：
+`src/news.config.ts` — 12 個 target（11 產品 + `marketing`），每個 target 定義：
 - `queries`: Google News RSS 搜尋關鍵字
 - `voicePoints`: writer 可參考的「我們關心的痛點」
 - `proofPoints`: 白名單 — `designResponse` 段落只能引用這些事實，每條附 `#N` 索引（regex guard 會檢查）
@@ -124,14 +124,15 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   └── gen-og.mjs             ← OG 圖產生器
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
 │   ├── assets/images/         ← 所有圖片
-│   │   └── og/                ← 分產品 OG 圖（home/yaocare/huatuo/txgnn/func/geri/pedi/sign/care/intel/siqc/triz/marketing.png）
+│   │   └── og/                ← 分產品 OG 圖（home/yaocare/huatuo/txgnn/func/geri/pedi/sign/care/intel/siqc/triz/goalkeeper/marketing.png）
 │   ├── contents/              ← BMI/BP/GLU-AC 衛教圖
 │   ├── robots.txt
 │   └── 藥提醒Line民眾服務.ppsx ← LFS 管理
 ├── src/
 │   ├── site.config.ts         ← 全站設定（公司名/title/description/keywords/NAV）
-│   ├── products.config.ts     ← 四大分類 + 10 個產品定義 + medical 子分組（MEDICAL_GROUPS/group/productsByGroup）（單一 source of truth）
-│   ├── news.config.ts         ← 11 個 news target（queries / voicePoints / proofPoints / CTA）+ KEEP_PER_TARGET
+│   ├── products.config.ts     ← 四大分類 + 11 個產品定義 + medical 子分組（MEDICAL_GROUPS/group/productsByGroup）（單一 source of truth）
+│   ├── seo.config.ts          ← GEO/SEO：KNOWS_ABOUT / ORG_SAME_AS / 各產品 FAQ（PRODUCT_FAQS）
+│   ├── news.config.ts         ← 12 個 news target（queries / voicePoints / proofPoints / CTA）+ KEEP_PER_TARGET
 │   ├── content/
 │   │   ├── config.ts          ← news collection schema（Zod）
 │   │   └── news/<target>/*.json ← 自動產生的議題評論文章（cron 寫入）
@@ -154,7 +155,8 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   │   ├── index.astro    ← AI 系統 hub
 │   │   │   ├── intel.astro    ← 情報自動化系統
 │   │   │   ├── siqc.astro     ← 稽核 / 評鑑 AI 系統
-│   │   │   └── triz.astro     ← TRIZ 創新方法 AI 知識庫
+│   │   │   ├── triz.astro     ← TRIZ 創新方法 AI 知識庫
+│   │   │   └── goalkeeper.astro ← 醫療 AI 內容合規守門 API（B2B；private repo，live goalkeeper.yao.care）
 │   │   ├── care/             ← 高齡友善（耀・陪伴 wordmark）
 │   │   │   ├── index.astro    ← 高齡友善 hub（sign 卡 + Geri 交叉卡 + GcmClosedLoop）
 │   │   │   └── sign.astro     ← 長者友善無接觸報到

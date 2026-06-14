@@ -1,0 +1,181 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import ProductNews from '../../components/news/ProductNews.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
+
+const product = PRODUCT_BY_SLUG.goalkeeper;
+
+const stats = [
+  { value: '5', unit: '道', label: '合規檢查關卡' },
+  { value: 'API', unit: '+MCP', label: '兩種串接方式' },
+  { value: '115.05.29', unit: '', label: '規範版本可鎖定' },
+  { value: '0', unit: '原文', label: '原文不寫入稽核' },
+];
+
+const checks = [
+  { id: 'disclosure', name: '揭露 / 免責', body: '是否註明 AI 生成、可能有誤、僅供參考，必要時由醫事人員確認。', law: '生成式 AI 指引、病人自主權利法 §5' },
+  { id: 'source_attribution', name: '來源標註', body: '實質臨床 / 事實主張是否有溯源。', law: '醫療法 §67、電子病歷製作及管理辦法' },
+  { id: 'scope_boundary', name: '越權 / 越級診斷', body: '是否逾越為「下確定診斷 / 治療指令」或冒充醫事人員親自執行。', law: '醫師法 §11、護理人員法 §24、醫療器材管理法' },
+  { id: 'pii', name: '個資外洩', body: '是否夾帶可識別個資（身分證、電話、病歷號…）。', law: '個資法 §6、醫療法 §72' },
+  { id: 'hallucination', name: '幻覺查核', body: '編造文獻、錯誤藥物交互、與臨床指引不符（三子型）。', law: '生成式 AI 指引、AI / ML 醫材軟體指引' },
+];
+
+const statuses = [
+  { tone: 'emerald', s: 'pass', body: '通過該關卡。' },
+  { tone: 'amber', s: 'warning', body: '有疑慮，需人工覆核。' },
+  { tone: 'red', s: 'fail', body: '未通過，建議擋下。' },
+  { tone: 'neutral', s: 'error', body: '無法判定，需人工覆核（error ≠ pass）。' },
+];
+const dot: Record<string, string> = {
+  emerald: 'bg-emerald-500', amber: 'bg-amber-500', red: 'bg-red-500', neutral: 'bg-neutral-400',
+};
+
+const curl = `curl -X POST "https://goalkeeper.yao.care/medical/validate" \\
+  -H "X-API-Key: <你的金鑰>" -H "content-type: application/json" \\
+  -d '{"content":"本內容由 AI 生成，可能有誤，僅供參考，必要時由醫事人員確認。","audience":"patient"}'`;
+---
+<ProductLayout slug="goalkeeper">
+  <ProductHero product={product}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {stats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={product.externalUrl} target="_blank" rel="noopener" class="btn-brand">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          看線上服務
+        </a>
+        <a href="mailto:service@yao.care" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-neutral-300 text-[color:var(--color-ink)] hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          申請串接 / API 金鑰
+        </a>
+      </div>
+    </Fragment>
+  </ProductHero>
+
+  <!-- 是什麼 / 不是什麼 -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        <div class="rounded-2xl bg-white border-l-4 border-emerald-500 p-6 md:p-8 shadow-sm">
+          <h3 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)]">✅ 是一個「查核器」</h3>
+          <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+            送進 AI 產出的醫療內容，回傳<strong class="text-[color:var(--color-ink)]">五道檢查各自的狀態</strong>（pass / warning / fail / error）與依據法條。
+          </p>
+        </div>
+        <div class="rounded-2xl bg-white border-l-4 border-neutral-400 p-6 md:p-8 shadow-sm">
+          <h3 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)]">❌ 不是「放行決策器」</h3>
+          <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+            它<strong class="text-[color:var(--color-ink)]">不會</strong>回你「可以發 / 不可以發」——整體放行與否，由你依各關卡狀態自行決定。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 五道檢查 -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Five Checkpoints</p>
+        <h2 class="section-title mt-2">五道檢查，每道綁台灣法源</h2>
+        <p class="section-subtitle">依衛福部《醫療機構應用生成式人工智慧指引》(115.05.29) 等多部法律，每道檢查綁多條法源</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {checks.map((c) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <div class="flex items-center gap-2">
+              <code class="text-xs font-mono text-[color:var(--color-brand)]">{c.id}</code>
+            </div>
+            <h3 class="mt-1 text-lg font-bold text-[color:var(--color-ink)]">{c.name}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{c.body}</p>
+            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-[color:var(--color-ink-muted)]">依據：{c.law}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 判讀鐵則 -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Reading the Result</p>
+        <h2 class="section-title mt-2">判讀鐵則</h2>
+        <p class="section-subtitle">不可只看 <code class="font-mono text-sm">summary.fail === 0</code> 就放行；<code class="font-mono text-sm">error ≠ pass</code></p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {statuses.map((st) => (
+          <div class="rounded-xl bg-white border border-neutral-200 p-5 text-center shadow-sm">
+            <span class:list={['inline-block w-3 h-3 rounded-full mb-2', dot[st.tone]]}></span>
+            <div class="font-mono text-sm font-bold text-[color:var(--color-ink)]">{st.s}</div>
+            <p class="mt-1 text-xs text-[color:var(--color-ink-soft)] leading-relaxed">{st.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-6 text-center text-sm text-[color:var(--color-ink-soft)]">
+        建議策略：<strong class="text-[color:var(--color-ink)]">全 pass</strong> 才自動放行、<strong class="text-[color:var(--color-ink)]">任一 fail</strong> 擋下、<strong class="text-[color:var(--color-ink)]">任一 warning / error</strong> 轉人工覆核。
+      </p>
+    </div>
+  </section>
+
+  <!-- 串接 -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Integration</p>
+        <h2 class="section-title mt-2">一支 API，AI agent 也能用</h2>
+        <p class="section-subtitle">REST API 與 MCP Server 同網址、同金鑰；最小呼叫如下</p>
+      </div>
+      <pre class="rounded-xl bg-neutral-900 text-neutral-100 text-xs md:text-sm p-5 md:p-6 overflow-x-auto leading-relaxed"><code>{curl}</code></pre>
+      <div class="mt-6 grid sm:grid-cols-3 gap-4">
+        <div class="rounded-xl bg-white border border-neutral-200 p-5">
+          <code class="text-xs font-mono text-[color:var(--color-brand)]">POST /medical/validate</code>
+          <p class="mt-2 text-sm text-[color:var(--color-ink-soft)]">查核內容 → 回各關卡狀態。</p>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 p-5">
+          <code class="text-xs font-mono text-[color:var(--color-brand)]">GET /medical/describe</code>
+          <p class="mt-2 text-sm text-[color:var(--color-ink-soft)]">查可帶參數、關卡清單與依據法條（不需金鑰）。</p>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 p-5">
+          <code class="text-xs font-mono text-[color:var(--color-brand)]">POST /mcp</code>
+          <p class="mt-2 text-sm text-[color:var(--color-ink-soft)]">MCP Server，供 AI agent 串接。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 隱私與稽核 -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
+      <h2 class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)]">隱私優先、可稽核重現</h2>
+      <p class="mt-4 text-base md:text-lg">
+        呼叫端送原文，服務<strong>先在內部去識別化</strong>，全程在遮罩後文本上判定；
+        <strong>原文與個資原值永不寫入稽核</strong>，稽核只存遮罩文雜湊（HMAC）+ 各關卡狀態摘要。
+      </p>
+      <p class="mt-4 text-base md:text-lg">
+        每次查核留一筆紀錄（request_id / 規範版本 / 各關卡狀態 / 時間，不含原文），
+        租戶可用 <code class="font-mono text-sm">GET /medical/audit</code> 自助調閱自己的紀錄；規範版本可鎖定，確保判讀可重現。
+      </p>
+    </div>
+  </section>
+
+  <ProductCta
+    product={product}
+    headline="要把合規守門接進你的醫療 AI 流程？"
+    description="開通、配額、規範版本鎖定、啟用哪幾道檢查 — 來信 service@yao.care 或 LINE 與團隊聊聊。"
+  />
+
+  <ProductNews slot="news" target="goalkeeper" />
+</ProductLayout>

@@ -78,6 +78,14 @@ const WORKS = [
     tagline: '2mo-6yr · 7 age bands · norm-referenced triage',
   },
   {
+    slug: 'goalkeeper',
+    kicker: 'Medical AI Compliance Gate · API',
+    stat: '5',
+    statLabel: 'CHECKS · API · MCP',
+    title: 'goalkeeper',
+    tagline: 'Per-check compliance status · you decide release',
+  },
+  {
     slug: 'sign',
     kicker: 'Age-Friendly Contactless Check-in',
     stat: 'FACE',

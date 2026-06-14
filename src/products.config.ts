@@ -99,6 +99,7 @@ export type ProductSlug =
   | 'intel'
   | 'siqc'
   | 'triz'
+  | 'goalkeeper'
   | 'sign';
 
 /** 智慧醫療分類下的子分組（其他分類不分組） */
@@ -326,6 +327,25 @@ export const PRODUCTS: readonly Product[] = [
       '多角色 SYSTEM_PROMPT 協作',
     ],
     cta: { label: '想用在我們公司', href: LINE_PERSONAL },
+  },
+  {
+    slug: 'goalkeeper',
+    category: 'ai',
+    title: 'goalkeeper 醫療 AI 合規守門',
+    tagline: '醫療 AI 內容的合規守門 API — 回報五道檢查的法規符合狀態，放行與否由你決定',
+    description:
+      '醫療 AI 內容的合規「查核器」：送進 AI 產出的醫療內容，依台灣醫療法規回報五道檢查（揭露免責、來源標註、越權診斷、個資外洩、幻覺查核）各自的狀態與依據法條，但不替你做整體放行決定。依據衛福部《醫療機構應用生成式人工智慧指引》(115.05.29) 等多部法律，每道檢查綁多條法源、規範版本可鎖定可重現。提供 REST API 與 MCP Server（AI agent 串接），隱私優先：呼叫端送原文後服務先在內部去識別化，原文與個資原值永不寫入稽核。',
+    ogTitle: 'goalkeeper',
+    ogStat: '5',
+    ogStatLabel: 'CHECKS · API · MCP',
+    cardKicker: '醫療 AI 合規 · API / MCP',
+    cardBullets: [
+      '五道檢查：揭露 / 來源 / 越權診斷 / 個資 / 幻覺',
+      '每道綁台灣法源，規範版本可鎖定、可稽核重現',
+      'REST API + MCP Server；隱私優先，原文不入稽核',
+    ],
+    externalUrl: 'https://goalkeeper.yao.care/',
+    cta: { label: '申請串接 / API 金鑰', href: 'mailto:service@yao.care' },
   },
   // ─── 高齡友善 ────────────────────────────────────────
   {
