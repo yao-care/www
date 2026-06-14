@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import FooterLinks from '../../components/FooterLinks.astro';
+import ContactMap from '../../components/ContactMap.astro';
+import ProductCard from '../../components/products/ProductCard.astro';
+import { GLOSSARY, GLOSSARY_BY_SLUG } from '../../glossary.config';
+import { PRODUCT_BY_SLUG } from '../../products.config';
+import { SITE } from '../../site.config';
+
+export function getStaticPaths() {
+  return GLOSSARY.map((t) => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const term = GLOSSARY_BY_SLUG[slug!];
+const related = (term.related ?? []).map((s) => PRODUCT_BY_SLUG[s]);
+
+const pageTitle = `${term.term} 是什麼？ · yao.care`;
+const pageDescription = term.oneLiner;
+const canonical = new URL(`/glossary/${term.slug}`, SITE.url).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'DefinedTerm',
+      name: term.term,
+      alternateName: term.en,
+      description: term.oneLiner,
+      url: canonical,
+      inDefinedTermSet: {
+        '@type': 'DefinedTermSet',
+        name: 'yao.care 醫療 AI 名詞解釋',
+        url: new URL('/glossary', SITE.url).toString(),
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: '知識庫', item: new URL('/glossary', SITE.url).toString() },
+        { '@type': 'ListItem', position: 3, name: term.term, item: canonical },
+      ],
+    },
+  ],
+};
+---
+<BaseLayout title={pageTitle} description={pageDescription} ogType="article" jsonLd={jsonLd}>
+  <Nav />
+  <main class="pt-20">
+    <!-- breadcrumb -->
+    <div class="max-w-3xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
+      <span class="mx-1.5">›</span>
+      <a href="/glossary" class="hover:text-[color:var(--color-brand)]">知識庫</a>
+      <span class="mx-1.5">›</span>
+      <span class="text-[color:var(--color-ink)]">{term.term}</span>
+    </div>
+
+    <!-- hero / definition -->
+    <article class="max-w-3xl mx-auto px-4 lg:px-6 py-8 md:py-12">
+      <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+        {term.en}
+      </p>
+      <h1 class="mt-2 text-3xl md:text-4xl font-bold leading-tight">{term.term} 是什麼？</h1>
+      <p class="mt-5 text-lg md:text-xl text-[color:var(--color-ink)] leading-relaxed font-medium border-l-4 border-[color:var(--color-brand)] pl-4">
+        {term.oneLiner}
+      </p>
+
+      <div class="mt-8 space-y-4 text-base md:text-lg text-[color:var(--color-ink-soft)] leading-relaxed">
+        {term.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+
+      {term.keyPoints && term.keyPoints.length > 0 && (
+        <ul class="mt-8 space-y-2.5">
+          {term.keyPoints.map((k) => (
+            <li class="flex items-start gap-2.5 text-[color:var(--color-ink)]">
+              <svg class="w-5 h-5 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>{k}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {term.sources && term.sources.length > 0 && (
+        <div class="mt-8 pt-6 border-t border-neutral-200 text-sm text-[color:var(--color-ink-soft)]">
+          <span class="font-medium text-[color:var(--color-ink)]">參考來源：</span>
+          {term.sources.map((s, i) => (
+            <>
+              {i > 0 && <span class="mx-1.5">·</span>}
+              <a href={s.url} target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">{s.label}</a>
+            </>
+          ))}
+        </div>
+      )}
+    </article>
+
+    <!-- related products -->
+    {related.length > 0 && (
+      <section class="py-12 md:py-16 bg-neutral-50">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+          <div class="mb-8 max-w-3xl mx-auto">
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Related</p>
+            <h2 class="mt-2 text-2xl md:text-3xl font-bold">yao.care 相關服務</h2>
+            <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">
+              以下 yao.care 服務直接應用了「{term.term}」：
+            </p>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {related.map((p) => <ProductCard product={p} variant="preview" />)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- back to glossary -->
+    <div class="max-w-3xl mx-auto px-4 lg:px-6 py-12">
+      <a href="/glossary" class="inline-flex items-center gap-2 text-sm text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        回知識庫看更多名詞
+      </a>
+    </div>
+
+    <ContactMap />
+  </main>
+  <FooterLinks />
+</BaseLayout>

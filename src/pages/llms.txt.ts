@@ -5,6 +5,7 @@ import { SITE } from '../site.config';
 import { CATEGORIES, productsByCategory } from '../products.config';
 import { NEWS_TARGETS } from '../news.config';
 import { KNOWS_ABOUT } from '../seo.config';
+import { GLOSSARY } from '../glossary.config';
 
 export const GET: APIRoute = () => {
   const u = (path: string) => new URL(path, SITE.url).toString();
@@ -43,6 +44,14 @@ export const GET: APIRoute = () => {
   );
   for (const t of NEWS_TARGETS) {
     lines.push(`- [${t.title} 議題追蹤](${u(t.pageUrl)}): ${t.serviceContext}`);
+  }
+  lines.push('');
+
+  lines.push('## 名詞解釋（知識庫）');
+  lines.push('');
+  lines.push(`- [醫療 AI 名詞解釋總覽](${u('/glossary')}): 醫療資訊與 AI 關鍵名詞的清楚定義。`);
+  for (const t of GLOSSARY) {
+    lines.push(`- [${t.term}](${u(`/glossary/${t.slug}`)}): ${t.oneLiner}`);
   }
   lines.push('');
 
