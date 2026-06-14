@@ -133,6 +133,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── products.config.ts     ← 四大分類 + 11 個產品定義 + medical 子分組（MEDICAL_GROUPS/group/productsByGroup）（單一 source of truth）
 │   ├── seo.config.ts          ← GEO/SEO：KNOWS_ABOUT / ORG_SAME_AS / 各產品 FAQ（PRODUCT_FAQS）
 │   ├── glossary.config.ts     ← 名詞解釋（10 則）：定義 + 段落 + related 產品 + 來源（GEO 用）
+│   ├── guides.config.ts       ← 情境指南（7 則）：使用者搜尋原話為題 + answer-first + 工具帶入（GEO 用）
 │   ├── news.config.ts         ← 12 個 news target（queries / voicePoints / proofPoints / CTA）+ KEEP_PER_TARGET
 │   ├── content/
 │   │   ├── config.ts          ← news collection schema（Zod）
@@ -168,6 +169,9 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   ├── glossary/
 │   │   │   ├── index.astro            ← 名詞解釋總覽（DefinedTermSet）
 │   │   │   └── [slug].astro           ← 名詞頁（DefinedTerm + Breadcrumb；交叉連回產品）
+│   │   ├── guides/
+│   │   │   ├── index.astro            ← 情境指南總覽（ItemList）
+│   │   │   └── [slug].astro           ← 情境題頁（Article + FAQPage + Breadcrumb；連回產品/名詞）
 │   │   └── llms.txt.ts               ← /llms.txt（llmstxt.org）build 時自動生成，給 LLM 的站點地圖
 │   └── components/
 │       ├── Nav.astro          ← 固定頂部導覽 + 漢堡選單

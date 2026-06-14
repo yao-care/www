@@ -6,6 +6,7 @@ import { CATEGORIES, productsByCategory } from '../products.config';
 import { NEWS_TARGETS } from '../news.config';
 import { KNOWS_ABOUT } from '../seo.config';
 import { GLOSSARY } from '../glossary.config';
+import { GUIDES } from '../guides.config';
 
 export const GET: APIRoute = () => {
   const u = (path: string) => new URL(path, SITE.url).toString();
@@ -44,6 +45,14 @@ export const GET: APIRoute = () => {
   );
   for (const t of NEWS_TARGETS) {
     lines.push(`- [${t.title} 議題追蹤](${u(t.pageUrl)}): ${t.serviceContext}`);
+  }
+  lines.push('');
+
+  lines.push('## 情境指南（常見問題的直接解答）');
+  lines.push('');
+  lines.push(`- [情境指南總覽](${u('/guides')}): 從使用者會搜尋的問題出發，給直接解答與對應工具。`);
+  for (const g of GUIDES) {
+    lines.push(`- [${g.question}](${u(`/guides/${g.slug}`)}): ${g.answer}`);
   }
   lines.push('');
 
