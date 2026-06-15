@@ -126,8 +126,11 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - `scripts/ga-setup.ts`：用 Admin API 冪等建立自訂維度/指標/關鍵事件（已執行）。
 - `scripts/ga-insights.ts`：用 Data API 拉報告，並產 **`reports/news-insights.json`**。計分用**完成率**(read_complete/page_view) 而非絕對數，避免長尾/爆款偏差：貝氏收縮(α=20)防小樣本雜訊、比較對象為**全站平均率**(非最大值)、單議題未達 MIN_PV(30) 不調、只加重不懲罰、地板 ×1、上限 ×3；全站量不足 → `enoughData=false` 全 1＝現狀。`reports/` 已 gitignore。
 - `scripts/ga-report.sh` + cron：**台灣週一 03:00**（`0 3 * * 1`，Asia/Taipei 區段）每週重產訊號；log `/var/log/yaocare-ga.log`。
-- `scripts/fetch-news.ts` 的 `loadInterestWeights()` 讀該訊號，`selectRoundRobin` **加權選題**（高互動議題每天多分到幾篇，總量仍受 `MAX_WRITE_TOTAL` 限制）；無訊號/資料不足時等同原行為。
-- 需要真實流量累積（2–4 週）才會開始實際加權。
+- `scripts/fetch-news.ts` 的 `loadInsights()` 讀該訊號 →（a）`selectRoundRobin` **加權選題**（高互動/高需求議題每天多分到幾篇，總量仍受 `MAX_WRITE_TOTAL` 限制）；（b）把每議題的**讀者搜尋字 + 低完成率旗標**當 `WriterHint` 傳進 `writerPrompt`。無訊號/資料不足時選題與寫作都等同原行為。
+- **權重三訊號**（合併上限 ×3、地板 ×1）：品質級距（GA 完成率，貝氏收縮、相對全站平均）＋ CTA 加成（GA cta 率，B）＋ 需求機會（GSC 高曝光但排名差/低 CTR，已生效）。
+- **`scripts/gsc.ts`**：Search Console API（同金鑰、scope webmasters；資源 `sc-domain:yao.care` 故加 `www.yao.care` page filter）→ 搜尋查詢/頁面 + 每議題搜尋字（A）。GSC 有歷史資料故需求面即刻生效；GA 品質/CTA 待累積（2–4 週）。
+- **writer 洞察注入**（`news-prompts.mjs renderHints`）：A 搜尋字 + C 低完成率風格提示；明示「嚴格規則仍全部適用」，且 regex/proofPoint guards 仍為安全網。
+- GSC sitemap 提交也走這把金鑰（webmasters scope，Full 權限）。
 
 ## § 檔案結構
 

@@ -107,7 +107,9 @@ async function buildNewsInsights(gsc: GscInsights | null) {
 
   const totalPv = [...pv.values()].reduce((a, b) => a + b, 0);
   const totalRc = [...rc.values()].reduce((a, b) => a + b, 0);
-  const globalRate = totalPv > 0 ? totalRc / totalPv : 0; // 先驗平均完成率
+  const totalCtaAll = [...cta.values()].reduce((a, b) => a + b, 0);
+  const globalRate = totalPv > 0 ? totalRc / totalPv : 0;        // 先驗平均完成率
+  const globalCtaRate = totalPv > 0 ? totalCtaAll / totalPv : 0; // 先驗平均 CTA 率
   const enoughData = totalPv >= MIN_TOTAL_PV && totalRc >= MIN_TOTAL_RC;
 
   // ── 需求面（GSC）門檻 ──
@@ -115,43 +117,54 @@ async function buildNewsInsights(gsc: GscInsights | null) {
   const MIN_TOTAL_IMPR = 500; // 全站最低曝光，未達不啟用需求加成
   const gscEnough = !!gsc && gsc.totals.impressions >= MIN_TOTAL_IMPR;
 
-  const slugs = new Set<string>([...pv.keys(), ...rc.keys(), ...cta.keys(), ...Object.keys(gsc?.perTopic ?? {})]);
+  const slugs = new Set<string>([
+    ...pv.keys(), ...rc.keys(), ...cta.keys(),
+    ...Object.keys(gsc?.perTopic ?? {}), ...Object.keys(gsc?.perTopicQueries ?? {}),
+  ]);
   const targets: Record<string, {
     pageViews: number; readComplete: number; cta: number;
-    completionRate: number; smoothedRate: number; qualityWeight: number;
-    impressions: number; clicks: number; ctr: number; position: number;
-    demandOpportunity: boolean; weight: number;
+    completionRate: number; smoothedRate: number; qualityTier: number; lowCompletion: boolean;
+    ctaRate: number; ctaStrong: boolean;
+    impressions: number; clicks: number; ctr: number; position: number; demandOpportunity: boolean;
+    topQueries: string[]; weight: number;
   }> = {};
   for (const s of slugs) {
     const pageViews = pv.get(s) ?? 0;
     const readComplete = rc.get(s) ?? 0;
     const ctaClick = cta.get(s) ?? 0;
+    const eligible = enoughData && pageViews >= MIN_PV;
+    // 品質（完成率，貝氏收縮，相對全站平均；只加重、地板 1）
     const completionRate = pageViews > 0 ? readComplete / pageViews : 0;
-    // 貝氏收縮：樣本少 → 接近全站平均；樣本多 → 接近自身完成率
     const smoothedRate = (readComplete + ALPHA * globalRate) / (pageViews + ALPHA);
-    // 品質權重（GA 完成率，相對全站平均、非最大值；只加重、地板 1）
-    let qualityWeight = 1;
-    if (enoughData && pageViews >= MIN_PV && globalRate > 0) {
+    let qualityTier = 1;
+    if (eligible && globalRate > 0) {
       const ratio = smoothedRate / globalRate;
-      qualityWeight = ratio >= 1.3 ? 3 : ratio >= 1.1 ? 2 : 1;
+      qualityTier = ratio >= 1.3 ? 3 : ratio >= 1.1 ? 2 : 1;
     }
+    const lowCompletion = !!(eligible && globalRate > 0 && smoothedRate / globalRate <= 0.8); // C：讀者常讀不完
+    // 轉換（B：CTA 率，收縮，相對全站平均）
+    const ctaRate = pageViews > 0 ? ctaClick / pageViews : 0;
+    const smoothedCta = (ctaClick + ALPHA * globalCtaRate) / (pageViews + ALPHA);
+    const ctaStrong = !!(eligible && globalCtaRate > 0 && smoothedCta / globalCtaRate >= 1.3);
     // 需求機會（GSC）：有人搜、曝光夠，但「排名差(>10)或點擊率明顯偏低」＝該補的題目
     const d = gsc?.perTopic?.[s];
     const impressions = d?.impressions ?? 0;
     const clicks = d?.clicks ?? 0;
     const ctr = d?.ctr ?? 0;
     const position = d?.position ?? 0;
-    const demandOpportunity =
-      gscEnough && impressions >= MIN_IMPR && (position > 10 || ctr < 0.5 * gsc!.globalCtr);
-    // 合併：品質權重 + 需求機會加成（+1），上限 3、地板 1
-    const weight = Math.max(1, Math.min(3, qualityWeight + (demandOpportunity ? 1 : 0)));
+    const demandOpportunity = !!(gscEnough && impressions >= MIN_IMPR && (position > 10 || ctr < 0.5 * gsc!.globalCtr));
+    // A：讀者實際搜尋字（給 writer 參考）
+    const topQueries = (gsc?.perTopicQueries?.[s] ?? []).map((q) => q.query);
+    // 合併權重：品質級距 + CTA 加成(B) + 需求機會加成(GSC)，上限 3、地板 1
+    const weight = Math.max(1, Math.min(3, qualityTier + (ctaStrong ? 1 : 0) + (demandOpportunity ? 1 : 0)));
     targets[s] = {
       pageViews, readComplete, cta: ctaClick,
       completionRate: Math.round(completionRate * 1000) / 1000,
       smoothedRate: Math.round(smoothedRate * 1000) / 1000,
-      qualityWeight,
-      impressions, clicks, ctr, position,
-      demandOpportunity, weight,
+      qualityTier, lowCompletion,
+      ctaRate: Math.round(ctaRate * 1000) / 1000, ctaStrong,
+      impressions, clicks, ctr, position, demandOpportunity,
+      topQueries, weight,
     };
   }
 

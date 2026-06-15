@@ -44,9 +44,31 @@ ${list}`;
 }
 
 /**
- * Writer pass: 為一則新聞寫三段評論文
+ * 讀者洞察區塊（A：搜尋字；C：低完成率）。無洞察時回空字串 → prompt 與原本完全相同。
  */
-export function writerPrompt(target, item) {
+function renderHints(hints) {
+  if (!hints) return '';
+  const lines = [];
+  if (Array.isArray(hints.queries) && hints.queries.length) {
+    lines.push(
+      `- 讀者實際搜尋本主題常用這些關鍵字：${hints.queries.join('、')}。可在 titleZh 與內文「自然」採用相近用語以貼近搜尋意圖；不可硬塞、不可改變事實，designResponse 仍只能引用上方 proofPoints。`,
+    );
+  }
+  if (hints.lowCompletion) {
+    lines.push(
+      '- 讀者常讀不完此類文章：newsBrief 與 issueAnalysis 請在開頭第一句就點出重點，句子精簡、避免冗長鋪陳。',
+    );
+  }
+  if (!lines.length) return '';
+  return `\n【讀者洞察（僅供參考；上述【嚴格規則】仍全部適用，不可為此違規）】\n${lines.join('\n')}\n`;
+}
+
+/**
+ * Writer pass: 為一則新聞寫三段評論文
+ * @param hints 可選的讀者洞察 { queries: string[], lowCompletion: boolean }
+ */
+export function writerPrompt(target, item, hints) {
+  const hintBlock = renderHints(hints);
   return `你是「${target.title}」服務的內容編輯。任務：根據以下新聞 metadata，寫一篇三段式議題評論文。
 
 【嚴格規則】
@@ -84,7 +106,7 @@ source: ${item.source}
 pubDate: ${item.pubDate}
 snippet: ${(item.snippet || '').slice(0, 400)}
 url: ${item.link}
-
+${hintBlock}
 【輸出格式】
 僅以 JSON 回應，不要任何前後文字。schema：
 {

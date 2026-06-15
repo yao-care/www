@@ -12,11 +12,13 @@ const TARGET_SLUGS = new Set<string>(NEWS_TARGETS.map((t) => t.slug));
 
 export type GscRow = { keys: string[]; clicks: number; impressions: number; ctr: number; position: number };
 export type TopicDemand = { impressions: number; clicks: number; ctr: number; position: number };
+export type TopicQuery = { query: string; impressions: number; clicks: number; position: number };
 export type GscInsights = {
   siteUrl: string;
   topQueries: GscRow[];
   topPages: GscRow[];
   perTopic: Record<string, TopicDemand>;
+  perTopicQueries: Record<string, TopicQuery[]>; // 每議題讀者實際搜尋字（給 writer 參考）
   totals: { impressions: number; clicks: number };
   globalCtr: number;
 };
@@ -72,6 +74,33 @@ export async function getGscInsights(): Promise<GscInsights | null> {
 
   const byQuery = await run(['query'], 1000);
   const byPage = await run(['page'], 1000);
+  const byPageQuery = await run(['page', 'query'], 5000);
+
+  // 每議題的搜尋查詢（用頁面對應 target，同字跨頁面合併，取曝光前 5）
+  const tq: Record<string, Map<string, { impressions: number; clicks: number; position: number }>> = {};
+  for (const r of byPageQuery) {
+    const slug = topicFromUrl(r.keys[0]);
+    if (!slug) continue;
+    const q = r.keys[1];
+    const m = (tq[slug] ??= new Map());
+    const cur = m.get(q) ?? { impressions: 0, clicks: 0, position: 0 };
+    cur.impressions += r.impressions;
+    cur.clicks += r.clicks;
+    cur.position += r.position * r.impressions; // 曝光加權
+    m.set(q, cur);
+  }
+  const perTopicQueries: Record<string, TopicQuery[]> = {};
+  for (const slug of Object.keys(tq)) {
+    perTopicQueries[slug] = [...tq[slug].entries()]
+      .map(([query, v]) => ({
+        query,
+        impressions: v.impressions,
+        clicks: v.clicks,
+        position: v.impressions > 0 ? Math.round((v.position / v.impressions) * 10) / 10 : 0,
+      }))
+      .sort((a, b) => b.impressions - a.impressions)
+      .slice(0, 5);
+  }
 
   // 每議題聚合（用頁面網址對應）
   const perTopic: Record<string, TopicDemand> = {};
@@ -100,6 +129,7 @@ export async function getGscInsights(): Promise<GscInsights | null> {
     topQueries: sortByImpr(byQuery),
     topPages: sortByImpr(byPage),
     perTopic,
+    perTopicQueries,
     totals: { impressions: totalImpr, clicks: totalClicks },
     globalCtr: totalImpr > 0 ? totalClicks / totalImpr : 0,
   };

@@ -313,6 +313,7 @@ async function writeOne(
   item: RawItem,
   relevance: number,
   highlight: boolean,
+  hint?: WriterHint,
 ): Promise<{ ok: true; draft: Draft; passes: number } | { ok: false; reason: string }> {
   // 簡化版：writer + regex 迴圈。critic LLM 暫時關閉以省 quota，
   // 防幻覺主要靠 (a) writer prompt 嚴格規則 + (b) regex 黑名單預檢。
@@ -326,7 +327,7 @@ async function writeOne(
       const prompt =
         lastViolations && prevDraft
           ? rewritePrompt(target, item, prevDraft, lastViolations)
-          : writerPrompt(target, item);
+          : writerPrompt(target, item, hint);
       const raw = callClaude(WRITER_MODEL, prompt);
       draft = {
         newsBrief: String(raw.newsBrief ?? '').trim(),
@@ -485,28 +486,41 @@ async function fetchAndFilter(
   }));
 }
 
+/** 給 writer 的讀者洞察：搜尋字（A）+ 是否常讀不完（C） */
+type WriterHint = { queries: string[]; lowCompletion: boolean };
+
 /**
- * 讀者喜好權重：讀 reports/news-insights.json（由每週 GA cron 產出）。
- * 高互動議題 → 權重 >1（每輪多挑幾篇）；無檔/資料不足 → 空 map（全部視為 1，等同現狀）。
+ * 讀 reports/news-insights.json（每週 GA+GSC cron 產出），回傳：
+ *   - weights：高互動/高需求議題 → 權重 >1（加權選題）
+ *   - hints：每議題的讀者搜尋字 + 低完成率旗標（餵 writer prompt）
+ * 無檔/資料不足 → 皆空（選題與寫作都等同現狀）。
  */
-function loadInterestWeights(): Map<NewsTargetSlug, number> {
-  const w = new Map<NewsTargetSlug, number>();
+function loadInsights(): {
+  weights: Map<NewsTargetSlug, number>;
+  hints: Map<NewsTargetSlug, WriterHint>;
+} {
+  const weights = new Map<NewsTargetSlug, number>();
+  const hints = new Map<NewsTargetSlug, WriterHint>();
   const p = join(PROJECT_ROOT, 'reports/news-insights.json');
   try {
-    if (!existsSync(p)) return w;
+    if (!existsSync(p)) return { weights, hints };
     const j = JSON.parse(readFileSync(p, 'utf8'));
-    if (!j?.enoughData || !j?.targets) return w;
+    if (!j?.enoughData || !j?.targets) return { weights, hints };
     for (const [slug, t] of Object.entries<any>(j.targets)) {
       const weight = Math.max(1, Math.min(3, Math.round(Number(t?.weight) || 1)));
-      if (weight > 1) w.set(slug as NewsTargetSlug, weight);
+      if (weight > 1) weights.set(slug as NewsTargetSlug, weight);
+      const queries = Array.isArray(t?.topQueries) ? t.topQueries.slice(0, 5).map(String) : [];
+      const lowCompletion = !!t?.lowCompletion;
+      if (queries.length || lowCompletion) hints.set(slug as NewsTargetSlug, { queries, lowCompletion });
     }
-    if (w.size) {
-      log(`  讀者喜好權重（GA ${j.days}天，產於 ${j.generatedAt?.slice(0, 10)}）：${[...w].map(([s, n]) => `${s}×${n}`).join(', ')}`);
+    if (weights.size) {
+      log(`  讀者喜好權重（產於 ${j.generatedAt?.slice(0, 10)}）：${[...weights].map(([s, n]) => `${s}×${n}`).join(', ')}`);
     }
+    if (hints.size) log(`  寫作洞察（搜尋字/低完成率）：${[...hints.keys()].join(', ')}`);
   } catch (e: any) {
-    log(`  ⚠ 讀 news-insights.json 失敗，用預設權重：${e.message}`);
+    log(`  ⚠ 讀 news-insights.json 失敗，用預設（不影響發文）：${e.message}`);
   }
-  return w;
+  return { weights, hints };
 }
 
 /**
@@ -539,10 +553,10 @@ function selectRoundRobin(
 }
 
 /** Phase 3: 對單一已選 item 跑 writer + regex，寫檔 */
-async function writeOneSelected(picked: KeptItem, stats: Stats) {
+async function writeOneSelected(picked: KeptItem, stats: Stats, hint?: WriterHint) {
   const { target, item, relevance, highlight } = picked;
-  log(`  ▸ [${target.slug}] "${item.title.slice(0, 40)}..." (rel=${relevance.toFixed(2)})`);
-  const result = await writeOne(target, item, relevance, highlight);
+  log(`  ▸ [${target.slug}] "${item.title.slice(0, 40)}..." (rel=${relevance.toFixed(2)})${hint ? ' [+洞察]' : ''}`);
+  const result = await writeOne(target, item, relevance, highlight, hint);
   if (result.ok) {
     writeNewsFile(target, item, result.draft, relevance, highlight, result.passes);
     stats.written++;
@@ -587,8 +601,9 @@ async function main() {
   const totalCap = ONLY_TARGET
     ? Math.min(MAX_ITEMS, byTarget.get(ONLY_TARGET)?.length ?? 0)
     : Math.min(MAX_ITEMS, MAX_WRITE_TOTAL);
-  // 依讀者喜好加權選題（單一 target 模式不需要；無訊號時等同現狀）
-  const weights = ONLY_TARGET ? undefined : loadInterestWeights();
+  // 依讀者喜好加權選題 + 載入寫作洞察（單一 target 模式不加權；無訊號時等同現狀）
+  const insights = loadInsights();
+  const weights = ONLY_TARGET ? undefined : insights.weights;
   const picked = selectRoundRobin(byTarget, totalCap, weights);
 
   log(`\n══════ Phase 2: 排程 ${picked.length} 篇 ══════`);
@@ -603,7 +618,7 @@ async function main() {
   // ─── Phase 3: 依序寫每篇 ──────────────────────────────
   log(`\n══════ Phase 3: Writer ══════`);
   for (const p of picked) {
-    await writeOneSelected(p, stats);
+    await writeOneSelected(p, stats, insights.hints.get(p.target.slug));
   }
 
   // ─── Phase 4: prune（每 target 保留最新 KEEP_PER_TARGET）─
