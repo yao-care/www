@@ -19,3 +19,9 @@ Thumbs.db
 # 環境
 .env
 .env.local
+
+# GA4 / service account 憑證與報表（絕不進版控）
+*sa*.json
+*service-account*.json
+*-credentials.json
+reports/
