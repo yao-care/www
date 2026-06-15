@@ -111,7 +111,7 @@ tail -50 /var/log/yaocare-news.log
 
 ## § 分析追蹤（GA4）
 
-GA4 評估 ID `G-5JH83LM8X7`（在 `src/site.config.ts` 的 `SITE.gaId`，單一 source）。
+GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一 source）。
 追蹤碼在 `src/components/Analytics.astro`，BaseLayout 與 ProductLayout 的 `<head>` 都引入 → 全站覆蓋；無 cookie 同意橫幅；只追蹤 www.yao.care（不跨網域）。
 
 - **inline 腳本**（Analytics.astro）：依 `location.pathname` 分類內容、依 referrer/utm 分類來源，存 `window.__ya` 並讓首個 `page_view` 帶 `content_group / content_type / content_category / content_item` 與 user property `traffic_category / ai_source / referrer_host`。
