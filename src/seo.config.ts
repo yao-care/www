@@ -110,6 +110,12 @@ export const PRODUCT_FAQS: Partial<Record<ProductSlug, readonly Faq[]>> = {
     { q: '我送的原文與個資安全嗎？', a: '隱私優先：服務先在內部去識別化，全程在遮罩後文本上判定；原文與個資原值永不寫入稽核，稽核只存遮罩文雜湊（HMAC）與各關卡狀態摘要。' },
     { q: '怎麼串接？AI agent 也能用嗎？', a: '提供 REST API（POST /medical/validate）與 MCP Server（同網址、同金鑰），一般系統與 AI agent 都能串接；開通、配額與規範版本鎖定請來信 service@yao.care。' },
   ],
+  gcm: [
+    { q: 'GCM 收案伺服器是什麼？', a: '它是 Smart Func / Geri / Pedi 自評工具的後端，以 SMART on FHIR 接收自評結果並做個案管理，把「自評 → 收案 → 追蹤」串成閉環。' },
+    { q: '民眾要註冊帳號嗎？', a: '不用帳號密碼；僅填暱稱、由系統產生收案碼，重複評估會自動歸到同一個案。' },
+    { q: '資料隱私如何保障？', a: '先去識別化，原文與個資原值不寫入稽核，只存遮罩文雜湊與狀態摘要；全程可稽核、每日加密備份異地備援。' },
+    { q: '怎麼串接？', a: '以 FHIR R4 QuestionnaireResponse + OAuth 2.0 / PKCE 交付，符合 Inferno FHIR 測試；收案串接與合作請來信 service@yao.care。' },
+  ],
   sign: [
     { q: '長者友善無接觸報到是什麼？', a: '為長照據點打造的純前端人臉辨識報到系統，長者走過鏡頭即自動辨識並語音問候，免按鈕、免簽名、免安裝 App。' },
     { q: '個資安全嗎？', a: '臉部特徵與報到紀錄 100% 留在裝置瀏覽器、零雲端傳輸。' },

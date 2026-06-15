@@ -96,6 +96,7 @@ export type ProductSlug =
   | 'func'
   | 'geri'
   | 'pedi'
+  | 'gcm'
   | 'intel'
   | 'siqc'
   | 'triz'
@@ -272,6 +273,25 @@ export const PRODUCTS: readonly Product[] = [
     externalUrl: 'https://smart-pedi-cds.yao.care/',
     repoUrl: 'https://github.com/yao-care/smart-pedi-cds',
     cta: { label: '免費自我評估', href: 'https://smart-pedi-cds.yao.care/' },
+  },
+  {
+    slug: 'gcm',
+    category: 'medical',
+    group: 'assessment',
+    title: 'GCM SMART on FHIR 收案伺服器',
+    tagline: '全齡評估的收案與個案管理後端 — 以 SMART on FHIR 串起「自評 → 收案 → 追蹤」閉環',
+    description:
+      'Smart Func / Geri / Pedi 三件式自評工具的收案後端：以 FHIR R4 QuestionnaireResponse 接收自評結果，民眾僅填暱稱、由系統產生收案碼（免帳號密碼），重複評估自動歸戶；後台提供個案狀態追蹤、團隊指派、危險訊號自動升級。隱私優先 —— 先去識別化，原文與個資原值不寫入稽核；全程可稽核、每日加密備份異地備援。以 OAuth 2.0 + PKCE 交付、符合 Inferno FHIR 測試。與 GCM 預防醫學發展協會的公益使命接軌。',
+    ogTitle: 'GCM 收案伺服器',
+    ogStat: 'FHIR',
+    ogStatLabel: 'R4 · OAUTH2 PKCE',
+    cardKicker: '預防醫學收案 · SMART on FHIR 後端',
+    cardBullets: [
+      '接收 Func / Geri / Pedi 的 FHIR R4 自評結果',
+      '暱稱 + 收案碼免帳密，重複評估自動歸戶',
+      '個案管理 + 危險訊號升級；隱私優先、全程可稽核',
+    ],
+    cta: { label: '談收案串接 / 合作', href: 'mailto:service@yao.care' },
   },
   // ─── AI 系統 ────────────────────────────────────────
   {

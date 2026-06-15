@@ -8,8 +8,10 @@ interface Props {
   kicker?: string;
   /** 是否使用淺灰底（嵌在白底區塊時設 true 比較分層） */
   tinted?: boolean;
+  /** 「深入了解」連結；設 null 隱藏（GCM 頁自身用） */
+  detailHref?: string | null;
 }
-const { kicker = 'Closed Loop · SMART on FHIR', tinted = true } = Astro.props;
+const { kicker = 'Closed Loop · SMART on FHIR', tinted = true, detailHref = '/medical/gcm' } = Astro.props;
 
 const steps = [
   {
@@ -75,5 +77,14 @@ const steps = [
       <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-brand)]"></span> 暱稱 + 收案碼，免帳密</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-brand)]"></span> 符合 Inferno FHIR 測試</span>
     </div>
+
+    {detailHref && (
+      <div class="mt-8 text-center">
+        <a href={detailHref} class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline underline-offset-4">
+          深入了解 GCM 收案伺服器
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    )}
   </div>
 </section>

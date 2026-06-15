@@ -86,6 +86,14 @@ const WORKS = [
     tagline: 'Per-check compliance status · you decide release',
   },
   {
+    slug: 'gcm',
+    kicker: 'GCM Enrollment · SMART on FHIR',
+    stat: 'FHIR',
+    statLabel: 'R4 · OAUTH2 PKCE',
+    title: 'GCM Server',
+    tagline: 'Enrollment + case management for the assessment suite',
+  },
+  {
     slug: 'sign',
     kicker: 'Age-Friendly Contactless Check-in',
     stat: 'FACE',
