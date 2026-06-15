@@ -6,6 +6,7 @@ import { PRODUCT_FAQS } from '../seo.config';
 import Nav from '../components/Nav.astro';
 import FooterLinks from '../components/FooterLinks.astro';
 import ContactMap from '../components/ContactMap.astro';
+import Analytics from '../components/Analytics.astro';
 
 interface Props {
   slug: Product['slug'];
@@ -98,6 +99,7 @@ const jsonLd = {
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
     <link rel="apple-touch-icon" href="/assets/images/favicon.png" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <Analytics />
   </head>
   <body class="bg-white text-[color:var(--color-ink)] antialiased">
     <Nav />
