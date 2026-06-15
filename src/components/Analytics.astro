@@ -1,6 +1,8 @@
 ---
 // Google Analytics 4（gtag）— 評估 ID 來自 site.config（單一 source）。
-// 放在 <head>；BaseLayout 與 ProductLayout 都需引入才會全站覆蓋。
+// 放在 <head>；BaseLayout 與 ProductLayout 都引入才會全站覆蓋。
+//  - inline：載入 gtag + 依 pathname/referrer 分類 → 完整歸因首個 page_view（存 window.__ya）
+//  - module（track.ts）：捲動深度 / 讀完 / 互動時間 / CTA 點擊事件
 import { SITE } from '../site.config';
 const gaId = SITE.gaId;
 ---
@@ -11,7 +13,73 @@ const gaId = SITE.gaId;
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-      gtag('config', gaId);
+
+      // 依路徑分類內容（議題追蹤 / 情境指南 / 名詞解釋 / 產品 / hub …）
+      function classifyPage(path) {
+        var p = (path || '/').replace(/\/+$/, '') || '/';
+        if (p === '/') return { type: 'home', category: '', item: '', group: '首頁' };
+        var s = p.split('/').filter(Boolean);
+        var c = s[0];
+        if (c === 'news') return s.length >= 3
+          ? { type: 'news_article', category: s[1], item: s[2], group: '議題追蹤' }
+          : { type: 'hub', category: 'news', item: '', group: '議題追蹤' };
+        if (c === 'guides') return s.length >= 2
+          ? { type: 'guide', category: '', item: s[1], group: '情境指南' }
+          : { type: 'hub', category: 'guides', item: '', group: '情境指南' };
+        if (c === 'glossary') return s.length >= 2
+          ? { type: 'glossary_term', category: '', item: s[1], group: '名詞解釋' }
+          : { type: 'hub', category: 'glossary', item: '', group: '名詞解釋' };
+        if (c === 'medical' || c === 'ai' || c === 'care') return s.length >= 2
+          ? { type: 'product', category: c, item: s[1], group: '產品' }
+          : { type: 'hub', category: c, item: '', group: '分類首頁' };
+        if (c === 'marketing') return { type: 'page', category: 'marketing', item: '', group: '行銷' };
+        return { type: 'page', category: c || '', item: s[1] || '', group: '其他' };
+      }
+
+      // 來源分類（AI 助理 / 搜尋 / 社群 / 站內 / 推薦 / 直接）；第一觸點存 sessionStorage
+      function classifySource() {
+        try { var st = sessionStorage.getItem('ya_src'); if (st) return JSON.parse(st); } catch (e) {}
+        var ref = document.referrer || '';
+        var host = '';
+        try { host = ref ? new URL(ref).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+        var utm = '';
+        try { utm = (new URLSearchParams(location.search).get('utm_source') || '').toLowerCase(); } catch (e) {}
+        var hay = (host + ' ' + utm).toLowerCase();
+        var self = location.hostname.replace(/^www\./, '');
+        function has(list) { return list.some(function (k) { return hay.indexOf(k) >= 0; }); }
+        var AI = ['chatgpt', 'chat.openai', 'openai.com', 'perplexity', 'gemini.google', 'bard.google', 'copilot.microsoft', 'bing.com/chat', 'claude.ai', 'anthropic', 'you.com', 'poe.com', 'phind', 'x.ai', 'grok', 'felo.ai', 'genspark'];
+        var SEARCH = ['google.', 'bing.com', 'search.yahoo', 'yahoo.com', 'duckduckgo', 'baidu', 'yandex', 'ecosia', 'naver'];
+        var SOCIAL = ['facebook', 'fb.com', 'instagram', 'line.me', 'lin.ee', 't.co', 'twitter', 'x.com', 'linkedin', 'youtube', 'reddit', 'threads', 'plurk'];
+        var internal = host && host.indexOf('yao.care') >= 0;
+        var cat = 'direct', ai = '';
+        if (has(AI)) { cat = 'ai'; ai = host || utm; }
+        else if (has(SEARCH)) { cat = 'organic_search'; }
+        else if (has(SOCIAL)) { cat = 'social'; }
+        else if (internal) { cat = 'direct'; }
+        else if (host) { cat = 'referral'; }
+        else if (utm) { cat = 'referral'; }
+        else { cat = 'direct'; }
+        var res = { traffic_category: cat, ai_source: ai, referrer_host: host };
+        try { sessionStorage.setItem('ya_src', JSON.stringify(res)); } catch (e) {}
+        return res;
+      }
+
+      var __page = classifyPage(location.pathname);
+      var __src = classifySource();
+      window.__ya = { page: __page, source: __src };
+
+      gtag('set', 'user_properties', {
+        traffic_category: __src.traffic_category,
+        ai_source: __src.ai_source,
+        referrer_host: __src.referrer_host,
+      });
+      gtag('config', gaId, {
+        content_group: __page.group,
+        content_type: __page.type,
+        content_category: __page.category,
+        content_item: __page.item,
+      });
     </script>
+    <script>import '../scripts/track.ts';</script>
   </>
 )}

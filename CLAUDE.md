@@ -109,6 +109,18 @@ cd $WWW_REPO_DIR
 tail -50 /var/log/yaocare-news.log
 ```
 
+## § 分析追蹤（GA4）
+
+GA4 評估 ID `G-5JH83LM8X7`（在 `src/site.config.ts` 的 `SITE.gaId`，單一 source）。
+追蹤碼在 `src/components/Analytics.astro`，BaseLayout 與 ProductLayout 的 `<head>` 都引入 → 全站覆蓋；無 cookie 同意橫幅；只追蹤 www.yao.care（不跨網域）。
+
+- **inline 腳本**（Analytics.astro）：依 `location.pathname` 分類內容、依 referrer/utm 分類來源，存 `window.__ya` 並讓首個 `page_view` 帶 `content_group / content_type / content_category / content_item` 與 user property `traffic_category / ai_source / referrer_host`。
+- **`src/scripts/track.ts`**（打包 module，全站內聯）：`scroll_depth`(25/50/75/100)、`read_complete`(含 `engaged_seconds`)、`page_engagement`(離開時補送)、`cta_click`(LINE/mail/demo/github/外連)。
+- 內容分類靠 **URL 路徑推導**（零per-page改動）：`/news/<target>/<slug>`→議題追蹤、`/guides`、`/glossary`、`/{medical|ai|care}/<product>`。
+- 來源「AI 助理」涵蓋 chatgpt/perplexity/gemini/copilot/claude 等 host 或 utm_source。
+- **GA4 後台需手動設**：自訂維度（content_type/category/item、scroll_percent、referrer_host、ai_source、link_domain、cta_type；user-scope traffic_category）、自訂指標 engaged_seconds、關鍵事件 read_complete/cta_click、自訂管道群組「AI Assistants」。
+- 加新事件/改分類：只動 `Analytics.astro`（分類）與 `scripts/track.ts`（事件）。
+
 ## § 檔案結構
 
 ```
