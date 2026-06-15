@@ -62,12 +62,21 @@ function table(rows: Row[] | null, max = 15) {
 
 /**
  * 產生「議題權重訊號」reports/news-insights.json，供 fetch-news 依讀者喜好加重選題。
- * 以 news 文章的 read_complete（讀完）為主、cta_click 為輔，依 content_category(=target) 聚合。
- * 資料量不足（總讀完數 < 門檻）時 enoughData=false → fetch-news 用預設權重（等同現狀）。
+ *
+ * 計分以「品質」為準，避免長尾/爆款偏差：
+ *   - 用「完成率」= read_complete / page_view（per 議題），抵銷曝光差異（量大≠好）。
+ *   - 貝氏收縮：(rc + α×全站率) / (pv + α)，樣本少的議題往全站平均拉回，防小樣本雜訊。
+ *   - 比較對象＝全站平均率（非最大值），爆款不會壓掉其他議題。
+ *   - 最低曝光門檻（MIN_PV）前權重一律 1；只加重、不懲罰，地板 ×1（不餓死冷門）。
+ *   - 全站資料不足時 enoughData=false → 全部 ×1（等同現狀）。
+ *   （僅統計 content_type=news_article 的事件，對齊 news target slug。）
  */
 async function buildNewsInsights() {
   console.log('\n▼ 產生議題權重訊號（news-insights.json）');
-  const ENOUGH = 20; // 總讀完數門檻，未達標不調權重（避免用雜訊調）
+  const ALPHA = 20;        // 貝氏收縮強度（等效「先驗樣本數」）
+  const MIN_PV = 30;       // 單議題最低瀏覽數，未達不調權重
+  const MIN_TOTAL_PV = 200; // 全站最低瀏覽數，未達 enoughData=false
+  const MIN_TOTAL_RC = 30;  // 全站最低讀完數
 
   const byCat = (rows: Row[] | null): Map<string, number> => {
     const m = new Map<string, number>();
@@ -91,36 +100,55 @@ async function buildNewsInsights() {
       },
     }, true);
 
+  const pv = byCat(await evByCat('page_view'));
   const rc = byCat(await evByCat('read_complete'));
   const cta = byCat(await evByCat('cta_click'));
 
-  const slugs = new Set<string>([...rc.keys(), ...cta.keys()]);
-  const targets: Record<string, { readComplete: number; cta: number; score: number; weight: number }> = {};
-  let totalRc = 0;
-  let maxScore = 0;
+  const totalPv = [...pv.values()].reduce((a, b) => a + b, 0);
+  const totalRc = [...rc.values()].reduce((a, b) => a + b, 0);
+  const globalRate = totalPv > 0 ? totalRc / totalPv : 0; // 先驗平均完成率
+  const enoughData = totalPv >= MIN_TOTAL_PV && totalRc >= MIN_TOTAL_RC;
+
+  const slugs = new Set<string>([...pv.keys(), ...rc.keys(), ...cta.keys()]);
+  const targets: Record<string, {
+    pageViews: number; readComplete: number; cta: number;
+    completionRate: number; smoothedRate: number; weight: number;
+  }> = {};
   for (const s of slugs) {
+    const pageViews = pv.get(s) ?? 0;
     const readComplete = rc.get(s) ?? 0;
     const ctaClick = cta.get(s) ?? 0;
-    const score = readComplete + 0.5 * ctaClick;
-    targets[s] = { readComplete, cta: ctaClick, score, weight: 1 };
-    totalRc += readComplete;
-    if (score > maxScore) maxScore = score;
-  }
-  const enoughData = totalRc >= ENOUGH;
-  for (const s of Object.keys(targets)) {
-    const sc = targets[s].score;
-    // 只「加重」表現好的，最低保持 1（不餓死冷門議題，避免低流量≠不受歡迎的誤判）
-    targets[s].weight = enoughData ? (sc >= 0.5 * maxScore ? 3 : sc >= 0.2 * maxScore ? 2 : 1) : 1;
+    const completionRate = pageViews > 0 ? readComplete / pageViews : 0;
+    // 貝氏收縮：樣本少 → 接近全站平均；樣本多 → 接近自身完成率
+    const smoothedRate = (readComplete + ALPHA * globalRate) / (pageViews + ALPHA);
+    let weight = 1;
+    if (enoughData && pageViews >= MIN_PV && globalRate > 0) {
+      const ratio = smoothedRate / globalRate; // 相對「全站平均」，非最大值
+      weight = ratio >= 1.3 ? 3 : ratio >= 1.1 ? 2 : 1; // 只加重、不懲罰；地板 ×1
+    }
+    targets[s] = {
+      pageViews, readComplete, cta: ctaClick,
+      completionRate: Math.round(completionRate * 1000) / 1000,
+      smoothedRate: Math.round(smoothedRate * 1000) / 1000,
+      weight,
+    };
   }
 
-  const out = { generatedAt: new Date().toISOString(), days: DAYS, enoughData, targets };
+  const out = {
+    generatedAt: new Date().toISOString(),
+    days: DAYS,
+    enoughData,
+    globalCompletionRate: Math.round(globalRate * 1000) / 1000,
+    totals: { pageViews: totalPv, readComplete: totalRc },
+    targets,
+  };
   await mkdir(dirname(NEWS_OUT), { recursive: true });
   await writeFile(NEWS_OUT, JSON.stringify(out, null, 2));
-  console.log(`  ✓ 寫入 ${NEWS_OUT}（enoughData=${enoughData}，總讀完=${totalRc}）`);
+  console.log(`  ✓ 寫入 ${NEWS_OUT}（enoughData=${enoughData}；全站瀏覽=${totalPv} 讀完=${totalRc} 平均完成率=${out.globalCompletionRate}）`);
   if (enoughData) {
     Object.entries(targets)
-      .sort((a, b) => b[1].score - a[1].score)
-      .forEach(([s, t]) => console.log(`    ${s.padEnd(12)} 讀完=${t.readComplete} CTA=${t.cta} → 權重 ×${t.weight}`));
+      .sort((a, b) => b[1].smoothedRate - a[1].smoothedRate)
+      .forEach(([s, t]) => console.log(`    ${s.padEnd(12)} 瀏覽=${t.pageViews} 完成率=${t.completionRate}(收縮 ${t.smoothedRate}) → 權重 ×${t.weight}`));
   } else {
     console.log('    （資料量未達門檻，fetch-news 將用預設權重＝現狀）');
   }
