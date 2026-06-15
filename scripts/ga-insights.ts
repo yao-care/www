@@ -16,6 +16,7 @@ import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getGscInsights, type GscInsights } from './gsc.ts';
 
 const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || '$YAOCARE_SECRETS_DIR/ga4-sa.json';
 const PROPERTY_ID = process.env.GA_PROPERTY_ID || '$GA_PROPERTY_ID';
@@ -71,7 +72,7 @@ function table(rows: Row[] | null, max = 15) {
  *   - 全站資料不足時 enoughData=false → 全部 ×1（等同現狀）。
  *   （僅統計 content_type=news_article 的事件，對齊 news target slug。）
  */
-async function buildNewsInsights() {
+async function buildNewsInsights(gsc: GscInsights | null) {
   console.log('\n▼ 產生議題權重訊號（news-insights.json）');
   const ALPHA = 20;        // 貝氏收縮強度（等效「先驗樣本數」）
   const MIN_PV = 30;       // 單議題最低瀏覽數，未達不調權重
@@ -109,10 +110,17 @@ async function buildNewsInsights() {
   const globalRate = totalPv > 0 ? totalRc / totalPv : 0; // 先驗平均完成率
   const enoughData = totalPv >= MIN_TOTAL_PV && totalRc >= MIN_TOTAL_RC;
 
-  const slugs = new Set<string>([...pv.keys(), ...rc.keys(), ...cta.keys()]);
+  // ── 需求面（GSC）門檻 ──
+  const MIN_IMPR = 50;        // 單議題最低曝光，未達不算需求機會
+  const MIN_TOTAL_IMPR = 500; // 全站最低曝光，未達不啟用需求加成
+  const gscEnough = !!gsc && gsc.totals.impressions >= MIN_TOTAL_IMPR;
+
+  const slugs = new Set<string>([...pv.keys(), ...rc.keys(), ...cta.keys(), ...Object.keys(gsc?.perTopic ?? {})]);
   const targets: Record<string, {
     pageViews: number; readComplete: number; cta: number;
-    completionRate: number; smoothedRate: number; weight: number;
+    completionRate: number; smoothedRate: number; qualityWeight: number;
+    impressions: number; clicks: number; ctr: number; position: number;
+    demandOpportunity: boolean; weight: number;
   }> = {};
   for (const s of slugs) {
     const pageViews = pv.get(s) ?? 0;
@@ -121,36 +129,51 @@ async function buildNewsInsights() {
     const completionRate = pageViews > 0 ? readComplete / pageViews : 0;
     // 貝氏收縮：樣本少 → 接近全站平均；樣本多 → 接近自身完成率
     const smoothedRate = (readComplete + ALPHA * globalRate) / (pageViews + ALPHA);
-    let weight = 1;
+    // 品質權重（GA 完成率，相對全站平均、非最大值；只加重、地板 1）
+    let qualityWeight = 1;
     if (enoughData && pageViews >= MIN_PV && globalRate > 0) {
-      const ratio = smoothedRate / globalRate; // 相對「全站平均」，非最大值
-      weight = ratio >= 1.3 ? 3 : ratio >= 1.1 ? 2 : 1; // 只加重、不懲罰；地板 ×1
+      const ratio = smoothedRate / globalRate;
+      qualityWeight = ratio >= 1.3 ? 3 : ratio >= 1.1 ? 2 : 1;
     }
+    // 需求機會（GSC）：有人搜、曝光夠，但「排名差(>10)或點擊率明顯偏低」＝該補的題目
+    const d = gsc?.perTopic?.[s];
+    const impressions = d?.impressions ?? 0;
+    const clicks = d?.clicks ?? 0;
+    const ctr = d?.ctr ?? 0;
+    const position = d?.position ?? 0;
+    const demandOpportunity =
+      gscEnough && impressions >= MIN_IMPR && (position > 10 || ctr < 0.5 * gsc!.globalCtr);
+    // 合併：品質權重 + 需求機會加成（+1），上限 3、地板 1
+    const weight = Math.max(1, Math.min(3, qualityWeight + (demandOpportunity ? 1 : 0)));
     targets[s] = {
       pageViews, readComplete, cta: ctaClick,
       completionRate: Math.round(completionRate * 1000) / 1000,
       smoothedRate: Math.round(smoothedRate * 1000) / 1000,
-      weight,
+      qualityWeight,
+      impressions, clicks, ctr, position,
+      demandOpportunity, weight,
     };
   }
 
   const out = {
     generatedAt: new Date().toISOString(),
     days: DAYS,
-    enoughData,
-    globalCompletionRate: Math.round(globalRate * 1000) / 1000,
-    totals: { pageViews: totalPv, readComplete: totalRc },
+    enoughData: enoughData || gscEnough, // 品質或需求任一就緒就讓 fetch-news 參考
+    quality: { ready: enoughData, globalCompletionRate: Math.round(globalRate * 1000) / 1000, pageViews: totalPv, readComplete: totalRc },
+    demand: { ready: gscEnough, site: gsc?.siteUrl ?? null, impressions: gsc?.totals.impressions ?? 0, clicks: gsc?.totals.clicks ?? 0 },
     targets,
   };
   await mkdir(dirname(NEWS_OUT), { recursive: true });
   await writeFile(NEWS_OUT, JSON.stringify(out, null, 2));
-  console.log(`  ✓ 寫入 ${NEWS_OUT}（enoughData=${enoughData}；全站瀏覽=${totalPv} 讀完=${totalRc} 平均完成率=${out.globalCompletionRate}）`);
-  if (enoughData) {
+  console.log(`  ✓ 寫入 ${NEWS_OUT}（品質就緒=${enoughData} 需求就緒=${gscEnough}）`);
+  if (out.enoughData) {
     Object.entries(targets)
-      .sort((a, b) => b[1].smoothedRate - a[1].smoothedRate)
-      .forEach(([s, t]) => console.log(`    ${s.padEnd(12)} 瀏覽=${t.pageViews} 完成率=${t.completionRate}(收縮 ${t.smoothedRate}) → 權重 ×${t.weight}`));
+      .sort((a, b) => b[1].weight - a[1].weight || b[1].smoothedRate - a[1].smoothedRate)
+      .forEach(([s, t]) => console.log(
+        `    ${s.padEnd(12)} 完成率=${t.completionRate} 曝光=${t.impressions} 排名=${t.position}${t.demandOpportunity ? ' [需求機會]' : ''} → 權重 ×${t.weight}`,
+      ));
   } else {
-    console.log('    （資料量未達門檻，fetch-news 將用預設權重＝現狀）');
+    console.log('    （品質與需求皆未達門檻，fetch-news 將用預設權重＝現狀）');
   }
 }
 
@@ -228,7 +251,27 @@ async function main() {
   await writeFile(OUT, JSON.stringify(out, null, 2));
   console.log(`\n✓ 摘要已寫入 ${OUT}`);
 
-  await buildNewsInsights();
+  // 7) 搜尋需求（Search Console）
+  console.log('\n▼ 搜尋需求（Search Console）');
+  let gsc: GscInsights | null = null;
+  try {
+    gsc = await getGscInsights();
+  } catch (e: any) {
+    console.log(`  ⚠ GSC 取得失敗：${(e?.message || e).split('\n')[0]}`);
+  }
+  if (!gsc) {
+    console.log('  （無 GSC 資源或尚無資料）');
+  } else {
+    console.log(`  資源：${gsc.siteUrl}　曝光=${gsc.totals.impressions} 點擊=${gsc.totals.clicks}`);
+    console.log('  熱門搜尋查詢（曝光排序，可拿來訂題目）：');
+    gsc.topQueries.slice(0, 10).forEach((r) =>
+      console.log(`    "${r.keys[0]}"  曝光=${r.impressions} 點擊=${r.clicks} 排名=${Math.round(r.position * 10) / 10}`));
+    console.log('  熱門頁面：');
+    gsc.topPages.slice(0, 10).forEach((r) =>
+      console.log(`    ${r.keys[0].replace(/^https?:\/\/[^/]+/, '')}  曝光=${r.impressions} 點擊=${r.clicks}`));
+  }
+
+  await buildNewsInsights(gsc);
   console.log('');
 }
 
