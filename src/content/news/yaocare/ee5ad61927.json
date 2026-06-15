@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "3年僅收5案 居家醫療讓藥師嘆氣 | NOWNEWS今日新聞 - LINE TODAY",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBjTEhzOHZsV0ZDclY4RThlWWxiNDVBdEhsaGFiNG9VWEltdGxUa0JPM2c4YUlqalhXTDc0cmV2UnhIblB0RG9FRWJ1VXB3ZUJmZ01SeF9R?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-27T00:48:12.000Z",
+  "fetchedAt": "2026-05-31T21:07:15.787Z",
+  "newsBrief": "有藥師反映，居家醫療照護制度推行多年，實際收案量卻極為稀少，三年內僅累積五案。制度設計與現場執行之間的落差，讓有意投入居家藥事服務的藥師感到困惑與無奈，顯示居家醫療在藥事端的推進仍面臨系統性障礙。",
+  "issueAnalysis": "居家醫療的藥事服務量能不足，根源是多層面的結構問題：收案流程繁瑣、跨專業協作機制不成熟，加上藥師缺乏有效工具追蹤病人在院外的用藥狀況，導致投入意願低落。對於老年與行動不便的慢性病患者而言，居家藥事本應是延續院內處方管理的關鍵一環，但若連藥師端的資訊支援都不到位，服藥追蹤便難以持續。這不只是人力問題，更是「工具缺位」造成的系統性斷鏈。",
+  "designResponse": "面對居家藥事服務門檻高的問題，在資料接入環節，設計上採用 ATC 編碼對接健保處方資料，藥師無需人工 keyin 即可啟動追蹤流程 (proofPoint #1)，減少行政耗損。在病人端，以 LINE 與 Telegram 作為提醒通道，不需安裝額外 App (proofPoint #2)，契合居家年長族群的使用習慣。藥師端介面支援批次檢視多位追蹤對象的服藥回報狀況 (proofPoint #4)，讓有限人力得以覆蓋更多居家病人，而非依賴逐一電話確認。",
+  "tags": [],
+  "relevance": 0.7,
+  "highlight": false,
+  "criticPasses": 2
+}

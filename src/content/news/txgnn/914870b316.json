@@ -1,0 +1,20 @@
+{
+  "target": "txgnn",
+  "title": "個股：華安戰略事業源華智醫全球指標年會秀AI老藥新用平台，攻全球授權商機 - 富聯網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNUGFPWk9BLVgwaEU4bU5ObWZOUG5ubXFuQjlCeXo5QnhBbkVUMEM1WUhWVGdzVWtINHJpVDI1cU1UQzRla1d3VVpuYkJCbHo5T3E2OW9EVzJPT2Jubkluc1lELUJJbThOMmdjcVFZS2w3M0ROMTZfcFlzZThqOVNFVWRDX0FQbTY4?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-22T00:46:00.000Z",
+  "fetchedAt": "2026-05-27T20:39:51.478Z",
+  "newsBrief": "源華智醫在全球指標年會上展示 AI 老藥新用平台，瞄準全球授權市場。業界對 AI 驅動藥物再利用技術的商業潛力認可日增，顯示老藥新用正從學術探索走向產業化授權，成為新藥研發體系中的策略性佈局選項。",
+  "issueAnalysis": "新藥研發平均耗時十年、成本逾十億美元，失敗率卻居高不下。相比之下，已上市藥物的安全性已有臨床驗證，系統性探索其潛在新適應症，可大幅縮短進入臨床的時間與成本。然而，此類嘗試長期缺乏跨藥物、跨疾病的圖譜式關聯分析，各國藥品資料庫各自為政，預測結果也往往缺乏多國文獻佐證，使授權方難以評估跨境可移植性——這正是業界積極尋求突破的核心痛點。",
+  "designResponse": "面對老藥新用商業化的核心挑戰——預測品質與跨境可信度——平台的設計思路從資料廣度與證據鏈兩個維度切入。在藥品覆蓋層面，整合 30+ 國 FDA 藥品資料 (proofPoint #2)，確保預測基底不受單一法規市場侷限，讓潛在授權方得以評估跨地區的適應症機會。在模型架構上，採知識圖譜與深度學習雙引擎並行 (proofPoint #1)：知識圖譜捕捉藥物–疾病的結構性關聯，深度學習從大規模數據挖掘潛在信號，兩者互補以降低單一方法的盲點。每條預測均附帶 PubMed 文獻與 ClinicalTrials 證據包 (proofPoint #4)，讓評估方在考察授權標的時有可追溯的科學依據，而非僅憑模型分數決策。這樣的設計，試圖讓平台成為能支撐實際授權談判的知識基礎設施。",
+  "tags": [
+    "老藥新用",
+    "AI藥物預測",
+    "授權商機"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1
+}

@@ -446,8 +446,6 @@ export const NEWS_TARGET_BY_SLUG: Record<NewsTargetSlug, NewsTarget> =
     NewsTarget
   >;
 
-/** 每個 target 保留新聞數上限 */
-export const KEEP_PER_TARGET = 8;
 /** 產品頁底顯示新聞數 */
 export const SHOW_PER_PRODUCT = 4;
 /** 首頁 highlight 區塊顯示新聞數 */

@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "台大醫院電子處方箋系統上線！率先實現「視訊診察社區領藥」減少奔波 - TVBS 健康2.0",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE90Tk4tb2NLNy1iZDNOb2JSczVESlAyOUloSjJjRWZWMHlFc2pjZlNfZ0tpT3hlYmRaWEc5S3BoYjhpa0xEWVF4RUtZYkVKNUpQQ21B?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-02-13T08:00:00.000Z",
+  "fetchedAt": "2026-05-07T20:38:39.538Z",
+  "newsBrief": "台大醫院推出電子處方箋系統，串接視訊診察與社區藥局領藥流程，讓民眾在完成遠距看診後，不必返回醫院即可就近取藥。此舉被視為臺灣醫療數位化的重要里程碑，有望改變慢性病患者長途奔波的就醫習慣。",
+  "issueAnalysis": "電子處方箋的普及，解決了「處方開立」這一環節的數位化，但用藥旅程的斷點往往發生在領藥之後。慢性處方箋的第二、三次領藥率長期偏低，根本原因不在於民眾不願意複診，而在於提醒與追蹤機制的缺位。尤其是年長族群，視訊診察已降低了就醫門檻，但後續的用藥追蹤若仍仰賴記憶或紙本，整條照護鏈依然脆弱。電子處方箋打通了開藥端的資訊流，如何讓這份資訊流延伸至服藥行為，才是真正決定治療成效的關鍵環節。",
+  "designResponse": "電子處方箋讓「開藥」環節資訊化，但用藥行為的追蹤缺口往往在領藥之後。在資料串接端，ATC 編碼對接健保處方資料 (#1) 可自動識別藥品類型與頻次，免除人工建檔負擔。在觸及端，透過 LINE 推播提醒 (#2) 無需安裝新 App，對行動不便的年長族群尤為重要；提醒訊息附帶藥品外觀圖片 (#3) 則協助多重用藥患者辨識正確藥物。補上這段追蹤鏈，處方資訊流才能真正轉化為服藥行為。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

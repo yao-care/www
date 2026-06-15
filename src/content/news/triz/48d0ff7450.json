@@ -1,0 +1,16 @@
+{
+  "target": "triz",
+  "title": "國內金融大語言模型專案啟動，16家金融業者聯手打造熟悉在地金融法規、產業知識的大語言模型 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1nZlUtb2p6WGJTOFhDZVF6RUdRNHVfaERyWjhsQ2hKOFVWdmVyVVhPQzdYZFRhSHM0OHdhNXJ1NjVra09HcU84UDlZVl9qdw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-22T07:00:00.000Z",
+  "fetchedAt": "2026-05-13T20:53:39.918Z",
+  "newsBrief": "國內16家金融業者聯手啟動大語言模型專案，目標打造熟悉在地金融法規與產業知識的專屬LLM。此舉標誌著垂直領域AI知識庫從通用模型向深度領域化轉型，揭示「知識落地」已成為各行業AI應用競爭的核心焦點。",
+  "issueAnalysis": "金融業聯合建構領域LLM，折射出一個更普遍的困境：通用大模型在面對高度專業化的知識體系時，往往無法提供精準且可溯源的推理依據。金融法規的細緻性與動態更新，要求模型必須具備結構化的領域知識管理能力，而非僅靠語料訓練記憶。這與TRIZ方法論長期面臨的挑戰高度相似——工程矛盾識別缺乏自動化工具、專家知識難以系統化複製，都指向同一核心問題：如何讓AI在專業推理時有可信的知識基礎可依循。",
+  "designResponse": "面對「專業知識如何嵌入AI推理」的核心問題，關鍵在於先將知識結構化。建構含40發明原則、263矛盾矩陣的完整向量庫 (#1)，確保每次原則推薦都有明確可溯源的知識基礎，推理不依賴模型自由聯想；再透過crawl → chunk → embed三階段RAG管線 (#3)，將領域知識轉為可精確檢索的向量索引，讓AI面對具體問題時能定位對應解法而非仰賴訓練語料殘存記憶。「先結構化、再推理」的設計邏輯，是垂直領域AI落地的核心分野。",
+  "tags": [],
+  "relevance": 0.6,
+  "highlight": false,
+  "criticPasses": 2
+}

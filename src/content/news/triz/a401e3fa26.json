@@ -1,0 +1,16 @@
+{
+  "target": "triz",
+  "title": "【數位轉型個案6】從人治經驗到「AI協作」！固緯電子以AI Agent破局 - find.org.tw",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPZ2pveHYxWE5hWDJFOXRWUWdpR2tSMnFjcjZ1V3M3cC1vaFNJUFNHMkM1SzdNUGJlT1FUZmVZbkRKU1NHSkdWdzRERXNabFlDMlZLVS1halhPWjVwbEZfUkF6MmIwMzJPbjBNZkxQWU1lVFRoRXotQzQ5anViRGg1Rg?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-11T17:25:44.000Z",
+  "fetchedAt": "2026-05-12T20:55:00.857Z",
+  "newsBrief": "固緯電子面對技術知識集中於少數老師傅的「人治困境」，嘗試引入 AI Agent 協作框架，將隱性工程經驗轉化為可查詢、可推論的系統化知識。此案例揭示製造業數位轉型的核心矛盾：既要保留專家判斷力，又必須讓知識得以跨人員流通與複用。",
+  "issueAnalysis": "製造業長年仰賴資深工程師個人經驗解題，人員流動或規模擴張時知識斷層風險急速升高。AI Agent 提供了可能出路，但真正挑戰不在「有沒有 AI」，而在背後的知識庫是否足夠結構化。若僅將非結構化文件餵給通用大型語言模型，推論往往漂移於語意層，難以觸及工程矛盾核心。製造業需要的不只是問答機器人，而是能識別問題類型、對應矛盾結構、給出有工程根據的創新推理框架。TRIZ 方法論提供這套語言，但傳統工具門檻高、需專家陪伴，在中小型工程團隊難以規模化落地，這才是最關鍵的斷層所在。",
+  "designResponse": "製造業知識系統化的核心困難，在於隱性經驗難以結構化表達。TRIZ AI 知識庫從方法論層次切入，將 40 發明原則、39 工程參數與 263 矛盾矩陣轉為可計算向量庫（#1），並涵蓋 4 分離原理、Oxford Effects 與 AutoTRIZ Cases（#2），使推論具備跨領域借力的基礎，而非停留於字詞匹配。搭配多角色 SYSTEM_PROMPT 協作與 onStep callback 即時回報（#4），「描述問題 → 識別矛盾 → 推薦原則 → 生成解法」的 TRIZ 標準流程得以自動化銜接，工程師毋需事先熟悉方法論，即可透過對話介面觸及結構化創新推理，讓知識跨人員流通複用。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": true,
+  "criticPasses": 2
+}

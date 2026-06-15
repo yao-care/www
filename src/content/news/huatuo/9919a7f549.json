@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "整合AI與科技 讓中醫發展出台灣特色 - CIO Taiwan",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTE9ZaXc4TUh4TGJCdzliSkRWSVJqdTM5b1hCYmVPX20zLU5MMXBkQ3YxakQ4QXhoWjJLRVNKVTR4dFZRUnBm?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-01T01:00:19.000Z",
+  "fetchedAt": "2026-05-12T20:58:06.512Z",
+  "newsBrief": "台灣中醫界正積極整合 AI 與現代科技，探索發展在地特色的臨床輔助路徑。業界觀察指出，AI 工具的引入有助於強化中醫問診流程的系統性，但如何在保留傳統辨證精髓的同時確保技術可解釋性，仍是核心挑戰所在。",
+  "issueAnalysis": "中醫 AI 的根本挑戰不在技術力本身，而在「可信任性」。大型語言模型在通用場景表現亮眼，但在臨床決策中，黑箱輸出讓醫師難以確認推理依據是否符合辨證邏輯。與此同時，中醫四診本身缺乏標準化格式，難以轉化為機器可處理的結構化資料；若診斷結果無法對應國際標準碼，也將形成中西醫資訊系統整合的斷層。因此，真正具臨床價值的中醫 AI，必須同步解決「辨證可追溯」與「資訊可互通」兩個層次的問題，缺一不可。",
+  "designResponse": "面對辨證推理不透明的核心痛點，系統將八綱與臟腑邏輯拆解為 128 條明文規則，寫入可供中醫師逐條審閱的 syndromes.json（proofPoint #1），每次結論均附完整推理路徑與 RAG 證據索引（proofPoint #3），使臨床端得以回溯每一判斷依據。在資訊互通層，辨證結果對應 ICD-11 TM 章節並封裝為 FHIR R4 Bundle 輸出（proofPoint #4），讓中醫診斷資料以標準格式進入現有醫療資訊系統，有效降低中西醫整合的技術摩擦。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": false,
+  "criticPasses": 2
+}

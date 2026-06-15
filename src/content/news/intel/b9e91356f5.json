@@ -1,0 +1,16 @@
+{
+  "target": "intel",
+  "title": "Anthropic調整Claude訂閱用量計算，Agent SDK等程式化使用改走專屬月額度 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5mdUh0c0tvd1N1cUt2dFZJZEZreC1IVTVTUmhfZGdtZi14YzRsckQySFdiVWNnNnY1dlBPY09LTjVwZWFiZ0ZXMkNTRGpidw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-14T07:00:00.000Z",
+  "fetchedAt": "2026-06-03T20:47:05.761Z",
+  "newsBrief": "Anthropic 宣布調整 Claude 訂閱方案的用量計算規則，Agent SDK 及其他程式化呼叫方式將從原本的共用配額中分離，改為獨立的月額度計費。此舉意味著 AI 工具的企業級程式化使用將受到更明確的資源管控，也反映出 AI Agent 自動化應用正快速成為主流使用情境。",
+  "issueAnalysis": "當 AI 訂閱平台開始針對程式化使用單獨設限，背後揭示的是一個結構性趨勢：自動化情報任務的規模已大到足以影響平台資源分配。對中小型團隊而言，這帶來雙重挑戰——一方面 AI 輔助的自動化流程愈來愈普及，另一方面用量成本開始變得難以預測。產業情報資料散落各處、人工搜集跟不上更新速度本已是常見痛點，若又要依賴高頻 API 呼叫才能維持情報更新，運營成本壓力將進一步放大。如何在控制 API 依賴的同時仍維持情報生產線的可靠運作，成為這類團隊必須面對的架構選擇。",
+  "designResponse": "AI API 計費規則的不確定性，讓情報系統的設計必須從源頭降低對單一服務的依賴。在資料蒐集層，設計上採用 RSS、HTTP、Playwright 三模式並行爬取 (#1)，讓資料在進入語言模型前先行結構化，減少不必要的呼叫次數。在事件識別環節，選擇於本地完成關鍵字標註與重要性評分 (#2)，AI 只介入真正需要語意理解的步驟，避免每筆資料都觸發外部呼叫。整體基礎設施的選型上，採用 GitHub Actions 免費方案承載排程與執行 (#4)，確保情報生產線的可持續性不建立在難以預期的訂閱用量之上。這樣的分層設計，使各環節的資源消耗各自獨立、可單獨優化，而非綁死在單一平台的計費邏輯裡。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": false,
+  "criticPasses": 3
+}

@@ -10,7 +10,7 @@
  *        writer (Sonnet) → regex guards 預檢 → critic (Sonnet)
  *        通過 → 寫入 src/content/news/<target>/<id>.json
  *        最多 5 次重生，仍失敗則丟棄
- *   5. 每 target 保留最新 KEEP_PER_TARGET 則
+ *   （不再刪文：常青議題分析長期累積，無 prune）
  *
  * CLI：
  *   --target <slug>   只跑單一 target（除錯用）
@@ -28,7 +28,6 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
-  unlinkSync,
   writeFileSync,
 } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -36,7 +35,6 @@ import { fileURLToPath } from 'node:url';
 import Parser from 'rss-parser';
 import {
   NEWS_TARGETS,
-  KEEP_PER_TARGET,
   type NewsTarget,
   type NewsTargetSlug,
 } from '../src/news.config';
@@ -403,31 +401,6 @@ function writeNewsFile(
   }
 }
 
-function pruneOld(target: NewsTarget) {
-  const dir = join(NEWS_DIR, target.slug);
-  if (!existsSync(dir)) return;
-  const files = readdirSync(dir).filter((f) => f.endsWith('.json'));
-  const entries: { file: string; publishedAt: number }[] = [];
-  for (const f of files) {
-    try {
-      const obj = JSON.parse(readFileSync(join(dir, f), 'utf8'));
-      entries.push({ file: f, publishedAt: new Date(obj.publishedAt).valueOf() });
-    } catch {
-      /* ignore broken file */
-    }
-  }
-  entries.sort((a, b) => b.publishedAt - a.publishedAt);
-  const toDelete = entries.slice(KEEP_PER_TARGET);
-  for (const e of toDelete) {
-    if (DRY_RUN) {
-      log(`    [DRY-RUN] would prune ${e.file}`);
-    } else {
-      unlinkSync(join(dir, e.file));
-      log(`    pruned ${e.file}`);
-    }
-  }
-}
-
 function existingUrls(target: NewsTarget): Set<string> {
   const dir = join(NEWS_DIR, target.slug);
   const urls = new Set<string>();
@@ -621,11 +594,10 @@ async function main() {
     await writeOneSelected(p, stats, insights.hints.get(p.target.slug));
   }
 
-  // ─── Phase 4: prune（每 target 保留最新 KEEP_PER_TARGET）─
-  log(`\n══════ Phase 4: Prune ══════`);
-  for (const t of targets) {
-    pruneOld(t);
-  }
+  // ─── 不再刪文 ───
+  // 早期版本曾每 target 只保留最新 KEEP_PER_TARGET 則（pruneOld），
+  // 那是把這套引擎當「會過期的新聞」的錯誤假設。實際內容是常青議題分析，
+  // 該長期累積以建立主題深度與 SEO 權重，故移除所有刪除邏輯。
 
   // 真實寫入分配（不是 picked，是真正成功落地的）
   const writtenByTarget = new Map<NewsTargetSlug, number>();

@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "54周年再升級 台北醫院通過重度急救責任醫院、啟用達文西中心 成為民眾最信賴的健康守護者 - PChome Online 新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOWmpnVWZnMFhtWlNtcTI4Ukh3MEFQZmFodGtta21VNEdPSG5LbUY5LVF1bDNabk9sa0J4SF9xakx2V1RGVE5ROVhBbk9zb0hkQnRrNFhFWEVQZEg1OGVjZmdoZXFBV2JOdWs5dmdXVW1lcWpJRkJUV09Ya1JMdl93UVI1ZEp3SjZzS25Z?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-04T11:54:29.000Z",
+  "fetchedAt": "2026-05-07T20:51:28.793Z",
+  "newsBrief": "某醫療機構於創院54周年之際，通過重度急救責任醫院資格認定，並同步啟用達文西手術系統，藉由兩項重大認證里程碑的達成，強化其在高階急重症醫療領域的服務能量與社會公信力。",
+  "issueAnalysis": "醫院評鑑與責任醫院資格審查，本質上是一套以文件為核心的合規流程——從感染管制、設備維護到人員訓練，各條文皆需對應佐證文件，且須定期更新、版本可追溯。然而，多數醫療機構仍倚賴人工方式彙整數十份文件，條文對應依賴個人記憶，審查前夕往往陷入高壓的文件「補齊衝刺」。此種作業模式不僅耗費大量行政人力，更在版控疏漏時埋下合規風險。隨著評鑑標準日趨嚴格、跨系統要求逐漸交疊，單靠人工已難以維持文件的即時準確性與可稽核性。",
+  "designResponse": "醫院評鑑的文件合規壓力，根源在於「準備」與「日常維運」的脫節。針對此結構性問題，設計上將評鑑文件視為持續管線的自然輸出：64 份 ISMS 框架可依場景重組為醫策會或 JCI 所需文件體系 (#6)，同一底層素材毋須重複建置；稽核包以離線打包格式交付 (#5)，確保評審在任何環境下均可完整檢視佐證；每 15 分鐘的漏洞輪詢與自動告警 (#4)，則讓文件呈現的資安現況與實際系統狀態保持同步，而非靜態快照。三個環節合力，使「準備評鑑」成為日常營運的副產品。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": true,
+  "criticPasses": 2
+}

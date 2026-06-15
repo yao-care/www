@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "首屆臺灣50優良SMART應用程式獎 新竹臺大分院奪臨床決策支援類獎項 - 勁報",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9tc0FVblJqWFZGV3RBWHZWUERETXp5LXpCVEVGa3dFVHVLeVBJejhLRUY3X3JteFZtN1Z2Q2J4eXNYY050VWF6SDFPZDRNdGtIVXQ1TUN3MVhtYjRRV1UyWg?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-22T07:42:28.000Z",
+  "fetchedAt": "2026-05-07T20:57:26.812Z",
+  "newsBrief": "臺灣首屆「50優良SMART應用程式獎」日前揭曉，臨床決策支援類別由某醫學中心分院奪得殊榮。這項新設獎項專門表彰符合 SMART on FHIR 標準、可直接嵌入 EHR 系統的醫療 AI 工具，反映出臺灣醫療生態對「可落地、可整合」臨床決策輔助工具的需求正持續升溫。",
+  "issueAnalysis": "臨床決策支援工具的核心挑戰，在於「資料孤島」與「模型落地」之間的鴻溝。多數 AI 模型在開發環境表現亮眼，卻難以無縫接入醫院既有的 EHR 流程；醫師若需切換系統查詢，往往傾向放棄使用。SMART on FHIR 標準的出現，正是為了讓 AI 應用以「App」形式嵌入主流電子病歷平台，無需獨立登入即可在診間即時調用。然而，光有標準還不夠——工具本身若缺乏跨國藥品覆蓋、或預測結果無文獻佐證，臨床端的採用意願依然有限。此次獎項的設立，標誌著業界已開始將「EHR 原生整合」列為評鑑醫療 AI 工具的核心指標之一。",
+  "designResponse": "應對「整合門檻」與「可信度門檻」，藥物再利用平台的設計從兩個維度提供結構性回應。在整合層，採 OAuth + PKCE 認證流程接入 EHR（#7），並已上架 SMART on FHIR App Gallery，相容 Epic 與 Cerner 等主流系統（#5），讓臨床人員無需離開慣用介面即可調用預測結果。在證據層，每筆預測均附帶 PubMed 文獻與 ClinicalTrials 臨床試驗證據包（#4），使醫師在決策當下即可檢視支撐依據，而非面對不透明的黑盒分數。「嵌入即用、預測即舉證」的設計邏輯，正是對此次獎項所彰顯之落地需求的直接呼應。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 2
+}

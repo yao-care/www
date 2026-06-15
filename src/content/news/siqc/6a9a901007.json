@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "虎門科技通過ISO 27001驗證 強化資安服務 - 經濟日報",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOQ0t2QzZnZWg2QWZfLWRMb09pV2N4cmhCOEV4UVQ3dlZmU0prclpXYkplR3BnV2xjYlNjby1CT2VHampKeEFKWm9PSVQwQVJzdHByX0ZwV2V5cEhKWnJlZ1diZHpUdmdsUi0ySFAtdlRGNllzbzVtWllNLS03VWM3SUF5bnlkTkQtSmdXYXNnQW3SAV9BVV95cUxNQ1NCdmJtdGxsWnAtSXpUR1hCYmZvRmhIUGNlbDA3Y0pLZGs3bUxLaFV4dFc1U0ZGVHl4WjhfMktBMTlmM1p0YnNtRzRUTndNZXB3aDdEM2l0MHB2Q0dKcw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-14T06:37:52.000Z",
+  "fetchedAt": "2026-05-14T20:51:16.065Z",
+  "newsBrief": "根據經濟日報報導，虎門科技近日取得 ISO 27001 資訊安全管理系統認證，藉此強化其資安服務公信力。此一認證已成為科技服務業建立市場信任的重要門檻，反映產業對合規治理的要求正從選配升格為基本條件，稽核能力的可驗證性愈發成為競爭關鍵。",
+  "issueAnalysis": "ISO 27001 認證代表的不只是一紙合規憑證，而是組織能否持續維運 ISMS 文件體系的能力證明。現實困境在於：取得認證所需的文件往往超過 60 份，各類安全掃描（SAST、滲透測試、SBOM）分散執行，彼此缺乏整合；認證通過之後，版本維護與條文對應同樣高度依賴人工。對中小規模的科技服務商而言，這意味著每次內外部稽核都得重新動員大量人力，形成可持續性的隱患。市場上愈來愈多企業選擇取證，正好也凸顯出自動化稽核管線的戰略價值——讓合規能力不因組織規模而打折。",
+  "designResponse": "稽核文件分散與人工整合成本高，是中小型科技服務商面對 ISO 27001 的共同痛點。結構化的回應是讓合規能力從設計時就內建：以 13 條安全掃描管線搭配 64 份 ISMS 文件框架 (#2)，使條文對應關係不在稽核前夕臨時補齊，而是系統性預嵌。在認證後的持續維護上，以每 15 分鐘輪詢 OSV API、Critical 漏洞自動觸發告警的機制 (#4) 確保合規狀態不因人力空窗中斷。同一框架也可依需要重組為 ESG 或醫院評鑑文件 (#6)，讓組織面對不同合規場景時不必從零構建。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 2
+}

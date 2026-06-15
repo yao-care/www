@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "資策會攜東擎科技 創全臺首款AI合規驗證設備 - n.yam.com",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5pcFA0SXdtanJWY05BZl9TTG1INE9kMUQyYmVMQjdjVUtzaGZWend1d1lzTWFEZXpVM1JEWHAzRlFuUzRMMmk1NjlUc3UtRWZDUVE?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-05T02:35:00.000Z",
+  "fetchedAt": "2026-06-05T20:40:38.458Z",
+  "newsBrief": "資策會與東擎科技攜手推出全臺首款 AI 合規驗證設備，將合規檢測能力內嵌於硬體裝置。此舉標誌 AI 治理需求已從軟體框架延伸至可驗證的實體解決方案，反映企業面對 AI 系統上線合規壓力持續升高，亟需具體可交付的稽核工具。",
+  "issueAnalysis": "AI 系統進入醫療、金融、製造等關鍵場域，合規驗證的難度隨之升高。傳統稽核流程仰賴人工彙整文件，難以跟上 AI 模型快速迭代的節奏；安全掃描散落於 SAST、滲透測試、SBOM 各自運作，彼此缺乏整合，稽核人員往往面臨版本不一致、條文對應困難的困境。此次業界推出專屬硬體驗證設備，正是試圖打破「合規是事後補文件」的慣性，將驗證機制前移至系統設計階段。對中小規模技術團隊而言，如何以有限資源建立可持續的合規體系，仍是核心挑戰所在。",
+  "designResponse": "SIQC 以結構化掃描與自動化管線回應 AI 合規驗證升溫的需求。13 條安全掃描管線對齊 OWASP ASVS 與 OWASP LLM Top 10 (proofPoint #2)(proofPoint #3)，每次程式碼異動即觸發合規檢查。稽核包透過 GitHub Release 離線交付，確保各版本狀態可溯源 (proofPoint #5)。同一框架可重組為 ESG 或醫院評鑑格式 (proofPoint #6)，以單一基礎設施服務多種合規需求。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

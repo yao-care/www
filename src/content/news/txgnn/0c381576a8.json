@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "抗過敏藥「老藥新用」 嘉義毛小孩膀胱癌意外痊癒【最新快訊】 - 台視全球資訊網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9ic3ZCTXBNcTJKUFhZaWtuMUdoTEtOcGhMR3NVOWEwMFZ3cW9ndG1kVUZNYWpXeEl1bGVQZGJpOE9YY2w2S2VPNzdKdWxoZDNYTGM2TW1jN0lUVmZEb05KejhPN2ZibldDWi1TWFg3dWtQWlN1R0dxSVhXeTc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-10T12:17:55.000Z",
+  "fetchedAt": "2026-05-12T20:47:47.924Z",
+  "newsBrief": "一款原用於治療過敏的抗組織胺藥物，在動物臨床案例中意外展現出對膀胱癌的抑制效果，使一隻罹患膀胱癌的犬隻獲得緩解。此案例再度引發各界對「老藥新用」潛力的討論，也凸顯既有藥物的未知適應症仍有龐大的系統性探索空間。",
+  "issueAnalysis": "老藥新用的偶發案例雖令人振奮，卻也揭示了現行藥物研發體系的結構性缺口：已上市藥物的潛在新適應症，往往依賴臨床巧合而非系統性分析才得以被發現。新藥從研發到核准平均耗時逾十年、成本高達數十億美元，而既有藥物的安全性資料已相對充分，理論上可大幅壓縮再用途化的驗證成本。然而，現實中缺乏跨病種、跨藥物的整合性預測工具，加上預測結果往往欠缺文獻佐證，使臨床端難以評估可信度。如何將零散的案例線索轉化為可重複驗證的知識，是老藥新用領域亟待解決的核心問題。",
+  "designResponse": "面對老藥新用「可信度不足」與「缺乏系統性覆蓋」兩大痛點，平台從廣度與深度兩個維度切入。廣度上，知識圖譜與深度學習雙引擎並行互補，降低單一方法的盲區，並橫跨多國 FDA 藥品資料，不侷限於單一市場 (proofPoint #1, #2)。深度上，每筆預測均附帶 PubMed 文獻與 ClinicalTrials 試驗資料，讓使用者可追溯預測背後的完整證據鏈 (proofPoint #4)。這樣的架構，正是為了讓偶發的臨床觀察得以被系統性回溯驗證，進而客觀評估其轉化潛力。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "維曙智能子公司APOTEK因果AI精準選藥題 搶進老藥新用、獲海外藥廠醫院合作 - 環球生技",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5jS3lnNGlCd1IzWW03RUxvank2WWwwbmR4ZkluTUZ6Y05JSXl0bDZGQkthd2xYT2FPZ1FYcnVqUVlJb3JiZGlTT3pOWnpPSXdzXzVJVEJRdEtHUXVrajBSS29OdjBMaDlkRnhNRnNBeXpKQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-06T02:23:04.000Z",
+  "fetchedAt": "2026-05-07T12:26:21.333Z",
+  "newsBrief": "維曙智能子公司 APOTEK 以因果 AI 技術切入老藥新用賽道，主打精準縮短候選藥物篩選週期，並宣稱已獲海外藥廠與醫院的合作意向。此一動向顯示，AI 驅動的藥物再利用正從學術研究加速走向商業落地，國際競爭格局日趨緊密。",
+  "issueAnalysis": "老藥新用的邏輯優勢在於借用已通過安全審核的上市藥物，大幅壓縮研發時程與成本。然而，這條路徑面臨兩項結構性障礙：跨適應症的藥物知識高度分散，缺乏系統性整合工具；AI 預測若無文獻與臨床試驗的雙重佐證，臨床醫師的採納意願依舊偏低。因果 AI 嘗試區分相關與因果，切入點具有理論意義；但跨國藥品資料的覆蓋廣度，以及與異質 EHR 系統的整合深度，仍是整個賽道共同面對的工程挑戰。",
+  "designResponse": "面對「預測可信度不足」與「EHR 整合摩擦高」兩項賽道共同痛點，TxGNN 平台採雙引擎並行設計——知識圖譜方法與深度學習方法互為校驗，有效降低單一模型帶來的假陽性風險，讓臨床推論更具可靠基礎 (#1)；在整合層面，平台透過 OAuth + PKCE 認證流程直接接入 EHR，使預測結果能在臨床工作流中即時呈現，免去切換系統的操作摩擦 (#7)。工具被採納的前提，在於同步降低醫師的信任門檻與切換成本。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}

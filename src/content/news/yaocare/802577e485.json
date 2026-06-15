@@ -1,0 +1,20 @@
+{
+  "target": "yaocare",
+  "title": "「固定型藥物疹」患者就醫時 醫提醒：應主動提供完整用藥史 - 台灣好新聞",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMilgNBVV95cUxOV2RPbG54TDNZV1ByWVp3UFNxUFFzaG9qMHZBVzdDX2t2NGJES19uTTRxaHJGeGxLUS15RkVNaXM1eUtwRldpNm5CV3BVdUM3X3JHdnJnWW5fdk9Lb2FzNkFQNEY1dDVhNkloeDRGUzN3NkZOQUxHOFltYUFaWUVoMlNoZC1FQVdPVFNVbzBEZmRFMlJNZjgxdWZSYW9DalUtRXlDLUtGWFcwZGZtWEMwdGtMdUlEZUtUeFJjWUZNRHM1N0lvT1FlYjFsZkVxdHE0RTRwNUVJbHhTT0NvZ29YSUNhanBjTWNWQzVJMjBPaVlqNTlHZzZSNzVYN2FXRmhUQ2hzQkFoYUFUSWJfRE84TUFWbkdLdllkenJiZUtFc1hrc0Jqb2dEVGd5M1R2ZnM0cU5Rbm05WXhrTjdzbHVnOEJITFZ0cF85TlgxU0Q4RjFOQVc5a3pqMlpTR09yZ1M3STlnbFhub0MwZ1Y3T0Q5WHdTLWtpZ185T19XOXVJS0J1U19XNVJ0WUVEelJfVkxUOEZuU0Nn?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-19T07:00:00.000Z",
+  "fetchedAt": "2026-05-17T20:44:44.187Z",
+  "newsBrief": "固定型藥物疹是一種特殊的藥物過敏，患者就醫時應主動提供完整用藥史，包括處方藥、成藥與保健品。臨床醫師指出，資訊不足容易導致患者再次暴露於致敏藥物，增加診斷難度與復發風險，完整的用藥記錄是精準診療的關鍵前提。",
+  "issueAnalysis": "藥物不良反應的診斷，高度仰賴患者能否提供完整的用藥清單。然而現實中，許多患者同時使用多種處方藥、指示藥甚至保健食品，往往無法在診間當下完整說出。多重用藥的混淆不只是用藥安全問題，也直接影響醫師的鑑別診斷能力。當患者說不清楚「自己在吃什麼」，固定型藥物疹這類需比對用藥史的疾病，診斷時程便會延長，甚至造成重複暴露於致敏藥物的風險。用藥記錄的結構化與可攜性，是整體醫療品質的隱形關鍵。",
+  "designResponse": "面對多重用藥的追蹤難題，藥提醒的設計思路是從「藥師端主動管理」切入，而非仰賴患者臨場回憶。在資料銜接環節，藥提醒採用 ATC 編碼對接健保處方資料，不需藥師人工 keyin（proofPoint #1），使每位患者的用藥清單得以結構化呈現，隨時可作為就醫時完整用藥史的參考依據。在溝通介面的選擇上，藥提醒透過 LINE 與 Telegram 推播用藥提醒（proofPoint #2），降低高齡患者的使用門檻，讓用藥資訊得以在日常互動中持續累積更新，而非僅在就醫當下才需要重新建構。當用藥記錄的維護被嵌入患者的日常行為，它提供給醫師的就不只是一張靜態清單，而是一份有脈絡、可追溯的動態用藥歷程，讓固定型藥物疹這類依賴用藥史比對的診斷工作，有更可靠的資訊基礎可以仰賴。",
+  "tags": [
+    "藥物過敏",
+    "用藥史管理",
+    "多重用藥"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1
+}

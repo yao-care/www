@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "Exein 重新定義 IoT 資安 CRA 法規、晶片級整合一次完成 - iThome",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE82NVUyay1BLXRwWEk2TXQyNTNwNTAxTGs4ZGtJV3ZVbGhqd0ItRERURjN4UnZLMk9IZnBjOUxSNFJjYUtoallManBaMA?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-12T16:52:28.000Z",
+  "fetchedAt": "2026-05-16T20:50:38.606Z",
+  "newsBrief": "Exein 發表整合式 IoT 資安方案，主張可在晶片層級完成歐盟《網路韌性法》（CRA）所要求的合規掃描，將 SBOM 產製、漏洞偵測與法規對齊整合進韌體生命週期管理流程，使合規驗證從使用端事後補件，提前至製造端即時執行。",
+  "issueAnalysis": "CRA 落地期限日益逼近，IoT 裝置的合規壓力已不僅是軟體問題：SBOM 產製、晶片韌體漏洞揭露義務、跨供應鏈安全文件交付，每一環都在考驗現有流程的耐受度。更根本的困境在於，多數中小型製造商缺乏整合工具——安全掃描、漏洞管理、文件版控各自為政，稽核來臨時靠人工彙整，既耗時又容易出錯。Exein 試圖以晶片側整合打破分散局面，恰恰凸顯出整個產業對「掃描即合規」一體化架構的渴求。",
+  "designResponse": "掃描工具分散、文件版控各自為政，是合規流程最常見的結構困境。稽核 AI 的設計思路是將合規動作整合進開發流程：13 條安全掃描管線搭配 64 份 ISMS 文件框架，讓 SAST、SBOM 產製、滲透測試結果統一彙整於同一套管線 (#2)；Critical 漏洞透過每 15 分鐘的 OSV API 輪詢自動觸發告警，安全狀態持續可見而非依賴人工排程 (#4)。稽核包以 GitHub Release 打包離線交付，文件與掃描紀錄完整可查 (#5)，讓合規成為每次 commit 的日常紀律，而非期末前的補件衝刺。",
+  "tags": [],
+  "relevance": 0.7,
+  "highlight": false,
+  "criticPasses": 2
+}

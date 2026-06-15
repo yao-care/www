@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "拆解EU CRA 門檻：產品安全設計與驗證佈局全解析線上研討會 - 網管人",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBlSnR6Y01XQ2RETG92dDV2c04wMXNTNE5ZektKa1hLMlh4X09JUVV2U216UkxDNS1zX25PcjZvYlI5YnFiMVU3UmNXUnpTMDFhaGtZRHFIMXlGbFg5enFvU0psdm43eUpGeHlfNmg3YnNodw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-20T05:12:01.000Z",
+  "fetchedAt": "2026-05-25T20:50:42.913Z",
+  "newsBrief": "歐盟《網路韌性法》(CRA) 正式立法後，凡含數位元件的產品均須在設計與開發全程落實安全義務。2026 年五月一場以「拆解 CRA 門檻」為主題的線上研討會，聚焦產品安全設計架構與驗證佈局，協助企業釐清持續性合規能力的建置方向。",
+  "issueAnalysis": "CRA 標誌著歐盟從「資安建議」走向「法律強制」的轉折，製造商須在產品全生命週期中落實漏洞揭露、安全更新與文件稽核義務。企業核心困境在於：SAST 掃描、SBOM 追蹤、滲透測試各自分散，難以彙整為稽核可接受的格式；ISO 27001 等框架要求的大量 ISMS 文件又高度仰賴人工維護。對中小型開發商而言，同時應對多套標準、維持持續性合規，是一道極高的組織門檻。",
+  "designResponse": "面對跨框架合規壓力，設計核心在於構築可重組的稽核底座，而非為每套法規各建工具。以 12 個 GitHub Actions workflow 串起掃描到文件交付的完整管線 (proofPoint #1)，讓合規過程可追蹤、可重現，取代人工逐項彙整。13 條安全掃描管線搭配 64 份 ISMS 文件框架，同步對齊 ISO 27001、SOC 2 TSC、OWASP ASVS 等多重標準 (proofPoint #2)(proofPoint #3)，無需為各認證重整文件脈絡。稽核包以 GitHub Release 離線交付 (proofPoint #5)，符合 CRA 強調的可驗證性要求。",
+  "tags": [],
+  "relevance": 0.65,
+  "highlight": false,
+  "criticPasses": 2
+}

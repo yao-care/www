@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "CRA生效在即 ONEKEY攜手創提科技翻轉資安合規壓力為市場紅利 - DIGITIMES",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPbHFmbEtrODNkZmd4OFNGeFZKWmNESi1QUzdiMXVrVGdhZnNQbGVTSkg4RWF1cWNlRS03c0JvVjJiem1ERDhlek90dkVlWUpkNmJYN0Rzc0x6Szl0SFZYU2lLeUI0RlhLWk5kWE1wZVpnRmxkcWNjZmxTajhQUHBpekI5a0dzQlE5NUU1RnFubEVOS2wwSG8wdXRvR2xSV0dTZWYw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-12T16:30:00.000Z",
+  "fetchedAt": "2026-05-13T20:43:23.973Z",
+  "newsBrief": "歐盟《網路韌性法案》（CRA）即將正式生效，對連網產品製造商與軟體供應商提出嚴格的資安合規要求。業界已出現將合規壓力轉化為競爭優勢的策略思路，透過技術工具鏈串接與夥伴整合，協助企業在多重標準框架下降低合規門檻，避免因文件準備不足而喪失市場資格。",
+  "issueAnalysis": "CRA 的推進揭示一個結構性困境：資安合規不再是大型企業的選擇題，而是整條供應鏈都必須面對的基本門檻。中小型組織往往缺乏專職資安人力，卻需同時應對 ISMS 文件動輒 60 份以上的交付要求，以及 SAST、滲透測試、SBOM 各自為政的掃描工具，容易陷入人工彙整的循環。更深層的問題在於：合規文件的版本控制與條文對應，本質上是高頻、重複且容易出錯的工作；若無自動化支撐，稽核窗口一旦縮短，合規能力也將淪為一次性衝刺而非持續狀態。",
+  "designResponse": "面對 CRA 帶來的多標準合規壓力，核心思路是以自動化讓持續合規取代截止日衝刺。流程上，以 12 個 GitHub Actions workflow 串成掃描到稽核包交付的完整閉環 (#1)；標準覆蓋上，框架同步對齊 ISO 27001、SOC 2 TSC、OWASP ASVS 與 LLM Top 10，單一管線即可回應多重合規要求 (#3)。漏洞情報方面，每 15 分鐘輪詢 OSV API，Critical 事件自動觸發告警 (#4)，確保合規狀態可審計、可持續，而非在稽核前臨時拼湊。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 2
+}

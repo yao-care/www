@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "CRA生效在即 ONEKEY攜手創提科技翻轉資安合規壓力為市場紅利 - DIGITIMES",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxORk41ZENKMU9Na2d2WEdNVVJJX005R0NWQ0lKcm8xczlJbDczRlZPUUhaTGpJZVpNQjJwVnNKcTNPSlpuZWFERWRYYldRdXNCSzhwN3ktLVB2bzhmZHQ0VFhqNG1zYnIwX3gyVEZBQjg4anA0WmpDYV9RM3Bnd1RSa0d6dDBGLWxrQXZaMGJR?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-25T22:13:45.000Z",
+  "fetchedAt": "2026-05-26T20:42:30.546Z",
+  "newsBrief": "歐盟《網路韌性法》（CRA）即將正式生效，要求聯網產品製造商在全生命週期內持續追蹤漏洞、維護 SBOM 並保存技術文件。ONEKEY 與創提科技提出「合規即商機」論述，認為提前建立符合 CRA 要求的掃描與文件架構，將成為進入歐盟市場的差異化門檻。",
+  "issueAnalysis": "CRA 的挑戰核心不在於「知道要做什麼」，而在於「能否持續做到」。傳統合規模式下，SAST、SBOM 掃描、滲透測試各有獨立工具，報告格式分散，文件版控缺乏系統，每逢稽核窗口便需大量人工彙整。對中小型軟硬體廠商而言，這種「工具各自為政」的狀態意味著每次外部稽核都是一場臨時補文件的應急行動。CRA 生效後，漏洞追蹤義務從一次性申報升級為持續性要求，舊有手動維運模式難以長期負荷，合規管線的整合設計因此成為迫切課題。",
+  "designResponse": "合規管線的設計重點在於消除工具孤立與文件斷鏈。以 12 個 GitHub Actions workflow 串成統一執行管線（#1），讓 SAST、SBOM 生成與滲透測試報告在同一流程產出，避免各工具獨立輸出、難以彙整的問題。持續漏洞監控層以每 15 分鐘輪詢 OSV API 並於 Critical 等級自動觸發 email 告警（#4），以機制取代人工定期巡檢。稽核產出統一以 GitHub Release 打包為離線交付物（#5），使文件保存與提交有具體可驗證的路徑。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}
