@@ -26,6 +26,7 @@ const dateRanges = [{ startDate: `${DAYS}daysAgo`, endDate: 'today' }];
 const client = new BetaAnalyticsDataClient({ keyFilename: KEY });
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(__dirname, '../reports/ga-insights.json');
+const NEWS_OUT = resolve(__dirname, '../reports/news-insights.json');
 
 type Row = Record<string, string | number>;
 
@@ -56,6 +57,72 @@ function table(rows: Row[] | null, max = 15) {
   if (!rows || rows.length === 0) { console.log('  （無資料）'); return; }
   for (const r of rows.slice(0, max)) {
     console.log('  ' + Object.entries(r).map(([k, v]) => `${k}=${v}`).join('  ·  '));
+  }
+}
+
+/**
+ * 產生「議題權重訊號」reports/news-insights.json，供 fetch-news 依讀者喜好加重選題。
+ * 以 news 文章的 read_complete（讀完）為主、cta_click 為輔，依 content_category(=target) 聚合。
+ * 資料量不足（總讀完數 < 門檻）時 enoughData=false → fetch-news 用預設權重（等同現狀）。
+ */
+async function buildNewsInsights() {
+  console.log('\n▼ 產生議題權重訊號（news-insights.json）');
+  const ENOUGH = 20; // 總讀完數門檻，未達標不調權重（避免用雜訊調）
+
+  const byCat = (rows: Row[] | null): Map<string, number> => {
+    const m = new Map<string, number>();
+    for (const r of rows ?? []) {
+      const slug = String(r['customEvent:content_category'] ?? '');
+      if (slug) m.set(slug, Number(r['eventCount'] ?? 0));
+    }
+    return m;
+  };
+  const evByCat = (event: string) =>
+    report(`insight_${event}`, {
+      dimensions: [{ name: 'customEvent:content_category' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: {
+        andGroup: {
+          expressions: [
+            { filter: { fieldName: 'eventName', stringFilter: { value: event } } },
+            { filter: { fieldName: 'customEvent:content_type', stringFilter: { value: 'news_article' } } },
+          ],
+        },
+      },
+    }, true);
+
+  const rc = byCat(await evByCat('read_complete'));
+  const cta = byCat(await evByCat('cta_click'));
+
+  const slugs = new Set<string>([...rc.keys(), ...cta.keys()]);
+  const targets: Record<string, { readComplete: number; cta: number; score: number; weight: number }> = {};
+  let totalRc = 0;
+  let maxScore = 0;
+  for (const s of slugs) {
+    const readComplete = rc.get(s) ?? 0;
+    const ctaClick = cta.get(s) ?? 0;
+    const score = readComplete + 0.5 * ctaClick;
+    targets[s] = { readComplete, cta: ctaClick, score, weight: 1 };
+    totalRc += readComplete;
+    if (score > maxScore) maxScore = score;
+  }
+  const enoughData = totalRc >= ENOUGH;
+  for (const s of Object.keys(targets)) {
+    const sc = targets[s].score;
+    // 只「加重」表現好的，最低保持 1（不餓死冷門議題，避免低流量≠不受歡迎的誤判）
+    targets[s].weight = enoughData ? (sc >= 0.5 * maxScore ? 3 : sc >= 0.2 * maxScore ? 2 : 1) : 1;
+  }
+
+  const out = { generatedAt: new Date().toISOString(), days: DAYS, enoughData, targets };
+  await mkdir(dirname(NEWS_OUT), { recursive: true });
+  await writeFile(NEWS_OUT, JSON.stringify(out, null, 2));
+  console.log(`  ✓ 寫入 ${NEWS_OUT}（enoughData=${enoughData}，總讀完=${totalRc}）`);
+  if (enoughData) {
+    Object.entries(targets)
+      .sort((a, b) => b[1].score - a[1].score)
+      .forEach(([s, t]) => console.log(`    ${s.padEnd(12)} 讀完=${t.readComplete} CTA=${t.cta} → 權重 ×${t.weight}`));
+  } else {
+    console.log('    （資料量未達門檻，fetch-news 將用預設權重＝現狀）');
   }
 }
 
@@ -131,7 +198,10 @@ async function main() {
   };
   await mkdir(dirname(OUT), { recursive: true });
   await writeFile(OUT, JSON.stringify(out, null, 2));
-  console.log(`\n✓ 摘要已寫入 ${OUT}\n`);
+  console.log(`\n✓ 摘要已寫入 ${OUT}`);
+
+  await buildNewsInsights();
+  console.log('');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

@@ -121,6 +121,14 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - **GA4 後台需手動設**：自訂維度（content_type/category/item、scroll_percent、referrer_host、ai_source、link_domain、cta_type；user-scope traffic_category）、自訂指標 engaged_seconds、關鍵事件 read_complete/cta_click、自訂管道群組「AI Assistants」。
 - 加新事件/改分類：只動 `Analytics.astro`（分類）與 `scripts/track.ts`（事件）。
 
+### B 回饋迴路（依讀者喜好自動選題）
+- **service account 金鑰**：`$YAOCARE_SECRETS_DIR/ga4-sa.json`（repo 外、600、不入版控）；Property ID `$GA_PROPERTY_ID`（非機密）。
+- `scripts/ga-setup.ts`：用 Admin API 冪等建立自訂維度/指標/關鍵事件（已執行）。
+- `scripts/ga-insights.ts`：用 Data API 拉報告，並產 **`reports/news-insights.json`**（每 target 讀完/CTA → 權重 1–3；`enoughData` 未達門檻時全 1＝現狀）。`reports/` 已 gitignore。
+- `scripts/ga-report.sh` + cron：**台灣週一 03:00**（`0 3 * * 1`，Asia/Taipei 區段）每週重產訊號；log `/var/log/yaocare-ga.log`。
+- `scripts/fetch-news.ts` 的 `loadInterestWeights()` 讀該訊號，`selectRoundRobin` **加權選題**（高互動議題每天多分到幾篇，總量仍受 `MAX_WRITE_TOTAL` 限制）；無訊號/資料不足時等同原行為。
+- 需要真實流量累積（2–4 週）才會開始實際加權。
+
 ## § 檔案結構
 
 ```

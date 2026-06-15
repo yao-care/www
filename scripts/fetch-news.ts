@@ -486,26 +486,52 @@ async function fetchAndFilter(
 }
 
 /**
- * Round-robin 從每個 target 的清單中輪流挑，直到湊滿 totalCap 或全部用完。
- * 同 target 內的順序是 relevance desc（fetchAndFilter 已排序）。
+ * 讀者喜好權重：讀 reports/news-insights.json（由每週 GA cron 產出）。
+ * 高互動議題 → 權重 >1（每輪多挑幾篇）；無檔/資料不足 → 空 map（全部視為 1，等同現狀）。
+ */
+function loadInterestWeights(): Map<NewsTargetSlug, number> {
+  const w = new Map<NewsTargetSlug, number>();
+  const p = join(PROJECT_ROOT, 'reports/news-insights.json');
+  try {
+    if (!existsSync(p)) return w;
+    const j = JSON.parse(readFileSync(p, 'utf8'));
+    if (!j?.enoughData || !j?.targets) return w;
+    for (const [slug, t] of Object.entries<any>(j.targets)) {
+      const weight = Math.max(1, Math.min(3, Math.round(Number(t?.weight) || 1)));
+      if (weight > 1) w.set(slug as NewsTargetSlug, weight);
+    }
+    if (w.size) {
+      log(`  讀者喜好權重（GA ${j.days}天，產於 ${j.generatedAt?.slice(0, 10)}）：${[...w].map(([s, n]) => `${s}×${n}`).join(', ')}`);
+    }
+  } catch (e: any) {
+    log(`  ⚠ 讀 news-insights.json 失敗，用預設權重：${e.message}`);
+  }
+  return w;
+}
+
+/**
+ * 加權 round-robin：每輪每個 target 出「weight」篇（預設 1），直到湊滿 totalCap 或全部用完。
+ * 同 target 內順序為 relevance desc（fetchAndFilter 已排序）。weights 全為 1 時 = 原本行為。
  */
 function selectRoundRobin(
   byTarget: Map<NewsTargetSlug, KeptItem[]>,
   totalCap: number,
+  weights?: Map<NewsTargetSlug, number>,
 ): KeptItem[] {
   const queues = new Map<NewsTargetSlug, KeptItem[]>();
   for (const [slug, items] of byTarget) queues.set(slug, [...items]);
 
   const picked: KeptItem[] = [];
-  // 每輪掃一遍所有 target，每個 target 出 1 篇，直到湊滿或全部空
   while (picked.length < totalCap) {
     let progressed = false;
     for (const [slug, q] of queues) {
       if (picked.length >= totalCap) break;
       if (q.length === 0) continue;
-      const next = q.shift()!;
-      picked.push(next);
-      progressed = true;
+      const take = Math.max(1, weights?.get(slug) ?? 1);
+      for (let i = 0; i < take && q.length > 0 && picked.length < totalCap; i++) {
+        picked.push(q.shift()!);
+        progressed = true;
+      }
     }
     if (!progressed) break;
   }
@@ -561,7 +587,9 @@ async function main() {
   const totalCap = ONLY_TARGET
     ? Math.min(MAX_ITEMS, byTarget.get(ONLY_TARGET)?.length ?? 0)
     : Math.min(MAX_ITEMS, MAX_WRITE_TOTAL);
-  const picked = selectRoundRobin(byTarget, totalCap);
+  // 依讀者喜好加權選題（單一 target 模式不需要；無訊號時等同現狀）
+  const weights = ONLY_TARGET ? undefined : loadInterestWeights();
+  const picked = selectRoundRobin(byTarget, totalCap, weights);
 
   log(`\n══════ Phase 2: 排程 ${picked.length} 篇 ══════`);
   const distribution = new Map<NewsTargetSlug, number>();
