@@ -32,6 +32,13 @@ const caseMgmt = [
   '後台個案總覽：狀態追蹤（待聯繫 / 已聯繫 / 結案）、團隊指派、進度註記',
   '危險訊號（憂鬱 / 自傷等）自動升級，提醒人工即時處理',
 ];
+
+// 三套自評工具都能透過此伺服器收案
+const sources = [
+  { title: 'Smart Func 成人功能健康評估', href: '/medical/func', desc: '成人 · WHO 內在能力五大功能' },
+  { title: 'Smart Geri 高齡周全性評估', href: '/medical/geri', desc: '高齡 · CFS 衰弱量表 + 多面向 CGA' },
+  { title: 'Smart Pedi 兒童發展評估', href: '/medical/pedi', desc: '兒童 · 六大發展領域，對標 ASQ-3' },
+];
 ---
 <ProductLayout slug="fhir-server">
   <ProductHero product={product}>
@@ -62,16 +69,39 @@ const caseMgmt = [
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
       <p class="text-base md:text-lg">
-        Smart Func、Smart Geri、Smart Pedi 三個自評工具都在瀏覽器端完成評估、資料留在裝置。
-        當民眾<strong class="text-[color:var(--color-brand)]">選擇送出</strong>時，
-        GCM 收案伺服器就是接住這些結果、並把它變成可追蹤個案的後端 ——
-        讓「自評」不只是一次性的測驗，而能銜接後續的關懷與追蹤。
+        這是一個<strong class="text-[color:var(--color-brand)]">通用的 SMART on FHIR 收案伺服器</strong> ——
+        各自評工具在瀏覽器端完成評估、資料留在裝置；當民眾選擇送出時，這個後端接住結果、
+        並把它變成可追蹤的個案，讓「自評」不只是一次性測驗，而能銜接後續關懷與追蹤。
+        目前以 <a href="https://gcm.org.tw" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">GCM 預防醫學發展協會</a> 為導入案例。
       </p>
     </div>
   </section>
 
-  <!-- 收案閉環（本頁不再放深入連結，避免連到自己） -->
-  <GcmClosedLoop detailHref={null} />
+  <!-- 哪些系統可以收案 -->
+  <section class="py-12 md:py-16 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Sources</p>
+        <h2 class="section-title mt-2">三套全齡評估皆可收案</h2>
+        <p class="section-subtitle">同一個收案伺服器，接收成人、高齡、兒童三套自評工具的 FHIR R4 結果</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+        {sources.map((s) => (
+          <a href={s.href} class="group block rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all">
+            <h3 class="font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors">{s.title}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)]">{s.desc}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)]">
+              看評估工具
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 收案閉環（本頁不放深入連結，避免連到自己） -->
+  <GcmClosedLoop detailHref={null} tinted={false} />
 
   <!-- FHIR 互通 -->
   <section class="py-14 md:py-20">
@@ -121,9 +151,24 @@ const caseMgmt = [
     </div>
   </section>
 
+  <!-- 導入案例 -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6">
+      <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Case Study</p>
+        <h2 class="mt-2 text-xl md:text-2xl font-bold text-[color:var(--color-ink)]">導入案例 — GCM 預防醫學發展協會</h2>
+        <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+          <a href="https://gcm.org.tw" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">GCM 預防醫學發展協會</a>
+          以此收案伺服器承接 Smart Func / Geri / Pedi 的自評結果，做後續的預防醫學個案管理與關懷追蹤 ——
+          示範了「全齡自評 → 收案 → 追蹤」的完整閉環。同一套伺服器也可供其他機構依需求導入。
+        </p>
+      </div>
+    </div>
+  </section>
+
   <ProductCta
     product={product}
     headline="想把自評結果接進你的收案 / 個案管理流程？"
-    description="GCM 收案伺服器為後端服務，可依需求討論 SMART on FHIR 串接與合作 — 來信 service@yao.care。"
+    description="這是通用的 SMART on FHIR 收案後端，可依需求討論串接與導入 — 來信 service@yao.care。"
   />
 </ProductLayout>

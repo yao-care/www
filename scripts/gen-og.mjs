@@ -87,11 +87,11 @@ const WORKS = [
   },
   {
     slug: 'fhir-server',
-    kicker: 'GCM Enrollment · SMART on FHIR',
+    kicker: 'SMART on FHIR Intake Server',
     stat: 'FHIR',
     statLabel: 'R4 · OAUTH2 PKCE',
-    title: 'GCM Server',
-    tagline: 'Enrollment + case management for the assessment suite',
+    title: 'FHIR Intake Server',
+    tagline: 'Func/Geri/Pedi enrollment + case mgmt · GCM case study',
   },
   {
     slug: 'sign',

@@ -1,8 +1,8 @@
 ---
-// GCM SMART on FHIR 收案閉環 panel
-// 用在 /medical（評估生態系區塊尾端）與 /care hub，把三個 CDS 自評工具
-// 與 GCM 收案後端串成一條預防醫學閉環。GCM 後端為 private repo、無對外站，
-// 故以「閉環基礎建設」呈現，不另開產品頁。
+// SMART on FHIR 收案閉環 panel
+// 用在 /medical（評估生態系區塊尾端）、/care hub 與評估產品頁，把三個 CDS 自評工具
+// 與通用收案伺服器串成一條預防醫學閉環。GCM 預防醫學發展協會為導入案例。
+// 收案伺服器有獨立頁 /medical/fhir-server。
 interface Props {
   /** 區塊上方小標 */
   kicker?: string;
@@ -22,11 +22,11 @@ const steps = [
   {
     n: '2',
     title: '選擇送出收案',
-    body: '民眾自願選擇將結果送交 GCM；僅填暱稱、由系統產生收案碼，免帳號密碼。',
+    body: '民眾自願選擇將結果送交收案伺服器；僅填暱稱、由系統產生收案碼，免帳號密碼。',
   },
   {
     n: '3',
-    title: 'GCM 後端收案',
+    title: '收案伺服器接收',
     body: '收案伺服器以 OAuth 2.0 + PKCE 接收資料；同一收案碼的重複評估自動歸戶。',
   },
   {
@@ -42,13 +42,13 @@ const steps = [
       <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
         {kicker}
       </p>
-      <h2 class="mt-2 text-2xl md:text-3xl font-bold">GCM SMART on FHIR 收案閉環</h2>
+      <h2 class="mt-2 text-2xl md:text-3xl font-bold">SMART on FHIR 收案閉環</h2>
       <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink-soft)] max-w-3xl mx-auto leading-relaxed">
         三個自評工具不是各自獨立的小程式 —— 它們以 SMART on FHIR 標準匯流到
-        <strong class="text-[color:var(--color-ink)]">GCM 收案伺服器</strong>，
+        <strong class="text-[color:var(--color-ink)]">收案伺服器</strong>，
         把「自評 → 收案 → 個案管理」串成一條可追蹤、可稽核的預防醫學閉環。
-        GCM 為
-        <a href="https://gcm.org.tw" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">預防醫學發展協會</a>。
+        導入案例為
+        <a href="https://gcm.org.tw" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">GCM 預防醫學發展協會</a>。
       </p>
     </div>
 
@@ -81,7 +81,7 @@ const steps = [
     {detailHref && (
       <div class="mt-8 text-center">
         <a href={detailHref} class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline underline-offset-4">
-          深入了解 GCM 收案伺服器
+          深入了解收案伺服器
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>

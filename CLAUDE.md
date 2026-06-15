@@ -193,7 +193,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   │   ├── func.astro     ← Smart Func 成人功能健康評估（assessment 子分組）
 │   │   │   ├── geri.astro     ← Smart Geri 高齡周全性評估（assessment；亦跨列於 /care）
 │   │   │   ├── pedi.astro     ← Smart Pedi 兒童發展評估（assessment）
-│   │   │   └── fhir-server.astro ← GCM SMART on FHIR 收案伺服器（slug=fhir-server；assessment 後端；private、無對外站；/medical/gcm 重導至此）
+│   │   │   └── fhir-server.astro ← SMART on FHIR 收案伺服器（slug=fhir-server；通用收案後端，Func/Geri/Pedi 皆可收案，GCM 為導入案例；private、無對外站；/medical/gcm 重導至此）
 │   │   ├── ai/
 │   │   │   ├── index.astro    ← AI 系統 hub
 │   │   │   ├── intel.astro    ← 情報自動化系統
@@ -227,7 +227,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │       │   ├── ProductHero.astro      ← 產品詳情頁 hero
 │       │   ├── ProductCta.astro       ← 產品詳情頁底部 LINE CTA
 │       │   ├── CapabilityCloud.astro  ← hub 頁的能力雲標籤
-│       │   └── GcmClosedLoop.astro    ← GCM SMART on FHIR 收案閉環 panel（用於 /medical 評估區塊、/care、三個 CDS 頁）
+│       │   └── GcmClosedLoop.astro    ← SMART on FHIR 收案閉環 panel（用於 /medical 評估區塊、/care、CDS 頁；GCM 為案例；深入了解連 /medical/fhir-server）
 │       ├── news/
 │       │   ├── HighlightNews.astro    ← 議題總覽頁上方精選
 │       │   ├── NewsCard.astro         ← 列表卡片
