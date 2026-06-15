@@ -1,0 +1,16 @@
+{
+  "target": "goalkeeper",
+  "title": "衛福部首發醫療 GenAI 指引，六大風險九項要點建立治理框架",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBsT29sYUNrR1NONHc4OWdOMUJiZ3k0RGl0ZlJrTHZvRHk2bmlFcFRIYU9pUEZWaUZ4UnUwOVZHLUx3TGNiWmdjUnlSNzQ5c2FVclZwdHU4TG1QdkZKVXB6RlBXelgzVnk2?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-03T16:52:30.000Z",
+  "fetchedAt": "2026-06-15T21:00:22.711Z",
+  "newsBrief": "衛福部於 2026 年 6 月正式發布台灣首份醫療生成式 AI 指引，揭示六大風險類型與九項治理要點，要求醫療機構在導入 GenAI 工具時建立系統性治理框架。這份指引被視為台灣醫療 AI 合規落地的重要政策里程碑，也讓業界對如何具體落實查核的需求急速升溫。",
+  "issueAnalysis": "政策框架確立後，醫療機構最常面臨的問題是：指引說明了「應」防範哪些風險，卻未提供「怎麼」驗證已達標的工具路徑。衛福部指引所列的風險類型，涵蓋越權診斷、個資外洩、幻覺內容等面向，每一項都需要可重現、可稽核的查核機制，才能在事後舉證合規。然而目前多數機構仍依賴人工審查，不僅耗時，更缺乏標準化的判斷依據，使「指引正式上路」與「落地執行」之間存在明顯的工具缺口。",
+  "designResponse": "面對衛福部指引落地的工具缺口，可將六大風險類型對應為可機器執行的查核邏輯。每次 AI 內容產出後，系統自動回報揭露免責、來源標註、越權診斷、個資外洩、幻覺查核五道狀態（#1），機構在 API 層級即可取得明確合規訊號。每道查核綁定具體台灣法源，涵蓋衛福部生成式 AI 指引、醫師法與個資法（#2），使判斷依據可索引、可舉證。系統僅回傳關卡狀態、不替機構做整體放行決定（#3），確保合規判斷責任由機構自行承擔。",
+  "tags": [],
+  "relevance": 1,
+  "highlight": true,
+  "criticPasses": 3
+}

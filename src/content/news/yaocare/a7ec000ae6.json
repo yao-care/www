@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "長輩多重用藥隱憂多！藥師示警五大風險，藥事追蹤成照護關鍵",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE01bTVSR0xWTjluWnFNQjZXbm95Q3pXU0dPYUotWTFZQklaZVpLLU5qR2tXWXpLSzVmOHAyYmJRNGltSEFsSUk2YlZBSWxwX08yMDJZSjV5YTQyNlFoc2NrdmZZZWrSAWpBVV95cUxNbnJuaXprLXk3OTB4eU15TDB2V1BlOFM3SEV2ZUlfTVZtOVBSc0JXM2NTRTdNV002bWtqQTM2UVpOSDd0ZnJ2dXZ4SVJGaHJCNjQ2ZmF5RDUwUldWbTZYY0ZJenhOVHBhVVJ3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-28T07:00:00.000Z",
+  "fetchedAt": "2026-06-15T21:03:38.935Z",
+  "newsBrief": "藥師提醒，長輩同時服用多種藥物的「多重用藥」現象日益普遍，潛藏交互作用、副作用累加、重複用藥等五大隱憂。隨著慢性病共病情形增加，長輩往往在不同科別取藥，藥物整合與追蹤成為照護缺口，亟需系統性工具介入管理。",
+  "issueAnalysis": "多重用藥問題的核心挑戰，在於藥物資訊散落於不同就醫紀錄之間，難以整合。藥師雖具備辨別交互作用的專業能力，卻缺乏跨時間軸的追蹤工具，往往只能在患者回診時被動確認。老年患者對數位工具的使用門檻較高，若需安裝獨立 App 才能接收提醒，往往執行率偏低，如何在不增加患者負擔的前提下讓藥師主動掌握服藥狀況，是社區藥事照護的結構性痛點。",
+  "designResponse": "面對多重用藥的追蹤需求，設計從患者與藥師兩端同步切入。患者端選擇以 LINE 推播作為提醒管道，降低長輩安裝獨立 App 的使用門檻 (proofPoint #2)；提醒訊息同步附上藥品外觀圖片，在多種藥物並行服用的情境下，協助長輩逐一辨識確認、減少混淆 (proofPoint #3)。藥師端的介面設計，則採批次瀏覽的方式呈現各追蹤對象的服藥狀況 (proofPoint #4)，讓藥師能在單一畫面中逐一確認，將工作模式從被動等待患者回診，轉換為可主動篩選需要介入個案的照護流程。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 3
+}

@@ -1,0 +1,20 @@
+{
+  "target": "goalkeeper",
+  "title": "馬偕醫師登輝達GTC大會！揭醫療產業最在意「能否相信AI回答」",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE5KS1RScU1zakg2ZW5HUnAzZjJiT0pfUDNMY0d0ekVxWWRHZ1kwTk9Wa2tMeVlnNGtIOHhyRHNrb0JwQ0lHZnVvRVc5TDHSAVJBVV95cUxOc3ROd1hMSFZNQ3lHU2JvV3FNRVJ2WnVpRTFyY1dlemE2Y2RHbDNUNVR6ZFFDUUVfR3hYbU9TOWhUaFpPZjNiaHgwVU96dFNBZDd3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-04T05:03:21.000Z",
+  "fetchedAt": "2026-06-15T21:16:58.370Z",
+  "newsBrief": "一位受邀登上輝達GTC大會的醫師，點出醫療產業最在意的關鍵疑慮：「能否相信AI的回答？」這道問題涵蓋醫療責任、內容正確性與法規遵循，是整個產業在擁抱生成式AI時無法迴避的核心挑戰。",
+  "issueAnalysis": "醫療場景對AI回答的信任疑慮，本質上是一個「可驗證性」問題。AI生成的醫療內容可能涉及越權診斷、來源缺失或資訊幻覺，而現行醫療法規並未因AI介入而鬆動；一旦內容出錯，醫療機構仍須承擔法律責任。衛福部已發布生成式AI指引，但業者普遍面臨「規範有了、落地工具沒有」的困境——缺乏可重現、可稽核的標準化檢核機制，信任感便無從建立。",
+  "designResponse": "面對「能否信任AI醫療內容」這道核心疑慮，goalkeeper的設計思路是把信任拆解為可驗證的具體關卡。在內容查核環節，系統針對每一條AI產出，逐一回報揭露免責、來源標註、越權診斷、個資外洩、幻覺查核五道狀態，並為每道關卡綁定對應的台灣法源依據（proofPoint #1）（proofPoint #2）。在責任邊界的設計上，goalkeeper選擇「只回報各關卡狀態、不替使用者做整體放行決定」——醫療機構依自身情境做最終判斷，合規決策權留在人的手中（proofPoint #3）。同時，規範版本可鎖定、每次查核留有稽核軌跡，讓「信任」從感受變成可重現、可回溯的紀錄（proofPoint #4）。",
+  "tags": [
+    "醫療AI信任",
+    "合規查核",
+    "生成式AI指引"
+  ],
+  "relevance": 0.95,
+  "highlight": true,
+  "criticPasses": 1
+}
