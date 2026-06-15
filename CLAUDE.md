@@ -74,11 +74,12 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 ### 內容存放
 `src/content/news/<target>/<id>.json` — 走 Astro content collection，schema 定義在 `src/content/config.ts`（含 `newsBrief / issueAnalysis / designResponse / relevance / highlight / criticPasses` 等欄位與長度限制）。檔名 `<id>` 是 URL hash。
 
-### Pipeline（`scripts/fetch-news.ts`, 622 行）
+### Pipeline（`scripts/fetch-news.ts`）
 1. 對每個 target 的每個 query 抓 Google News RSS → 合併、URL 去重
 2. **Filter pass**（Haiku, `claude -p`）：留下 `relevance ≥ 0.6` 的相關新聞
-3. **Writer + Critic 迴圈**（Sonnet）：writer 出稿 → regex guards 預檢（`scripts/news-guards.mjs`）→ critic 審 → 通過寫檔。最多 5 次重生，仍失敗則丟棄
-4. 每 target 留最新 `KEEP_PER_TARGET` 則，舊的砍掉
+3. **加權選題**：round-robin 依讀者喜好權重分配（見「§ 分析追蹤 → B 回饋迴路」），總量受 `MAX_WRITE_TOTAL`（檔內常數）限制
+4. **Writer 迴圈**（Sonnet）：writer 出稿（可帶讀者搜尋字/低完成率洞察）→ regex guards 預檢（`scripts/news-guards.mjs`）→ 寫檔。最多 3 次重生，仍失敗則丟棄。（critic LLM 目前關閉省 quota，防幻覺靠 regex guards + writer prompt 嚴格規則；`criticPrompt` 仍保留可隨時開）
+5. 每 target 留最新 `KEEP_PER_TARGET` 則，舊的砍掉
 
 Prompt 模板在 `scripts/news-prompts.mjs`，CLI 旗標：`--target <slug>` / `--dry-run` / `--debug` / `--max-items <n>`。
 
@@ -118,8 +119,8 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - **`src/scripts/track.ts`**（打包 module，全站內聯）：`scroll_depth`(25/50/75/100)、`read_complete`(含 `engaged_seconds`)、`page_engagement`(離開時補送)、`cta_click`(LINE/mail/demo/github/外連)。
 - 內容分類靠 **URL 路徑推導**（零per-page改動）：`/news/<target>/<slug>`→議題追蹤、`/guides`、`/glossary`、`/{medical|ai|care}/<product>`。
 - 來源「AI 助理」涵蓋 chatgpt/perplexity/gemini/copilot/claude 等 host 或 utm_source。
-- **GA4 後台需手動設**：自訂維度（content_type/category/item、scroll_percent、referrer_host、ai_source、link_domain、cta_type；user-scope traffic_category）、自訂指標 engaged_seconds、關鍵事件 read_complete/cta_click、自訂管道群組「AI Assistants」。
-- 加新事件/改分類：只動 `Analytics.astro`（分類）與 `scripts/track.ts`（事件）。
+- **GA4 後台自訂定義**：自訂維度（content_type/category/item、scroll_percent、referrer_host、ai_source、link_domain、cta_type；user-scope traffic_category）、自訂指標 engaged_seconds、關鍵事件 read_complete/cta_click —— **已用 `scripts/ga-setup.ts`（Admin API）程式化建好、可冪等重跑**。唯「AI Assistants 自訂管道群組」仍須 GA4 UI 手動建（選用）。
+- 加新事件/改分類：只動 `Analytics.astro`（分類）與 `src/scripts/track.ts`（事件）；要新增自訂維度則改 `scripts/ga-setup.ts` 陣列重跑。
 
 ### B 回饋迴路（依讀者喜好自動選題）
 - **service account 金鑰**：`$YAOCARE_SECRETS_DIR/ga4-sa.json`（repo 外、600、不入版控）；Property ID `$GA_PROPERTY_ID`（非機密）。
@@ -132,6 +133,17 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - **writer 洞察注入**（`news-prompts.mjs renderHints`）：A 搜尋字 + C 低完成率風格提示；明示「嚴格規則仍全部適用」，且 regex/proofPoint guards 仍為安全網。
 - GSC sitemap 提交也走這把金鑰（webmasters scope，Full 權限）。
 
+## § SEO / Sitemap / GSC
+
+### www 本站
+- Astro 產 `sitemap-index.xml` + `sitemap-0.xml`；另有 `src/pages/sitemap.xml.ts` 產 `/sitemap.xml` 別名（指向 sitemap-0.xml）—— 修正「提交 /sitemap.xml 卻回首頁 HTML、被 GSC 判為 HTML 網頁」的問題。`robots.txt` 指向 sitemap-index.xml。
+- GEO（被 LLM 引用）資產：`src/seo.config.ts`（Organization knowsAbout / 各產品 FAQ）、`/glossary`、`/guides`、`/llms.txt`，各頁 schema（SoftwareApplication / FAQPage / DefinedTerm / Article / BreadcrumbList）。
+
+### GSC（網域資源 `sc-domain:yao.care`，涵蓋所有子網域）
+- **Sitemap 要逐站維護**：網域資源只整合「驗證/報表」，各子網域要有自己的 sitemap + robots（`Sitemap:` 行指向自己）。
+- 用 SA 金鑰（scope `webmasters`，Full 權限）可程式化**提交/列出 sitemap**（見 `scripts/gsc.ts` 同款認證）。目前已提交 35 個：www + 30 國 TxGNN + smart-func/geri/pedi-cds + sign。**huatuo.ai 刻意不收錄、goalkeeper（API）不需**。
+- 各國 TxGNN 是獨立 repo（Jekyll / GitHub Pages，`docs/robots.txt` + `docs/CNAME`），robots `Sitemap:` 行需指自己（曾 13 國誤指 twtxgnn / sgtxgnn，已修）。
+
 ## § 檔案結構
 
 ```
@@ -139,11 +151,15 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 ├── astro.config.mjs           ← Astro + sitemap + Tailwind v4 設定
 ├── tsconfig.json
 ├── package.json
-├── scripts/                   ← 自動議題評論引擎（cron 觸發，見「§ News 議題追蹤模組」）
-│   ├── fetch-news.sh          ← cron entry：抓新聞 → 有變化才 commit + push + build
-│   ├── fetch-news.ts          ← 主流程（RSS → filter → writer + critic 迴圈）
-│   ├── news-prompts.mjs       ← Claude 的 filter / writer / rewrite prompt 模板
+├── scripts/                   ← cron 觸發的後台流程（news 引擎 + GA/GSC 回饋）
+│   ├── fetch-news.sh          ← cron entry（日 04:30）：抓新聞 → 有變化才 commit + push + build
+│   ├── fetch-news.ts          ← 主流程（RSS → filter → 加權選題 → writer 迴圈）
+│   ├── news-prompts.mjs       ← filter / writer(可帶讀者洞察 renderHints) / rewrite / critic 模板
 │   ├── news-guards.mjs        ← regex 預檢（長度 / proofPoint 引用 / 標題正規化）
+│   ├── ga-report.sh           ← cron entry（週一 03:00）：拉 GA+GSC 產訊號，log /var/log/yaocare-ga.log
+│   ├── ga-insights.ts         ← GA Data API + GSC → reports/news-insights.json（議題權重 + 寫作洞察）
+│   ├── ga-setup.ts            ← GA Admin API 冪等建自訂維度/指標/關鍵事件
+│   ├── gsc.ts                 ← Search Console API（搜尋需求 + 每議題搜尋字；限 www）
 │   └── gen-og.mjs             ← OG 圖產生器
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
 │   ├── assets/images/         ← 所有圖片
@@ -161,6 +177,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── content/
 │   │   ├── config.ts          ← news collection schema（Zod）
 │   │   └── news/<target>/*.json ← 自動產生的議題評論文章（cron 寫入）
+│   ├── scripts/track.ts       ← GA4 互動事件（捲動 / 讀完 / 互動時間 / CTA），由 Analytics.astro 全站載入
 │   ├── styles/global.css      ← Tailwind 入口 + 主題變數 + 共用 class
 │   ├── layouts/
 │   │   ├── BaseLayout.astro   ← <html> + meta + JSON-LD（Organization）+ favicon
@@ -195,9 +212,11 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   ├── guides/
 │   │   │   ├── index.astro            ← 情境指南總覽（ItemList）
 │   │   │   └── [slug].astro           ← 情境題頁（Article + FAQPage + Breadcrumb；連回產品/名詞）
-│   │   └── llms.txt.ts               ← /llms.txt（llmstxt.org）build 時自動生成，給 LLM 的站點地圖
+│   │   ├── llms.txt.ts               ← /llms.txt（llmstxt.org）build 時自動生成，給 LLM 的站點地圖
+│   │   └── sitemap.xml.ts            ← /sitemap.xml 別名（指 sitemap-0.xml；修 GSC「HTML 網頁」誤判）
 │   └── components/
 │       ├── Nav.astro          ← 固定頂部導覽 + 漢堡選單
+│       ├── Analytics.astro     ← GA4 gtag bootstrap + 內容/來源分類（BaseLayout & ProductLayout 引入）
 │       ├── ContactCTA.astro   ← #cta 首頁公司層級 LINE 加好友 + mailto（與團隊聊聊）
 │       ├── CareTag.astro      ← 四條業務線的 yao・care 同音 wordmark pill（藥/鑰/耀/邀・X (care)）
 │       ├── ContactMap.astro   ← #contact（地址 + Google Maps；幾乎所有頁底都會放）
@@ -215,6 +234,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │       │   └── ProductNews.astro      ← 嵌在產品詳情頁的相關議題
 │       └── (yaocare 專屬，仍只在 medical/yaocare.astro 引用)
 │           SmartHealthcare / Advantages / SixServices / Verification / Screenshots
+├── reports/                   ← GA/GSC 訊號輸出（gitignored）：news-insights.json 餵 fetch-news
 └── dist/                      ← 本地 build 產物（gitignored）；deploy 時 rsync 到 $WWW_SITE_DIR/（後者才是 nginx mount 點）
 ```
 
@@ -282,6 +302,12 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 3. 抓到但全被丟棄 → 多半是 critic 一直退稿，用 `--debug` 跑單一 target 看 stdout
 4. 在 Claude Code session 內手動跑卡住 → 確認 `fetch-news.sh` 仍有 `unset CLAUDECODE`
 
+### 分析 / 回饋沒更新（GA / GSC）
+1. 手動拉一次：`./node_modules/.bin/tsx scripts/ga-insights.ts`（印報告 + 重產 `reports/news-insights.json`）
+2. 週 cron 結果：`tail -50 /var/log/yaocare-ga.log`
+3. GA 拉到空 → GA4 標準報表延遲 24–48h，或資源剛建/事件未進；GSC 拉到空 → 確認 SA 仍在 GSC 使用者
+4. fetch-news 沒依喜好調整 → 看 `reports/news-insights.json` 的 `enoughData` 與各 target `weight`（全 1 = 資料未達門檻，屬正常）
+
 ### 502 / 403
 1. NPM 容器是否正常：`docker ps | grep $NPM_CONTAINER`
 2. 產物是否存在：`ls $WWW_SITE_DIR/index.html`（沒有 → 跑 `npm run deploy`）
@@ -298,3 +324,8 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 - [x] ~~index.html 581 行單檔拆分~~（已拆為 11 個 Astro 元件）
 - [ ] 老藥新用平台統計數字（191 / 142,328 / 5）寫死在 `TxGNN.astro`，未來若要動態化可改 fetch
 - [ ] 部分裝飾圖目前透過 CSS 漸層代替；如需找回原視覺效果，可從 git history 取出舊 `decor` 圖
+- [ ] **觀察中**：B（CTA 加成）/ C（低完成率提示）待 GA 資料累積 2–4 週才生效（A 搜尋字、GSC 需求已生效）
+- [ ] **站外實體權威**（Wikidata 條目、Google 商家檔案）— GEO 最高槓桿，需開帳號
+- [ ] **soft-404**：www 對不存在路徑回 200 + 首頁（非 404），輕微 SEO；要動 NPM(nginx) 設定 + 授權
+- [ ] （選）GSC 高需求但無內容的查詢（如 `ai agent` 排名 57）→ 可做「自動建議新題目/補題」，目前只在週報列出
+- [ ] （選）SA 私鑰曾透過上傳提供，在意可至該服務帳戶輪替金鑰（換 `$YAOCARE_SECRETS_DIR/ga4-sa.json`）
