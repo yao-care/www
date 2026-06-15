@@ -163,7 +163,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   └── gen-og.mjs             ← OG 圖產生器
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
 │   ├── assets/images/         ← 所有圖片
-│   │   └── og/                ← 分產品 OG 圖（home/yaocare/huatuo/txgnn/func/geri/pedi/gcm/sign/care/intel/siqc/triz/goalkeeper/marketing.png）
+│   │   └── og/                ← 分產品 OG 圖（home/yaocare/huatuo/txgnn/func/geri/pedi/fhir-server/sign/care/intel/siqc/triz/goalkeeper/marketing.png）
 │   ├── contents/              ← BMI/BP/GLU-AC 衛教圖
 │   ├── robots.txt
 │   └── 藥提醒Line民眾服務.ppsx ← LFS 管理
@@ -193,7 +193,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   │   ├── func.astro     ← Smart Func 成人功能健康評估（assessment 子分組）
 │   │   │   ├── geri.astro     ← Smart Geri 高齡周全性評估（assessment；亦跨列於 /care）
 │   │   │   ├── pedi.astro     ← Smart Pedi 兒童發展評估（assessment）
-│   │   │   └── gcm.astro      ← GCM SMART on FHIR 收案伺服器（assessment 後端；private、無對外站）
+│   │   │   └── fhir-server.astro ← GCM SMART on FHIR 收案伺服器（slug=fhir-server；assessment 後端；private、無對外站；/medical/gcm 重導至此）
 │   │   ├── ai/
 │   │   │   ├── index.astro    ← AI 系統 hub
 │   │   │   ├── intel.astro    ← 情報自動化系統

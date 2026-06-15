@@ -96,7 +96,7 @@ export type ProductSlug =
   | 'func'
   | 'geri'
   | 'pedi'
-  | 'gcm'
+  | 'fhir-server'
   | 'intel'
   | 'siqc'
   | 'triz'
@@ -275,7 +275,7 @@ export const PRODUCTS: readonly Product[] = [
     cta: { label: '免費自我評估', href: 'https://smart-pedi-cds.yao.care/' },
   },
   {
-    slug: 'gcm',
+    slug: 'fhir-server',
     category: 'medical',
     group: 'assessment',
     title: 'GCM SMART on FHIR 收案伺服器',

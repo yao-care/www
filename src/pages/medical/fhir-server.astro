@@ -5,7 +5,7 @@ import ProductCta from '../../components/products/ProductCta.astro';
 import GcmClosedLoop from '../../components/products/GcmClosedLoop.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
-const product = PRODUCT_BY_SLUG.gcm;
+const product = PRODUCT_BY_SLUG['fhir-server'];
 
 const stats = [
   { value: 'FHIR', unit: 'R4', label: 'QuestionnaireResponse 收案' },
@@ -33,7 +33,7 @@ const caseMgmt = [
   '危險訊號（憂鬱 / 自傷等）自動升級，提醒人工即時處理',
 ];
 ---
-<ProductLayout slug="gcm">
+<ProductLayout slug="fhir-server">
   <ProductHero product={product}>
     <Fragment slot="hero-extras">
       <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">

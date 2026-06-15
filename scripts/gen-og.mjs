@@ -86,7 +86,7 @@ const WORKS = [
     tagline: 'Per-check compliance status · you decide release',
   },
   {
-    slug: 'gcm',
+    slug: 'fhir-server',
     kicker: 'GCM Enrollment · SMART on FHIR',
     stat: 'FHIR',
     statLabel: 'R4 · OAUTH2 PKCE',

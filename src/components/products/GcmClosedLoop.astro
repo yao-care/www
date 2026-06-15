@@ -11,7 +11,7 @@ interface Props {
   /** 「深入了解」連結；設 null 隱藏（GCM 頁自身用） */
   detailHref?: string | null;
 }
-const { kicker = 'Closed Loop · SMART on FHIR', tinted = true, detailHref = '/medical/gcm' } = Astro.props;
+const { kicker = 'Closed Loop · SMART on FHIR', tinted = true, detailHref = '/medical/fhir-server' } = Astro.props;
 
 const steps = [
   {

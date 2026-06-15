@@ -15,5 +15,6 @@ export default defineConfig({
     '/works/siqc': '/ai/siqc',
     '/works/marketing': '/marketing',
     '/cases': '/medical/yaocare',
+    '/medical/gcm': '/medical/fhir-server',
   },
 });
