@@ -12,6 +12,9 @@ const gaId = SITE.gaId;
     <script is:inline define:vars={{ gaId }}>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
+      // define:vars 會把這段 inline script 包進 IIFE，function 宣告不會自動掛到全域，
+      // 故顯式掛上 window.gtag，否則 track.ts（另一支 module）抓不到、互動事件全部送不出去。
+      window.gtag = gtag;
       gtag('js', new Date());
 
       // 依路徑分類內容（議題追蹤 / 情境指南 / 名詞解釋 / 產品 / hub …）
