@@ -327,7 +327,7 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 - [x] ~~index.html 581 行單檔拆分~~（已拆為 11 個 Astro 元件）
 - [ ] 老藥新用平台統計數字（191 / 142,328 / 5）寫死在 `TxGNN.astro`，未來若要動態化可改 fetch
 - [ ] 部分裝飾圖目前透過 CSS 漸層代替；如需找回原視覺效果，可從 git history 取出舊 `decor` 圖
-- [ ] **觀察中**：B（CTA 加成）/ C（低完成率提示）待 GA 資料累積 2–4 週才生效（A 搜尋字、GSC 需求已生效）
+- [ ] **觀察中**：B（CTA 加成）/ C（低完成率提示）。**2026-06-16 修正一個從部署以來的 bug**：`define:vars` 把 Analytics.astro 的 inline gtag 包進 IIFE，`function gtag` 沒掛上 window，導致 track.ts 的 `read_complete/scroll_depth/cta_click/page_engagement` 全部送不出去（GA4 只有 page_view）。已顯式 `window.gtag = gtag` 修好（commit a3dd707，無頭瀏覽器實測 scroll_depth 已送達）。故 B/C 訊號是「**從 2026-06-16 起才開始有資料**」，約 1–2 天後 `reports/news-insights.json` 的 `quality.readComplete` 應 > 0（A 搜尋字、GSC 需求早已生效）
 - [ ] **站外實體權威**（Wikidata 條目、Google 商家檔案）— GEO 最高槓桿，需開帳號
 - [ ] **soft-404**：www 對不存在路徑回 200 + 首頁（非 404），輕微 SEO；要動 NPM(nginx) 設定 + 授權
 - [ ] （選）GSC 高需求但無內容的查詢（如 `ai agent` 排名 57）→ 可做「自動建議新題目/補題」，目前只在週報列出
