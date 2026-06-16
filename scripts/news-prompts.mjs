@@ -2,15 +2,28 @@
 // 全部要求 JSON 輸出，配合 claude -p --output-format json --json-schema
 
 /**
- * Filter pass: 給 30–50 筆 candidate，留下與 target 真相關的 8–12 筆
+ * Filter pass: 給 30–50 筆 candidate，留下與 target 真相關的相關新聞
+ * @param target NewsTarget
+ * @param candidates RawItem[]
+ * @param opts { threshold?: number, demandQueries?: string[] }
+ *        threshold    — relevance 門檻（低於即排除；與程式端常數一致）
+ *        demandQueries — GSC 真實搜尋字（讓選題貼近讀者需求，而非只看內容相關）
  */
-export function filterPrompt(target, candidates) {
+export function filterPrompt(target, candidates, opts = {}) {
+  const threshold = typeof opts.threshold === 'number' ? opts.threshold : 0.6;
+  const demandQueries = Array.isArray(opts.demandQueries) ? opts.demandQueries : [];
   const list = candidates
     .map(
       (c, i) =>
         `[${i}] title: ${c.title}\n    source: ${c.source}\n    pubDate: ${c.pubDate}\n    snippet: ${(c.snippet || '').slice(0, 200)}`,
     )
     .join('\n');
+
+  const demandBlock = demandQueries.length
+    ? `\n讀者實際在搜尋本主題常用的關鍵字（代表真實需求，命中者更值得寫）：
+${demandQueries.map((q) => `  - ${q}`).join('\n')}
+凡內容真正切合上述搜尋意圖的新聞，relevance 可在合理範圍內給偏高分；但仍須真實相關，不可為了貼關鍵字硬抬分數。\n`
+    : '';
 
   return `你是「${target.title}」議題追蹤系統的新聞過濾器。任務：從以下 candidate 清單中找出與本主題真實相關的新聞。
 
@@ -19,7 +32,7 @@ ${target.serviceContext}
 
 主題涵蓋的關鍵議題：
 ${target.voicePoints.map((v, i) => `  - ${v}`).join('\n')}
-
+${demandBlock}
 評分原則：
 - 1.0：直接報導本主題核心議題
 - 0.7–0.9：報導相鄰但相關議題（同產業、同政策範疇）
@@ -28,7 +41,7 @@ ${target.voicePoints.map((v, i) => `  - ${v}`).join('\n')}
 
 要求：
 1. 為每筆給 0–1 relevance 分數
-2. relevance < 0.6 直接視為不相關，從 kept 列表中排除
+2. relevance < ${threshold} 直接視為不相關，從 kept 列表中排除（門檻已提高，寧缺勿濫）
 3. 對於相關的，初步判斷是否「值得首頁 highlight」(時效性強 + 議題重要)
 4. 同一事件多家報導時只留品質最好的一筆，去重
 

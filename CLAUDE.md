@@ -69,17 +69,19 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 - `voicePoints`: writer 可參考的「我們關心的痛點」
 - `proofPoints`: 白名單 — `designResponse` 段落只能引用這些事實，每條附 `#N` 索引（regex guard 會檢查）
 - `ctaText / ctaHref`: 文章底部 CTA
-- `KEEP_PER_TARGET = 8`（檔尾）：每 target 保留最新幾則
+
+> **策略（2026-06）：精準少量 + 永久累積。** 文章是常青議題分析，**不再砍文**（已移除 `pruneOld` / `KEEP_PER_TARGET`），長期累積以建主題深度與 SEO 權重。每天**少寫、寫準、不重複**（門檻 `RELEVANCE_THRESHOLD=0.72`、每日 `MAX_WRITE_TOTAL=10`、每 target `PER_TARGET_DAILY_CAP=3`，皆 `fetch-news.ts` 檔內常數）。
 
 ### 內容存放
 `src/content/news/<target>/<id>.json` — 走 Astro content collection，schema 定義在 `src/content/config.ts`（含 `newsBrief / issueAnalysis / designResponse / relevance / highlight / criticPasses` 等欄位與長度限制）。檔名 `<id>` 是 URL hash。
 
 ### Pipeline（`scripts/fetch-news.ts`）
 1. 對每個 target 的每個 query 抓 Google News RSS → 合併、URL 去重
-2. **Filter pass**（Haiku, `claude -p`）：留下 `relevance ≥ 0.6` 的相關新聞
-3. **加權選題**：round-robin 依讀者喜好權重分配（見「§ 分析追蹤 → B 回饋迴路」），總量受 `MAX_WRITE_TOTAL`（檔內常數）限制
-4. **Writer 迴圈**（Sonnet）：writer 出稿（可帶讀者搜尋字/低完成率洞察）→ regex guards 預檢（`scripts/news-guards.mjs`）→ 寫檔。最多 3 次重生，仍失敗則丟棄。（critic LLM 目前關閉省 quota，防幻覺靠 regex guards + writer prompt 嚴格規則；`criticPrompt` 仍保留可隨時開）
-5. 每 target 留最新 `KEEP_PER_TARGET` 則，舊的砍掉
+2. **Filter pass**（Haiku, `claude -p`）：留下 `relevance ≥ RELEVANCE_THRESHOLD`(0.72) 的相關新聞；**GSC 真實搜尋字（topQueries）注入 filter prompt**，讓選題貼近讀者需求而非只看內容相關
+3. **題目層級去重**：與該 target **既有語料**標題做 bigram Jaccard 比對（門檻 `DUP_TITLE_THRESHOLD=0.6`），近似重複者跳過（log `DUP`）—— 不砍文後避免薄內容累積
+4. **需求感知全域選題**（`selectDemandAware`）：所有 target 候選彙成單池，按 `relevance + 需求加成(命中搜尋字) + (GA/GSC權重−1)×係數` 全域排序取前 `MAX_WRITE_TOTAL`，並限每 target ≤ `PER_TARGET_DAILY_CAP`。零需求且無高相關候選的 target 當天自然寫 0 篇
+5. **Writer + Critic 迴圈**（Sonnet）：writer 出稿（可帶讀者搜尋字/低完成率洞察）→ regex guards 預檢（`scripts/news-guards.mjs`）→ **critic LLM 語意複審**（已重新開啟；critic 掛掉時 fail-open，已過 regex 即接受）→ 不過則 rewrite。最多 `MAX_WRITER_ATTEMPTS=3` 次，仍失敗則丟棄
+6. **不再 prune**（永久累積）
 
 Prompt 模板在 `scripts/news-prompts.mjs`，CLI 旗標：`--target <slug>` / `--dry-run` / `--debug` / `--max-items <n>`。
 
@@ -127,7 +129,7 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - `scripts/ga-setup.ts`：用 Admin API 冪等建立自訂維度/指標/關鍵事件（已執行）。
 - `scripts/ga-insights.ts`：用 Data API 拉報告，並產 **`reports/news-insights.json`**。計分用**完成率**(read_complete/page_view) 而非絕對數，避免長尾/爆款偏差：貝氏收縮(α=20)防小樣本雜訊、比較對象為**全站平均率**(非最大值)、單議題未達 MIN_PV(30) 不調、只加重不懲罰、地板 ×1、上限 ×3；全站量不足 → `enoughData=false` 全 1＝現狀。`reports/` 已 gitignore。
 - `scripts/ga-report.sh` + cron：**台灣週一 03:00**（`0 3 * * 1`，Asia/Taipei 區段）每週重產訊號；log `/var/log/yaocare-ga.log`。
-- `scripts/fetch-news.ts` 的 `loadInsights()` 讀該訊號 →（a）`selectRoundRobin` **加權選題**（高互動/高需求議題每天多分到幾篇，總量仍受 `MAX_WRITE_TOTAL` 限制）；（b）把每議題的**讀者搜尋字 + 低完成率旗標**當 `WriterHint` 傳進 `writerPrompt`。無訊號/資料不足時選題與寫作都等同原行為。
+- `scripts/fetch-news.ts` 的 `loadInsights()` 讀該訊號 →（a）`selectDemandAware` **需求感知全域選題**（權重高的議題在全域評分加分，受 `MAX_WRITE_TOTAL` 與 `PER_TARGET_DAILY_CAP` 限制）；（b）把每議題的**讀者搜尋字注入 filter prompt**（影響「挑哪篇」，非只文案）＋**搜尋字 + 低完成率旗標**當 `WriterHint` 傳進 `writerPrompt`。無訊號/資料不足時選題與寫作都等同原行為。
 - **權重三訊號**（合併上限 ×3、地板 ×1）：品質級距（GA 完成率，貝氏收縮、相對全站平均）＋ CTA 加成（GA cta 率，B）＋ 需求機會（GSC 高曝光但排名差/低 CTR，已生效）。
 - **`scripts/gsc.ts`**：Search Console API（同金鑰、scope webmasters；資源 `sc-domain:yao.care` 故加 `www.yao.care` page filter）→ 搜尋查詢/頁面 + 每議題搜尋字（A）。GSC 有歷史資料故需求面即刻生效；GA 品質/CTA 待累積（2–4 週）。
 - **writer 洞察注入**（`news-prompts.mjs renderHints`）：A 搜尋字 + C 低完成率風格提示；明示「嚴格規則仍全部適用」，且 regex/proofPoint guards 仍為安全網。
@@ -153,8 +155,8 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 ├── package.json
 ├── scripts/                   ← cron 觸發的後台流程（news 引擎 + GA/GSC 回饋）
 │   ├── fetch-news.sh          ← cron entry（日 04:30）：抓新聞 → 有變化才 commit + push + build
-│   ├── fetch-news.ts          ← 主流程（RSS → filter → 加權選題 → writer 迴圈）
-│   ├── news-prompts.mjs       ← filter / writer(可帶讀者洞察 renderHints) / rewrite / critic 模板
+│   ├── fetch-news.ts          ← 主流程（RSS → filter[+需求字] → 去重 → 需求感知選題 → writer+critic 迴圈；不砍文）
+│   ├── news-prompts.mjs       ← filter(可注入需求字) / writer(可帶讀者洞察 renderHints) / rewrite / critic 模板
 │   ├── news-guards.mjs        ← regex 預檢（長度 / proofPoint 引用 / 標題正規化）
 │   ├── ga-report.sh           ← cron entry（週一 03:00）：拉 GA+GSC 產訊號，log /var/log/yaocare-ga.log
 │   ├── ga-insights.ts         ← GA Data API + GSC → reports/news-insights.json（議題權重 + 寫作洞察）
@@ -173,7 +175,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── seo.config.ts          ← GEO/SEO：KNOWS_ABOUT / ORG_SAME_AS / 各產品 FAQ（PRODUCT_FAQS）
 │   ├── glossary.config.ts     ← 名詞解釋（10 則）：定義 + 段落 + related 產品 + 來源（GEO 用）
 │   ├── guides.config.ts       ← 情境指南（7 則）：使用者搜尋原話為題 + answer-first + 工具帶入（GEO 用）
-│   ├── news.config.ts         ← 12 個 news target（queries / voicePoints / proofPoints / CTA）+ KEEP_PER_TARGET
+│   ├── news.config.ts         ← 12 個 news target（queries / voicePoints / proofPoints / CTA）
 │   ├── content/
 │   │   ├── config.ts          ← news collection schema（Zod）
 │   │   └── news/<target>/*.json ← 自動產生的議題評論文章（cron 寫入）
@@ -275,7 +277,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 
 ### 調整 news 抓取範圍 / 角度
 - 加搜尋關鍵字、改痛點 / 設計 proof：編 `src/news.config.ts` 對應 target
-- 改每 target 保留則數：`KEEP_PER_TARGET`（檔尾）
+- 調精準度 / 產量：`fetch-news.ts` 檔內常數 `RELEVANCE_THRESHOLD`(0.72) / `MAX_WRITE_TOTAL`(10) / `PER_TARGET_DAILY_CAP`(3) / `DUP_TITLE_THRESHOLD`(0.6)
 - 改 writer / critic 的 prompt：`scripts/news-prompts.mjs`
 - 改長度 / proofPoint 引用規則：`scripts/news-guards.mjs` + `src/content/config.ts` 的 Zod schema 要一致
 - 改完不用手動跑；cron 每天 04:30 會自動觸發，要立刻看效果可手動跑 `./scripts/fetch-news.sh`

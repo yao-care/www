@@ -268,3 +268,41 @@ export function checkLengths(draft) {
 export function normTitle(s) {
   return (s || '').replace(/[\s\p{P}]/gu, '').toLowerCase();
 }
+
+// ── 題目層級去重（不砍文後，避免常青語料一直長出近似重複的薄內容）──────
+// 中文無斷詞，用字元 2-gram shingle 近似「顯著詞重疊」，再算 Jaccard。
+function _bigrams(s) {
+  const t = normTitle(s);
+  const grams = new Set();
+  if (t.length <= 1) {
+    if (t) grams.add(t);
+    return grams;
+  }
+  for (let i = 0; i < t.length - 1; i++) grams.add(t.slice(i, i + 2));
+  return grams;
+}
+
+/** 兩標題的 bigram Jaccard 相似度（0–1） */
+export function titleSimilarity(a, b) {
+  const A = _bigrams(a);
+  const B = _bigrams(b);
+  if (A.size === 0 || B.size === 0) return 0;
+  let inter = 0;
+  for (const g of A) if (B.has(g)) inter++;
+  return inter / (A.size + B.size - inter);
+}
+
+/**
+ * 標題是否與既有語料任一標題近似重複。
+ * 命中回傳該既有標題（供 log），否則回 null。門檻保守（預設 0.6），寧可少跳。
+ * @param {string} title
+ * @param {readonly string[]} existingTitles
+ * @param {number} [threshold]
+ * @returns {string|null}
+ */
+export function findNearDuplicate(title, existingTitles, threshold = 0.6) {
+  for (const t of existingTitles) {
+    if (titleSimilarity(title, t) >= threshold) return t;
+  }
+  return null;
+}

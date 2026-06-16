@@ -7,9 +7,9 @@
  *   2. 合併、URL 去重 → 每 target ~30–50 筆 candidate
  *   3. Filter pass: claude -p (Haiku) → 留下 relevance ≥ 0.6 的相關新聞
  *   4. 對每篇相關新聞跑 Writer + Critic 迴圈：
- *        writer (Sonnet) → regex guards 預檢 → critic (Sonnet)
+ *        writer (Sonnet) → regex guards 預檢 → critic (Sonnet 語意複審)
  *        通過 → 寫入 src/content/news/<target>/<id>.json
- *        最多 5 次重生，仍失敗則丟棄
+ *        最多 MAX_WRITER_ATTEMPTS 次重生，仍失敗則丟棄
  *   （不再刪文：常青議題分析長期累積，無 prune）
  *
  * CLI：
@@ -42,8 +42,15 @@ import {
   filterPrompt,
   writerPrompt,
   rewritePrompt,
+  criticPrompt,
 } from './news-prompts.mjs';
-import { checkRegexGuards, checkLengths, checkSimplified, normTitle } from './news-guards.mjs';
+import {
+  checkRegexGuards,
+  checkLengths,
+  checkSimplified,
+  normTitle,
+  findNearDuplicate,
+} from './news-guards.mjs';
 import { fixTerms } from './zh-tw.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -66,15 +73,24 @@ const MAX_ITEMS = parseInt(arg('--max-items') ?? '0', 10) || Infinity;
 
 const FILTER_MODEL = 'claude-haiku-4-5';
 const WRITER_MODEL = 'claude-sonnet-4-6';
-const RELEVANCE_THRESHOLD = 0.6;
+/** 相關度門檻（提高 → 只寫真的切題的；「精準少量」策略） */
+const RELEVANCE_THRESHOLD = 0.72;
 const MAX_WRITER_ATTEMPTS = 3;
 const PER_QUERY_DELAY_MS = 400;
 /** 每個 query 取最新幾筆 — Google News 預設回 ~50–100，但我們只關心新近的 */
 const PER_QUERY_LIMIT = 12;
 /** 送進 filter LLM 的最大 candidate 數 */
 const FILTER_BATCH_SIZE = 25;
-/** 一次 cron 全部 target 加總最多寫幾篇 — round-robin 平均分配 */
-const MAX_WRITE_TOTAL = 21;
+/** 一次 cron 全部 target 加總最多寫幾篇（不砍文後改少量精選） */
+const MAX_WRITE_TOTAL = 10;
+/** 單一 target 一天最多寫幾篇（避免單線洗版，保留多樣性） */
+const PER_TARGET_DAILY_CAP = 3;
+/** 命中 GSC 真實搜尋字的需求加成（疊在 relevance 上影響「挑哪篇」） */
+const DEMAND_BOOST = 0.15;
+/** GA/GSC target 權重（1–3）換算成選題分數的係數 */
+const WEIGHT_SCORE_FACTOR = 0.2;
+/** 題目層級去重門檻（bigram Jaccard；保守，寧可少跳） */
+const DUP_TITLE_THRESHOLD = 0.6;
 
 // ─── 型別 ───────────────────────────────────────────
 
@@ -98,10 +114,14 @@ type Stats = {
   fetched: number;
   unique: number;
   filterKept: number;
+  dupSkipped: number;
   written: number;
   dropped: number;
   dropReasons: string[];
 };
+
+/** 給 writer 的讀者洞察：搜尋字（A）+ 是否常讀不完（C） */
+type WriterHint = { queries: string[]; lowCompletion: boolean };
 
 // ─── 工具函式 ────────────────────────────────────────
 
@@ -280,13 +300,17 @@ function parseClaudeOutput(stdout: string): any {
 async function filterCandidates(
   target: NewsTarget,
   candidates: RawItem[],
+  demandQueries: string[] = [],
 ): Promise<{ item: RawItem; relevance: number; highlight: boolean }[]> {
   if (candidates.length === 0) return [];
   const sorted = [...candidates].sort(
     (a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf(),
   );
   const sliced = sorted.slice(0, FILTER_BATCH_SIZE);
-  const prompt = filterPrompt(target, sliced);
+  const prompt = filterPrompt(target, sliced, {
+    threshold: RELEVANCE_THRESHOLD,
+    demandQueries,
+  });
   let parsed: any;
   try {
     parsed = callClaude(FILTER_MODEL, prompt);
@@ -313,9 +337,9 @@ async function writeOne(
   highlight: boolean,
   hint?: WriterHint,
 ): Promise<{ ok: true; draft: Draft; passes: number } | { ok: false; reason: string }> {
-  // 簡化版：writer + regex 迴圈。critic LLM 暫時關閉以省 quota，
-  // 防幻覺主要靠 (a) writer prompt 嚴格規則 + (b) regex 黑名單預檢。
-  // 若未來需要更嚴審查，可重新引入 criticPrompt + criticPasses 欄位。
+  // 寫作迴圈：writer → regex guards 預檢 → critic（Sonnet 語意複審）→ 不過則 rewrite。
+  // regex 擋機械式違規（戰績語/簡體/字數…），critic 補抓 regex 抓不到的幻覺/空泛/離題。
+  // 每日產量降到精選量後 quota 有餘裕，故重新開啟 critic（曾為省 quota 關閉）。
   let prevDraft: Draft | null = null;
   let lastViolations: any[] | null = null;
 
@@ -345,11 +369,30 @@ async function writeOne(
       ...checkLengths(draft),
       ...checkSimplified(draft),
     ];
-    if (regexFails.length === 0) {
+    if (regexFails.length > 0) {
+      log(`    regex fail (attempt ${attempt}): ${regexFails.map((v) => v.rule).join(',')}`);
+      lastViolations = regexFails;
+      continue;
+    }
+
+    // 通過 regex → critic 語意複審
+    let critic: any;
+    try {
+      critic = callClaude(WRITER_MODEL, criticPrompt(target, item, draft));
+    } catch (e: any) {
+      // critic 掛掉時 fail-open：已過 regex（硬規則）即接受，不因 critic 抖動全數丟棄
+      log(`    ⚠ critic 失敗，已過 regex 故接受 (attempt ${attempt}): ${e.message}`);
       return { ok: true, draft, passes: attempt };
     }
-    log(`    regex fail (attempt ${attempt}): ${regexFails.map((v) => v.rule).join(',')}`);
-    lastViolations = regexFails;
+    if (critic?.pass) {
+      return { ok: true, draft, passes: attempt };
+    }
+    const cviol =
+      Array.isArray(critic?.violations) && critic.violations.length
+        ? critic.violations
+        : [{ rule: 'CRITIC', evidence: 'critic 判定不通過但未給明細', fix: '依嚴格規則重寫' }];
+    log(`    critic fail (attempt ${attempt}): ${cviol.map((v: any) => v.rule).join(',')}`);
+    lastViolations = cviol;
   }
   return {
     ok: false,
@@ -401,19 +444,22 @@ function writeNewsFile(
   }
 }
 
-function existingUrls(target: NewsTarget): Set<string> {
+/** 既有語料：來源 URL（精確去重）+ 標題清單（題目層級近似去重） */
+function existingCorpus(target: NewsTarget): { urls: Set<string>; titles: string[] } {
   const dir = join(NEWS_DIR, target.slug);
   const urls = new Set<string>();
-  if (!existsSync(dir)) return urls;
+  const titles: string[] = [];
+  if (!existsSync(dir)) return { urls, titles };
   for (const f of readdirSync(dir).filter((x) => x.endsWith('.json'))) {
     try {
       const obj = JSON.parse(readFileSync(join(dir, f), 'utf8'));
       if (obj.url) urls.add(obj.url);
+      if (obj.title) titles.push(String(obj.title));
     } catch {
       /* ignore */
     }
   }
-  return urls;
+  return { urls, titles };
 }
 
 // ─── 主流程 ─────────────────────────────────────────
@@ -422,13 +468,27 @@ type KeptItem = {
   target: NewsTarget;
   item: RawItem;
   relevance: number;
+  /** 選題分數 = relevance + 需求加成（命中 GSC 搜尋字）；決定「挑哪篇」 */
+  score: number;
   highlight: boolean;
 };
 
-/** Phase 1: 對單一 target 跑 RSS + filter pass，回傳 kept items（不寫檔）*/
+/** 候選 title/snippet 是否命中任一 GSC 搜尋字 → 需求加成 */
+function demandBoostFor(item: RawItem, demandQueries: string[]): number {
+  if (!demandQueries.length) return 0;
+  const hay = `${item.title} ${item.snippet || ''}`.toLowerCase();
+  const hit = demandQueries.some((q) => {
+    const needle = q.trim().toLowerCase();
+    return needle.length >= 2 && hay.includes(needle);
+  });
+  return hit ? DEMAND_BOOST : 0;
+}
+
+/** Phase 1: 對單一 target 跑 RSS + filter pass + 去重，回傳 kept items（不寫檔）*/
 async function fetchAndFilter(
   target: NewsTarget,
   stats: Stats,
+  hint?: WriterHint,
 ): Promise<KeptItem[]> {
   log(`\n═══ ${target.title} (${target.slug}) — Filter ═══`);
 
@@ -439,28 +499,39 @@ async function fetchAndFilter(
   log(`  共 ${candidates.length} 筆 unique candidate`);
   if (candidates.length === 0) return [];
 
-  const existing = existingUrls(target);
-  const fresh = candidates.filter((c) => !existing.has(c.link));
-  log(`  扣掉已存在 ${candidates.length - fresh.length} 筆，剩 ${fresh.length} 筆要審`);
+  const { urls: existingUrlSet, titles: existingTitles } = existingCorpus(target);
+  const fresh = candidates.filter((c) => !existingUrlSet.has(c.link));
+  log(`  扣掉已存在 URL ${candidates.length - fresh.length} 筆，剩 ${fresh.length} 筆要審`);
   if (fresh.length === 0) return [];
 
-  log(`  → Filter pass (Haiku)`);
-  const kept = await filterCandidates(target, fresh);
+  const demandQueries = hint?.queries ?? [];
+  log(`  → Filter pass (Haiku)${demandQueries.length ? ` [+需求字 ${demandQueries.length}]` : ''}`);
+  const kept = await filterCandidates(target, fresh, demandQueries);
   stats.filterKept += kept.length;
   log(`  filter 留下 ${kept.length} 筆 (relevance ≥ ${RELEVANCE_THRESHOLD})`);
 
-  // 依 relevance desc 排序，round-robin 才會挑到最相關的先寫
-  const sorted = [...kept].sort((a, b) => b.relevance - a.relevance);
-  return sorted.map((k) => ({
-    target,
-    item: k.item,
-    relevance: k.relevance,
-    highlight: k.highlight,
-  }));
-}
+  // 題目層級去重：剔除與既有語料近似重複的（不砍文後避免薄內容累積）
+  const deduped = kept.filter((k) => {
+    const dup = findNearDuplicate(k.item.title, existingTitles, DUP_TITLE_THRESHOLD);
+    if (dup) {
+      stats.dupSkipped++;
+      log(`    ↩ DUP 跳過「${k.item.title.slice(0, 30)}…」≈ 既有「${dup.slice(0, 30)}…」`);
+      return false;
+    }
+    return true;
+  });
 
-/** 給 writer 的讀者洞察：搜尋字（A）+ 是否常讀不完（C） */
-type WriterHint = { queries: string[]; lowCompletion: boolean };
+  // 計算選題分數（relevance + 需求加成），依 score desc 排序
+  return deduped
+    .map((k) => ({
+      target,
+      item: k.item,
+      relevance: k.relevance,
+      score: k.relevance + demandBoostFor(k.item, demandQueries),
+      highlight: k.highlight,
+    }))
+    .sort((a, b) => b.score - a.score);
+}
 
 /**
  * 讀 reports/news-insights.json（每週 GA+GSC cron 產出），回傳：
@@ -497,30 +568,31 @@ function loadInsights(): {
 }
 
 /**
- * 加權 round-robin：每輪每個 target 出「weight」篇（預設 1），直到湊滿 totalCap 或全部用完。
- * 同 target 內順序為 relevance desc（fetchAndFilter 已排序）。weights 全為 1 時 = 原本行為。
+ * 需求感知全域選題：把所有 target 的候選彙整成單一池，依
+ *   選題分數 = score（relevance + 需求加成）+ (targetWeight−1) × 係數
+ * 由高到低排序，取前 totalCap；同時每個 target 不超過 perTargetCap（保留多樣性）。
+ * 零需求且無高相關候選的 target 當天自然寫 0 篇 —— 即「精準少量」要的行為。
  */
-function selectRoundRobin(
-  byTarget: Map<NewsTargetSlug, KeptItem[]>,
+function selectDemandAware(
+  items: KeptItem[],
   totalCap: number,
+  perTargetCap: number,
   weights?: Map<NewsTargetSlug, number>,
 ): KeptItem[] {
-  const queues = new Map<NewsTargetSlug, KeptItem[]>();
-  for (const [slug, items] of byTarget) queues.set(slug, [...items]);
+  const scored = items.map((it) => {
+    const w = weights?.get(it.target.slug) ?? 1;
+    return { it, sel: it.score + (w - 1) * WEIGHT_SCORE_FACTOR };
+  });
+  scored.sort((a, b) => b.sel - a.sel);
 
+  const perTarget = new Map<NewsTargetSlug, number>();
   const picked: KeptItem[] = [];
-  while (picked.length < totalCap) {
-    let progressed = false;
-    for (const [slug, q] of queues) {
-      if (picked.length >= totalCap) break;
-      if (q.length === 0) continue;
-      const take = Math.max(1, weights?.get(slug) ?? 1);
-      for (let i = 0; i < take && q.length > 0 && picked.length < totalCap; i++) {
-        picked.push(q.shift()!);
-        progressed = true;
-      }
-    }
-    if (!progressed) break;
+  for (const { it } of scored) {
+    if (picked.length >= totalCap) break;
+    const c = perTarget.get(it.target.slug) ?? 0;
+    if (c >= perTargetCap) continue;
+    perTarget.set(it.target.slug, c + 1);
+    picked.push(it);
   }
   return picked;
 }
@@ -554,30 +626,34 @@ async function main() {
     fetched: 0,
     unique: 0,
     filterKept: 0,
+    dupSkipped: 0,
     written: 0,
     dropped: 0,
     dropReasons: [],
   };
 
-  // ─── Phase 1: 對所有 target 抓 RSS + filter ───────────
+  // 先載入 GA/GSC 訊號：權重（選題）+ 洞察（搜尋字餵 filter & writer、低完成率餵 writer）
+  // 無訊號/資料不足時皆空 → 行為等同現狀。
+  const insights = loadInsights();
+
+  // ─── Phase 1: 對所有 target 抓 RSS + filter（需求字進 filter）+ 去重 ───
   const byTarget = new Map<NewsTargetSlug, KeptItem[]>();
+  const allKept: KeptItem[] = [];
   for (const t of targets) {
-    const kept = await fetchAndFilter(t, stats);
+    const kept = await fetchAndFilter(t, stats, insights.hints.get(t.slug));
     byTarget.set(t.slug, kept);
+    allKept.push(...kept);
   }
 
-  // ─── Phase 2: round-robin 選出總共要寫的 ──────────────
-  // 規則：
-  //   - 預設 cap 是 MAX_WRITE_TOTAL（全 target 加總）
-  //   - 若有 --target，cap 改用 MAX_ITEMS（單 target 模式）
-  //   - --max-items 一律 override
+  // ─── Phase 2: 需求感知全域選題 ──────────────────────────
+  //   - 非單 target：全域評分排序 + per-target 上限，cap = MAX_WRITE_TOTAL
+  //   - 單 target（--target）：直接取該 target 前 N（依 score），cap = MAX_ITEMS
   const totalCap = ONLY_TARGET
     ? Math.min(MAX_ITEMS, byTarget.get(ONLY_TARGET)?.length ?? 0)
     : Math.min(MAX_ITEMS, MAX_WRITE_TOTAL);
-  // 依讀者喜好加權選題 + 載入寫作洞察（單一 target 模式不加權；無訊號時等同現狀）
-  const insights = loadInsights();
-  const weights = ONLY_TARGET ? undefined : insights.weights;
-  const picked = selectRoundRobin(byTarget, totalCap, weights);
+  const picked: KeptItem[] = ONLY_TARGET
+    ? (byTarget.get(ONLY_TARGET) ?? []).slice(0, totalCap)
+    : selectDemandAware(allKept, totalCap, PER_TARGET_DAILY_CAP, insights.weights);
 
   log(`\n══════ Phase 2: 排程 ${picked.length} 篇 ══════`);
   const distribution = new Map<NewsTargetSlug, number>();
@@ -621,6 +697,7 @@ async function main() {
   log(`  fetched:     ${stats.fetched}`);
   log(`  unique:      ${stats.unique}`);
   log(`  filter kept: ${stats.filterKept}`);
+  log(`  dup skipped: ${stats.dupSkipped}`);
   log(`  picked:      ${picked.length} (cap=${totalCap})`);
   log(`  written:     ${stats.written}`);
   log(`  dropped:     ${stats.dropped}`);

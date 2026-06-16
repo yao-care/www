@@ -6,16 +6,25 @@ import FooterLinks from '../../../components/FooterLinks.astro';
 import ContactMap from '../../../components/ContactMap.astro';
 import NewsArticle from '../../../components/news/NewsArticle.astro';
 import { NEWS_TARGET_BY_SLUG } from '../../../news.config';
+import { GLOSSARY } from '../../../glossary.config';
 import { SITE } from '../../../site.config';
 
+/** news entry id（如 "yaocare/abc123.json"）→ 對外 slug */
+function hrefSlug(e: CollectionEntry<'news'>): string {
+  const p = e.id.replace(/\.(json|yaml|yml)$/, '');
+  const i = p.lastIndexOf('/');
+  return i >= 0 ? p.substring(i + 1) : p;
+}
+
 export async function getStaticPaths() {
+  // 注意：getStaticPaths 在隔離環境執行，無法引用 frontmatter 函式（只能用 import），
+  // 故此處內聯 slug 推導，與下方 hrefSlug 邏輯一致。
   const entries = await getCollection('news');
   return entries.map((entry) => {
-    const slugPath = entry.id.replace(/\.(json|yaml|yml)$/, '');
-    const lastSlash = slugPath.lastIndexOf('/');
-    const slug = lastSlash >= 0 ? slugPath.substring(lastSlash + 1) : slugPath;
+    const p = entry.id.replace(/\.(json|yaml|yml)$/, '');
+    const i = p.lastIndexOf('/');
     return {
-      params: { target: entry.data.target, slug },
+      params: { target: entry.data.target, slug: i >= 0 ? p.substring(i + 1) : p },
       props: { entry },
     };
   });
@@ -29,36 +38,53 @@ const { entry } = Astro.props;
 const data = entry.data;
 const target = NEWS_TARGET_BY_SLUG[data.target];
 
+// 同主題其他議題（永久語料互連 → 建立主題權威）
+const allNews = await getCollection('news');
+const relatedNews = allNews
+  .filter((e) => e.data.target === data.target && e.id !== entry.id)
+  .sort((a, b) => b.data.fetchedAt.valueOf() - a.data.fetchedAt.valueOf())
+  .slice(0, 5);
+// 相關名詞解釋（glossary 交叉連結；related 含本產品者）
+const relatedTerms = GLOSSARY.filter((g) =>
+  (g.related ?? []).includes(data.target as never),
+).slice(0, 6);
+
 const pageTitle = `${data.titleZh ?? data.title} · ${target.title} 議題追蹤`;
 const pageDescription = data.newsBrief;
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 
-// NewsArticle JSON-LD — isBasedOn 標明這是對原新聞的衍生評論而非原始報導
+// JSON-LD：NewsArticle（isBasedOn 標明是對原新聞的衍生評論）+ BreadcrumbList
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'NewsArticle',
-  headline: data.titleZh ?? data.title,
-  description: data.newsBrief,
-  url: canonical,
-  datePublished: data.fetchedAt.toISOString(),
-  dateModified: data.fetchedAt.toISOString(),
-  author: {
-    '@type': 'Organization',
-    name: SITE.name,
-    url: SITE.url,
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: SITE.name,
-    url: SITE.url,
-    logo: {
-      '@type': 'ImageObject',
-      url: `${SITE.url}/assets/images/logo.png`,
+  '@graph': [
+    {
+      '@type': 'NewsArticle',
+      headline: data.titleZh ?? data.title,
+      description: data.newsBrief,
+      url: canonical,
+      datePublished: data.fetchedAt.toISOString(),
+      dateModified: data.fetchedAt.toISOString(),
+      author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE.name,
+        url: SITE.url,
+        logo: { '@type': 'ImageObject', url: `${SITE.url}/assets/images/logo.png` },
+      },
+      isBasedOn: data.url,
+      about: target.title,
+      keywords: data.tags.join(', '),
     },
-  },
-  isBasedOn: data.url,
-  about: target.title,
-  keywords: data.tags.join(', '),
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: '議題追蹤', item: new URL('/news', SITE.url).toString() },
+        { '@type': 'ListItem', position: 3, name: target.title, item: new URL(target.pageUrl, SITE.url).toString() },
+        { '@type': 'ListItem', position: 4, name: data.titleZh ?? data.title, item: canonical },
+      ],
+    },
+  ],
 };
 
 const ogImage = `/assets/images/og/${data.target}.png`;
@@ -82,6 +108,45 @@ const ogImage = `/assets/images/og/${data.target}.png`;
     </div>
 
     <NewsArticle entry={entry} />
+
+    <!-- 相關議題 + 交叉連結（永久語料互連，建立主題權威） -->
+    <section class="max-w-3xl mx-auto px-4 lg:px-6 pb-4">
+      {relatedNews.length > 0 && (
+        <div class="pt-8 border-t border-neutral-200">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">同主題其他議題</p>
+          <ul class="mt-4 space-y-3">
+            {relatedNews.map((r) => (
+              <li>
+                <a href={`/news/${r.data.target}/${hrefSlug(r)}`} class="group block">
+                  <span class="font-medium text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors">{r.data.titleZh ?? r.data.title}</span>
+                  <span class="block text-sm text-[color:var(--color-ink-soft)] mt-0.5 line-clamp-1">{r.data.newsBrief}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {relatedTerms.length > 0 && (
+        <div class="mt-8 pt-6 border-t border-neutral-200">
+          <p class="text-sm font-medium text-[color:var(--color-ink)] mb-3">相關名詞解釋</p>
+          <div class="flex flex-wrap gap-2">
+            {relatedTerms.map((t) => (
+              <a href={`/glossary/${t.slug}`} class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-sm text-[color:var(--color-ink-soft)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors">
+                {t.term}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="mt-8 pt-6 border-t border-neutral-200 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+        <a href={target.pageUrl} class="inline-flex items-center gap-1 font-medium text-[color:var(--color-brand)] hover:underline">前往 {target.title} →</a>
+        <a href="/news" class="text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">看更多議題追蹤</a>
+        <a href="/guides" class="text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">情境指南</a>
+        <a href="/glossary" class="text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">名詞解釋</a>
+      </div>
+    </section>
 
     <ContactMap />
   </main>
