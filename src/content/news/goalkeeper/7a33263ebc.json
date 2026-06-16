@@ -1,0 +1,16 @@
+{
+  "target": "goalkeeper",
+  "title": "AI 會回答不代表答案正確：醫療 AI 的可信度從何而來",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE0wOHcxT2haR3JRTncwY0N1dXgwZHpIUTJuVEVLVkxIRXZzVU84Vy1EYVBhVHVIV1ZRRVZEZ0NuZGw2UlI0QTdDbkVoaTB6ajBnU0M4amJB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-05T07:00:00.000Z",
+  "fetchedAt": "2026-06-16T20:43:26.027Z",
+  "newsBrief": "「AI 能回答」不等於「答案正確」，醫師指出，醫療 AI 的核心價值不在生成速度，而在於能否提供具備可信度的資訊。當生成式 AI 在臨床場域廣泛應用，如何確認 AI 產出的醫療內容品質，已成醫療機構與業者共同面對的核心課題。",
+  "issueAnalysis": "醫療 AI 的信任危機，根源不只是技術缺陷，更是「驗證缺位」的結構困境。生成式 AI 在醫療場景中容易出現三類風險：幻覺（捏造看似合理的診療資訊）、越權診斷（給出超出 AI 職能範疇的判斷建議）、以及來源缺失（無從追溯的說法讓使用者難以查核）。當醫師與機構選擇導入 AI 輔助服務，合規責任由誰承擔、產出內容如何被稽核，往往付之闕如。衛福部生成式 AI 指引雖已上路，但業者如何將法規要求轉化為可操作的查核流程，仍是普遍的落地難題。",
+  "designResponse": "「AI 能回答」與「答案可信」之間存在落差，填補這道缺口需要結構化的查核機制而非人工逐筆審閱。針對每次呼叫，系統回報揭露免責、來源標註、越權診斷、個資外洩、幻覺查核五道符合狀態 (#1)，並將每道檢查綁定衛福部生成式 AI 指引、醫師法、個資法等台灣法源 (#2)，業者得以清楚知道每道關卡的規範依據。整體放行決定仍由使用者與機構自行負責 (#3)，合規責任鏈條清晰，不只是通過或不通過的黑盒子結論。",
+  "tags": [],
+  "relevance": 0.92,
+  "highlight": true,
+  "criticPasses": 2
+}

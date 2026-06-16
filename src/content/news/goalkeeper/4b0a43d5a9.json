@@ -1,0 +1,20 @@
+{
+  "target": "goalkeeper",
+  "title": "馬偕受邀輝達GTC 醫：缺實證資料驗證 恐釀AI幻覺",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE41XzBJcmY1bmFleDJoSWpVaEtQRmtZaWUzanFtRXc4VUlfSm5WWjYzV0MtZ2hERzV6b0M3STZYRGZkS2RCSHozTnhoQU55bkRHVGc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-04T22:13:11.000Z",
+  "fetchedAt": "2026-06-16T20:44:19.752Z",
+  "newsBrief": "馬偕醫院受邀出席輝達GTC大會，與會醫師警示：生成式AI若缺乏實證資料驗證，極易產生幻覺，對臨床決策形成潛在風險。此一現象點出台灣醫療機構雖積極探索AI應用，但系統性的內容查核機制仍是當前明顯缺口。",
+  "issueAnalysis": "AI幻覺在醫療場域的危害遠大於一般文字錯誤——錯誤的藥物建議、誤判的症狀描述、甚至越權的診斷意見，都可能直接影響病患安全。更根本的問題在於，當生成式AI被整合進醫療流程，「誰來查核內容是否合規」的責任歸屬往往不清。衛福部雖已發布生成式AI指引，但多數機構面臨的實際困境是：指引精神難以轉化為可操作、可稽核的技術流程。幻覺查核、來源標註、越權診斷偵測，每一關都需要對應的法規依據與系統支撐，缺一不可。",
+  "designResponse": "面對「幻覺」這道具體威脅，goalkeeper的設計思路是將查核工作拆解為五道獨立關卡，而非依賴單一模型給出籠統判斷。幻覺查核作為其中一環，與揭露免責、來源標註、越權診斷、個資外洩查核並列，逐一回報各關卡的符合狀態，而非直接替使用者做整體放行決定 (proofPoint #1)(proofPoint #3)。每道關卡同步綁定對應台灣法源，包含衛福部生成式AI指引、醫師法等，讓查核結果有明確的法規依據可供追溯與舉證 (proofPoint #2)。在查核流程中，系統對原文先行去識別化處理，確保個資原值不寫入稽核紀錄，兼顧隱私保護與合規效率 (proofPoint #5)。這樣的設計邏輯，讓醫療機構在面對AI幻覺質疑時，能以可重現的稽核軌跡應對外部審查，而非僅憑口頭聲明。",
+  "tags": [
+    "AI幻覺",
+    "醫療合規",
+    "內容查核"
+  ],
+  "relevance": 0.91,
+  "highlight": true,
+  "criticPasses": 1
+}

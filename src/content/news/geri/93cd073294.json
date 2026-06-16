@@ -1,0 +1,20 @@
+{
+  "target": "geri",
+  "title": "65歲以上領200元！新北長輩免費做1檢測還送禮券 揪出失智、肌少症風險",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiowNBVV95cUxOZml0YURKUnFuMHYtVGdpeUYtWndMMUVCS2dsb01fdl8yVlJlaE9Tc1IxX01hR1loeVNVTHY5OERHWGNTLU1wcXRVVW9Gakl4UTlKMUlxMkRHWVVtbWZwMkNyTzM0OC1ESUdfMHEwSThxcFdZd2xXcUQ0TFYwTVE5bHIxTktjWVo4ZUdDN0ZPdWVDcU1DZGlTZ3Y5OWFFeXFsU09aZkZCVFE3dTJXb3RwcGxFRW52QWk0UlprNk12YW9reXNJcXMtbnprajRpdTE1M3MyWHB3WDByZ3U5SDV6SW9JVGtGTVl3dkM0U05tV0dNMkx5RnVTRDBuRVZzTjdoTlhuR09TWUV4TEttamFZRGxNMnBPRlJlQXZRcjhmZWo4NVZtSURLNndwWnlTUWxnZHUwZE5HT2RrVmswU1dJeGFnWldJd3VGTFFRUk5sSGdCV1hGdW9MZ2tuZ2lHWDkyZFJUWjQyYVcxSzhlanFIU1Nkc2RURzFKbEFQM2dzSmdISXR1bF91LXMyaVZqLVE4RnJIQkhNV3pBOFFFSENhWFVRdw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-16T00:03:08.000Z",
+  "fetchedAt": "2026-06-16T20:51:26.524Z",
+  "newsBrief": "地方政府推出針對65歲以上長者的免費健康檢測活動，完成評估即可獲得200元禮券，目標在於早期篩查失智與肌少症風險。此舉凸顯結構化高齡評估工具在社區層級的迫切需求，也反映政策端對高齡預防醫學的重視，是近期公共衛生策略中少見的主動出擊案例。",
+  "issueAnalysis": "失智與肌少症往往在症狀明顯前已悄然進展，家屬與長者本身難以察覺。以禮券誘因推動篩查雖能提升參與率，但一次性檢測若缺乏後續追蹤與分級轉介機制，所產生的資料往往流於片段、難以轉化為照護行動。Geri 醫學評估的核心挑戰正在此：衰弱是一個連續光譜，需要可重複、多面向的工具，辨識哪些長者處於功能退化尚可逆轉的窗口期，並在正確的時間點啟動介入，而非僅停留在風險「知曉」的層次。",
+  "designResponse": "面對社區篩查與臨床評估之間的落差，Smart Geri 的設計思路是讓同一套工具同時服務兩種場景。公眾模式讓家屬與長者在家即可完成自篩，無須等待門診資源（proofPoint #2）；臨床模式則供專業人員在社區據點或門診情境使用，確保評估結果具備可比較性與連續追蹤的基礎。\n\n在評估架構上，以臨床衰弱量表 CFS 1–9 作為分層基準（proofPoint #1），而非僅憑單一量表或體重指數判斷，能更準確捕捉衰弱的漸進性變化。評估完成後，紅黃綠分級機制自動配對轉介建議與衛教內容（proofPoint #5），讓社區工作人員不須具備深度臨床背景，也能給出有依據的下一步行動——這正是免費篩查活動最需要、卻最容易缺位的環節。",
+  "tags": [
+    "高齡評估",
+    "肌少症",
+    "衰弱預防"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1
+}

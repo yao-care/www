@@ -1,0 +1,20 @@
+{
+  "target": "goalkeeper",
+  "title": "美國FDA逐步完善AI醫療器材監管 明確軟體功能定義與審查指引",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5mLVlFc1ZiWEpBb0xFOWRXa2pmSnNpOXpBS2JTaTJKd05xMnFLUzM1WnpvZUYtN1RFdDZGTXlReC0xbEJpZkhyMTc4TTU4SzNZQUlLdkVTUXRmRkZOMXc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-05T03:03:28.000Z",
+  "fetchedAt": "2026-06-16T20:47:06.120Z",
+  "newsBrief": "美國FDA持續強化AI醫療器材監管框架，明確界定具備AI功能的軟體是否屬於醫療器材，並發布相應審查指引。此舉反映全球監管機構正加速因應AI在醫療場域快速落地所帶來的法規空缺，為業者提供更清晰的合規依循路徑。",
+  "issueAnalysis": "FDA此次明確AI軟體功能定義，釐清哪些AI輔助功能構成醫療器材、哪些不構成，直接決定業者須承擔的審查義務。台灣同樣面臨衛福部生成式AI指引落地困境：醫療機構導入AI後，產出內容是否合規、責任歸屬如何界定，往往缺乏可重現、可稽核的工具支撐。全球監管趨勢正從「事後管理」轉向「設計端內建合規」，業者若未建立結構化查核機制，法規明確化後所面臨的合規壓力將顯著提升。",
+  "designResponse": "面對AI醫療內容合規查核日益嚴格的監管環境，goalkeeper的設計思路是把法規查核嵌入AI輸出流程的最前端，而非留待人工事後審閱。在查核維度的選擇上，依台灣現行法規設計五道關卡：揭露免責聲明、來源標註、越權診斷、個資外洩、幻覺查核，並針對每道關卡綁定對應法源，讓每次查核結果都能溯源至具體條文(proofPoint #1)(proofPoint #2)。在放行判斷的設計上，刻意選擇只回報各關卡狀態，不代替使用者做整體放行決定；規範版本可鎖定，每次查核留存稽核軌跡，確保可重現性(proofPoint #3)(proofPoint #4)。個資保護層面，查核流程在內部先去識別化，原文與個資原值永不寫入稽核記錄，降低合規工具本身帶來的外洩風險(proofPoint #5)。",
+  "tags": [
+    "AI醫療監管",
+    "合規查核",
+    "法規落地"
+  ],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 1
+}

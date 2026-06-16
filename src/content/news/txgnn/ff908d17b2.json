@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "國際學術發表背後：AI老藥新用如何從論文走向臨床整合",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5HTUFvZ1BKY21oRFRoREVKUjJmVjVUWHQ4a2t3R3NzV1VoVWlhUjdhQ3ZwZVVyeS1qREN1Z0dfNFo5N1dFZGtYSkR2dm44Q3dQN3FRTFR6ams4Z9IBX0FVX3lxTE10TEdTMzRwTGVXcWVSbkNCSzJ2T3NCM3lELTFNa19lNDlOZDFMUXNNdldnREgwWUVPOW9HNUxUUFl0MGVWZ2lJdldkZ1hfZUJDSUhqSnhpRzB4ZXQzQTdj?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-29T07:00:00.000Z",
+  "fetchedAt": "2026-06-16T20:45:45.791Z",
+  "newsBrief": "源華智醫於5月在兩大國際指標學術會議發表AI醫療研發成果，顯示台灣醫療AI新創正積極進入國際舞台。此類以國際會議為媒介的研究發表，是業界建立跨境醫療AI公信力的重要途徑，也反映老藥新用、AI輔助藥物研發等主題在全球學術圈的高度關注。",
+  "issueAnalysis": "AI藥物研發的國際能見度競爭正在加劇。醫療AI新創能否在頂級學術會議取得發表位置，往往左右臨床社群的信任與採用意願。然而，光靠會議論文還不夠——AI預測若缺乏可查核的文獻佐證，臨床醫師難以將之納入實際決策；跨國藥品資料覆蓋範圍不足，也讓工具的適用場景大打折扣。如何讓研究成果從論文走向真實EHR整合，是整個老藥新用領域共同面對的核心挑戰。",
+  "designResponse": "面對AI醫療研發的國際標準化需求，TxGNN老藥新用平台的設計著眼於「可驗證性」與「可整合性」。在預測根基上，平台採用知識圖譜與深度學習雙引擎並行推論 (#1)，確保藥物再利用的預測透過兩種方法論相互校驗，而非依賴單一黑箱輸出。每一項預測都附帶PubMed文獻與ClinicalTrials臨床試驗證據包 (#4)，讓臨床醫師能自行回溯查核。在整合層面，平台已上架SMART on FHIR App Gallery，相容主流EHR系統 (#5)，縮短研究成果走向臨床場景的路徑。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 2
+}

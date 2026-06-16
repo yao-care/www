@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "慢箋族過年不斷藥：春節提早領藥措施一次看",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE0tMkQxNjEyWjFfUVV6dXYwWFF4VElVWkdZWWtjaEZHbENwTHNUSEtPVzNpZXZCUXVNT0VYemRxS2pzSU56SlVTU3p2RHl2dGN1Z050elp6UThZbm5VXzNTSXdfMm3SAWpBVV95cUxPeGlKSHJYLW5ZMTJPb1FkZ2JZWi1zb0RyUUphd3czcDB2TGlpM1JXdUVpZHlCSDNmc29fc0I0dUZyZDZmaXl4bFZIa2VtT0htX2QtUW96dm0zTDhPZFppa2pkR0RzU3Q2dUZn?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-02-13T08:00:00.000Z",
+  "fetchedAt": "2026-06-16T20:50:09.796Z",
+  "newsBrief": "農曆春節期間診所及藥局停診，慢性病患者面臨用藥中斷風險。相關單位推出「春節提早領藥」等因應措施，協助慢箋族在假期前備妥藥品，避免因停診造成斷藥。此議題每逢長假反覆出現，顯示慢性病用藥連續性管理仍是健康照護體系待解的結構性課題。",
+  "issueAnalysis": "慢性處方箋制度的設計初衷是讓穩定期患者定期自行領藥，減少診所負擔。然而第二、三次領藥率長期偏低，即使平日也難以達到理想服藥連續性，更遑論長假期間的斷藥風險。春節「提早領藥」屬一次性行政補救，無法從根本解決患者在家遺忘服藥、或不清楚剩藥量而延誤補藥的慣性問題。真正需要關注的，是如何在日常追蹤機制中就內建「提醒與回饋」，讓慢箋患者在任何假期都能維持用藥規律。",
+  "designResponse": "慢箋族的斷藥風險，根源在於日常提醒機制的缺失，而非靠節前行政補救可解。透過 LINE 與 Telegram 推播通知，患者無需安裝額外 App 即可在領藥週期到來前收到提醒（proofPoint #2）；提醒訊息附帶藥品外觀圖片，協助多重用藥者確認存藥品項不混淆（proofPoint #3）。當追蹤機制內建於患者熟悉的日常通訊工具，長假的斷藥風險便能被例行提醒自然覆蓋，而非每逢節前才緊急因應。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 3
+}

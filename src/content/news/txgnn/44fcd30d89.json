@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "AI老藥新用平台入選GTC前8名優選展示：知識圖譜與深度學習如何突破藥物研發瓶頸",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1HaGdTdDhJXzlpcWVEY3dIRjNwa2ZtQnZpRmlsdGRpRkVacmhhWmhKX3NfZDRsYWRicHBhLThGR1FYNE14Yk1kME5QUGRWZGt5NGV2YzhZdjdzRjBFVU1YLUJnUG9WMEk?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-17T07:00:00.000Z",
+  "fetchedAt": "2026-06-16T20:41:29.151Z",
+  "newsBrief": "AI老藥新用平台在NVIDIA GTC大會入選前8名優選展示，顯示透過AI系統性分析既有藥物潛在適應症，有望降低研發成本並縮短上市時程，成為當前生醫AI領域備受關注的重要議題。",
+  "issueAnalysis": "新藥研發耗費龐大時間與成本，已上市藥物中仍有大量潛在適應症未被系統性探索。AI技術透過知識圖譜與深度學習分析藥物與疾病的關係網路，能快速篩選具臨床潛力的組合。國際生醫AI研討會上陸續可見老藥新用平台，反映產業對「以存量換增量」策略的認可。關鍵挑戰在於：預測結果如何取得臨床信任，以及跨國藥品資料覆蓋是否足以支撐多中心研究需求。",
+  "designResponse": "面對老藥新用預測結果說服力不足的核心挑戰，關鍵在於讓每個預測都具備可追溯的科學依據。平台採雙引擎並行架構，知識圖譜捕捉藥物與疾病間的結構性關聯，深度學習學習隱性模式，兩者互補提升預測可靠性 (#1)。每個預測附帶 PubMed 文獻佐證與 ClinicalTrials 試驗紀錄，讓研究者能直接驗核證據鏈，而非面對黑箱輸出 (#4)。整合 30+ 國 FDA 藥品資料確保跨國資訊不因地區差異斷鏈，為有意進行多中心研究的團隊提供足夠的資料廣度 (#2)。",
+  "tags": [],
+  "relevance": 0.95,
+  "highlight": true,
+  "criticPasses": 3
+}
