@@ -45,6 +45,8 @@ export const KNOWS_ABOUT: readonly string[] = [
 export const ORG_SAME_AS: readonly string[] = Array.from(
   new Set([
     'https://github.com/yao-care',
+    // Wikidata 實體（LLM/搜尋引擎做實體消歧、確認真實性的核心節點）
+    'https://www.wikidata.org/wiki/Q140265007',
     // Google 商家檔案（canonical CID 形式，供 LLM/搜尋引擎做實體比對）
     'https://www.google.com/maps?cid=12025785010180313919',
     SITE.lineLink,
