@@ -79,7 +79,8 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 1. 對每個 target 的每個 query 抓 Google News RSS → 合併、URL 去重
 2. **Filter pass**（Haiku, `claude -p`）：留下 `relevance ≥ RELEVANCE_THRESHOLD`(0.72) 的相關新聞；**GSC 真實搜尋字（topQueries）注入 filter prompt**，讓選題貼近讀者需求而非只看內容相關
 3. **題目層級去重**：與該 target **既有語料**標題做 bigram Jaccard 比對（門檻 `DUP_TITLE_THRESHOLD=0.6`），近似重複者跳過（log `DUP`）—— 不砍文後避免薄內容累積
-4. **需求感知全域選題**（`selectDemandAware`）：所有 target 候選彙成單池，按 `relevance + 需求加成(命中搜尋字) + (GA/GSC權重−1)×係數` 全域排序取前 `MAX_WRITE_TOTAL`，並限每 target ≤ `PER_TARGET_DAILY_CAP`。零需求且無高相關候選的 target 當天自然寫 0 篇
+4. **需求感知全域選題**（`selectDemandAware`）：所有 target 候選彙成單池，按 `relevance + 需求加成(命中搜尋字) + (GA/GSC權重−1)×係數 + 引用價值先驗(CITATION_PRIORITY)` 全域排序取前 `MAX_WRITE_TOTAL`，並限每 target ≤ `min(PER_TARGET_DAILY_CAP, 該 target 日上限 TARGET_DAILY_CAP)`。零需求且無高相關候選的 target 當天自然寫 0 篇
+   - **引用價值先驗（GEO，2026-06-17）**：`CITATION_PRIORITY` 給「民眾真的會問 LLM 且有對外站」的消費者醫療題目加分（yaocare/geri/func/pedi +0.25、sign +0.2、huatuo/txgnn +0.1），純 B2B/無對外站的內部產品降權（siqc/intel/triz/goalkeeper −0.3）並用 `TARGET_DAILY_CAP` 收緊日上限至 1（marketing 2）。目的：把每日有限額度導向會被 LLM 引用的健康主題，避免再像過去那樣 siqc(59)/intel(28)/triz(22) 灌爆語料。**靜態先驗 + 動態學習**：GA/GSC 權重仍疊加其上，日後若資料證明某 B2B 題目有讀者可部分抵銷。
 5. **Writer + Critic 迴圈**（Sonnet）：writer 出稿（可帶讀者搜尋字/低完成率洞察）→ regex guards 預檢（`scripts/news-guards.mjs`）→ **critic LLM 語意複審**（已重新開啟；critic 掛掉時 fail-open，已過 regex 即接受）→ 不過則 rewrite。最多 `MAX_WRITER_ATTEMPTS=3` 次，仍失敗則丟棄
 6. **不再 prune**（永久累積）
 
@@ -280,6 +281,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 ### 調整 news 抓取範圍 / 角度
 - 加搜尋關鍵字、改痛點 / 設計 proof：編 `src/news.config.ts` 對應 target
 - 調精準度 / 產量：`fetch-news.ts` 檔內常數 `RELEVANCE_THRESHOLD`(0.72) / `MAX_WRITE_TOTAL`(10) / `PER_TARGET_DAILY_CAP`(3) / `DUP_TITLE_THRESHOLD`(0.6)
+- 調各 target 的「引用價值傾斜」：`CITATION_PRIORITY`（選題加減分）與 `TARGET_DAILY_CAP`（單 target 日上限覆寫），同在 `fetch-news.ts`
 - 改 writer / critic 的 prompt：`scripts/news-prompts.mjs`
 - 改長度 / proofPoint 引用規則：`scripts/news-guards.mjs` + `src/content/config.ts` 的 Zod schema 要一致
 - 改完不用手動跑；cron 每天 04:30 會自動觸發，要立刻看效果可手動跑 `./scripts/fetch-news.sh`

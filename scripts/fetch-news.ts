@@ -92,6 +92,45 @@ const WEIGHT_SCORE_FACTOR = 0.2;
 /** 題目層級去重門檻（bigram Jaccard；保守，寧可少跳） */
 const DUP_TITLE_THRESHOLD = 0.6;
 
+/**
+ * 引用價值先驗（GEO）：民眾真的會拿去問 LLM、且有對外可被引用站點的消費者醫療題目加分；
+ * 純 B2B / 無對外消費者站的內部產品降權 —— 讓每日有限的寫作額度往「會被 LLM 引用」的主題傾斜。
+ * 加在選題分數上（與 relevance 同尺度，約 0.72–1.x）；GA/GSC 學到的權重仍疊加其上，
+ * 故日後若資料顯示某 B2B 題目其實有讀者，學習訊號可部分抵銷此先驗（靜態先驗 + 動態學習）。
+ *   Tier A（消費者醫療、公開站、民眾高頻問）：用藥 / 長者 / 功能 / 兒童發展 / 報到
+ *   Tier B（公開但較技術）：中醫 AI / 老藥新用
+ *   Tier C（B2B / 無對外消費者站，壓低）：稽核評鑑 / 情報 / TRIZ / 合規守門 API
+ */
+const CITATION_PRIORITY: Record<NewsTargetSlug, number> = {
+  yaocare: 0.25,
+  geri: 0.25,
+  func: 0.25,
+  pedi: 0.25,
+  sign: 0.2,
+  huatuo: 0.1,
+  txgnn: 0.1,
+  marketing: 0,
+  goalkeeper: -0.3,
+  siqc: -0.3,
+  intel: -0.3,
+  triz: -0.3,
+  // fhir-server 未開 news target（無對外消費者站）；列出僅為型別完整，實際不會被選
+  'fhir-server': -0.3,
+};
+/**
+ * 每日每 target 上限覆寫（未列者用 PER_TARGET_DAILY_CAP）。
+ * Tier C 收緊到 1，避免候選量大時（如 siqc 新聞多）灌爆當日額度、排擠消費者醫療題目。
+ */
+const TARGET_DAILY_CAP: Partial<Record<NewsTargetSlug, number>> = {
+  goalkeeper: 1,
+  siqc: 1,
+  intel: 1,
+  triz: 1,
+  marketing: 2,
+};
+const dailyCapFor = (slug: NewsTargetSlug): number =>
+  TARGET_DAILY_CAP[slug] ?? PER_TARGET_DAILY_CAP;
+
 // ─── 型別 ───────────────────────────────────────────
 
 type RawItem = {
@@ -569,8 +608,9 @@ function loadInsights(): {
 
 /**
  * 需求感知全域選題：把所有 target 的候選彙整成單一池，依
- *   選題分數 = score（relevance + 需求加成）+ (targetWeight−1) × 係數
- * 由高到低排序，取前 totalCap；同時每個 target 不超過 perTargetCap（保留多樣性）。
+ *   選題分數 = score（relevance + 需求加成）+ (targetWeight−1) × 係數 + 引用價值先驗
+ * 由高到低排序，取前 totalCap；同時每個 target 不超過 min(perTargetCap, 該 target 日上限)。
+ * 引用價值先驗（CITATION_PRIORITY）讓消費者醫療題目優先、B2B 內部產品降權並收緊上限。
  * 零需求且無高相關候選的 target 當天自然寫 0 篇 —— 即「精準少量」要的行為。
  */
 function selectDemandAware(
@@ -581,7 +621,8 @@ function selectDemandAware(
 ): KeptItem[] {
   const scored = items.map((it) => {
     const w = weights?.get(it.target.slug) ?? 1;
-    return { it, sel: it.score + (w - 1) * WEIGHT_SCORE_FACTOR };
+    const prior = CITATION_PRIORITY[it.target.slug] ?? 0;
+    return { it, sel: it.score + (w - 1) * WEIGHT_SCORE_FACTOR + prior };
   });
   scored.sort((a, b) => b.sel - a.sel);
 
@@ -590,7 +631,7 @@ function selectDemandAware(
   for (const { it } of scored) {
     if (picked.length >= totalCap) break;
     const c = perTarget.get(it.target.slug) ?? 0;
-    if (c >= perTargetCap) continue;
+    if (c >= Math.min(perTargetCap, dailyCapFor(it.target.slug))) continue;
     perTarget.set(it.target.slug, c + 1);
     picked.push(it);
   }
