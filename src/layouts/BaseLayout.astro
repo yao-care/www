@@ -21,31 +21,47 @@ const {
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const ogImageUrl = new URL(ogImage ?? SITE.ogImage, SITE.url).toString();
 
+const orgId = `${SITE.url}/#organization`;
 const defaultJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: SITE.name,
-  alternateName: '藥提醒',
-  url: SITE.url,
-  logo: `${SITE.url}/assets/images/logo.png`,
-  description: SITE.description,
-  email: SITE.email,
-  knowsAbout: KNOWS_ABOUT,
-  areaServed: { '@type': 'Country', name: 'Taiwan' },
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '台灣大道二段239號13樓',
-    addressLocality: '台中市西區',
-    addressCountry: 'TW',
-  },
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'customer service',
-    email: SITE.email,
-    url: SITE.lineLink,
-    availableLanguage: ['zh-TW', 'en'],
-  },
-  sameAs: ORG_SAME_AS,
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': orgId,
+      name: SITE.name,
+      alternateName: '藥提醒',
+      url: SITE.url,
+      logo: `${SITE.url}/assets/images/logo.png`,
+      description: SITE.description,
+      email: SITE.email,
+      knowsAbout: KNOWS_ABOUT,
+      areaServed: { '@type': 'Country', name: 'Taiwan' },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '台灣大道二段239號13樓',
+        addressLocality: '台中市西區',
+        addressCountry: 'TW',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: SITE.email,
+        url: SITE.lineLink,
+        availableLanguage: ['zh-TW', 'en'],
+      },
+      sameAs: ORG_SAME_AS,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      url: SITE.url,
+      name: SITE.name,
+      alternateName: '藥提醒 yao.care',
+      description: SITE.description,
+      inLanguage: 'zh-TW',
+      publisher: { '@id': orgId },
+    },
+  ],
 };
 const finalJsonLd = jsonLd ?? defaultJsonLd;
 ---
