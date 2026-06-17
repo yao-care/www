@@ -29,6 +29,7 @@ const defaultJsonLd = {
       '@type': ['Organization', 'MedicalOrganization'],
       '@id': orgId,
       name: SITE.name,
+      legalName: '藥提醒科技有限公司',
       alternateName: '藥提醒',
       url: SITE.url,
       logo: `${SITE.url}/assets/images/logo.png`,
@@ -36,6 +37,7 @@ const defaultJsonLd = {
       email: SITE.email,
       knowsAbout: KNOWS_ABOUT,
       areaServed: { '@type': 'Country', name: 'Taiwan' },
+      hasMap: 'https://www.google.com/maps?cid=12025785010180313919',
       address: {
         '@type': 'PostalAddress',
         streetAddress: '台灣大道二段239號13樓',

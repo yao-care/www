@@ -45,6 +45,8 @@ export const KNOWS_ABOUT: readonly string[] = [
 export const ORG_SAME_AS: readonly string[] = Array.from(
   new Set([
     'https://github.com/yao-care',
+    // Google 商家檔案（canonical CID 形式，供 LLM/搜尋引擎做實體比對）
+    'https://www.google.com/maps?cid=12025785010180313919',
     SITE.lineLink,
     LINE_PERSONAL,
     LINE_TEAM,
