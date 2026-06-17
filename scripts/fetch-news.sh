@@ -15,6 +15,11 @@ fi
 
 cd $WWW_REPO_DIR
 
+# 系統時區是 UTC；本站面向台灣，日期標籤（commit message / log 起訖）一律用台北時間，
+# 否則台北清晨 04:30 發的文會被標成前一天（UTC 此刻仍是前一日 20:30）。
+# 只前綴 bash 的 date 呼叫，不污染子 node 程序（其 toISOString 仍輸出 UTC，文章內容不變）。
+TWDATE() { TZ=Asia/Taipei date "$@"; }
+
 # 若 caller 是 Claude Code session，子 claude CLI 會被擋（nested session）
 # cron 沒有這變數，但手動觸發時要清掉
 unset CLAUDECODE CLAUDE_CODE_ENTRYPOINT CLAUDE_CODE_SSE_PORT
@@ -23,7 +28,7 @@ LOG=/var/log/yaocare-news.log
 {
   echo ""
   echo "════════════════════════════════════════"
-  echo " fetch-news start: $(date '+%Y-%m-%d %H:%M:%S')"
+  echo " fetch-news start: $(TWDATE '+%Y-%m-%d %H:%M:%S') (台北)"
   echo "════════════════════════════════════════"
 
   # 1) 抓新聞 + 寫檔
@@ -38,7 +43,7 @@ LOG=/var/log/yaocare-news.log
     CHANGED_NEWS=$(git diff --cached --name-only -- src/content/news)
 
     git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
-      commit -m "chore(news): auto fetch $(date '+%Y-%m-%d')"
+      commit -m "chore(news): auto fetch $(TWDATE '+%Y-%m-%d')"
     git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗（不阻擋 build）"
 
     # 3) build → 同步產物到 NPM 掛載的服務目錄
@@ -51,5 +56,5 @@ LOG=/var/log/yaocare-news.log
     fi
   fi
 
-  echo " fetch-news end: $(date '+%Y-%m-%d %H:%M:%S')"
+  echo " fetch-news end: $(TWDATE '+%Y-%m-%d %H:%M:%S') (台北)"
 } 2>&1 | tee -a "$LOG"
