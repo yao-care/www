@@ -34,6 +34,9 @@ LOG=/var/log/yaocare-news.log
   if git diff --cached --quiet; then
     echo "  no changes; skip commit/build"
   else
+    # 先記下這次變動的文章檔（供 IndexNow 提交；commit 後 staged 清單會清空）
+    CHANGED_NEWS=$(git diff --cached --name-only -- src/content/news)
+
     git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
       commit -m "chore(news): auto fetch $(date '+%Y-%m-%d')"
     git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗（不阻擋 build）"
@@ -41,6 +44,11 @@ LOG=/var/log/yaocare-news.log
     # 3) build → 同步產物到 NPM 掛載的服務目錄
     npm run build
     rsync -a --delete dist/ $WWW_SITE_DIR/
+
+    # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（只送可索引文章，失敗不阻擋）
+    if [ -n "$CHANGED_NEWS" ]; then
+      node scripts/indexnow.mjs $CHANGED_NEWS || echo "  ⚠ IndexNow 提交失敗（不阻擋）"
+    fi
   fi
 
   echo " fetch-news end: $(date '+%Y-%m-%d %H:%M:%S')"

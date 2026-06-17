@@ -89,7 +89,9 @@ Prompt 模板在 `scripts/news-prompts.mjs`，CLI 旗標：`--target <slug>` / `
 ```
 30 20 * * *  $WWW_REPO_DIR/scripts/fetch-news.sh
 ```
-台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：抓新聞 → 若 `src/content/news` 有變化 → 自動 commit（作者 LightChang）+ push + `npm run build` + `rsync dist/ → $WWW_SITE_DIR/`。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。
+台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：抓新聞 → 若 `src/content/news` 有變化 → 自動 commit（作者 LightChang）+ push + `npm run build` + `rsync dist/ → $WWW_SITE_DIR/` → **IndexNow 即時通知**。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。
+
+> **IndexNow**（`scripts/indexnow.mjs`）：部署後把當天變動的文章 URL POST 給 `api.indexnow.org`（Bing/Yandex/Naver/Seznam 同 endpoint），讓新內容「當天」被收，而非等爬蟲。金鑰檔 `public/1be01cbeef8111fdeccbc36e95ec07c1.txt`（檔名＝金鑰，build 後出現在網站根目錄供驗證；換金鑰要同步改 `indexnow.mjs` 的 `KEY` 常數）。**只提交可索引文章**（共用 `src/news.policy.mjs` 的 relevance 門檻，與 noindex 政策一致，不送低相關文）。提交失敗不阻擋部署。
 
 > ⚠ wrapper 一開頭會 `unset CLAUDECODE CLAUDE_CODE_ENTRYPOINT CLAUDE_CODE_SSE_PORT`，否則在 Claude Code session 內手動觸發時，子 `claude` CLI 會因為偵測到 nested session 而被擋。
 
