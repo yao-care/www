@@ -1,0 +1,20 @@
+{
+  "target": "func",
+  "title": "毛巾擰不乾、起身要扶手？醫警告：肌少症已悄悄上身，3招在家就能測",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBiMjRXdFdnM0M0dllxYkRGeHQtZGVjYW1LWklpbFktUGlCZEc3VXUxVnZoamw1OXZnaXFvZ3ZCd1FVb3VOeEViWDFKU2tIVXJMel8wSG1RbGZqLXd5OEI4VWxPRdIBaEFVX3lxTE1uLUZONTN0SmxYSVB5ZUFQYm5lVWZ1TlYySFZrblpCekFKaTNlRVYzRm02eWdnY2lvQzctU1JiczZIZU9sa2NGckRVbVdjLTRyRGVTU0tWZU40dW9FY1QwSUJqaFcxYmtH?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-17T01:51:00.000Z",
+  "fetchedAt": "2026-06-17T20:56:33.601Z",
+  "newsBrief": "毛巾擰不乾、起身需要扶手，可能是肌少症的早期警訊。醫師提醒，肌肉量流失往往悄悄發生，與行動力衰退及跌倒風險密切相關。文章提供三項居家自測方式，協助民眾判斷是否出現肌少徵兆，建議及早正視。",
+  "issueAnalysis": "肌少症的困境在於進展緩慢、早期症狀模糊，既不如血壓血糖有標準檢驗值，也難以從外觀察覺。一般健檢著重生化數據，對行動力、肌力等功能層面的評估往往付之闕如。然而肌少症與失能、跌倒、住院率上升高度相關，中年後便應納入日常健康管理。成人在亞健康階段若缺乏可量化的自評工具，難以在症狀惡化前建立警覺，容易錯失預防的黃金窗口。",
+  "designResponse": "面對肌少症這類「症狀不明顯、但後果嚴重」的功能衰退議題，Smart Func 的設計思路是把行動力與活力納入結構化評估框架，而非僅依賴生化數據。在評估架構上，採用 WHO 內在能力（IC）五大功能中的行動與活力向度，設計能反映日常肌力表現的自評題目 (proofPoint #1)。考量高風險族群未必熟悉正式就醫管道，工具以智慧分支題型設計：健康者可快速通過，出現警訊者才深入展開 (proofPoint #2)，避免過長問卷導致中途放棄。評估結果依紅黃綠分級提供個人化衛教說明，並可匯出 PDF 供就醫或家庭討論參考 (proofPoint #5)。這樣的設計讓功能健康評估能在肌力問題惡化為失能之前，先建立一道可量化的自我察覺入口。",
+  "tags": [
+    "肌少症",
+    "行動功能",
+    "功能健康自評"
+  ],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 1
+}

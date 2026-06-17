@@ -1,0 +1,20 @@
+{
+  "target": "geri",
+  "title": "長者免費肌少症＋健康評估｜紅十字會流動車提供血糖、骨質密度、血壓、內臟脂肪檢查及6月出車時間表",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi_ARBVV95cUxPSldHdXBoNGVQU09lYkdMbXMxQXlNTmdTYkx3TGx6dFFydFZ0emZFWENET08xTHg0eWxYMTlBdE5fZko5Mk91dG54VXNZTzM1YkExWmRENlZLZXVCS3JDSjVaUDhIem1sWTBxbU1vYXp6cUk4bFA3OGtkaG9kSzVDYlVnVFU1dGhsTjRfSFdoN1JMbFBJNVp6dENmT3h0bWxOVm9lMXNuYzU0ZkVKejVzQ0JtN1NoUzBJbjdPblg1VlFUMHhTSS1PVnc1TVhMWFl2STdPcUlpMjZfQ1hnLXh0R2dsVS1jblIyemQ5dGR0YkE4dFpUODIzS0xFRHZqYUxqdFoxZDdVQnJId01MQnRoQWV2ZHB0UXNoNy1RXzIySGUzd3NwUkNwVXNmVTQtbkJXT1d4NWJ2ZWtfb1hoLXc5dURVTFk3U1Nib0xHQW9GOFZQSmVjTmxwTHhHVlNkTDZ5VDhSTUc2NTRVVXE1M3NYcjRkcFdtTFZEYkpETUdnbUsxZ1RyeWczRWxxdncwRmJCcXAzU1ZPR3JXSmlmN0ExUm85cVhwLWIyMEY0bGp5bWYyVkpaZlhYUGNlck5VU3hxeUJVMENoTnVYTGItdUhtaUx3MmhPbFhGY042M2lhZ2I0T0h2SGpVQkFseXgzVFZmdjZxdmFIVmpvSkVET29jUDZLVy03aFNPRGU3YV9RdGI5VFk4YmhGSVA5MnNqWi1hQzFUOHNSc2MtVDdmOGU5NzROUlJnVWt3ZkZERkpRSWVqM1dtVThOR1B1SEdqbG9ob2NJTzBQMFBfbTRYWXpDU2hnSF9VR2ppZFpxRkdKV0JMTEw3bjlUWFRWYlI?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-17T00:00:00.000Z",
+  "fetchedAt": "2026-06-17T20:50:52.437Z",
+  "newsBrief": "社福機構透過流動服務車，為長者提供免費肌少症篩查及多項健康指標檢測，涵蓋血糖、骨質密度、血壓與內臟脂肪，並公布6月出車地點與時間安排。此類社區外展模式將評估資源帶入長者生活圈，降低就醫門檻，反映高齡社會對結構化健康篩查的迫切需求。",
+  "issueAnalysis": "社區外展式健康評估的普及，揭示了一個結構性缺口：單次測量的血壓、骨質密度等指標，若缺乏功能狀態、認知與社會支持等面向的脈絡，容易讓「異常數值」停留在孤立訊息，而非有效的轉介依據。肌少症與衰弱風險往往分散在不同量表，家屬難以從片段數字判斷長者整體狀況。如何讓社區篩查結果與後續臨床評估形成連貫路徑，是當前 geri 醫學實踐在社區場景仍待補全的環節。",
+  "designResponse": "面對篩查資訊分散、難以形成整合判斷的問題，Smart Geri 的設計思路是以臨床衰弱量表（CFS 1–9）作為分層基準，讓單次評估能對應到整體衰弱程度，而非孤立讀取某幾項數值 (proofPoint #1)。評估面向涵蓋認知、情緒、營養、行動、用藥與社會支持，貼近 geri 醫學周全性評估的臨床邏輯，以補社區外展場景通常無法觸及的多維風險面向 (proofPoint #3)。在使用情境上，系統同時支援公眾自篩與專業臨床兩種模式 (proofPoint #2)：家屬可在社區活動後延伸評估長者整體功能狀態，取得比單一生理數值更完整的風險輪廓。評估結果以紅黃綠分級搭配衛教內容呈現 (proofPoint #5)，目的是讓篩查成為後續行動的起點，而非止於數字輸出。",
+  "tags": [
+    "肌少症",
+    "衰弱評估",
+    "社區篩查"
+  ],
+  "relevance": 0.79,
+  "highlight": true,
+  "criticPasses": 1
+}

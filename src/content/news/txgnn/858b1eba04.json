@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "AI 老藥新用平台競爭深化，預測可信度與 EHR 整合性成臨床導入關鍵",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBlN2ozQ2tKTHd4Qks1SlVSYXVGU09BaUpsYnVzWmp4NngweGZrczZXSXNGUDBvY1dkTGt5UHNBRWxLVzB2SzM1cEdfc2tZNG5YbllKNExzUk5Xb014VnVJ0gFkQVVfeXFMUDR0VlBBTmU1ZmZsUDRmRkp6bzFYcTc1Z01oTlJTdFpreEx1VUZsdFRGVFpTWFFTaW90TnZUblMwTGdYQ3VhZnFkQ1VBekNoNjZPMF9ZMzJVaXdtb3NVaEZsWUxkSw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-29T07:00:00.000Z",
+  "fetchedAt": "2026-06-17T20:42:47.766Z",
+  "newsBrief": "源華智醫接連出席兩大國際舞台展現 AI 藥物研發實力，顯示老藥新用議題持續受全球製藥業關注，相關 AI 平台的競爭格局也正加速成形。",
+  "issueAnalysis": "全球新藥研發耗時耗資，已核准藥物中仍有大量潛在適應症未被系統性探索。AI 老藥新用平台的競爭重點，已從「能否預測新用途」轉向「預測是否具充分文獻佐證」與「能否嵌入既有醫療資訊系統直接使用」，後兩者正成為臨床導入的核心門檻。",
+  "designResponse": "面對 AI 老藥新用領域的競爭，TxGNN 的設計重心在「預測可信度」與「臨床可整合性」。每筆適應症推薦均附帶 PubMed 文獻與 ClinicalTrials 臨床試驗資料 (proofPoint #4)，讓臨床端得以對照學術證據評估，而非仰賴黑盒子輸出。平台已上架 SMART on FHIR App Gallery，相容主流 EHR 系統 (proofPoint #5)，可嵌入既有臨床流程，降低導入阻力，分別回應信任度與整合度兩道核心門檻。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}
