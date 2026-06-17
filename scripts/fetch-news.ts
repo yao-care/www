@@ -50,6 +50,7 @@ import {
   checkSimplified,
   normTitle,
   findNearDuplicate,
+  titleSimilarity,
 } from './news-guards.mjs';
 import { fixTerms } from './zh-tw.mjs';
 
@@ -607,6 +608,43 @@ function loadInsights(): {
 }
 
 /**
+ * 跨 target 去重：同一則新聞可能同時命中多個 target（如肌少症新聞同時落在
+ * func 成人功能評估與 geri 高齡評估），各寫一篇會撞題並浪費每日額度。
+ * 去重鍵 = 同 URL，或標題 bigram Jaccard ≥ DUP_TITLE_THRESHOLD（涵蓋不同來源同新聞）。
+ * 每群只留「引用價值較高」者：先比 CITATION_PRIORITY，同分再比選題分數 score。
+ * 貪婪保留 —— 依 (CITATION_PRIORITY desc, score desc) 掃描，後到且撞群者捨棄並 log。
+ * 單 target 路徑（--target）不經此函式。
+ */
+function dedupeAcrossTargets(items: KeptItem[]): KeptItem[] {
+  const ranked = [...items].sort((a, b) => {
+    const pa = CITATION_PRIORITY[a.target.slug] ?? 0;
+    const pb = CITATION_PRIORITY[b.target.slug] ?? 0;
+    if (pb !== pa) return pb - pa;
+    return b.score - a.score;
+  });
+  const kept: KeptItem[] = [];
+  let dropped = 0;
+  for (const it of ranked) {
+    const dup = kept.find(
+      (k) =>
+        k.item.link === it.item.link ||
+        titleSimilarity(k.item.title, it.item.title) >= DUP_TITLE_THRESHOLD,
+    );
+    if (dup) {
+      dropped++;
+      log(
+        `    ↩ 跨target DUP 捨棄 [${it.target.slug}]「${it.item.title.slice(0, 26)}…」` +
+          ` → 讓給引用價值較高的 [${dup.target.slug}]`,
+      );
+      continue;
+    }
+    kept.push(it);
+  }
+  if (dropped) log(`  跨 target 去重：${items.length} → ${kept.length}（捨棄 ${dropped}）`);
+  return kept;
+}
+
+/**
  * 需求感知全域選題：把所有 target 的候選彙整成單一池，依
  *   選題分數 = score（relevance + 需求加成）+ (targetWeight−1) × 係數 + 引用價值先驗
  * 由高到低排序，取前 totalCap；同時每個 target 不超過 min(perTargetCap, 該 target 日上限)。
@@ -692,9 +730,11 @@ async function main() {
   const totalCap = ONLY_TARGET
     ? Math.min(MAX_ITEMS, byTarget.get(ONLY_TARGET)?.length ?? 0)
     : Math.min(MAX_ITEMS, MAX_WRITE_TOTAL);
+  // 全域路徑先跨 target 去重（同新聞只留引用價值較高者），再做需求感知選題
+  const globalPool = ONLY_TARGET ? allKept : dedupeAcrossTargets(allKept);
   const picked: KeptItem[] = ONLY_TARGET
     ? (byTarget.get(ONLY_TARGET) ?? []).slice(0, totalCap)
-    : selectDemandAware(allKept, totalCap, PER_TARGET_DAILY_CAP, insights.weights);
+    : selectDemandAware(globalPool, totalCap, PER_TARGET_DAILY_CAP, insights.weights);
 
   log(`\n══════ Phase 2: 排程 ${picked.length} 篇 ══════`);
   const distribution = new Map<NewsTargetSlug, number>();
