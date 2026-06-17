@@ -329,6 +329,9 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 - [ ] 部分裝飾圖目前透過 CSS 漸層代替；如需找回原視覺效果，可從 git history 取出舊 `decor` 圖
 - [ ] **觀察中**：B（CTA 加成）/ C（低完成率提示）。**2026-06-16 修正一個從部署以來的 bug**：`define:vars` 把 Analytics.astro 的 inline gtag 包進 IIFE，`function gtag` 沒掛上 window，導致 track.ts 的 `read_complete/scroll_depth/cta_click/page_engagement` 全部送不出去（GA4 只有 page_view）。已顯式 `window.gtag = gtag` 修好（commit a3dd707，無頭瀏覽器實測 scroll_depth 已送達）。故 B/C 訊號是「**從 2026-06-16 起才開始有資料**」，約 1–2 天後 `reports/news-insights.json` 的 `quality.readComplete` 應 > 0（A 搜尋字、GSC 需求早已生效）
 - [ ] **站外實體權威**（Wikidata 條目、Google 商家檔案）— GEO 最高槓桿，需開帳號
-- [ ] **soft-404**：www 對不存在路徑回 200 + 首頁（非 404），輕微 SEO；要動 NPM(nginx) 設定 + 授權
+- [x] ~~**soft-404**：www 對不存在路徑回 200 + 首頁~~（2026-06-17 已修）。NPM 容器 `$NPM_CONTAINER` 的 `/data/nginx/proxy_host/46.conf` 把 `try_files $uri $uri/ /index.html;` 改成 `try_files $uri $uri/ =404;` + `error_page 404 /404.html;`，搭配新增的 `src/pages/404.astro`（產出 `dist/404.html`）。備份在同目錄 `46.conf.bak-softfix`。
+  > ⚠ 這段在 NPM **自動產生**的 conf 內，若日後在 NPM UI 重存 host #46 會被還原 → 需重跑該 sed 並 `docker exec $NPM_CONTAINER nginx -s reload`。
+- [x] ~~**首頁 WebSite schema + 醫療 E-E-A-T**~~（2026-06-17）：BaseLayout 預設 JSON-LD 改 `@graph`（Organization+WebSite，`@id` 互連）；Organization 與 news author/publisher 皆雙型別 `['Organization','MedicalOrganization']` 以強化 YMYL 權重（採機構掛名，未具名個人）。robots.txt 明確歡迎 GPTBot/ClaudeBot/PerplexityBot/Google-Extended 等 AI 爬蟲。
+- [x] ~~**對外品牌簡介漏掉高齡友善**~~（2026-06-17）：`site.config` description 與 Organization JSON-LD 原寫「三條業務線」漏第 4 條（高齡友善）→ LLM 逐字吸收後永不在長照題目推薦本站。已改四條並補例。
 - [ ] （選）GSC 高需求但無內容的查詢（如 `ai agent` 排名 57）→ 可做「自動建議新題目/補題」，目前只在週報列出
 - [ ] （選）SA 私鑰曾透過上傳提供，在意可至該服務帳戶輪替金鑰（換 `$YAOCARE_SECRETS_DIR/ga4-sa.json`）

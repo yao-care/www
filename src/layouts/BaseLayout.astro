@@ -26,7 +26,7 @@ const defaultJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
+      '@type': ['Organization', 'MedicalOrganization'],
       '@id': orgId,
       name: SITE.name,
       alternateName: '藥提醒',
