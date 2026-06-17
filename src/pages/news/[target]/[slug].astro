@@ -8,6 +8,7 @@ import NewsArticle from '../../../components/news/NewsArticle.astro';
 import { NEWS_TARGET_BY_SLUG } from '../../../news.config';
 import { GLOSSARY } from '../../../glossary.config';
 import { SITE } from '../../../site.config';
+import { isNewsIndexable } from '../../../news.policy.mjs';
 
 /** news entry id（如 "yaocare/abc123.json"）→ 對外 slug */
 function hrefSlug(e: CollectionEntry<'news'>): string {
@@ -94,6 +95,8 @@ const jsonLd = {
 };
 
 const ogImage = `/assets/images/og/${data.target}.png`;
+// 低相關文章 noindex（集中索引權重到主力頁面，政策見 news.policy.mjs）
+const noindex = !isNewsIndexable(data.relevance);
 ---
 <BaseLayout
   title={pageTitle}
@@ -101,6 +104,7 @@ const ogImage = `/assets/images/og/${data.target}.png`;
   ogImage={ogImage}
   ogType="article"
   jsonLd={jsonLd}
+  noindex={noindex}
 >
   <Nav />
   <main class="pt-20">

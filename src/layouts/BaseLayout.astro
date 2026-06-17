@@ -10,6 +10,7 @@ interface Props {
   ogImage?: string;
   ogType?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
+  noindex?: boolean;
 }
 const {
   title = SITE.title,
@@ -17,6 +18,7 @@ const {
   ogImage,
   ogType = 'website',
   jsonLd,
+  noindex = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const ogImageUrl = new URL(ogImage ?? SITE.ogImage, SITE.url).toString();
@@ -74,6 +76,7 @@ const finalJsonLd = jsonLd ?? defaultJsonLd;
     <title>{title}</title>
     <meta name="author" content="yao.care" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="keywords" content={SITE.keywords} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonical} />
