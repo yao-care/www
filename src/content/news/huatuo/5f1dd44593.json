@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "心房顫動用藥兩難，可解釋 AI 讓中風風險評估不再是黑箱",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE92LUR1Y0g3ZG1ENkJQNXRmbzVWbXhJU3d2bnFKRGdGaE5JSkQydXJGbVI1MU9uN1BXVFpGTEpzZi1XYU9fWnM5MUNvd2NRb0VFb1REME9R?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-16T07:00:00.000Z",
+  "fetchedAt": "2026-06-18T20:57:53.561Z",
+  "newsBrief": "台大醫院針對心房顫動患者開發可解釋 AI 系統，使中風風險評估能個人化呈現，並讓臨床醫師看懂模型推理依據，而非只接受黑箱結論。可解釋性正成為 AI 醫療落地的核心門檻。",
+  "issueAnalysis": "AI 在醫療場景最大的信任障礙，是「不知道它怎麼想的」。心房顫動的抗凝血劑決策涉及多重共病與出血風險，若臨床醫師無法追溯模型為何給出某風險等級，實務上便難以採信或對患者說明。這問題在中醫 AI 場景同樣存在——辨證結論若無法回溯到四診資料與規則依據，中醫師既無法審查，也難以教學傳承。可解釋性因此不只是技術加分，而是 AI 醫療在臨床端能否真正落地的基本條件。",
+  "designResponse": "面對可解釋性需求，辨證引擎採用規則 ×0.6 加 LLM ×0.4 的混合辨證權重（#2），確保可被審查的部分夠多，讓臨床端始終有足夠脈絡確認或質疑系統判斷。128 條八綱與臟腑規則全部寫在可被中醫師逐條檢視的 syndromes.json 內（#1），任何辨證結論都能追溯到觸發規則、四診資料與 RAG 引用證據，形成完整推理路徑（#3）。這樣的架構讓可解釋性不停留在介面說明層，而是內建於辨證邏輯的每一步——中醫師在質疑某個結論時，有明確的規則節點可以切入審查，而非面對無從拆解的統計黑箱。",
+  "tags": [],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 3
+}

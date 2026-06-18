@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "AI老藥新用登上國際舞台，可辯護性推論成競爭關鍵",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1VcUFsSXpiN2hZZjVlN19iY1k4ZWJlVlo3Vjd1Z0lIcWtENVFkdnZUWGFUUmw0T3NYN0Fsd2VMTkt1aVcyNFY5T3hmQnVzQmh4R0MzY05Cc2hZckhqM3Vj0gFkQVVfeXFMTmlscTdvcWt1Y3FzdnFhTnEyc2tHc2kwM2R5bmh3XzNMSGFScFJjSDJaaU1IOFZMVkdnNGR6M0NvblVRSk9fZXhnNnJMY251bC1LRmNFMTFYUEV3VE9EUTl4MFZMUw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-01-22T08:00:00.000Z",
+  "fetchedAt": "2026-06-18T20:43:04.368Z",
+  "newsBrief": "台灣生技公司華安偕子公司源華智醫宣布，將於2026年3月輝達GTC大會發表AI老藥新用研發成果。此消息顯示老藥新用技術正從學術探索走向產業能見度，AI驅動的藥物再定位議題受到更廣泛的國際關注。",
+  "issueAnalysis": "新藥開發動輒耗費十年以上與數十億美元，卻面臨高失敗率。老藥新用提供另一條路：已通過安全性驗證的上市藥物，若能系統性比對適應症資料，開發週期與風險皆可大幅壓縮。現實挑戰在於，藥物資料與文獻散布各平台，缺乏統一整合與AI輔助推論機制，使許多潛力新用途長期埋沒在資料孤島之中。",
+  "designResponse": "面對老藥新用在資料整合與推論可信度上的核心挑戰，解法在於讓預測具備「可辯護性」。方法層面採雙引擎並行——知識圖譜捕捉結構性藥物-疾病關聯、深度學習抽取隱性訊號，兩者互補而非取捨 (#1)；每筆預測皆附帶 PubMed 文獻與 ClinicalTrials 試驗佐證，使臨床判斷有據可循 (#4)。覆蓋範圍超越單一市場，整合多國藥品資訊以實現跨境推論 (#2)。以開源授權公開原始碼 (#6)，讓研究社群能持續迭代而非各自重建基礎設施。",
+  "tags": [],
+  "relevance": 0.92,
+  "highlight": true,
+  "criticPasses": 2
+}

@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "從數位孤島到醫療生態系：SMART on FHIR 如何重塑台灣臨床資料互通",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5LcGtZYmpqTUdmTDFZWFl0ak42ajlfRVVhNkV2U29xSGNlYm1xY0pqMDNrSG9FbzRZeEpLYTI3MGtwcUxMLVlzZEhyVkRBYV9UNE54blNn?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-08T07:00:00.000Z",
+  "fetchedAt": "2026-06-18T21:00:10.109Z",
+  "newsBrief": "iThome 刊出李建璋觀點文章，指出台灣各院 EHR 系統長期割裂呈「數位孤島」狀態，以 SMART on FHIR 標準為核心，探討台灣如何透過國家級基建將孤立系統串連為具互通性的醫療生態系。",
+  "issueAnalysis": "台灣醫療資訊化程度雖高，但各院 HIS、EHR 系統採用不同技術架構，形成互不相通的資料孤島。SMART on FHIR 提供標準化 App 授權與資料交換介面，理論上可讓第三方應用以統一方式接入不同機構的患者資料。然而標準採納不等於生態系形成：臨床工作流整合、資安合規、各廠商實作落差仍是核心挑戰。對需要跨院、跨國藥品資料的臨床決策輔助場景，互通標準的建立是讓 AI 預測真正落地的前提。",
+  "designResponse": "面對 FHIR 生態系仍在成形的現實，設計思路是從標準端對齊、而非等待系統端整合。接入層採 OAuth + PKCE 認證流程接入 EHR（#7），在各廠商實作落差仍大的環境下仍能以標準流程完成身份驗證，降低機構導入阻力。資料層已上架 SMART on FHIR App Gallery、相容主流 EHR 系統（#5），台灣機構完成 FHIR 基建後可直接嵌入臨床工作流，無需另行開發介接層。每個預測結果並附帶 PubMed 文獻與 ClinicalTrials 證據包（#4），在互通標準普及前確保臨床可追溯性。",
+  "tags": [],
+  "relevance": 0.76,
+  "highlight": false,
+  "criticPasses": 3
+}
