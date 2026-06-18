@@ -225,6 +225,60 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     ],
     related: ['sign'],
   },
+  {
+    slug: 'triz-theory',
+    term: 'TRIZ 發明問題解決理論',
+    en: 'Theory of Inventive Problem Solving',
+    category: 'ai',
+    oneLiner:
+      '蘇聯工程師 Altshuller 從數百萬筆專利歸納出的系統化創新方法，主張多數發明都遵循少數可複用的解題模式。',
+    paragraphs: [
+      'TRIZ（俄文縮寫，英譯 Theory of Inventive Problem Solving）核心觀點是：把「具體問題」抽象成「典型矛盾」，再用前人驗證過的「發明原則」反推解法。常用工具包含 40 條發明原則、39 個工程參數，以及描述「改善 A 卻惡化 B」時該用哪些原則的矛盾矩陣。',
+      '傳統 TRIZ 工具操作門檻高、常需專家陪伴查表；結合 RAG 知識庫與 AI Agent 後，使用者能用自然語言描述問題，由系統抽取矛盾、推薦原則並生成可行解法方向，把專家門檻降到一段對話。',
+    ],
+    keyPoints: [
+      '40 發明原則 / 39 工程參數 / 矛盾矩陣',
+      '把具體問題抽象成典型矛盾再反推解法',
+      '適合製造、IT 產品、研發的系統化創新',
+    ],
+    related: ['triz'],
+  },
+  {
+    slug: 'security-audit-automation',
+    term: '資安稽核 / 評鑑自動化',
+    en: 'Security & Compliance Audit Automation',
+    category: 'ai',
+    oneLiner:
+      '用自動化管線持續執行安全掃描、維護合規文件並彙整稽核證據，把原本一次性、靠人工的稽核準備變成可重複的流程。',
+    paragraphs: [
+      '傳統合規（如 ISO 27001、SOC 2、醫院評鑑）最耗人力的不是技術本身，而是文件維護與稽核準備：數十份程序書、政策、表單要持續更新版本與合規性，每次稽核還要手動彙整報告與證據。',
+      '自動化做法把 SAST、弱點掃描、SBOM、CVE 監控等安全掃描，與 ISMS 文件渲染、缺漏自動修復、稽核包打包串成一條管線（常以 CI/CD 如 GitHub Actions 驅動），讓合規態勢「隨時可稽核」而非臨時抱佛腳。',
+    ],
+    keyPoints: [
+      '安全掃描 + 文件維護 + 證據彙整一條龍',
+      '對齊 ISO 27001 / SOC 2 / OWASP / 醫院評鑑等框架',
+      '把一次性稽核準備變成可重複的流程',
+    ],
+    related: ['siqc'],
+  },
+  {
+    slug: 'osint-automation',
+    term: '產業情報自動化',
+    en: 'OSINT / Industry Intelligence Automation',
+    category: 'ai',
+    oneLiner:
+      '以自動化管線從公開來源持續爬取、清洗、標註並視覺化資訊，把分散的情報整理成可追蹤、可重複產出的洞察。',
+    paragraphs: [
+      '資訊密集的工作（投資研究、競品分析、政策追蹤、供應鏈情報）痛點在於資料散落各處、且人力跟不上更新速度。情報自動化把「搜集 → 清洗 → 標註 → 視覺化」全流程自動化，讓團隊把時間花在判讀而非搬運資料。',
+      '這類系統常以排程式 CI/CD（如 GitHub Actions）為核心，接近零成本維運，且框架可移植 —— 換一組資料源與關鍵字，就能重組到不同產業情境。',
+    ],
+    keyPoints: [
+      '爬取 → 清洗 → 標註 → 視覺化全流程自動化',
+      '可移植到供應鏈／政策／競品／研究等情境',
+      '常以 GitHub Actions 排程、近零成本維運',
+    ],
+    related: ['intel'],
+  },
 ];
 
 export const GLOSSARY_BY_SLUG: Record<string, GlossaryTerm> = Object.fromEntries(

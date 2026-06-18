@@ -143,16 +143,19 @@ export const PRODUCT_FAQS: Partial<Record<ProductSlug, readonly Faq[]>> = {
     { q: '情報自動化系統是什麼？', a: '以 GitHub Actions 為核心的資訊搜集自動化，從爬取、清洗、標註到視覺化全流程自動化，可移植到任何資訊密集領域。' },
     { q: '維運成本高嗎？', a: '基礎設施跑在 GitHub Actions 免費方案，接近零成本維運。' },
     { q: '能用在我的產業嗎？', a: '可重組到供應鏈情報、政策追蹤、競品情報、研究綜述等場景。' },
+    { q: '為什麼用 GitHub Actions 當核心？', a: '排程穩定、每個步驟都有版本記錄與可重現性，且跑在免費方案、接近零成本維運；要新增資料源或調整流程，只要改／加一個 workflow。' },
   ],
   siqc: [
     { q: 'SIQC 是什麼？', a: 'AI 驅動的合規稽核 / 評鑑文件交付平台，以 12 個 GitHub Actions workflow 串成自動化管線，涵蓋 ISO 27001、ESG、醫院評鑑。' },
     { q: '對齊哪些標準？', a: 'ISO 27001、SOC 2 TSC、OWASP ASVS、OWASP LLM Top 10，框架可重組為 ESG（GRI/TCFD/SASB）與醫院評鑑（醫策會 / JCI）。' },
     { q: '稽核包怎麼交付？', a: '以 GitHub Release 打包離線交付，並提供單頁離線 HTML 的 AI 稽核助理。' },
+    { q: '導入需要額外架基礎設施嗎？', a: '不用。整套建構在 GitHub 生態（GitHub Actions + Release），無需額外伺服器；稽核顧問解壓稽核包、開啟 index.html 即可離線審查。' },
   ],
   triz: [
     { q: 'TRIZ AI 知識庫是什麼？', a: 'TRIZ 發明問題解決理論的 AI 知識庫，涵蓋 40 發明原則、39 工程參數、263 矛盾矩陣，由多角色 AI 協作解題。' },
     { q: '它怎麼運作？', a: '採 crawl → chunk → embed 的 RAG 管線，多角色協作完成「描述問題 → 識別矛盾 → 推薦原則 → 生成解法」。' },
     { q: '能客製化嗎？', a: '可客製為製造業、IT 產品、商業模式創新等情境。' },
+    { q: '誰適合用？要懂 TRIZ 才行嗎？', a: '適合製造業工程師、IT／產品設計與研發團隊；不需先精通 TRIZ —— 用自然語言描述卡住的問題，AI 會抽取矛盾、查 263 矛盾矩陣並推薦發明原則。' },
   ],
   goalkeeper: [
     { q: 'goalkeeper 是什麼？', a: '醫療 AI 內容的合規查核 API。送進 AI 產出的醫療內容，依台灣醫療法規回報五道檢查的符合狀態與依據法條，但不替你決定整體放行。' },
