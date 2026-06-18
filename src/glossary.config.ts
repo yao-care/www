@@ -279,6 +279,42 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     ],
     related: ['intel'],
   },
+  {
+    slug: 'ai-agent',
+    term: 'AI Agent（AI 代理）',
+    en: 'AI Agent',
+    category: 'ai',
+    oneLiner:
+      '能自主把目標拆成步驟、呼叫工具並依每一步結果決定下一步以完成任務的 AI 系統，而非單次一問一答。',
+    paragraphs: [
+      'AI Agent 指以大型語言模型為核心、能「規劃 → 行動 → 觀察結果再調整」的系統：它把一個目標拆成多個步驟，過程中呼叫外部工具（搜尋、資料庫、API），依每一步回饋決定下一步，而不是只回一段文字。',
+      '與一般聊天機器人的差別在「自主性與工具使用」。其工具能力常來自函式呼叫（function calling）與標準化的工具協定（如 MCP，Model Context Protocol），讓 agent 能安全、可重複地接上各種系統與資料來源。',
+    ],
+    keyPoints: [
+      '規劃 → 呼叫工具 → 依結果調整的迴圈',
+      '透過 function calling / MCP 接外部工具與資料',
+      '適合多步驟、需整合多來源的任務',
+    ],
+    related: ['intel', 'siqc', 'triz', 'goalkeeper'],
+  },
+  {
+    slug: 'rag',
+    term: 'RAG 檢索增強生成',
+    en: 'Retrieval-Augmented Generation',
+    category: 'ai',
+    oneLiner:
+      '讓大型語言模型回答前先「檢索」外部知識庫、再依檢索到的內容生成答案的方法，用以提高正確性與可溯源性。',
+    paragraphs: [
+      'RAG 把「檢索（retrieval）」接在「生成（generation）」之前：先把問題拿去向量資料庫等知識庫找出最相關片段，再連同問題一起餵給 LLM 生成答案。好處是答案能引用實際資料、降低幻覺，且知識可即時更新而不必重新訓練模型。',
+      '典型流程是把文件切塊（chunk）、轉成向量（embed）建索引，查詢時以語意相似度找回片段。RAG 常作為 AI Agent 的「查資料」工具，也是把專業知識庫接上 LLM 的主流做法。',
+    ],
+    keyPoints: [
+      '先檢索知識庫、再生成答案',
+      '降低幻覺、答案可溯源、知識可即時更新',
+      '流程：chunk → embed → 向量檢索 → 生成',
+    ],
+    related: ['triz', 'huatuo', 'intel'],
+  },
 ];
 
 export const GLOSSARY_BY_SLUG: Record<string, GlossaryTerm> = Object.fromEntries(
