@@ -4,6 +4,7 @@ import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
 import ProductNews from '../../components/news/ProductNews.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
+import { TXGNN_SITES, txgnnSiteUrl } from '../../seo.config';
 
 const product = PRODUCT_BY_SLUG.txgnn;
 
@@ -293,6 +294,37 @@ const stats = [
           <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">分數較低，僅作為參考</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 30 國涵蓋（列名 + 各國站連結） -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Global Coverage</p>
+        <h2 class="section-title mt-2">涵蓋 30 個國家／地區</h2>
+        <p class="section-subtitle">每個國家／地區都有獨立站台，依當地 FDA 藥品資料與在地語言產出老藥新用結果</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
+        {TXGNN_SITES.map((s) => (
+          <a
+            href={txgnnSiteUrl(s.code)}
+            target="_blank"
+            rel="noopener"
+            class="group flex items-center gap-3 rounded-xl bg-white border border-neutral-200 px-4 py-3 shadow-sm hover:border-[color:var(--color-brand)] transition-colors"
+          >
+            <span class="text-2xl leading-none" aria-hidden="true">{s.flag}</span>
+            <span class="flex-1 min-w-0">
+              <span class="block font-bold text-sm text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] truncate">{s.name}</span>
+              <span class="block text-[11px] font-mono text-[color:var(--color-ink-soft)] truncate">{s.code}txgnn.yao.care</span>
+            </span>
+          </a>
+        ))}
+      </div>
+      <p class="mt-6 text-center text-sm text-[color:var(--color-ink-soft)]">
+        台灣站為 <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] underline underline-offset-2">twtxgnn.yao.care</a>；
+        各國站採相同架構、獨立部署於 GitHub Pages。
+      </p>
     </div>
   </section>
 

@@ -41,6 +41,43 @@ export const KNOWS_ABOUT: readonly string[] = [
   'AI 內容治理 / 守門',
 ];
 
+/** TxGNN 老藥新用 30 國站台 — code 對應子網域 {code}txgnn.yao.care */
+export type TxgnnSite = { code: string; name: string; flag: string };
+export const TXGNN_SITES: readonly TxgnnSite[] = [
+  { code: 'tw', name: '台灣', flag: '🇹🇼' },
+  { code: 'jp', name: '日本', flag: '🇯🇵' },
+  { code: 'kr', name: '韓國', flag: '🇰🇷' },
+  { code: 'hk', name: '香港', flag: '🇭🇰' },
+  { code: 'sg', name: '新加坡', flag: '🇸🇬' },
+  { code: 'my', name: '馬來西亞', flag: '🇲🇾' },
+  { code: 'th', name: '泰國', flag: '🇹🇭' },
+  { code: 'ph', name: '菲律賓', flag: '🇵🇭' },
+  { code: 'in', name: '印度', flag: '🇮🇳' },
+  { code: 'au', name: '澳洲', flag: '🇦🇺' },
+  { code: 'nz', name: '紐西蘭', flag: '🇳🇿' },
+  { code: 'us', name: '美國', flag: '🇺🇸' },
+  { code: 'ca', name: '加拿大', flag: '🇨🇦' },
+  { code: 'uk', name: '英國', flag: '🇬🇧' },
+  { code: 'de', name: '德國', flag: '🇩🇪' },
+  { code: 'fr', name: '法國', flag: '🇫🇷' },
+  { code: 'it', name: '義大利', flag: '🇮🇹' },
+  { code: 'es', name: '西班牙', flag: '🇪🇸' },
+  { code: 'nl', name: '荷蘭', flag: '🇳🇱' },
+  { code: 'ch', name: '瑞士', flag: '🇨🇭' },
+  { code: 'se', name: '瑞典', flag: '🇸🇪' },
+  { code: 'no', name: '挪威', flag: '🇳🇴' },
+  { code: 'dk', name: '丹麥', flag: '🇩🇰' },
+  { code: 'fi', name: '芬蘭', flag: '🇫🇮' },
+  { code: 'eu', name: '歐盟（EMA）', flag: '🇪🇺' },
+  { code: 'br', name: '巴西', flag: '🇧🇷' },
+  { code: 'ar', name: '阿根廷', flag: '🇦🇷' },
+  { code: 'co', name: '哥倫比亞', flag: '🇨🇴' },
+  { code: 'sa', name: '沙烏地阿拉伯', flag: '🇸🇦' },
+  { code: 'za', name: '南非', flag: '🇿🇦' },
+];
+/** 各國站完整網址 */
+export const txgnnSiteUrl = (code: string) => `https://${code}txgnn.yao.care/`;
+
 /** Organization.sameAs — 蒐集所有官方據點，去重 */
 export const ORG_SAME_AS: readonly string[] = Array.from(
   new Set([
@@ -53,6 +90,8 @@ export const ORG_SAME_AS: readonly string[] = Array.from(
     LINE_PERSONAL,
     LINE_TEAM,
     ...PRODUCTS.flatMap((p) => [p.externalUrl, p.repoUrl].filter(Boolean) as string[]),
+    // TxGNN 30 國站台 — 國際規模的實體權威訊號
+    ...TXGNN_SITES.map((s) => txgnnSiteUrl(s.code)),
   ]),
 );
 

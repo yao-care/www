@@ -4,7 +4,7 @@ import type { APIRoute } from 'astro';
 import { SITE } from '../site.config';
 import { CATEGORIES, productsByCategory } from '../products.config';
 import { NEWS_TARGETS } from '../news.config';
-import { KNOWS_ABOUT } from '../seo.config';
+import { KNOWS_ABOUT, TXGNN_SITES, txgnnSiteUrl } from '../seo.config';
 import { GLOSSARY } from '../glossary.config';
 import { GUIDES } from '../guides.config';
 
@@ -62,6 +62,16 @@ export const GET: APIRoute = () => {
   for (const t of GLOSSARY) {
     lines.push(`- [${t.term}](${u(`/glossary/${t.slug}`)}): ${t.oneLiner}`);
   }
+  lines.push('');
+
+  lines.push('## TxGNN 老藥新用 — 30 國站台');
+  lines.push('');
+  lines.push(
+    `- 涵蓋 ${TXGNN_SITES.length} 個國家／地區，各有獨立站台、依當地 FDA 藥品與在地語言產出老藥新用結果。台灣站：${txgnnSiteUrl('tw')}`,
+  );
+  lines.push(
+    `- 國家／地區：${TXGNN_SITES.map((s) => s.name).join('、')}。`,
+  );
   lines.push('');
 
   lines.push('## 專長主題（knows about）');
