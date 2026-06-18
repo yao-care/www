@@ -72,6 +72,9 @@ export const GET: APIRoute = () => {
   lines.push(
     `- 國家／地區：${TXGNN_SITES.map((s) => s.name).join('、')}。`,
   );
+  lines.push(
+    `- [方法論與資料透明度](${u('/medical/txgnn/methodology')}): 共同方法論（KG+DL 雙引擎、L1–L5 證據等級、四級信心度）與各國主管機關、資料來源、驗證覆蓋率的差異與限制。`,
+  );
   lines.push('');
 
   lines.push('## 專長主題（knows about）');

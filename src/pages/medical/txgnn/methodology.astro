@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Nav from '../../../components/Nav.astro';
+import FooterLinks from '../../../components/FooterLinks.astro';
+import ContactMap from '../../../components/ContactMap.astro';
+import { SITE } from '../../../site.config';
+import { TXGNN_SITES } from '../../../seo.config';
+import countries from '../../../data/txgnn-countries.json';
+
+const flagOf = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.flag]));
+const fmt = (n: number | null) => (n == null ? '—' : n.toLocaleString('en-US'));
+const reg = (c: (typeof countries)[number]) =>
+  c.regulator.abbrev || c.regulator.name_en || c.regulator.name_local || '—';
+
+// 全部由資料計算，避免與真實數字脫節
+const totalDrugs = countries.reduce((a, c) => a + (c.drugs ?? 0), 0);
+const langCount = new Set(countries.flatMap((c) => c.langs ?? [])).size;
+const emaProxy = countries.filter((c) => c.dataset.ema_proxy);
+const millionKG = countries.filter((c) => (c.kg_candidates ?? 0) >= 1_000_000);
+const p5part = countries.filter((c) => c.phase.P5 === 'PART');
+const p8fail = countries.filter((c) => c.phase.P8 === 'FAIL');
+const p7fail = countries.filter((c) => c.phase.P7 === 'FAIL');
+const statsDate = countries.find((c) => c.stats_date)?.stats_date ?? '2026';
+// 具完整 about.md + methodology.md 的站台（來源：30country_summary §5）
+const fullDocIso = ['br', 'eu', 'jp', 'my', 'sg', 'th', 'tw'];
+
+const pageTitle = '30 國老藥新用 — 方法論與資料透明度 · yao.care';
+const pageDescription =
+  '我們對 30 個國家／地區的核准藥品跑同一套「知識圖譜 + 圖神經網路」雙引擎老藥新用預測流程。本頁說明共同方法論（雙引擎、L1–L5 證據等級、四級信心度），並如實列出各國主管機關、資料來源與驗證覆蓋的差異與限制。';
+const canonical = `${SITE.url}/medical/txgnn/methodology/`;
+
+const articleSchema = {
+  '@type': ['Article', 'TechArticle'],
+  headline: '30 國老藥新用：方法論與資料透明度',
+  description: pageDescription,
+  inLanguage: 'zh-TW',
+  url: canonical,
+  author: { '@id': `${SITE.url}/#organization` },
+  publisher: { '@id': `${SITE.url}/#organization` },
+  about: '老藥新用 Drug Repurposing',
+  isAccessibleForFree: true,
+};
+const breadcrumb = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首頁', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: '智慧醫療', item: `${SITE.url}/medical` },
+    { '@type': 'ListItem', position: 3, name: 'TxGNN 老藥新用', item: `${SITE.url}/medical/txgnn` },
+    { '@type': 'ListItem', position: 4, name: '方法論與資料透明度', item: canonical },
+  ],
+};
+---
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/txgnn.png" ogType="article" extraSchema={[articleSchema, breadcrumb]}>
+  <Nav />
+  <main class="pt-20">
+    <!-- breadcrumb -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a><span class="mx-1.5">›</span>
+      <a href="/medical" class="hover:text-[color:var(--color-brand)]">智慧醫療</a><span class="mx-1.5">›</span>
+      <a href="/medical/txgnn" class="hover:text-[color:var(--color-brand)]">TxGNN 老藥新用</a><span class="mx-1.5">›</span>
+      <span class="text-[color:var(--color-ink)]">方法論與資料透明度</span>
+    </div>
+
+    <!-- hero -->
+    <section class="py-12 md:py-16">
+      <div class="max-w-4xl mx-auto px-4 lg:px-6">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Methodology &amp; Data Transparency</p>
+        <h1 class="mt-3 text-3xl md:text-4xl font-bold leading-tight">30 國老藥新用：方法論與資料透明度</h1>
+        <p class="mt-5 text-base md:text-lg text-[color:var(--color-ink)] leading-relaxed">
+          我們對 <strong class="text-[color:var(--color-brand)]">{countries.length} 個國家／地區</strong>的核准藥品，
+          跑<strong>同一套</strong>「知識圖譜（KG）+ 圖神經網路（DL）」雙引擎老藥新用預測流程。
+          但各國的主管機關、藥品資料來源與驗證覆蓋率其實<strong>略有不同</strong> ——
+          這一頁把方法與差異如實攤開，因為「差異被誠實列出」本身就是可信度。
+        </p>
+        <p class="mt-3 text-sm text-[color:var(--color-ink-soft)]">統計數字擷取自各國 <code class="text-xs">integration_stats.json</code>（產出日約 {statsDate}）。</p>
+      </div>
+    </section>
+
+    <!-- 全球合計 -->
+    <section class="pb-4">
+      <div class="max-w-5xl mx-auto px-4 lg:px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+          {[
+            { v: countries.length, u: '國家／地區' },
+            { v: langCount, u: '在地語言' },
+            { v: fmt(totalDrugs), u: '分析藥物總數（unique）' },
+            { v: '2', u: '預測引擎（KG + DL）' },
+          ].map((s) => (
+            <div class="rounded-xl bg-white border border-neutral-200 px-4 py-4 shadow-sm text-center">
+              <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{s.v}</div>
+              <div class="text-xs text-[color:var(--color-ink-soft)] mt-1">{s.u}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 共同方法論 -->
+    <section class="py-12 md:py-16">
+      <div class="max-w-4xl mx-auto px-4 lg:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">共同方法論（30 國一致）</h2>
+        <div class="mt-6 space-y-5 text-[color:var(--color-ink)] leading-relaxed">
+          <div>
+            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">雙引擎預測</h3>
+            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
+              以知識圖譜（KG，約 17,080 節點）結合圖神經網路（DL/GNN）對既有核准藥品預測新適應症，
+              每個「藥物–疾病」配對輸出預測分數。30 國皆同時執行 KG 與 DL 兩引擎。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">篩選標準</h3>
+            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
+              最低預測分數 99%、每個藥物最多保留 5 個新適應症、排除已知適應症。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">證據包（Evidence Bundle）</h3>
+            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
+              對每個預測配對自動收集臨床試驗（ClinicalTrials.gov）、學術文獻（PubMed）、
+              藥物資訊（DrugBank），以及各國主管機關上市資訊與交互作用（DDI）。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">證據等級 L1–L5 與信心度四級</h3>
+            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
+              證據強度分 L1（多個 Phase 3 RCT／系統性回顧）至 L5（僅模型預測、無臨床證據）；
+              整合後預測再依信心分為 <code class="text-xs">very_high / high / medium / low</code> 四級。
+            </p>
+          </div>
+        </div>
+        <p class="mt-5 text-xs text-[color:var(--color-ink-soft)]">出處：<code>TwTxGNN/docs/methodology.md</code>。各國 methodology 頁語言與詳略不一。</p>
+      </div>
+    </section>
+
+    <!-- 30 國總表 -->
+    <section class="py-12 md:py-16 bg-neutral-50">
+      <div class="max-w-6xl mx-auto px-4 lg:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">30 國涵蓋與資料來源</h2>
+        <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">依分析藥物數排序。各國資料來源不同，<strong>標記「EMA 代理」者</strong>是以歐洲藥品管理局資料代理該國授權藥品。</p>
+        <div class="mt-6 overflow-x-auto rounded-2xl border border-neutral-200 bg-white shadow-sm">
+          <table class="w-full text-sm min-w-[720px]">
+            <thead>
+              <tr class="bg-neutral-50 border-b border-neutral-200 text-xs uppercase tracking-wider text-[color:var(--color-ink-soft)]">
+                <th class="text-left py-3 px-4 font-medium">國家／地區</th>
+                <th class="text-left py-3 px-4 font-medium">主管機關</th>
+                <th class="text-right py-3 px-4 font-medium">分析藥物數</th>
+                <th class="text-left py-3 px-4 font-medium">藥品資料來源</th>
+                <th class="text-left py-3 px-4 font-medium">站台</th>
+              </tr>
+            </thead>
+            <tbody>
+              {countries.map((c, i) => (
+                <tr class:list={[i > 0 ? 'border-t border-neutral-100' : '']}>
+                  <td class="py-3 px-4 whitespace-nowrap">
+                    <span class="mr-1.5">{flagOf[c.iso2] ?? ''}</span>
+                    <span class="font-medium text-[color:var(--color-ink)]">{c.zh}</span>
+                    <span class="text-xs text-[color:var(--color-ink-soft)] ml-1">{c.en}</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="font-medium">{reg(c)}</span>
+                    {c.regulator.name_local && c.regulator.name_local !== reg(c) && (
+                      <span class="block text-xs text-[color:var(--color-ink-soft)]">{c.regulator.name_local}</span>
+                    )}
+                  </td>
+                  <td class="py-3 px-4 text-right tabular-nums font-bold">{fmt(c.drugs)}</td>
+                  <td class="py-3 px-4 text-[color:var(--color-ink-soft)]">
+                    <span class="text-xs">{c.dataset.name ?? '—'}</span>
+                    {c.dataset.ema_proxy && (
+                      <span class="ml-1.5 inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 align-middle">EMA 代理</span>
+                    )}
+                  </td>
+                  <td class="py-3 px-4 whitespace-nowrap">
+                    <a href={c.url} target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline font-mono text-xs">{c.iso2}txgnn.yao.care ↗</a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 透明度：各國差異與限制 -->
+    <section class="py-12 md:py-16">
+      <div class="max-w-4xl mx-auto px-4 lg:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">透明度：各國差異與限制</h2>
+        <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">同一套流程跑 30 國，但資料與覆蓋不一致。以下差異會影響跨國比較，我們選擇全部寫清楚。</p>
+
+        <div class="mt-8 space-y-6">
+          <div class="rounded-2xl border-l-4 border-amber-500 bg-amber-50/40 p-5 md:p-6">
+            <h3 class="font-bold text-base md:text-lg">1. KG 候選規模兩種量級 — 不可直接跨國比較</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+              有 {millionKG.length} 國的 KG 候選數達<strong>百萬級</strong>（{millionKG.map((c) => c.zh).join('、')}），
+              其餘為<strong>千級</strong>，相差約上千倍，連帶使其 <code class="text-xs">very_high</code> 信心數遠高於其他國家。
+              這屬不同的 KG 候選生成設定／門檻批次，因此<strong>各國的 very_high／候選數不可直接相互比較</strong>，
+              本頁主表改以「分析藥物數」呈現涵蓋規模。
+            </p>
+          </div>
+
+          <div class="rounded-2xl border-l-4 border-amber-500 bg-amber-50/40 p-5 md:p-6">
+            <h3 class="font-bold text-base md:text-lg">2. 以 EMA 資料代理（非本國原生資料集）</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+              {emaProxy.map((c) => c.zh).join('、')} 的藥品清單來源在資料中明確標示為「EMA Medicines Data (proxy)」，
+              即以歐洲藥品管理局資料代理該國授權藥品，而非該國主管機關自家資料集。
+              （歐盟站本身即以 EMA 為主管機關，屬原生。）
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
+            <h3 class="font-bold text-base md:text-lg">3. 藥品清單筆數（record_count）語意各國不同</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+              各國所載藥品清單筆數定義不一：有的是官方許可證數（如台灣 71,552 為許可證層級、美國 104,047 為 NDC 代碼層級）、
+              有的是開放資料品項數（如哥倫比亞 159,295）、有的是匯入或已分析的藥品數。因此「筆數」不可橫向比較，
+              本頁主表採用較一致的「分析藥物數（unique drugs）」。
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
+            <h3 class="font-bold text-base md:text-lg">4. 資料集後設資料多數缺漏</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+              多數國家僅記錄主管機關與（部分）資料集名稱，未記錄授權條款與最後更新日。
+              明確記錄資料集授權者僅少數（如巴西、馬來西亞 CC BY 4.0、新加坡、歐盟、日本）。
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
+            <h3 class="font-bold text-base md:text-lg">5. 文件完整度與證據覆蓋率差異</h3>
+            <ul class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed space-y-1.5 list-disc pl-5">
+              <li>具備完整 about／methodology 說明頁者 {fullDocIso.length} 國（{fullDocIso.map((i) => countries.find((c) => c.iso2 === i)?.zh).filter(Boolean).join('、')}）；其餘集中於 README。</li>
+              <li>證據收集（P5）為「部分達標（PART）」者 {p5part.length} 國（{p5part.map((c) => c.zh).join('、')}）。</li>
+              <li>在地化檢查（P8）未過者 {p8fail.length} 國；SMART on FHIR（P7）未過者 {p7fail.length} 國（{p7fail.map((c) => c.zh).join('、')}）。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 免責 -->
+    <section class="py-12 md:py-16 bg-neutral-50">
+      <div class="max-w-4xl mx-auto px-4 lg:px-6">
+        <div class="rounded-2xl border-l-4 border-[color:var(--color-brand)] bg-white p-6 md:p-8 shadow-sm">
+          <h2 class="text-xl md:text-2xl font-bold">免責聲明</h2>
+          <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+            本平台所有預測<strong>僅供研究參考，不構成醫療建議</strong>。老藥新用候選屬計算預測、多數尚未經臨床驗證，
+            任何臨床或用藥決定都必須經完整臨床試驗驗證與主管機關核准，並請諮詢合格醫療專業。
+            每個國家站台另附該國在地語言的免責聲明。
+          </p>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/medical/txgnn" class="btn-brand">← 回 TxGNN 老藥新用</a>
+          <a href="/medical/txgnn#global-coverage" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-neutral-300 text-[color:var(--color-ink)] hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition">瀏覽 30 國站台</a>
+        </div>
+      </div>
+    </section>
+
+    <ContactMap />
+  </main>
+  <FooterLinks />
+</BaseLayout>

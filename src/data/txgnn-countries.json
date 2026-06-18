@@ -1,0 +1,1078 @@
+[
+  {
+    "iso2": "us",
+    "zh": "美國",
+    "en": "United States",
+    "url": "https://ustxgnn.yao.care",
+    "langs": [
+      "en"
+    ],
+    "regulator": {
+      "abbrev": "FDA",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "US FDA NDC (National Drug Code Directory)",
+      "url": "https://www.fda.gov/drugs/drug-approvals-and-databases/national-drug-code-directory",
+      "license": null,
+      "last_updated": null,
+      "record_count": 104047,
+      "ema_proxy": false
+    },
+    "drugs": 1662,
+    "kg_candidates": 5706,
+    "very_high": 3915,
+    "pubmed": 24327,
+    "clinicaltrials": 13318,
+    "evidence_bundles": 5703,
+    "drug_pages": 1501,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "This website provides computational predictions for research purposes only. Does NOT constitute medical advice; Should NOT be used for clinical decision-making without proper validation; Requires independent clinical trial verification before any therapeutic application. Always consult qualified healthcare professionals for medical decisions."
+  },
+  {
+    "iso2": "tw",
+    "zh": "台灣",
+    "en": "Taiwan",
+    "url": "https://twtxgnn.yao.care",
+    "langs": [
+      "zh-Hant"
+    ],
+    "regulator": {
+      "abbrev": "TFDA",
+      "name_en": null,
+      "name_local": "衛福部食藥署"
+    },
+    "dataset": {
+      "name": "藥品許可證資料集（政府資料開放平臺）",
+      "url": "https://data.fda.gov.tw/",
+      "license": null,
+      "last_updated": null,
+      "record_count": 71552,
+      "ema_proxy": false
+    },
+    "drugs": 1507,
+    "kg_candidates": 4889,
+    "very_high": 3081,
+    "pubmed": 7237,
+    "clinicaltrials": 3948,
+    "evidence_bundles": 280,
+    "drug_pages": 279,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "本報告僅供學術研究參考，不構成醫療建議。藥物使用請遵循醫師指示，切勿自行調整用藥。任何老藥新用決策需經過完整的臨床驗證與法規審查。"
+  },
+  {
+    "iso2": "hk",
+    "zh": "香港",
+    "en": "Hong Kong",
+    "url": "https://hktxgnn.yao.care",
+    "langs": [
+      "zh-Hant-HK"
+    ],
+    "regulator": {
+      "abbrev": null,
+      "name_en": "Hong Kong Drug Office",
+      "name_local": "香港衛生署藥物辦公室"
+    },
+    "dataset": {
+      "name": "Department of Health HK",
+      "url": "https://www.drugoffice.gov.hk/eps/psi/DrugList.xml",
+      "license": null,
+      "last_updated": null,
+      "record_count": null,
+      "ema_proxy": false
+    },
+    "drugs": 1261,
+    "kg_candidates": 21513581,
+    "very_high": 118090,
+    "pubmed": 16804,
+    "clinicaltrials": 10121,
+    "evidence_bundles": 1343,
+    "drug_pages": 1626,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "本專案結果僅供研究參考，不構成醫療建議。老藥新用候選需經過臨床驗證才能應用。"
+  },
+  {
+    "iso2": "ca",
+    "zh": "加拿大",
+    "en": "Canada",
+    "url": "https://catxgnn.yao.care",
+    "langs": [
+      "en-CA"
+    ],
+    "regulator": {
+      "abbrev": null,
+      "name_en": "Health Canada",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Drug Product Database (DPD)",
+      "url": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/drug-product-database.html",
+      "license": null,
+      "last_updated": null,
+      "record_count": 16120,
+      "ema_proxy": false
+    },
+    "drugs": 1254,
+    "kg_candidates": 21392510,
+    "very_high": 117954,
+    "pubmed": 20721,
+    "clinicaltrials": 12724,
+    "evidence_bundles": 1344,
+    "drug_pages": 1590,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-23",
+    "disclaimer_local": "This content is for research purposes only. Predictions are computational and have not been validated for clinical use. Always consult healthcare professionals before making any medical decisions."
+  },
+  {
+    "iso2": "in",
+    "zh": "印度",
+    "en": "India",
+    "url": "https://intxgnn.yao.care",
+    "langs": [
+      "en"
+    ],
+    "regulator": {
+      "abbrev": "CDSCO",
+      "name_en": "Central Drugs Standard Control Organisation",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "India Pharma",
+      "url": "https://cdsco.gov.in/",
+      "license": null,
+      "last_updated": null,
+      "record_count": null,
+      "ema_proxy": false
+    },
+    "drugs": 1178,
+    "kg_candidates": 5544,
+    "very_high": 3621,
+    "pubmed": 23413,
+    "clinicaltrials": 12910,
+    "evidence_bundles": 933,
+    "drug_pages": 1215,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "This website is for research purposes only. The predictions shown here are computational and have not been clinically validated. They do not constitute medical advice. Always consult healthcare professionals for medical decisions."
+  },
+  {
+    "iso2": "kr",
+    "zh": "南韓",
+    "en": "South Korea",
+    "url": "https://krtxgnn.yao.care",
+    "langs": [
+      "ko"
+    ],
+    "regulator": {
+      "abbrev": "MFDS",
+      "name_en": null,
+      "name_local": "식품의약품안전처"
+    },
+    "dataset": {
+      "name": "MFDS",
+      "url": null,
+      "license": null,
+      "last_updated": null,
+      "record_count": 35349,
+      "ema_proxy": false
+    },
+    "drugs": 1166,
+    "kg_candidates": 3894,
+    "very_high": 2509,
+    "pubmed": 17665,
+    "clinicaltrials": 10880,
+    "evidence_bundles": 1334,
+    "drug_pages": 820,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "본 프로젝트의 결과는 연구 목적으로만 제공되며 의료 조언을 구성하지 않습니다."
+  },
+  {
+    "iso2": "sa",
+    "zh": "沙烏地阿拉伯",
+    "en": "Saudi Arabia",
+    "url": "https://satxgnn.yao.care",
+    "langs": [
+      "ar"
+    ],
+    "regulator": {
+      "abbrev": "SFDA",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "SFDA Open Data - Registered Human Drugs List",
+      "url": "https://www.sfda.gov.sa/en/open-data",
+      "license": null,
+      "last_updated": null,
+      "record_count": 9650,
+      "ema_proxy": false
+    },
+    "drugs": 1102,
+    "kg_candidates": 5659,
+    "very_high": 3627,
+    "pubmed": 17651,
+    "clinicaltrials": 10634,
+    "evidence_bundles": 1124,
+    "drug_pages": 1014,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application."
+  },
+  {
+    "iso2": "sg",
+    "zh": "新加坡",
+    "en": "Singapore",
+    "url": "https://sgtxgnn.yao.care",
+    "langs": null,
+    "regulator": {
+      "abbrev": "HSA",
+      "name_en": "Health Sciences Authority",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Singapore HSA drug registration data (data.gov.sg)",
+      "url": "https://data.gov.sg/datasets/d_767279312753558cbf19d48344577084/view",
+      "license": "Open Government License",
+      "last_updated": "March 2026",
+      "record_count": 11466,
+      "ema_proxy": false
+    },
+    "drugs": 1041,
+    "kg_candidates": 18069,
+    "very_high": 1515,
+    "pubmed": 38972,
+    "clinicaltrials": 23060,
+    "evidence_bundles": 1613,
+    "drug_pages": 1783,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "This report is for academic research purposes only and does not constitute medical advice. Please follow physician instructions for medication use. Any drug repurposing decisions require complete clinical validation and regulatory approval."
+  },
+  {
+    "iso2": "ch",
+    "zh": "瑞士",
+    "en": "Switzerland",
+    "url": "https://chtxgnn.yao.care",
+    "langs": [
+      "de"
+    ],
+    "regulator": {
+      "abbrev": null,
+      "name_en": "Swissmedic",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Swissmedic Authorised Medicines",
+      "url": "https://www.swissmedic.ch/swissmedic/en/home/services/listen_neu.html",
+      "license": null,
+      "last_updated": null,
+      "record_count": 17884,
+      "ema_proxy": false
+    },
+    "drugs": 1000,
+    "kg_candidates": 5105,
+    "very_high": 3342,
+    "pubmed": 71,
+    "clinicaltrials": 135,
+    "evidence_bundles": 1165,
+    "drug_pages": 730,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung."
+  },
+  {
+    "iso2": "my",
+    "zh": "馬來西亞",
+    "en": "Malaysia",
+    "url": "https://mytxgnn.yao.care",
+    "langs": [
+      "ms"
+    ],
+    "regulator": {
+      "abbrev": "NPRA",
+      "name_en": "National Pharmaceutical Regulatory Agency",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "NPRA pharmaceutical products (data.gov.my)",
+      "url": "https://storage.data.gov.my/healthcare/pharmaceutical_products.csv",
+      "license": "CC BY 4.0",
+      "last_updated": "Weekly",
+      "record_count": 27938,
+      "ema_proxy": false
+    },
+    "drugs": 1000,
+    "kg_candidates": 3832,
+    "very_high": 2433,
+    "pubmed": 20732,
+    "clinicaltrials": 20602,
+    "evidence_bundles": 1199,
+    "drug_pages": 650,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Untuk tujuan penyelidikan sahaja. Bukan nasihat perubatan."
+  },
+  {
+    "iso2": "es",
+    "zh": "西班牙",
+    "en": "Spain",
+    "url": "https://estxgnn.yao.care",
+    "langs": [
+      "es"
+    ],
+    "regulator": {
+      "abbrev": "AEMPS",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "CIMA - Centro de Información de Medicamentos",
+      "url": "https://cima.aemps.es/cima/rest/medicamentos",
+      "license": null,
+      "last_updated": null,
+      "record_count": 25332,
+      "ema_proxy": false
+    },
+    "drugs": 872,
+    "kg_candidates": 4004,
+    "very_high": 2725,
+    "pubmed": 6935,
+    "clinicaltrials": 4833,
+    "evidence_bundles": 874,
+    "drug_pages": 643,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion."
+  },
+  {
+    "iso2": "br",
+    "zh": "巴西",
+    "en": "Brazil",
+    "url": "https://brtxgnn.yao.care",
+    "langs": [
+      "pt-BR"
+    ],
+    "regulator": {
+      "abbrev": "ANVISA",
+      "name_en": null,
+      "name_local": "Agência Nacional de Vigilância Sanitária"
+    },
+    "dataset": {
+      "name": "Dados Abertos ANVISA - Medicamentos Registrados",
+      "url": "https://dados.anvisa.gov.br/dados/DADOS_ABERTOS_MEDICAMENTOS.csv",
+      "license": "Dados Abertos Brasil",
+      "last_updated": "Semanal",
+      "record_count": 14150,
+      "ema_proxy": false
+    },
+    "drugs": 770,
+    "kg_candidates": 2404,
+    "very_high": 1522,
+    "pubmed": 12303,
+    "clinicaltrials": 7523,
+    "evidence_bundles": 996,
+    "drug_pages": 526,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Este relatório é apenas para fins de pesquisa acadêmica e não constitui aconselhamento médico. Qualquer decisão de reposicionamento de medicamentos requer validação clínica completa e aprovação regulatória."
+  },
+  {
+    "iso2": "au",
+    "zh": "澳洲",
+    "en": "Australia",
+    "url": "https://autxgnn.yao.care",
+    "langs": [
+      "en-AU"
+    ],
+    "regulator": {
+      "abbrev": "TGA",
+      "name_en": "Therapeutic Goods Administration (TGA)",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Australian Register of Therapeutic Goods (ARTG)",
+      "url": "https://www.tga.gov.au/resources/artg",
+      "license": null,
+      "last_updated": null,
+      "record_count": 1235,
+      "ema_proxy": false
+    },
+    "drugs": 729,
+    "kg_candidates": 12434566,
+    "very_high": 69426,
+    "pubmed": 29541,
+    "clinicaltrials": 17737,
+    "evidence_bundles": 730,
+    "drug_pages": 949,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-23",
+    "disclaimer_local": "The predictions provided by AuTxGNN are for research purposes only and do not constitute medical advice. All drug repurposing candidates require clinical validation before any therapeutic application. This is not a TGA-approved tool. Always consult healthcare professionals for medical decisions."
+  },
+  {
+    "iso2": "uk",
+    "zh": "英國",
+    "en": "United Kingdom",
+    "url": "https://uktxgnn.yao.care",
+    "langs": [
+      "en-GB"
+    ],
+    "regulator": {
+      "abbrev": "MHRA",
+      "name_en": "Medicines and Healthcare products Regulatory Agency",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "MHRA PARD (Pharmaceutical and Regulatory Database)",
+      "url": "https://products.mhra.gov.uk/",
+      "license": null,
+      "last_updated": null,
+      "record_count": 9616,
+      "ema_proxy": false
+    },
+    "drugs": 701,
+    "kg_candidates": 11958054,
+    "very_high": 51521,
+    "pubmed": 15344,
+    "clinicaltrials": 7369,
+    "evidence_bundles": 826,
+    "drug_pages": 880,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "This is not an MHRA-approved tool. Always consult healthcare professionals and refer to NICE guidelines for medical decisions."
+  },
+  {
+    "iso2": "de",
+    "zh": "德國",
+    "en": "Germany",
+    "url": "https://detxgnn.yao.care",
+    "langs": [
+      "de"
+    ],
+    "regulator": {
+      "abbrev": "BfArM",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "EMA Medicines Data (proxy for German-authorized medicines)",
+      "url": "https://www.ema.europa.eu/en/medicines/download-medicine-data",
+      "license": null,
+      "last_updated": null,
+      "record_count": 2309,
+      "ema_proxy": true
+    },
+    "drugs": 691,
+    "kg_candidates": 2763,
+    "very_high": 1920,
+    "pubmed": 8979,
+    "clinicaltrials": 7094,
+    "evidence_bundles": 738,
+    "drug_pages": 555,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung."
+  },
+  {
+    "iso2": "fi",
+    "zh": "芬蘭",
+    "en": "Finland",
+    "url": "https://fitxgnn.yao.care",
+    "langs": [
+      "fi"
+    ],
+    "regulator": {
+      "abbrev": "Fimea",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "EMA Medicines Data (proxy for Finnish-authorized medicines)",
+      "url": "https://www.ema.europa.eu/en/medicines/download-medicine-data",
+      "license": null,
+      "last_updated": null,
+      "record_count": null,
+      "ema_proxy": true
+    },
+    "drugs": 641,
+    "kg_candidates": 2395,
+    "very_high": 1688,
+    "pubmed": 8578,
+    "clinicaltrials": 6929,
+    "evidence_bundles": 685,
+    "drug_pages": 516,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Taemaen projektin tulokset ovat vain tutkimustarkoituksiin eivaetkae muodosta laeketieteen neuvontaa. Laaekkeiden uudelleenkaeytoeen ehdokkaat vaativat kliinisen validoinnin ennen soeveltamista."
+  },
+  {
+    "iso2": "no",
+    "zh": "挪威",
+    "en": "Norway",
+    "url": "https://notxgnn.yao.care",
+    "langs": [
+      "no"
+    ],
+    "regulator": {
+      "abbrev": "DMP",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "EMA Medicines Data (proxy for Norwegian-authorized medicines)",
+      "url": "https://www.ema.europa.eu/en/medicines/download-medicine-data",
+      "license": null,
+      "last_updated": null,
+      "record_count": 1850,
+      "ema_proxy": true
+    },
+    "drugs": 641,
+    "kg_candidates": 2395,
+    "very_high": 1688,
+    "pubmed": 8586,
+    "clinicaltrials": 6904,
+    "evidence_bundles": 685,
+    "drug_pages": 479,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "This report is for research purposes only and does not constitute medical advice."
+  },
+  {
+    "iso2": "eu",
+    "zh": "歐盟",
+    "en": "European Union",
+    "url": "https://eutxgnn.yao.care",
+    "langs": [
+      "en"
+    ],
+    "regulator": {
+      "abbrev": "EMA",
+      "name_en": "European Medicines Agency",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "EMA Medicines Database (Medicines Output) / Article 57 Database",
+      "url": "https://www.ema.europa.eu/en/documents/report/medicines-output-medicines-report_en.xlsx",
+      "license": "Open data",
+      "last_updated": null,
+      "record_count": 1543,
+      "ema_proxy": false
+    },
+    "drugs": 609,
+    "kg_candidates": 1491,
+    "very_high": 840,
+    "pubmed": 17770,
+    "clinicaltrials": 12638,
+    "evidence_bundles": 777,
+    "drug_pages": 710,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "The results of this project are for research purposes only and do not constitute medical advice. Drug repurposing candidates require clinical validation before application."
+  },
+  {
+    "iso2": "co",
+    "zh": "哥倫比亞",
+    "en": "Colombia",
+    "url": "https://cotxgnn.yao.care",
+    "langs": [
+      "es-CO"
+    ],
+    "regulator": {
+      "abbrev": "INVIMA",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Código Único de Medicamentos Vigentes",
+      "url": "https://datos.gov.co/resource/i7cb-raxc.json",
+      "license": null,
+      "last_updated": null,
+      "record_count": 159295,
+      "ema_proxy": false
+    },
+    "drugs": 549,
+    "kg_candidates": 3100,
+    "very_high": 2030,
+    "pubmed": 5636,
+    "clinicaltrials": 4255,
+    "evidence_bundles": 659,
+    "drug_pages": 648,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion."
+  },
+  {
+    "iso2": "nz",
+    "zh": "紐西蘭",
+    "en": "New Zealand",
+    "url": "https://nztxgnn.yao.care",
+    "langs": null,
+    "regulator": {
+      "abbrev": "Medsafe",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "PHARMAC Community Pharmaceutical Schedule",
+      "url": "https://schedule.pharmac.govt.nz/latest/CPSReporting.xlsx",
+      "license": null,
+      "last_updated": null,
+      "record_count": 2419,
+      "ema_proxy": false
+    },
+    "drugs": 542,
+    "kg_candidates": 3837,
+    "very_high": 2468,
+    "pubmed": 11147,
+    "clinicaltrials": 7151,
+    "evidence_bundles": 555,
+    "drug_pages": 581,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application."
+  },
+  {
+    "iso2": "dk",
+    "zh": "丹麥",
+    "en": "Denmark",
+    "url": "https://dktxgnn.yao.care",
+    "langs": [
+      "da"
+    ],
+    "regulator": {
+      "abbrev": "DKMA",
+      "name_en": "Danish Medicines Agency",
+      "name_local": null
+    },
+    "dataset": {
+      "name": null,
+      "url": null,
+      "license": null,
+      "last_updated": "2026-03-10",
+      "record_count": 2733,
+      "ema_proxy": false
+    },
+    "drugs": 501,
+    "kg_candidates": 8551543,
+    "very_high": 56640,
+    "pubmed": 12239,
+    "clinicaltrials": 8798,
+    "evidence_bundles": 503,
+    "drug_pages": 739,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Resultaterne af dette projekt er kun til forskningsformaal og udgoer ikke medicinsk raadgivning. Kandidater til laegemiddelrepositionering kraever klinisk validering foer anvendelse."
+  },
+  {
+    "iso2": "ph",
+    "zh": "菲律賓",
+    "en": "Philippines",
+    "url": "https://phtxgnn.yao.care",
+    "langs": [
+      "en"
+    ],
+    "regulator": {
+      "abbrev": "DOH-FDA Philippines",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Philippine National Formulary (PNF) Essential Medicines List, 8th Edition (2022)",
+      "url": "https://www.doh.gov.ph/philippine-national-formulary",
+      "license": null,
+      "last_updated": "8th Edition (2022)",
+      "record_count": 529,
+      "ema_proxy": false
+    },
+    "drugs": 456,
+    "kg_candidates": 3322,
+    "very_high": 2105,
+    "pubmed": 12404,
+    "clinicaltrials": 7302,
+    "evidence_bundles": 466,
+    "drug_pages": 420,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "These predictions are for research purposes only. They do not constitute medical advice and require clinical validation before any clinical application."
+  },
+  {
+    "iso2": "fr",
+    "zh": "法國",
+    "en": "France",
+    "url": "https://frtxgnn.yao.care",
+    "langs": [
+      "fr"
+    ],
+    "regulator": {
+      "abbrev": "ANSM",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Base de données publique des médicaments (BDPM)",
+      "url": "https://base-donnees-publique.medicaments.gouv.fr/index.php/download/file/",
+      "license": null,
+      "last_updated": null,
+      "record_count": null,
+      "ema_proxy": false
+    },
+    "drugs": 455,
+    "kg_candidates": 1928,
+    "very_high": 1307,
+    "pubmed": 8096,
+    "clinicaltrials": 4995,
+    "evidence_bundles": 465,
+    "drug_pages": 479,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Les resultats de ce projet sont uniquement a des fins de recherche et ne constituent pas un avis medical. Les candidats au repositionnement de medicaments necessitent une validation clinique avant application."
+  },
+  {
+    "iso2": "za",
+    "zh": "南非",
+    "en": "South Africa",
+    "url": "https://zatxgnn.yao.care",
+    "langs": [
+      "en"
+    ],
+    "regulator": {
+      "abbrev": "SAHPRA",
+      "name_en": "South African Health Products Regulatory Authority",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "SAHPRA",
+      "url": "https://www.sahpra.org.za/",
+      "license": null,
+      "last_updated": null,
+      "record_count": 4206,
+      "ema_proxy": false
+    },
+    "drugs": 455,
+    "kg_candidates": 7755620,
+    "very_high": 30401,
+    "pubmed": 12640,
+    "clinicaltrials": 7164,
+    "evidence_bundles": 610,
+    "drug_pages": 658,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-30",
+    "disclaimer_local": "This report is for research purposes only and does not constitute medical advice. Drug use should follow physician guidance. Any drug repurposing decisions require complete clinical validation and regulatory review."
+  },
+  {
+    "iso2": "jp",
+    "zh": "日本",
+    "en": "Japan",
+    "url": "https://jptxgnn.yao.care",
+    "langs": [
+      "ja"
+    ],
+    "regulator": {
+      "abbrev": "PMDA",
+      "name_en": null,
+      "name_local": "独立行政法人 医薬品医療機器総合機構"
+    },
+    "dataset": {
+      "name": "SSK 薬価基準マスター",
+      "url": "https://www.ssk.or.jp/",
+      "license": "公開情報",
+      "last_updated": null,
+      "record_count": 19317,
+      "ema_proxy": false
+    },
+    "drugs": 426,
+    "kg_candidates": 2946,
+    "very_high": 1940,
+    "pubmed": 7824,
+    "clinicaltrials": 3715,
+    "evidence_bundles": 1824,
+    "drug_pages": 920,
+    "phase": {
+      "P5": "OK",
+      "P7": "FAIL",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "本報告は研究参考のみを目的としており、医療アドバイスを構成するものではありません。"
+  },
+  {
+    "iso2": "it",
+    "zh": "義大利",
+    "en": "Italy",
+    "url": "https://ittxgnn.yao.care",
+    "langs": [
+      "it"
+    ],
+    "regulator": {
+      "abbrev": "AIFA",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "AIFA - Liste Farmaci Classe A e H",
+      "url": "https://www.aifa.gov.it/en/liste-farmaci-a-h",
+      "license": null,
+      "last_updated": null,
+      "record_count": null,
+      "ema_proxy": false
+    },
+    "drugs": 407,
+    "kg_candidates": 1860,
+    "very_high": 1263,
+    "pubmed": 4502,
+    "clinicaltrials": 2177,
+    "evidence_bundles": 407,
+    "drug_pages": 539,
+    "phase": {
+      "P5": "PART",
+      "P7": "OK",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "I risultati di questo progetto sono solo a scopo di ricerca e non costituiscono consulenza medica. I candidati al riposizionamento dei farmaci richiedono una validazione clinica prima dell'applicazione."
+  },
+  {
+    "iso2": "ar",
+    "zh": "阿根廷",
+    "en": "Argentina",
+    "url": "https://artxgnn.yao.care",
+    "langs": [
+      "es"
+    ],
+    "regulator": {
+      "abbrev": "ANMAT",
+      "name_en": null,
+      "name_local": null
+    },
+    "dataset": {
+      "name": "ANMAT",
+      "url": null,
+      "license": null,
+      "last_updated": null,
+      "record_count": 10167,
+      "ema_proxy": false
+    },
+    "drugs": 390,
+    "kg_candidates": 2545,
+    "very_high": 1665,
+    "pubmed": 2744,
+    "clinicaltrials": 1519,
+    "evidence_bundles": 414,
+    "drug_pages": 363,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion."
+  },
+  {
+    "iso2": "se",
+    "zh": "瑞典",
+    "en": "Sweden",
+    "url": "https://setxgnn.yao.care",
+    "langs": [
+      "sv"
+    ],
+    "regulator": {
+      "abbrev": "MPA",
+      "name_en": null,
+      "name_local": "Läkemedelsverket"
+    },
+    "dataset": {
+      "name": "Läkemedelsverket - Läkemedelsregister",
+      "url": "https://www.lakemedelsverket.se/api/lmfrest/exportmedprodcsv",
+      "license": null,
+      "last_updated": null,
+      "record_count": 14492,
+      "ema_proxy": false
+    },
+    "drugs": 152,
+    "kg_candidates": 556,
+    "very_high": 386,
+    "pubmed": 2679,
+    "clinicaltrials": 1149,
+    "evidence_bundles": 152,
+    "drug_pages": 139,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-31",
+    "disclaimer_local": "Resultaten av detta projekt aer endast foer forskningsaendamaal och utgoer inte medicinsk raadgivning. Kandidater foer lakemedelsrepositionering kraever klinisk validering foere tillaempning."
+  },
+  {
+    "iso2": "th",
+    "zh": "泰國",
+    "en": "Thailand",
+    "url": "https://thtxgnn.yao.care",
+    "langs": [
+      "th"
+    ],
+    "regulator": {
+      "abbrev": "อย.",
+      "name_en": "Thailand Food and Drug Administration",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "Thai FDA",
+      "url": "https://www.fda.moph.go.th/",
+      "license": null,
+      "last_updated": null,
+      "record_count": 155,
+      "ema_proxy": false
+    },
+    "drugs": 152,
+    "kg_candidates": 1115,
+    "very_high": 734,
+    "pubmed": 7578,
+    "clinicaltrials": 3978,
+    "evidence_bundles": 151,
+    "drug_pages": 151,
+    "phase": {
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
+    },
+    "stats_date": "2026-03-29",
+    "disclaimer_local": "รายงานนี้มีไว้เพื่อการวิจัยทางวิชาการเท่านั้น ไม่ถือเป็นคำแนะนำทางการแพทย์ การใช้ยาต้องปฏิบัติตามคำแนะนำของแพทย์ การตัดสินใจใช้ยาเก่าในข้อบ่งใช้ใหม่ต้องผ่านการตรวจสอบทางคลินิกและกฎระเบียบอย่างครบถ้วน"
+  },
+  {
+    "iso2": "nl",
+    "zh": "荷蘭",
+    "en": "Netherlands",
+    "url": "https://nltxgnn.yao.care",
+    "langs": [
+      "nl"
+    ],
+    "regulator": {
+      "abbrev": "CBG-MEB",
+      "name_en": "Medicines Evaluation Board",
+      "name_local": null
+    },
+    "dataset": {
+      "name": "CBG-MEB",
+      "url": null,
+      "license": null,
+      "last_updated": null,
+      "record_count": 1191,
+      "ema_proxy": false
+    },
+    "drugs": 145,
+    "kg_candidates": 2472981,
+    "very_high": 10405,
+    "pubmed": 3666,
+    "clinicaltrials": 1327,
+    "evidence_bundles": 149,
+    "drug_pages": 261,
+    "phase": {
+      "P5": "PART",
+      "P7": "FAIL",
+      "P8": "FAIL"
+    },
+    "stats_date": "2026-03-23",
+    "disclaimer_local": "For research purposes only. Not medical advice."
+  }
+]
