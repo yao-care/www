@@ -3,6 +3,8 @@ import '../styles/global.css';
 import { SITE } from '../site.config';
 import { PRODUCT_BY_SLUG, CATEGORY_BY_SLUG, type Product } from '../products.config';
 import { PRODUCT_FAQS } from '../seo.config';
+import { GLOSSARY } from '../glossary.config';
+import { GUIDES } from '../guides.config';
 import Nav from '../components/Nav.astro';
 import FooterLinks from '../components/FooterLinks.astro';
 import ContactMap from '../components/ContactMap.astro';
@@ -18,6 +20,11 @@ const { slug, title, description } = Astro.props;
 const product = PRODUCT_BY_SLUG[slug];
 const category = CATEGORY_BY_SLUG[product.category];
 const faqs = PRODUCT_FAQS[slug] ?? [];
+
+// 延伸閱讀：反查 related 指向本產品的名詞解釋 / 情境指南（雙向交叉連結）
+const relatedTerms = GLOSSARY.filter((t) => t.related?.includes(slug));
+const relatedGuides = GUIDES.filter((g) => g.related?.includes(slug));
+const hasFurtherReading = relatedTerms.length > 0 || relatedGuides.length > 0;
 
 const pageTitle = title ?? `${product.title} · yao.care`;
 const pageDescription = description ?? product.description;
@@ -135,6 +142,44 @@ const jsonLd = {
                     <p class="pt-4">{f.a}</p>
                   </div>
                 </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {hasFurtherReading && (
+        <section class="py-14 md:py-20 border-t border-neutral-200/70 bg-neutral-50">
+          <div class="max-w-5xl mx-auto px-4 lg:px-6">
+            <div class="mb-8">
+              <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+                Further Reading
+              </p>
+              <h2 class="mt-2 text-2xl md:text-3xl font-bold">延伸閱讀</h2>
+              <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">
+                與 {product.title} 相關的名詞解釋與情境指南
+              </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4 md:gap-5">
+              {relatedGuides.map((g) => (
+                <a
+                  href={`/guides/${g.slug}/`}
+                  class="group block rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm hover:border-[color:var(--color-brand)] transition-colors"
+                >
+                  <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">情境指南</div>
+                  <h3 class="font-bold text-base md:text-lg mb-2 group-hover:text-[color:var(--color-brand)]">{g.question}</h3>
+                  <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed line-clamp-3">{g.answer}</p>
+                </a>
+              ))}
+              {relatedTerms.map((t) => (
+                <a
+                  href={`/glossary/${t.slug}/`}
+                  class="group block rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm hover:border-[color:var(--color-brand)] transition-colors"
+                >
+                  <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">名詞解釋</div>
+                  <h3 class="font-bold text-base md:text-lg mb-2 group-hover:text-[color:var(--color-brand)]">{t.term}</h3>
+                  <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed line-clamp-3">{t.oneLiner}</p>
+                </a>
               ))}
             </div>
           </div>

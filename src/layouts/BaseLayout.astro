@@ -10,6 +10,8 @@ interface Props {
   ogImage?: string;
   ogType?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
+  /** 額外 schema 節點：疊加進預設 @graph（保留 Organization+WebSite），與整包 jsonLd 互斥 */
+  extraSchema?: Record<string, unknown>[];
   noindex?: boolean;
 }
 const {
@@ -18,6 +20,7 @@ const {
   ogImage,
   ogType = 'website',
   jsonLd,
+  extraSchema,
   noindex = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
@@ -67,7 +70,11 @@ const defaultJsonLd = {
     },
   ],
 };
-const finalJsonLd = jsonLd ?? defaultJsonLd;
+const finalJsonLd =
+  jsonLd ??
+  (extraSchema && extraSchema.length
+    ? { ...defaultJsonLd, '@graph': [...defaultJsonLd['@graph'], ...extraSchema] }
+    : defaultJsonLd);
 ---
 <!DOCTYPE html>
 <html lang="zh-TW">
