@@ -36,7 +36,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       'App 可在 Epic / Cerner 等 EHR 內直接啟動',
       '常以 OAuth + PKCE 流程安全交換資料',
     ],
-    related: ['txgnn', 'func', 'geri', 'pedi', 'goalkeeper'],
+    related: ['txgnn', 'func', 'geri', 'pedi', 'goalkeeper', 'fhir-server'],
     sources: [
       { label: 'HL7 FHIR 官方', url: 'https://www.hl7.org/fhir/' },
       { label: 'SMART Health IT', url: 'https://smarthealthit.org/' },
