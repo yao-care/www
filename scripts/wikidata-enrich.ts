@@ -107,17 +107,53 @@ function monolingualSnak(property: string, language: string, text: string) {
     rank: 'normal',
   };
 }
+function globeCoordinateSnak(
+  property: string,
+  latitude: number,
+  longitude: number,
+  precision = 0.0001,
+) {
+  return {
+    mainsnak: {
+      snaktype: 'value',
+      property,
+      datavalue: {
+        value: { latitude, longitude, precision, globe: 'http://www.wikidata.org/entity/Q2' },
+        type: 'globecoordinate',
+      },
+    },
+    type: 'statement',
+    rank: 'normal',
+  };
+}
+
+// 總部座標 — 取自官網 ContactMap 的 Google Maps 內嵌（pb !3d 緯度 / !2d 經度，
+// 內嵌地址編碼即「台灣大道二段239號13」），自家來源、可查證。
+const HQ_LAT = 24.1527914;
+const HQ_LNG = 120.6647072;
+
+// 多語言描述 — 對應 en「health and AI technology company based in Taichung, Taiwan」，
+// 善用 30 國多語站的優勢，讓各語系知識面板都認得這家公司。
+const DESCRIPTIONS: Record<string, string> = {
+  ja: '台湾・台中に拠点を置く医療・AIテクノロジー企業',
+  ko: '대만 타이중에 본사를 둔 의료 및 AI 기술 기업',
+  fr: "entreprise de technologie médicale et d'IA basée à Taichung, Taïwan",
+  de: 'Medizin- und KI-Technologieunternehmen mit Sitz in Taichung, Taiwan',
+  es: 'empresa de tecnología médica y de IA con sede en Taichung, Taiwán',
+  pt: 'empresa de tecnologia médica e de IA sediada em Taichung, Taiwan',
+};
 
 async function main() {
   // 先抓現況 → 決定哪些 claim 要加、哪些壞別名要刪
   const cur = await api({
     action: 'wbgetentities',
     ids: QID,
-    props: 'claims|aliases',
+    props: 'claims|aliases|descriptions',
   });
   const ent = cur.entities[QID];
   const claims = ent.claims ?? {};
   const aliases = ent.aliases ?? {};
+  const descriptions = ent.descriptions ?? {};
 
   const hasItemValue = (prop: string, id: number) =>
     (claims[prop] ?? []).some(
@@ -132,6 +168,14 @@ async function main() {
   if (!hasProp('P1813')) {
     newClaims.push(monolingualSnak('P1813', 'en', 'yao.care'));
     newClaims.push(monolingualSnak('P1813', 'zh-hant', '藥提醒'));
+  }
+  // P625 總部座標（自家 ContactMap 內嵌）
+  if (!hasProp('P625')) newClaims.push(globeCoordinateSnak('P625', HQ_LAT, HQ_LNG));
+
+  // 多語言描述：只補目前還沒有的語言
+  const descOps: Record<string, { language: string; value: string }> = {};
+  for (const [lang, value] of Object.entries(DESCRIPTIONS)) {
+    if (!descriptions[lang]) descOps[lang] = { language: lang, value };
   }
 
   // 別名修正：移除任何含全形頓號/逗號的「整串壞別名」，補上乾淨別名
@@ -162,8 +206,9 @@ async function main() {
   const data: any = {};
   if (newClaims.length) data.claims = newClaims;
   if (Object.keys(aliasOps).length) data.aliases = aliasOps;
+  if (Object.keys(descOps).length) data.descriptions = descOps;
 
-  if (!data.claims && !data.aliases) {
+  if (!data.claims && !data.aliases && !data.descriptions) {
     console.log('✓ 沒有需要變更的項目（已是目標狀態）。');
     return;
   }
@@ -184,7 +229,7 @@ async function main() {
       id: QID,
       token,
       bot: '1',
-      summary: 'Enrich org entity: GitHub username, software company, healthcare industry, short name, fix mangled aliases',
+      summary: 'Enrich org entity: HQ coordinates (P625) + multilingual descriptions (ja/ko/fr/de/es/pt)',
       data: JSON.stringify(data),
     },
     'POST',
