@@ -100,7 +100,7 @@
     "evidence_bundles": 1343,
     "drug_pages": 1626,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -136,7 +136,7 @@
     "evidence_bundles": 1344,
     "drug_pages": 1590,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -172,7 +172,7 @@
     "evidence_bundles": 933,
     "drug_pages": 1215,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -210,7 +210,7 @@
     "phase": {
       "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "본 프로젝트의 결과는 연구 목적으로만 제공되며 의료 조언을 구성하지 않습니다."
@@ -246,7 +246,7 @@
     "phase": {
       "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application."
@@ -278,7 +278,7 @@
     "evidence_bundles": 1613,
     "drug_pages": 1783,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -352,7 +352,7 @@
     "phase": {
       "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "Untuk tujuan penyelidikan sahaja. Bukan nasihat perubatan."
@@ -458,7 +458,7 @@
     "evidence_bundles": 730,
     "drug_pages": 949,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -494,7 +494,7 @@
     "evidence_bundles": 826,
     "drug_pages": 880,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -532,7 +532,7 @@
     "phase": {
       "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung."
@@ -568,7 +568,7 @@
     "phase": {
       "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "Taemaen projektin tulokset ovat vain tutkimustarkoituksiin eivaetkae muodosta laeketieteen neuvontaa. Laaekkeiden uudelleenkaeytoeen ehdokkaat vaativat kliinisen validoinnin ennen soeveltamista."
@@ -604,7 +604,7 @@
     "phase": {
       "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "This report is for research purposes only and does not constitute medical advice."
@@ -676,7 +676,7 @@
     "phase": {
       "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion."
@@ -708,7 +708,7 @@
     "evidence_bundles": 555,
     "drug_pages": 581,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -744,9 +744,9 @@
     "evidence_bundles": 503,
     "drug_pages": 739,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "Resultaterne af dette projekt er kun til forskningsformaal og udgoer ikke medicinsk raadgivning. Kandidater til laegemiddelrepositionering kraever klinisk validering foer anvendelse."
@@ -816,9 +816,9 @@
     "evidence_bundles": 465,
     "drug_pages": 479,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "Les resultats de ce projet sont uniquement a des fins de recherche et ne constituent pas un avis medical. Les candidats au repositionnement de medicaments necessitent une validation clinique avant application."
@@ -852,7 +852,7 @@
     "evidence_bundles": 610,
     "drug_pages": 658,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
@@ -889,7 +889,7 @@
     "drug_pages": 920,
     "phase": {
       "P5": "OK",
-      "P7": "FAIL",
+      "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
@@ -924,9 +924,9 @@
     "evidence_bundles": 407,
     "drug_pages": 539,
     "phase": {
-      "P5": "PART",
+      "P5": "OK",
       "P7": "OK",
-      "P8": "FAIL"
+      "P8": "OK"
     },
     "stats_date": "2026-03-31",
     "disclaimer_local": "I risultati di questo progetto sono solo a scopo di ricerca e non costituiscono consulenza medica. I candidati al riposizionamento dei farmaci richiedono una validazione clinica prima dell'applicazione."
@@ -1068,9 +1068,9 @@
     "evidence_bundles": 149,
     "drug_pages": 261,
     "phase": {
-      "P5": "PART",
-      "P7": "FAIL",
-      "P8": "FAIL"
+      "P5": "OK",
+      "P7": "OK",
+      "P8": "OK"
     },
     "stats_date": "2026-03-23",
     "disclaimer_local": "For research purposes only. Not medical advice."

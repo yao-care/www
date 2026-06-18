@@ -227,8 +227,12 @@ const breadcrumb = {
             <h3 class="font-bold text-base md:text-lg">5. 文件完整度與證據覆蓋率差異</h3>
             <ul class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed space-y-1.5 list-disc pl-5">
               <li>具備完整 about／methodology 說明頁者 {fullDocIso.length} 國（{fullDocIso.map((i) => countries.find((c) => c.iso2 === i)?.zh).filter(Boolean).join('、')}）；其餘集中於 README。</li>
-              <li>證據收集（P5）為「部分達標（PART）」者 {p5part.length} 國（{p5part.map((c) => c.zh).join('、')}）。</li>
-              <li>在地化檢查（P8）未過者 {p8fail.length} 國；SMART on FHIR（P7）未過者 {p7fail.length} 國（{p7fail.map((c) => c.zh).join('、')}）。</li>
+              {p5part.length > 0 && (
+                <li>證據收集（P5）為「部分達標（PART）」者 {p5part.length} 國（{p5part.map((c) => c.zh).join('、')}）。</li>
+              )}
+              {(p8fail.length > 0 || p7fail.length > 0) && (
+                <li>在地化檢查（P8）未過者 {p8fail.length} 國；SMART on FHIR（P7）未過者 {p7fail.length} 國（{p7fail.map((c) => c.zh).join('、')}）。</li>
+              )}
             </ul>
           </div>
         </div>
