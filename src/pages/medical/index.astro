@@ -8,6 +8,7 @@ import ProductCard from '../../components/products/ProductCard.astro';
 import CapabilityCloud from '../../components/products/CapabilityCloud.astro';
 import GcmClosedLoop from '../../components/products/GcmClosedLoop.astro';
 import { CATEGORY_BY_SLUG, MEDICAL_GROUPS, productsByGroup } from '../../products.config';
+import { SITE } from '../../site.config';
 
 const category = CATEGORY_BY_SLUG.medical;
 const clinical = productsByGroup('clinical');
@@ -17,6 +18,28 @@ const pageTitle = '智慧醫療 · yao.care';
 const pageDescription =
   '從基層用藥提醒到醫療 AI 與全齡預防醫學評估 — 藥提醒、AI 華佗、TxGNN，以及 Smart Func / Geri / Pedi 三件式自評，一條龍對接 ATC 編碼與 SMART on FHIR 互通協定。';
 
+// CollectionPage + ItemList：把本分類的產品目錄結構化，供 LLM/搜尋引擎理解
+const hubProducts = [...clinical, ...assessment];
+const collectionSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${new URL(category.href, SITE.url).toString()}#collection`,
+  name: pageTitle,
+  description: pageDescription,
+  url: new URL(category.href, SITE.url).toString(),
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  about: { '@id': `${SITE.url}/#organization` },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: hubProducts.length,
+    itemListElement: hubProducts.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(`/${p.category}/${p.slug}`, SITE.url).toString(),
+      name: p.title,
+    })),
+  },
+};
+
 const medicalCapabilities = [
   { label: '醫療 AI 系統整合', en: 'Healthcare AI Integration' },
   { label: 'FHIR R4 / SMART on FHIR 應用開發', en: 'FHIR R4 / SMART on FHIR' },
@@ -25,7 +48,7 @@ const medicalCapabilities = [
   { label: '證據導向 / 可解釋 AI', en: 'Verifiable / Explainable AI' },
 ];
 ---
-<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/yaocare.png">
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/yaocare.png" extraSchema={[collectionSchema]}>
   <Nav />
   <main class="pt-20">
     <!-- breadcrumb -->

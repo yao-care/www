@@ -7,6 +7,7 @@ import CareTag from '../../components/CareTag.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
 import CapabilityCloud from '../../components/products/CapabilityCloud.astro';
 import { CATEGORY_BY_SLUG, productsByCategory } from '../../products.config';
+import { SITE } from '../../site.config';
 
 const category = CATEGORY_BY_SLUG.ai;
 const products = productsByCategory('ai');
@@ -14,6 +15,26 @@ const products = productsByCategory('ai');
 const pageTitle = 'AI 系統 · yao.care';
 const pageDescription =
   '把專業知識變成自動化、可重複跑的 AI 系統 — 情報追蹤、ISO/ESG/醫院評鑑、TRIZ 創新方法庫。RAG + 多角色 Agent 把專業領域決策結構化。';
+
+const collectionSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${new URL(category.href, SITE.url).toString()}#collection`,
+  name: pageTitle,
+  description: pageDescription,
+  url: new URL(category.href, SITE.url).toString(),
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  about: { '@id': `${SITE.url}/#organization` },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: products.length,
+    itemListElement: products.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(`/${p.category}/${p.slug}`, SITE.url).toString(),
+      name: p.title,
+    })),
+  },
+};
 
 const aiCapabilities = [
   { label: 'AI 系統設計與落地', en: 'AI System Implementation' },
@@ -32,7 +53,7 @@ const aiCapabilities = [
   { label: 'AI 教育與學習系統設計', en: 'AI in Education / EdTech' },
 ];
 ---
-<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/intel.png">
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/intel.png" extraSchema={[collectionSchema]}>
   <Nav />
   <main class="pt-20">
     <!-- breadcrumb -->

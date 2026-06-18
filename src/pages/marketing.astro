@@ -14,6 +14,34 @@ const pageDescription =
   '與 GCM 預防醫學發展協會 900+ 醫療專業合作的整合行銷服務 — 從策略診斷、內容製作、KOL 操盤、廣告投放到法規合規一條龍。';
 const ctaHref = LINE_TEAM;
 
+// 數位行銷服務的 FAQ（同時渲染為可見區塊與 FAQPage schema）
+const marketingFaqs = [
+  { q: 'yao.care 的數位行銷服務包含哪些？', a: '從策略診斷、內容製作、醫友 KOL 操盤、Meta／Google／LINE 廣告投放，到法規合規審查一條龍（5 環閉環）。' },
+  { q: '什麼是「醫友」操盤？', a: '與 GCM 預防醫學發展協會 900+ 醫療專業合作，用真實專業背書取代品牌硬廣，特別適合食品／保健／醫療相關品牌。' },
+  { q: '會幫忙把關廣告法規嗎？', a: '會。由律師團隊把關酒類／食品／醫療法規，內容發布前走合規審查 SOP，降低裁罰風險。' },
+  { q: '適合哪些品牌？', a: '食品、保健、醫療、酒類等需要專業背書與法規把關的品牌；可依 24 節氣行銷曆規劃全年內容。' },
+];
+
+const marketingUrl = new URL('/marketing', SITE.url).toString();
+const serviceSchema = {
+  '@type': 'Service',
+  '@id': `${marketingUrl}#service`,
+  name: '數位行銷整合服務',
+  serviceType: '整合行銷 / 數位行銷',
+  description: pageDescription,
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Taiwan' },
+  url: marketingUrl,
+};
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: marketingFaqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 // 5 環閉環：醫友節氣閉環的方法論
 const closedLoop = [
   {
@@ -198,7 +226,7 @@ const pricingTiers = [
   },
 ];
 ---
-<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/marketing.png">
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/marketing.png" extraSchema={[serviceSchema, faqSchema]}>
   <Nav />
   <main class="pt-20">
     <!-- breadcrumb -->
@@ -620,6 +648,29 @@ const pricingTiers = [
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.74c0 4.32 3.55 7.94 8.35 8.62l1.06.15.13-.97-.07-.71c.08-.47-.31-.91-.78-.97l-.16-.02C5.83 16.27 3 13.81 3 10.74 3 6.48 7.03 3 12 3s9 3.48 9 7.74c0 4.26-4.03 7.74-9 7.74h-.5l-3.83 2.41a.5.5 0 0 1-.74-.55l.84-3.07A9.06 9.06 0 0 0 22 10.74C22 5.92 17.52 2 12 2z"/></svg>
           聊聊您的行銷需求
         </a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-14 md:py-20 border-t border-neutral-200/70">
+      <div class="max-w-3xl mx-auto px-4 lg:px-6">
+        <div class="mb-8">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">FAQ</p>
+          <h2 class="mt-2 text-2xl md:text-3xl font-bold">常見問題</h2>
+        </div>
+        <div class="space-y-3">
+          {marketingFaqs.map((f) => (
+            <details class="group rounded-xl bg-white border border-neutral-200 shadow-sm overflow-hidden">
+              <summary class="cursor-pointer p-5 md:p-6 flex items-start gap-4 list-none">
+                <span class="flex-1 font-bold text-[color:var(--color-ink)]">{f.q}</span>
+                <svg class="shrink-0 w-5 h-5 mt-0.5 text-[color:var(--color-ink-soft)] transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </summary>
+              <div class="px-5 md:px-6 pb-5 md:pb-6 pt-0 text-[color:var(--color-ink-soft)] leading-relaxed border-t border-neutral-100">
+                <p class="pt-4">{f.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
 
