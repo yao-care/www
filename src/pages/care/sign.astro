@@ -34,6 +34,13 @@ const features = [
 ];
 
 const scenarios = ['日間照顧中心', '巷弄長照站', '社區關懷據點', '課程簽到', '訪客登記', '長照機構'];
+
+const steps = [
+  { n: '1', title: '走過鏡頭', body: '長者走進鏡頭範圍，不必停下、不必操作任何裝置。' },
+  { n: '2', title: '自動辨識', body: '純前端人臉辨識，與裝置內建立的臉部特徵比對確認身分，全程不連雲端。' },
+  { n: '3', title: '語音問候', body: '辨識成功即依時段自動語音問候（早安／午安），同時完成當日報到。' },
+  { n: '4', title: '名冊產出', body: '自動彙整每日簽到名冊，格式可直接複製貼上政府社政平台，免人工謄寫。' },
+];
 ---
 <ProductLayout slug="sign">
   <ProductHero product={product}>
@@ -98,8 +105,28 @@ const scenarios = ['日間照顧中心', '巷弄長照站', '社區關懷據點'
     </div>
   </section>
 
-  <!-- scenarios -->
+  <!-- how it works -->
   <section class="py-14 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">How It Works</p>
+        <h2 class="section-title mt-2">怎麼用？走過鏡頭，4 步完成</h2>
+        <p class="section-subtitle">對長者零操作、對工作人員零謄寫</p>
+      </div>
+      <ol class="grid md:grid-cols-4 gap-4 md:gap-5">
+        {steps.map((s) => (
+          <li class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+            <div class="text-3xl font-bold text-[color:var(--color-brand)] tabular-nums mb-2">{s.n}</div>
+            <h3 class="font-bold text-base mb-2">{s.title}</h3>
+            <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- scenarios -->
+  <section class="py-14 md:py-20 bg-neutral-50">
     <div class="max-w-6xl mx-auto px-4 lg:px-6">
       <div class="text-center mb-10">
         <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Use Cases</p>

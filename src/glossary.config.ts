@@ -207,6 +207,24 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     related: ['goalkeeper'],
     sources: [{ label: 'Model Context Protocol 官方', url: 'https://modelcontextprotocol.io/' }],
   },
+  {
+    slug: 'contactless-checkin',
+    term: '無接觸報到 / 人臉辨識報到',
+    en: 'Contactless Check-in / Facial Recognition Attendance',
+    category: 'care',
+    oneLiner:
+      '不需觸控、按鈕或簽名，靠人臉辨識自動完成身分確認與報到的方式；用於長照據點可大幅降低長者的使用門檻。',
+    paragraphs: [
+      '傳統簽到要嘛手寫、要嘛在平板上觸控操作，對視力或行動不便的長者是門檻，對工作人員則是每日重複的謄寫負擔。無接觸報到讓人「走過鏡頭」即完成辨識與報到，並可搭配語音問候確認。',
+      '隱私是這類系統的關鍵爭點。把人臉辨識放在「裝置端（edge / 純前端）」完成、臉部特徵與紀錄不離開裝置、不上傳雲端，能從源頭降低長照場域的個資疑慮，與「先收集到雲端再比對」的做法有本質差異。',
+    ],
+    keyPoints: [
+      '免觸控 / 免按鈕 / 免簽名，降低長者使用門檻',
+      '裝置端（純前端）辨識，臉部資料不上雲端',
+      '常與語音問候、每日簽到名冊自動化搭配',
+    ],
+    related: ['sign'],
+  },
 ];
 
 export const GLOSSARY_BY_SLUG: Record<string, GlossaryTerm> = Object.fromEntries(
