@@ -15,6 +15,18 @@
 | NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
 
+## § 文件分工（先讀這段，再決定看哪一份）
+
+本專案維護分兩種情境，兩份主文件各管一邊；**不論你先讀到哪一份，照下表跳到對的地方**：
+
+| 你想做的事 | 看哪份 |
+|-----------|--------|
+| **A. 開發／優化專案** — 改版面/文案、build & deploy、改設定、新增頁面、排錯（502/build）、news 引擎**機制與除錯**、cron/腳本內部 | **本檔 `CLAUDE.md`**（Claude session 自動載入） |
+| **B. 對外平台互動與曝光成效** — GEO/LLM 推薦力、GSC/GA4/Bing/IndexNow、Wikidata、Google 商家、站外目錄/合作夥伴/新聞稿、**看曝光到哪了** | **`README.md`** ＋ `GEO-CHECKLIST.md` ＋ `docs/` |
+
+> 兩份文件最上方都有「**這段相同的路由**」；更新分工時兩邊一起改，避免走散。
+> 界線速記：**「機器怎麼跑」在本檔；「對外做了什麼、效果如何」在 `README.md`。** 本檔下文的 GA4 / GSC / SEO / GEO 章節講的是**腳本與引擎機制**；對應的「對外帳號總表、看成效指令、站外曝光素材」請看 `README.md`。
+
 ## § 改版 SOP（最常用）
 
 從乾淨狀態開始改版的標準流程：
@@ -117,6 +129,8 @@ tail -50 /var/log/yaocare-news.log
 
 ## § 分析追蹤（GA4）
 
+> 📤 **對外面向看 `README.md`**：GA4/GSC 帳號總表、看成效指令、`news-insights.json` 怎麼解讀、曝光現況。本節只講**埋點與腳本機制**。
+
 GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一 source）。
 追蹤碼在 `src/components/Analytics.astro`，BaseLayout 與 ProductLayout 的 `<head>` 都引入 → 全站覆蓋；無 cookie 同意橫幅；只追蹤 www.yao.care（不跨網域）。
 
@@ -139,6 +153,8 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - GSC sitemap 提交也走這把金鑰（webmasters scope，Full 權限）。
 
 ## § SEO / Sitemap / GSC
+
+> 📤 **對外面向看 `README.md`**：GSC 資源/sitemap 提交清單、Wikidata/Google 商家/站外目錄、GEO 推薦力現況。本節只講**站內 sitemap/robots/schema 機制**；GEO 逐項勾選見 `GEO-CHECKLIST.md`。
 
 ### www 本站
 - Astro 產 `sitemap-index.xml` + `sitemap-0.xml`；另有 `src/pages/sitemap.xml.ts` 產 `/sitemap.xml` 別名（指向 sitemap-0.xml）—— 修正「提交 /sitemap.xml 卻回首頁 HTML、被 GSC 判為 HTML 網頁」的問題。`robots.txt` 指向 sitemap-index.xml。
