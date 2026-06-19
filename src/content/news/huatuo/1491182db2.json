@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "中醫教育智慧化浪潮下，AI 辨證可解釋性成關鍵門檻",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFA5VlF2T2o1clp3YU5kQUFMOUxTc20wZ0QtcUJIZWt4S3hJVXhhR3E4Mk1ENXpDV3RSTTRDb0EtS1U1NUZwS0U3dmhyeThJLVlHckhxQU9n?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-10T07:00:00.000Z",
+  "fetchedAt": "2026-06-19T20:55:18.542Z",
+  "newsBrief": "全國中醫醫學校院第10次會議聚焦中醫教育標準化與智慧醫療整合，各院校代表就數位轉型及中醫 AI 輔助診療深入交流，顯示醫學教育端對中醫智慧化的關注持續升溫。",
+  "issueAnalysis": "中醫教育面臨兩層結構性困境：四診標準化不足，臨床知識難以轉化為可重複教學的明確規則，師徒傳授仍高度仰賴個人經驗；中醫 AI 若採純 LLM 黑箱架構，推理不透明既難融入教學，也難獲中醫師信任。各院校將智慧醫療列為發展方向後，核心挑戰轉為如何讓 AI 辨證推理「可解釋、可追溯、可傳授」，而非僅是統計預測的黑盒子。",
+  "designResponse": "中醫 AI 黑箱難教的痛點，核心解法在於可解釋性。128 條八綱與臟腑規則整理於 syndromes.json，中醫師可逐條檢視觸發條件與依據（#1），讓辨證結論有規則根基可供教研討論。規則 ×0.6 搭配 LLM ×0.4 的混合辨證架構（#2），保留傳統辨證邏輯主軸並引入語意推理，避免純 LLM 無法追溯的風險。每個結論均記錄完整推理路徑與 RAG 證據（#3），為跨院校的中醫 AI 教研合作提供可驗證的結構化基礎。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 2
+}

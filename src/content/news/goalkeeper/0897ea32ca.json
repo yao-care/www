@@ -1,0 +1,16 @@
+{
+  "target": "goalkeeper",
+  "title": "醫療AI會說謊？馬偕醫受邀輝達GTC 揭密大型語言模型防「幻術」",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1YWDRXelc4YzZIZlFVbFFDamxRWVYtQkxFTmVNYlZwcXREbkJaWEk3VVdvSkVYUm1NRGhaRGJRNjlDdFFhdzgyX0ppYk9rcC15ckJSajdaeTJRaFJmVEI0?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-04T07:00:00.000Z",
+  "fetchedAt": "2026-06-19T21:00:19.688Z",
+  "newsBrief": "台灣醫療機構受邀赴輝達GTC國際舞台，發表醫療大型語言模型幻覺防制研究，揭示生成式AI在臨床情境下可能產出不正確資訊的風險，並分享系統性降低「幻術」的方法，引發醫療界對AI內容可信度的廣泛討論。",
+  "issueAnalysis": "醫療AI幻覺問題直接衝擊臨床安全——語言模型可能在無意間產出看似合理但實則錯誤的診斷建議、藥物資訊或參考來源，而醫師與患者往往難以即時分辨。更深層的挑戰在於：當生成式AI廣泛整合進醫療資訊系統，幻覺查核的責任歸屬不清。目前多數機構缺乏可重現、可稽核的標準化檢核工具，「知道有風險、但不知如何系統性管控」成為業界共同痛點。",
+  "designResponse": "面對醫療AI幻覺風險，合規查核需具備可稽核、可重現的結構。Goalkeeper將幻覺查核納入五道合規關卡之一，對每批內容回報幻覺、越權診斷、來源標註等檢查狀態（proofPoint #1），並綁定衛福部生成式AI指引與醫師法等台灣法源（proofPoint #2），讓業者清楚哪條法規定義了責任邊界，而非只收到黑盒結論。系統只回各關卡狀態、不替使用者做整體放行決定（proofPoint #3），保留醫療專業人員的最終判斷空間。每次查核可鎖定規範版本並保存稽核軌跡（proofPoint #4），確保幻覺問題被系統性記錄，而非仰賴個案回憶管控。",
+  "tags": [],
+  "relevance": 0.88,
+  "highlight": true,
+  "criticPasses": 2
+}

@@ -1,0 +1,20 @@
+{
+  "target": "siqc",
+  "title": "因應AI與量子時代 中市數位局首創培訓60名資安長取得ISO國際證照",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5ERmxqLW5TTG82bUVSNkpGQzZpLWxyY1Jjb1JDWktpTGxxRXZRblQ5UFNubFIxZlNwRF9OQ0VaQlpIZkR1VFFjTDY0Um9UdlhneWhiaV91SQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-15T11:50:39.000Z",
+  "fetchedAt": "2026-06-19T21:02:41.465Z",
+  "newsBrief": "面對AI與量子運算帶來的新型態資安威脅，公部門正積極推動資安主管認證升級。近期有機關試辦批次培訓，協助資安長人員取得ISO國際證照，以人才認證帶動組織整體資安治理成熟度，成為布局量子後時代的具體實踐案例。",
+  "issueAnalysis": "資安治理的瓶頸不只在技術，更在於制度是否能讓人才落地。ISO 27001是良好的合規基準，但ISMS 60份以上的文件維護，對中小型資安團隊而言是沉重的人力負擔。更深層的問題是：即便取得了認證，組織內部的SAST、滲透測試、SBOM等掃描結果往往散落各處，難以整合為可交付的稽核包。量子運算的潛在威脅更加深了這種迫切性——推動人才認證固然必要，但若沒有文件自動化配套，合規能力仍難以制度化。",
+  "designResponse": "面對認證文件龐雜、掃描工具碎片化的困境，SIQC的設計思路是以自動化重新串接分散的合規環節。在掃描層，系統整合13條安全掃描管線，並每15分鐘輪詢OSV API，Critical漏洞即時觸發告警 (proofPoint #4)，讓威脅資訊不再堆積等待人工翻閱。在文件層，64份ISMS文件框架以12個GitHub Actions workflow自動串連，從掃描輸出到文件修復皆在同一管線完成 (proofPoint #2)。稽核包透過GitHub Release打包離線交付 (proofPoint #5)，評鑑委員可直接取用，無需現場連線。這樣的架構讓資安長取得ISO 27001認證之後，日常維運仍能維持系統性而非仰賴個人記憶——合規能力以制度落地，而非以人力透支換取。",
+  "tags": [
+    "資安認證",
+    "ISO 27001",
+    "稽核自動化"
+  ],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 1
+}
