@@ -60,7 +60,18 @@
 - **sitemap 要逐站維護**：網域資源只整合驗證/報表，各子網域要有自己的 sitemap + robots（`Sitemap:` 指自己）。目前已提交 **35 個**（www + 30 國 TxGNN + smart-func/geri/pedi-cds + sign）。`huatuo.ai` 刻意不收錄、goalkeeper（API）不需。
 - **更新**：新增子站要在 GSC 提交該站 sitemap；用同把 SA 金鑰可程式化提交（見 `gsc.ts`）。
 
-> **依真實搜尋需求補站上內容**（情境 B 的核心動作）：`gsc.ts` 列出的「高曝光、排名差」查詢＝讀者真的在問、但我們答得不夠好的題目。做法是把這些**真實問題**寫成 `/guides`（問題原話為題）或 `/glossary`（名詞定義），用事實回答並交叉連回產品 → 把曝光換成點擊、並被 LLM 引用。範例見 commit「依 GSC 真實搜尋需求補內容」。
+**依真實搜尋需求補站上內容（固定頻次，不瘋狂新增）**
+
+`gsc.ts` 列出的「高曝光、排名差」查詢＝讀者真的在問、但我們答得不夠好的題目。把這些**真實問題**寫成 `/guides`（問題原話為題）或 `/glossary`（名詞定義）、用事實回答並交叉連回產品 → 把曝光換成點擊、並被 LLM 引用。
+
+> **策略**：guides/glossary 是常青、要查事實、要對應產品的手工頁，**不像 news 每天自動產**。採**每兩週一次、每次最多 1 篇**的固定節奏，沒真缺口就不補（寧可 0）。
+
+**機制**（半自動，人工把關）：
+- **每兩週自動掃缺口 + 產草稿**：cron `0 2 1,15 * *`（每月 1/15）跑 `scripts/content-gaps.sh` → 列補題候選（`reports/content-gaps.json`）+ 為「top1 且對應自家產品」的候選產一份**草稿**到 `drafts/`。log：`/var/log/yaocare-content-gaps.log`。
+- **安全閘**：對應不到自家產品的高曝光字（品牌混淆，如「法律偵探」）不自動產稿；草稿會附模型自列的「需查證主張」與 `uncertain` 旗標。
+- **採用流程（人工）**：審 `drafts/<...>.md` → 逐條查證 `factCheckNotes` → 貼進 `src/guides.config.ts` 或 `src/glossary.config.ts` → `npm run deploy` → 提交 IndexNow。**草稿不自動上線、不自動 commit。**
+- 手動看候選：`./node_modules/.bin/tsx scripts/content-gaps.ts`（加 `--draft` 才產稿）。
+- 首批範例（2026-06-19 人工補）：`/glossary/llm`、`/guides/fhir-connectathon`。
 
 ### 2. 流量與讀者回饋（GA4）— 品質面，資料回流中
 - **看成效**：`./node_modules/.bin/tsx scripts/ga-insights.ts`（印報告 + 重產 `reports/news-insights.json`）。週一 03:00（台北）cron 自動跑，log `/var/log/yaocare-ga.log`。

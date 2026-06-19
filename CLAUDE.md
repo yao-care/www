@@ -165,6 +165,20 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - 用 SA 金鑰（scope `webmasters`，Full 權限）可程式化**提交/列出 sitemap**（見 `scripts/gsc.ts` 同款認證）。目前已提交 35 個：www + 30 國 TxGNN + smart-func/geri/pedi-cds + sign。**huatuo.ai 刻意不收錄、goalkeeper（API）不需**。
 - 各國 TxGNN 是獨立 repo（Jekyll / GitHub Pages，`docs/robots.txt` + `docs/CNAME`），robots `Sitemap:` 行需指自己（曾 13 國誤指 twtxgnn / sgtxgnn，已修）。
 
+## § GSC 內容缺口補題（固定頻次，半自動）
+
+> 📤 對外面向（為什麼這樣做、成效）見 `README.md`。本節是**機制**。
+
+把「依 GSC 真實搜尋需求補 guides/glossary」做成**固定頻次、人工把關**的流程（呼應 news「精準少量」紀律；常青醫療頁不適合像 news 那樣全自動產出）：
+
+- **`scripts/content-gaps.ts`**：讀 `getGscInsights()` → 找「曝光 ≥ `MIN_IMPRESSIONS`(8) × 平均排名比 `MIN_POSITION`(6) 差 × 與既有 guides/glossary 的 bigram 相似度 < `COVERED_THRESHOLD`(0.5)」的查詢 → 排序（曝光 × 排名差）寫 `reports/content-gaps.json`。加 `--draft` 時，**只為 top1 且對應得到自家產品的候選**產一份草稿到 `drafts/`（`PER_RUN_DRAFT_CAP=1`）。
+  - 旗標：`--draft` / `--debug` / `--min-impr <n>` / `--min-pos <n>`。
+  - **安全閘**：對應不到自家產品的高曝光字（如品牌混淆「法律偵探」）**不自動產稿**，避免逼模型杜撰；prompt 要求模型自列 `factCheckNotes` 並可設 `uncertain=true`。
+- **`scripts/content-gaps.sh`**：cron entry，`unset CLAUDECODE…` 後跑 `--draft`，log `/var/log/yaocare-content-gaps.log`。
+- **Cron**：`0 2 1,15 * *`（UTC，每月 1/15 號 = 台灣 10:00）—— **每兩週**一次。
+- ⚠ **草稿不自動上線、不自動 commit**。`drafts/` 已 gitignore。採用流程：人工查證 `factCheckNotes` → 貼進 `src/guides.config.ts` 或 `src/glossary.config.ts` → `npm run deploy` → IndexNow。
+- 調參：門檻/頻次改 `content-gaps.ts` 檔內常數與 crontab。
+
 ## § 檔案結構
 
 ```
@@ -181,6 +195,8 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── ga-insights.ts         ← GA Data API + GSC → reports/news-insights.json（議題權重 + 寫作洞察）
 │   ├── ga-setup.ts            ← GA Admin API 冪等建自訂維度/指標/關鍵事件
 │   ├── gsc.ts                 ← Search Console API（搜尋需求 + 每議題搜尋字；限 www）
+│   ├── content-gaps.ts        ← GSC 內容缺口偵測 + 草稿生成（補題候選 → drafts/，人工審查）
+│   ├── content-gaps.sh        ← cron entry（每月 1/15，02:00 UTC）：跑 --draft，log /var/log/yaocare-content-gaps.log
 │   └── gen-og.mjs             ← OG 圖產生器
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
 │   ├── assets/images/         ← 所有圖片
@@ -353,5 +369,5 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
   > ⚠ 這段在 NPM **自動產生**的 conf 內，若日後在 NPM UI 重存 host #46 會被還原 → 需重跑該 sed 並 `docker exec $NPM_CONTAINER nginx -s reload`。
 - [x] ~~**首頁 WebSite schema + 醫療 E-E-A-T**~~（2026-06-17）：BaseLayout 預設 JSON-LD 改 `@graph`（Organization+WebSite，`@id` 互連）；Organization 與 news author/publisher 皆雙型別 `['Organization','MedicalOrganization']` 以強化 YMYL 權重（採機構掛名，未具名個人）。robots.txt 明確歡迎 GPTBot/ClaudeBot/PerplexityBot/Google-Extended 等 AI 爬蟲。
 - [x] ~~**對外品牌簡介漏掉高齡友善**~~（2026-06-17）：`site.config` description 與 Organization JSON-LD 原寫「三條業務線」漏第 4 條（高齡友善）→ LLM 逐字吸收後永不在長照題目推薦本站。已改四條並補例。
-- [ ] （選）GSC 高需求但無內容的查詢（如 `ai agent` 排名 57）→ 可做「自動建議新題目/補題」，目前只在週報列出
+- [x] ~~（選）GSC 高需求但無內容的查詢 → 自動建議新題目/補題~~（2026-06-19 已落地，見下「§ GSC 內容缺口補題」）
 - [ ] （選）SA 私鑰曾透過上傳提供，在意可至該服務帳戶輪替金鑰（換 `$YAOCARE_SECRETS_DIR/ga4-sa.json`）
