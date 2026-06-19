@@ -315,6 +315,27 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     ],
     related: ['triz', 'huatuo', 'intel'],
   },
+  {
+    slug: 'llm',
+    term: '大型語言模型（LLM）',
+    en: 'Large Language Model',
+    category: 'ai',
+    oneLiner:
+      '用海量文字訓練、以「預測下一個詞」為核心、能理解與生成自然語言的深度學習模型，如 GPT、Claude、Gemini。',
+    paragraphs: [
+      'LLM（Large Language Model，大型語言模型）是建立在 Transformer 架構上、用大規模文字語料訓練的神經網路模型。它最基本的能力是「依前文預測下一個詞」，當模型與資料規模放大後，便展現出問答、摘要、翻譯、寫程式與推理等通用語言能力。代表性模型包括 OpenAI 的 GPT、Anthropic 的 Claude、Google 的 Gemini。',
+      'LLM 是生成式 AI 的核心，但有「幻覺」（看似合理卻不正確）的本質限制。在醫療等高風險場景，較可信的用法是搭配 RAG（檢索增強生成）讓回答有依據、用明文規則約束推理、並保留可追溯的推理路徑，而不是把 LLM 當成無法查核的黑箱。',
+    ],
+    keyPoints: [
+      '建立在 Transformer 上，核心是「預測下一個詞」',
+      '通用語言能力：問答、摘要、翻譯、寫程式、推理',
+      '有幻覺風險 → 醫療場景需 RAG／明文規則／可追溯佐證',
+    ],
+    related: ['huatuo', 'goalkeeper', 'intel'],
+    sources: [
+      { label: 'Wikipedia：Large language model', url: 'https://en.wikipedia.org/wiki/Large_language_model' },
+    ],
+  },
 ];
 
 export const GLOSSARY_BY_SLUG: Record<string, GlossaryTerm> = Object.fromEntries(

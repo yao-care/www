@@ -60,6 +60,8 @@
 - **sitemap 要逐站維護**：網域資源只整合驗證/報表，各子網域要有自己的 sitemap + robots（`Sitemap:` 指自己）。目前已提交 **35 個**（www + 30 國 TxGNN + smart-func/geri/pedi-cds + sign）。`huatuo.ai` 刻意不收錄、goalkeeper（API）不需。
 - **更新**：新增子站要在 GSC 提交該站 sitemap；用同把 SA 金鑰可程式化提交（見 `gsc.ts`）。
 
+> **依真實搜尋需求補站上內容**（情境 B 的核心動作）：`gsc.ts` 列出的「高曝光、排名差」查詢＝讀者真的在問、但我們答得不夠好的題目。做法是把這些**真實問題**寫成 `/guides`（問題原話為題）或 `/glossary`（名詞定義），用事實回答並交叉連回產品 → 把曝光換成點擊、並被 LLM 引用。範例見 commit「依 GSC 真實搜尋需求補內容」。
+
 ### 2. 流量與讀者回饋（GA4）— 品質面，資料回流中
 - **看成效**：`./node_modules/.bin/tsx scripts/ga-insights.ts`（印報告 + 重產 `reports/news-insights.json`）。週一 03:00（台北）cron 自動跑，log `/var/log/yaocare-ga.log`。
 - **怎麼解讀**：計分用**完成率**（read_complete / page_view）非絕對數，貝氏收縮防小樣本雜訊、比全站平均、只加重不懲罰。`enoughData=false` 或某 target `weight=1` ＝ 資料未達門檻、屬正常。

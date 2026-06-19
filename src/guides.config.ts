@@ -371,6 +371,52 @@ export const GUIDES: readonly Guide[] = [
     related: ['txgnn'],
     relatedTerms: ['drug-repurposing', 'smart-on-fhir'],
   },
+  {
+    slug: 'fhir-connectathon',
+    question: 'FHIR 聯測是什麼？系統要參加前要先準備什麼？',
+    searchPhrases: ['fhir 聯測', 'fhir connectathon', 'fhir 互通測試', 'fhir 介接測試', 'smart on fhir 測試', 'fhir 驗證工具'],
+    audience: 'b2b',
+    answer:
+      'FHIR 聯測（FHIR Connectathon／互通性測試）是讓不同醫療資訊系統實地驗證「能不能照 FHIR 標準正確交換資料」的測試活動或流程：各方依同一份實作指引（IG）與設定檔（Profile）互送資源、跑 SMART on FHIR 的 OAuth 2.0 授權流程，並用驗證工具（如 HL7 FHIR Validator、ONC Inferno）檢查符規。準備重點有三：先選定 FHIR 版本與 IG、把要交換的資源驗到綠燈、把 OAuth 2.0 + PKCE 授權流程測通。',
+    sections: [
+      {
+        heading: '聯測在測什麼',
+        bullets: [
+          '資源符規：Patient、Observation、QuestionnaireResponse 等是否符合 FHIR 與 IG/Profile',
+          'SMART on FHIR 啟動與 OAuth 2.0（含 PKCE）授權流程能否跑通',
+          '互通：A 系統送出的資源，B 系統能否正確解讀',
+          '邊界情境：必填欄位缺漏、代碼系統（LOINC／SNOMED／ATC）對齊、錯誤回應',
+        ],
+      },
+      {
+        heading: '參加前要準備的事',
+        bullets: [
+          '選定 FHIR 版本（多為 R4）與要遵循的 IG（如 TW Core 或場次指定的 IG）',
+          '把要交換的資源先用 HL7 FHIR Validator / Inferno 自驗到通過',
+          '建好 OAuth 2.0 + PKCE 授權端點，備妥測試帳號與 scope',
+          '備齊測試資料與情境腳本，能重複跑並留下紀錄',
+        ],
+      },
+      {
+        heading: '常見卡關',
+        bullets: [
+          '只測 happy path，沒測必填缺漏與錯誤碼回應',
+          'OAuth scope 或 PKCE 設定不全，launch 失敗',
+          '用自編碼而非標準碼，代碼系統對不上',
+          '資源能產出，卻不符 IG Profile 的限制',
+        ],
+      },
+    ],
+    toolIntro:
+      'SMART on FHIR 收案伺服器以 FHIR R4 收受 QuestionnaireResponse（Smart Func／Geri／Pedi 三系統皆可收案），以 OAuth 2.0 + PKCE 交付、並符合 ONC Inferno FHIR 測試 —— 等於把聯測常見的符規、授權與互通項目先做到位；要與院所或平台介接時可直接接上。',
+    faqs: [
+      { q: 'FHIR 聯測和 connectathon 一樣嗎？', a: 'connectathon 是國際上常見的 FHIR 互通測試活動形式，台灣多稱「聯測」；本質都是讓不同系統實地驗證能否照 FHIR 標準正確交換資料。' },
+      { q: '只有醫院才需要做嗎？', a: '不限。任何要與電子病歷或健康平台交換資料的 App、收案系統或廠商，都需先通過符規與授權測試才能穩定介接。' },
+      { q: '有哪些免費的驗證工具？', a: '常用 HL7 官方 FHIR Validator 與 ONC 的 Inferno 測試套件，可在送件／聯測前先自我驗證到通過。' },
+    ],
+    related: ['fhir-server', 'func', 'geri', 'pedi'],
+    relatedTerms: ['smart-on-fhir'],
+  },
 ];
 
 export const GUIDE_BY_SLUG: Record<string, Guide> = Object.fromEntries(
