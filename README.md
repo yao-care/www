@@ -70,6 +70,7 @@
 - **每兩週自動掃缺口 + 產草稿**：cron `0 2 1,15 * *`（每月 1/15）跑 `scripts/content-gaps.sh` → 列補題候選（`reports/content-gaps.json`）+ 為「top1 且對應自家產品」的候選產一份**草稿**到 `drafts/`。log：`/var/log/yaocare-content-gaps.log`。
 - **安全閘**：對應不到自家產品的高曝光字（品牌混淆，如「法律偵探」）不自動產稿；草稿會附模型自列的「需查證主張」與 `uncertain` 旗標。
 - **採用流程（人工）**：審 `drafts/<...>.md` → 逐條查證 `factCheckNotes` → 貼進 `src/guides.config.ts` 或 `src/glossary.config.ts` → `npm run deploy` → 提交 IndexNow。**草稿不自動上線、不自動 commit。**
+  - ⚠ **論文 / DOI / 統計數字類來源「一定要實連點開」確認**，不可只看模型給的編號像不像。實例：首份 txgnn 草稿給了貌似合理的 Nature DOI `s41591-023-02612-2`（2023），實查是**模型杜撰**——正解為 Nature Medicine **2024** `s41591-024-03333-8`（+ PMC11326339 全文）。模型自評 `uncertain=false` 也可能有此類假引用，故 DOI/數字必親自核對。
 - 手動看候選：`./node_modules/.bin/tsx scripts/content-gaps.ts`（加 `--draft` 才產稿）。
 - 首批範例（2026-06-19 人工補）：`/glossary/llm`、`/guides/fhir-connectathon`。
 
