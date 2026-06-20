@@ -1,0 +1,16 @@
+{
+  "target": "goalkeeper",
+  "title": "FDA醫療AI指引草案強調全週期稽核，台灣業者面臨責任邊界詮釋挑戰",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE1vNldRWXVLUWtUMVJvZkY0MWVwN0pRSlhFc3BzNGoybERrdW1ZY3ppdDBkU1JUNU55MHE1TTFxUE1Zai1UeTNSOE1iVQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-16T04:09:15.000Z",
+  "fetchedAt": "2026-06-20T20:52:31.240Z",
+  "newsBrief": "美國FDA發布AI醫療設備指引草案，強調涵蓋全產品生命週期的風險管理框架。草案針對AI持續學習特性訂定額外規範，呼籲業者建立可稽核的風險控管流程，是監管機關對AI醫療設備安全性的系統性回應。",
+  "issueAnalysis": "FDA指引草案揭示醫療AI監管的共同困境：技術迭代速度遠超法規更新節奏，業者難以判斷現行產品的合規位置。台灣衛福部生成式AI指引亦面臨相似挑戰——方向明確，但落地細節仍待業者自行詮釋。合規責任界定不清是根本障礙：誰負責查核AI產出的醫療內容、查核標準如何保持一致且可重現？",
+  "designResponse": "面對監管要求走向全生命週期可稽核性，醫療AI合規設計需能回報揭露免責、來源標註、越權診斷、個資外洩、幻覺查核五道關卡狀態(proofPoint #1)，各道並綁定台灣對應法源(proofPoint #2)。責任邊界上，系統僅回各關卡狀態、不替業者做整體放行決定(proofPoint #3)，保留業者自主判斷空間。規範版本可鎖定、每次查核留存稽核軌跡(proofPoint #4)，呼應FDA草案強調的可重現性要求。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

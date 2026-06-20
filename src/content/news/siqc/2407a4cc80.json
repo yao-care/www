@@ -1,0 +1,16 @@
+{
+  "target": "siqc",
+  "title": "合庫人壽再獲 ISO 27001 認證：金融業資安合規如何從衝刺轉為常態",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1mRUc3ZER6RGpWb1hkQUkzN0haRTFYVnBhOUxWc25UTDFJNG1TbEFlSDhsTHRBY0MyT1JKZ0hOMWJzNXNGQWdpZ1FnZmdxMGRKQmc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-25T07:00:00.000Z",
+  "fetchedAt": "2026-06-20T20:54:38.034Z",
+  "newsBrief": "合庫人壽再度通過 ISO 資訊安全認證，並同步推出客戶回饋活動，顯示金融業對資安合規的持續重視。在個資法規趨嚴與資料外洩風險升高的環境下，取得並維持 ISO 27001 認證已成為金融機構建立客戶信任的基本門檻。",
+  "issueAnalysis": "ISO 27001 認證的維持，考驗的不只是初次取得的能力，更是組織在文件管理與持續改善上的體制韌性。對中小資安團隊而言，ISMS 所要求的文件往往分散在不同系統，版控與條文對應困難，稽核前需大量人工彙整；一旦法規更新，維護成本便急速攀升。如何讓認證維持從「人工衝刺」轉為「持續自動化」，正是台灣企業資安合規治理的核心挑戰。",
+  "designResponse": "「認證維持」的難點在於合規工作週期性集中、難以日常化。以 12 個 GitHub Actions workflow 串接掃描、文件生成與稽核包封裝（#1），配合 13 條安全掃描管線與 64 份 ISMS 文件框架（#2），讓組織在既有架構上持續更新而非衝刺。每 15 分鐘輪詢 OSV API 自動告警（#4），使弱點不拖延至稽核前才浮現。如此設計下，合規工作可轉為機器持續執行的基礎建設，而非仰賴人員記憶與集中動員，才能在認證週期之間維持文件與實務的同步。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 3
+}

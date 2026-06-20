@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "AI老藥新用的可信度困境：從資料廣度到臨床證據的三層設計",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9CX0VrQXF0LWlYTlRUbVdFR3Jid2JyYTZFYUh0OE9SVkthS0RrY29XbWloSmNPMmNzZ3I0UnM3bUtQWjJwUzI2OHhfTWQxU0VodEVPUzNlVWh0ckVVWm4w0gFkQVVfeXFMTW0wV05zTkY3QzV4RWVva2lfaGx1X1FnWW9oLTNrRV85MDZlVFlNRGJ1SWNhQVB1bTlTR0NvdW9HVHNpZ2xpNkhZUDlzR2hldjdETWM4VVp5TlNRMk50MDRubHRNdQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-17T07:00:00.000Z",
+  "fetchedAt": "2026-06-20T20:45:39.990Z",
+  "newsBrief": "一家醫學AI新創的藥物平台在NVIDIA GTC競賽中入選前8強，引發各界對AI驅動老藥新用的關注。相較於全新藥物開發的高成本與長週期，老藥新用以既有安全性資料為基礎，正逐步受到國際技術社群重視。",
+  "issueAnalysis": "新藥研發的高成本使老藥新用成為重要研究方向，但探索成果要進入臨床決策，需克服三個缺口：跨國藥品資料整合不足、AI預測缺乏文獻佐證導致臨床難以採信，以及EHR與AI工具整合壁壘使洞察難以即時落地。國際技術舞台的關注，正反映業界對系統性填補上述缺口的期待。",
+  "designResponse": "面對老藥新用探索中資料碎散與預測可信度的挑戰，平台採雙引擎並行架構，同時運用知識圖譜與深度學習方法（#1），讓不同路徑的結論相互校驗。資料廣度上整合30+國FDA藥品資料（#2），適應不同藥政環境。每一條預測附帶PubMed文獻與ClinicalTrials證據包（#4），讓臨床人員能立即回溯研究依據，降低採信門檻。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2
+}
