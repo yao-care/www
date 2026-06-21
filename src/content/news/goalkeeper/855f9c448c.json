@@ -1,0 +1,20 @@
+{
+  "target": "goalkeeper",
+  "title": "MedTech 醫療科技雙週報第 50 期：衛福部發布醫療 GenAI 指引，聚焦 6 大風險與供應鏈透明度",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE92WElaVEg4cDVrX3FGMEpOT0Z0X2x1dUw0UGpqc2hoVmVZVXRITjhEclI3NEhYOTBWVHl4VTNvSjRJckZjQ1E4VThXLVNqdw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-02T07:00:00.000Z",
+  "fetchedAt": "2026-06-21T20:55:44.419Z",
+  "newsBrief": "衛福部於 2026 年 6 月正式發布醫療生成式 AI 指引，聚焦六大風險類別並要求供應鏈透明度揭露。此指引標誌著台灣醫療 AI 監管從業者自律進入法規規範期，醫療機構與 AI 工具業者均須面對更具體的合規義務與問責要求。",
+  "issueAnalysis": "衛福部指引點名六大風險，涵蓋越權診斷、幻覺輸出、資料偏差與供應鏈責任歸屬等類別，要求業者說明各環節的責任邊界。然而指引上路後，「如何落地執行」成為醫療機構的真實挑戰：採購或部署 AI 工具時，往往缺乏可逐條對應的查核機制，難以確認每項規範是否已被系統性覆蓋。更核心的困境在於，AI 產出的醫療內容難以靠人工逐條審閱，若合規查核未嵌入工具本身的回報流程，責任劃分便容易流於形式，淪為事後補救而非事前預防。",
+  "designResponse": "面對衛福部指引對六大風險的逐條要求，goalkeeper 的設計思路是將查核能力直接嵌入 AI 內容流程，針對揭露免責、來源標註、越權診斷、個資外洩與幻覺五道關卡分別回報符合狀態，並為每道關卡綁定對應的台灣法源條文 (proofPoint #1)(proofPoint #2)，讓醫療機構在對照指引時能直接追溯法源，而非仰賴業者自我聲明。在責任劃分上，系統設計為只回報各關卡狀態、不替使用者做整體放行決定 (proofPoint #3)，保留醫療專業人員的最終判斷空間，避免工具成為責任轉嫁的管道。在可重現性上，每次查核可鎖定規範版本並留存稽核軌跡 (proofPoint #4)，使供應鏈透明度的要求有跡可查，讓指引所強調的問責機制落實在可驗證的操作層面，而非僅靠書面聲明。",
+  "tags": [
+    "醫療AI合規",
+    "衛福部GenAI指引",
+    "供應鏈透明度"
+  ],
+  "relevance": 0.95,
+  "highlight": true,
+  "criticPasses": 1
+}

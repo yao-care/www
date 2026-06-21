@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "衛福部推動 SMART 醫療應用，「台灣50」遴選機制使 FHIR 相容成政策核心指標",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5ibFRad2NVTW5KRTNOcVA0Z0ZwUDA0bG9RTG1RelcxVUl6UGNzSmhpa2RBZ3NhbFZyOWtlLTVQM3poTUppa3p2dDRQZ0V1ekJLX0xwNHFB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-16T07:00:00.000Z",
+  "fetchedAt": "2026-06-21T20:53:02.887Z",
+  "newsBrief": "衛福部以「台灣50」遴選機制評鑑各院智慧醫療能量，入選項目涵蓋 AI 輔助診斷與數位病歷整合，顯示 SMART on FHIR 相容應用已成政策核心方向，EHR 互通標準逐步確立。",
+  "issueAnalysis": "「台灣50」遴選機制使臨床 AI 工具能否「插頭即用」成為實質評估指標，老藥新用領域面臨兩項結構性困境：AI 預測結果缺乏即時文獻佐證，臨床人員難以直接採信；多數工具受限於單一國家藥品資料，無法反映跨國核准現況。政策若要推動真正有臨床價值的 SMART 應用，預測可信度與藥品資料廣度必須同步解決。",
+  "designResponse": "面對 SMART on FHIR 生態系逐漸成熟的政策趨勢，老藥新用平台從 EHR 相容性與預測可信度兩個方向回應這項需求。在相容性層面，平台已上架 SMART on FHIR App Gallery，支援 Epic 與 Cerner 等主流 EHR 系統，臨床人員毋需切換介面即可查詢，並採用 OAuth + PKCE 認證流程確保合規存取 (#5, #7)。在可信度層面，每筆預測均附帶 PubMed 文獻與 ClinicalTrials 證據包，讓查詢結果具備文獻支撐而非單純 AI 輸出 (#4)。這兩項設計使老藥新用工具得以在政策要求的標準化架構下直接銜接臨床工作流程。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 3
+}

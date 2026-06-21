@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "台灣首屆優良SMART應用程式獎出爐：院端AI醫師系統「LHIT」獲獎，FHIR生態系進入正式評比",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFB0NHprNjIwVkRER2dZeFF4X2JxTlRMRzY4Z1BkV1lQY0cxejNDNHN0NWJxQ2ZYcXVTQ1Blc2x5NEIzUktyOHRWVDdHaEdIN1J3Y2FPWHNB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-23T07:00:00.000Z",
+  "fetchedAt": "2026-06-21T20:51:35.471Z",
+  "newsBrief": "台灣首屆優良SMART應用程式獎評選結果出爐，院端自建AI醫師系統「LHIT」脫穎而出。此獎項的設立標誌著SMART on FHIR生態系在台灣進入正式評比軌道，也反映各醫療院所積極將臨床決策支援應用整合進EHR工作流程的趨勢正在加速成形。",
+  "issueAnalysis": "SMART on FHIR標準的核心價值在於讓第三方應用程式能安全、標準化地接入醫院EHR系統，大幅降低臨床AI落地的整合門檻。然而，院內自建AI醫師方案往往面臨兩大瓶頸：其一，藥品與疾病知識庫多侷限於本國資料，難以支援跨國比較或罕見適應症探索；其二，預測結果缺乏即時可查的文獻證據佐證，使臨床人員難以在繁忙工作流程中驗證建議的可信度。如何在「院端客製化需求」與「跨國知識廣度 + 文獻溯源能力」之間取得平衡，正是當前臨床AI整合的核心挑戰。",
+  "designResponse": "此類平台以「可被任意EHR接入」為設計起點，採OAuth + PKCE認證流程（#7），確保接入符合醫療資安規範。已上架SMART on FHIR App Gallery，相容Epic與Cerner主流系統（#5），臨床人員可在既有工作流程中直接調用預測，無需切換介面。知識廣度上涵蓋30+國藥品資料（#2），每筆預測附帶PubMed文獻與ClinicalTrials證據包（#4），讓評估非典型適應症時有具體文獻可循，補足本土自建方案在跨國資料與文獻溯源上的缺口。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 2
+}

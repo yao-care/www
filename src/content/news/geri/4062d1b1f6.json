@@ -1,0 +1,20 @@
+{
+  "target": "geri",
+  "title": "社區長者智慧篩檢據點的設立，帶出高齡周全性評估（geri）走入日常的關鍵議題",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMikgNBVV95cUxNTUdDdHRlNzZ0X1RVekswa2JmVXJZMlNrTFJTOFdxNDU2YnZ0dFAzTEU2SXVjXzJ6SGZIUExnb2tzSFRYX0ZpZTZJaUY0M2Z0OFBwLVptSEJ6Y1paaDVYdGUwRkZEa1N3bVZoT1JVMlBYNWxFQ3lQY3MyN2UwZTAyRVo5alJ4QXgzOXlZYk1jbGdIMzdHamtrY1hDb29XWVlPOG91Z25LSW1uQzI0bjQwSEFUc0t5VGlsOFI5VVlSc0RXV3VSbEtNclI2UUE0Z2V3bG9GMU1FLWpiak1ScFhjNTEydnVtc19WR2F0LUFteE9Gak1Jd1NiS3dIb3Y1YVo2OU52eFFKRUx1WHl1NUoxal9BTU81LTFhNVdBdDZhWHV3NlBmMmR3RmdxSWFxM2ItQWxkWmxOUjNuX0xKVWlwWkdjTzNYdkM3QURKbllMMTlaUERjTHpTejdScE5YSXoyRTUzOUp3bTI1X05XalJYSWl1YjRWLTlTMEJ4dEhKMkFJbG5DUkRXaHo0Y05Qem91ZHc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-20T16:01:00.000Z",
+  "fetchedAt": "2026-06-21T20:48:20.714Z",
+  "newsBrief": "某醫療機構於社區環保站設置長者智慧篩檢據點，將高齡健康評估從醫院延伸至民眾日常活動場域。此舉反映台灣推動社區化長照的趨勢，讓高齡者無需特地前往醫院，即可在熟悉環境中接受初步健康篩檢。",
+  "issueAnalysis": "高齡衰弱評估走入社區，觸及的核心問題在於：長者往往因「沒感覺哪裡不對」而錯過最佳介入窗口。衰弱、肌少、認知退化等風險分散在不同量表，長照據點缺乏能快速、結構化執行的整合工具。此外，篩檢結果若無法與醫療院所資訊系統互通，社區與診間之間的照護斷層便難以彌合，高齡者的後續轉介也難以有效落實。",
+  "designResponse": "面對社區篩檢場域的實際需求，Smart Geri 的設計思路是讓同一套評估工具同時服務公眾自篩與專業臨床兩種情境（proofPoint #2）。系統以臨床衰弱量表 CFS 1–9 為分層基準（proofPoint #1），整合認知、情緒、營養、行動、用藥與社會支持等多面向，讓社區據點的護理人員也能依紅黃綠分級結果給出明確轉介建議並配對衛教內容（proofPoint #5）。離線 PWA 設計讓評估不受場域網路條件限制，資料可選擇留存裝置或上傳醫療機構 FHIR 系統（proofPoint #6），協助縮短社區與診間之間的資訊落差，讓篩檢結果真正延伸為後續的照護行動。",
+  "tags": [
+    "高齡衰弱",
+    "社區篩檢",
+    "長照評估"
+  ],
+  "relevance": 0.78,
+  "highlight": false,
+  "criticPasses": 1
+}
