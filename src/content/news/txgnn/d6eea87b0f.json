@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "AI老藥新用如何建立臨床信任：雙引擎驗證與EHR整合的設計路徑",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPLVMxSEluRTM0bEFnQmwtemdiWG9VaDNlU1p4NE5RemQybnBwZHh5aVhuRGwzN1ByWUR2QnZQMU5IVG1ZTkVkSEtKNUF3SXd6MUk0NFRJZkE1UVBKWVB1OHNtMU1hSXpneVMza3RwZjU5UE12aTV6Z01SWTVIR1BROEw5WklVUjJBTGwwU2staUdTUQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-01-22T08:00:00.000Z",
+  "fetchedAt": "2026-06-23T20:46:29.064Z",
+  "newsBrief": "台灣醫療AI企業源華智醫受邀於NVIDIA GTC大會展示AI新藥開發成果，顯示以深度學習挖掘既有藥物新適應症的老藥新用路徑，正從學術概念走向國際產業舞台。此趨勢反映業界對AI驅動藥物再利用技術的高度重視。",
+  "issueAnalysis": "新藥研發耗時耗費，一款藥物從候選到上市平均逾十年。相對地，已上市藥物若能透過AI系統性挖掘新適應症，可大幅壓縮成本與風險。然而臨床AI工具常面臨兩大瓶頸：預測缺乏文獻佐證、難以建立臨床信任；以及與EHR系統整合度低，成果難以進入實際診療流程。源華智醫登上NVIDIA GTC舞台，正反映業界對「可落地AI藥物再利用工具」的強烈期待。",
+  "designResponse": "AI藥物再利用工具最常被質疑的，是預測缺乏佐證、難以銜接臨床流程。針對「預測可查」面，平台採雙引擎並行架構，以知識圖譜與深度學習相互驗證（#1），每個預測均附帶PubMed文獻與ClinicalTrials臨床試驗記錄（#4），讓研究端可直接查閱原始證據，而非僅憑模型輸出判斷。針對「系統可接」面，平台相容Epic與Cerner等主流EHR系統（#5），銜接現有院端工作流程，而非要求另建獨立環境。兩者合力構成「預測有根據、系統可整合」的落地條件。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

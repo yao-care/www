@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "中醫當場問豆包 AI 照讀答案收診費──診間 AI 可解釋性爭議",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOcEMwYVprMXRYS01VSURxc2RkQ1ZNaVZCME9GRk5MSzBWRXJFWFdvSnJsbWI3b3VOSTlKY0tObVk1N1ZwTXhReVduMDNucF84TGlpR2hQYUYteGxldy02VjBZb29qSFBpWXZaTndPZk1QdlhLM2w4SzZMMmZ6SHVVcXRB?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-22T09:46:24.000Z",
+  "fetchedAt": "2026-06-23T20:54:49.957Z",
+  "newsBrief": "香港一名中醫師診症時當場問豆包 AI，將系統回覆照讀給病人並收取 340 港元診費，引發輿論熱議。事件核心在於 AI 輸出缺乏可解釋性，醫師責任歸屬模糊，病人無從得知辨證依據。",
+  "issueAnalysis": "這起事件的核心問題不在於「中醫師用了 AI」，而在於 AI 輸出被當成黑箱直接使用——病人無從得知系統依據了哪些辨證邏輯，醫師也未能對答案進行結構化的過濾與責任確認。通用型大語言模型並非為中醫問診設計：它缺乏四診資訊的標準化採集流程、無法輸出可追溯的推理路徑，更難以銜接現有醫療資訊系統。在 AI 醫療落地的當下，關鍵問題是：哪一類工具、在哪一個環節、由誰負責確認，才算合理地輔助臨床判斷？",
+  "designResponse": "面對「AI 工具進入診間但缺乏可解釋性」的議題，中醫 AI 的設計關鍵在於讓每一步辨證都有根可查。以 128 條八綱與臟腑規則寫入結構化檔案為基礎，中醫師可逐一核對辨證依據 (#1)；推理層採用規則 ×0.6 加 LLM ×0.4 的混合架構 (#2)，確保語言模型的靈活性不覆蓋規則的可驗證性，每個結論也保留完整推理路徑與引用依據。AI 在診間的角色，不應是被照讀的黑箱，而是一套可被中醫師逐步問責與檢視的決策支援工具。",
+  "tags": [],
+  "relevance": 0.88,
+  "highlight": true,
+  "criticPasses": 3
+}

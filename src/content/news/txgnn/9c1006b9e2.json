@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "台灣醫療AI登國際舞台：學術能見度之外，落地部署才是真正考驗",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFAzZ2Z2V2VtamJIaDRTYVhYX1hfZDViTTk5NG9yVFVaNEdYR2lnakhrMHotWDE4NGx2bF9NdDRoaFlTOFJlRFJUMFUxZGt1bmpSVFUwMlN3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-30T07:00:00.000Z",
+  "fetchedAt": "2026-06-23T20:44:02.367Z",
+  "newsBrief": "華安旗下源華智醫研發成果連登兩大國際指標會議，顯示台灣本土醫療AI團隊在學術舞台的能見度提升，也反映業界對AI輔助臨床決策的驗證需求日益迫切。",
+  "issueAnalysis": "醫療AI研發成果能否真正進入臨床，是業界核心挑戰。國際會議發表是研究成熟度的里程碑，但從學術驗證到實際部署，仍需跨越系統整合、跨國藥品資料相容性及EHR接入等關卡。在老藥新用領域，預測模型若缺乏跨國資料支撐與文獻佐證，臨床可信度將大打折扣。如何跨越「展示」到「部署」的鴻溝，是整個領域的結構性問題。",
+  "designResponse": "面對醫療AI研究成果落地的挑戰，可部署性是平台設計的核心考量。在資料廣度上，整合多國FDA藥品資料（#2），確保預測結果具備跨國臨床參考價值。在可信度設計上，每項藥物適應症預測均附帶PubMed文獻與ClinicalTrials臨床試驗證據包（#4），讓臨床工作者能獨立核實。平台已上架SMART on FHIR App Gallery（#5），相容主流EHR系統，縮短研究成果與臨床實際使用之間的距離。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

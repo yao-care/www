@@ -1,0 +1,20 @@
+{
+  "target": "goalkeeper",
+  "title": "柏原崇弟血便問AI兩次才就醫險延誤！醫揭AI問診3大隱憂：這件事一定要有人負責",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9CZG15bzZWRUhGWUhLNkxFMHM1bEdZUnIyRUt1WjA0TEFwYXpVei00VUduRnFFd3dOS0JucTJPSzV4SUpzeUNpUmgyaEpWV2c3WWNnMUZR?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-05T07:00:00.000Z",
+  "fetchedAt": "2026-06-23T21:02:10.108Z",
+  "newsBrief": "藝人柏原崇弟弟因出現血便症狀，先後兩次諮詢AI才決定就醫，差點延誤診治時機。醫師指出AI問診存在三大隱憂：缺乏問責機制、過度依賴可能誤導就醫時機，以及責任歸屬不明的核心困境。",
+  "issueAnalysis": "這起案例凸顯生成式AI在醫療應用的結構性困境：當AI回應未能辨識高風險症狀，使用者的就醫決策便遭悄悄延誤。問題核心不在AI「說錯了」，而在回應缺乏責任框架與來源依據，使用者無從判斷哪些是可信建議、哪些僅是資訊參考。衛福部雖已針對醫療機構導入生成式AI訂定指引，但實際落地的合規機制仍不完整，AI問診的責任灰色地帶因此難以釐清。",
+  "designResponse": "面對醫療AI問責空白，goalkeeper的設計思路從「讓每一次查核都有據可追」出發。在AI生成的醫療回應中，系統針對揭露免責聲明、來源標註、越權診斷、個資外洩與幻覺五道面向逐一回報狀態，每道檢查同時綁定台灣具體法源——涵蓋衛福部生成式AI指引、醫師法、個資法等 (proofPoint #1)(proofPoint #2)，讓責任歸屬從模糊地帶變為可稽核的法條錨點。值得一提的是，系統刻意不替使用者做整體放行決定，只提供各關卡的查核結果 (proofPoint #3)：這正呼應了醫師強調「一定要有人負責」的核心訴求——AI提供可重現的合規依據，最終判斷責任仍由醫療從業人員來承擔。每次查核並留存稽核軌跡 (proofPoint #4)，讓機構在面對主管機關時有清晰的紀錄可循。",
+  "tags": [
+    "AI問診責任",
+    "醫療合規",
+    "越權診斷"
+  ],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 1
+}

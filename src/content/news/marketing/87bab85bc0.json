@@ -1,0 +1,20 @@
+{
+  "target": "marketing",
+  "title": "萊雅與OpenAI深化合作 加速生成式AI助攻內容行銷",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiwwJBVV95cUxQUlZfcGNfeHZjOHdlVVItWWRYYmhkQ2M4UEt4Y3YwWDN2bUEyeWpubUxvVkIxZEEzVjM3OGo1QUtxT0lUQzJKU3Q3MTFFSHVLejItU0ViS2p2SzJSbUdQRmcxWjlENGRiRlluX0dPQUVuNDdDX2F0ZWRHOXZxTml2SHBkLXRBZG14Rl8zdTNFcUx0Y0Y4d3N1Y1Y4aG5vVHJjT3RqOVEtbEc0WVRXVGhGODVDWjBNWFlQOWJOZTZsYk1YUExMU0Zrcy1NaFU4bG01c0ZNYzFvVktFZFFTMTNCOXVQdjdkY0s1Tzdqc3E3OUo4U2Z3VldlTWp4YkhqbTNOTGNtaE9QMUNyMURudzZNWmJaVkRIXzhMLThIQ3ZWLUpWdEpNWUVYMmk0NDNOamN1YnNJWGRmTlU1bThCdVJocU10bw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-22T00:10:32.000Z",
+  "fetchedAt": "2026-06-23T20:58:28.046Z",
+  "newsBrief": "萊雅與OpenAI宣布深化合作，將生成式AI導入美妝品牌的內容行銷流程，涵蓋素材生產、個人化推薦與創意測試，目標是大幅壓縮從創意到上線的週期。此舉標誌著全球頂尖消費品牌已把AI內容生產能力視為競爭核心資產，也讓中小品牌面臨更大的內容規模化壓力。",
+  "issueAnalysis": "生成式AI大幅壓低了內容生產的邊際成本，卻也讓法規合規壓力同步放大：素材量增多，每一則都需符合廣告規範，對醫療、保健、食品品類尤其高風險。另一個結構性問題是社群行事曆的週期規劃——若只依時事或行銷節日臨時拼湊，缺乏可預期的內容節奏，AI加速生產後的素材反而更難累積品牌深度。KOL合作也面臨類似困境：流量高不代表轉換力強，健康品類若缺乏真實專業背書，廣告投放的信任基礎便薄弱，難以支撐長期品牌溝通。",
+  "designResponse": "面對AI時代素材量暴增、合規風險同步升高的結構性困境，設計思路必須在「速度」與「品質把關」之間建立系統機制。在社群行事曆的內容節奏上，以24節氣為週期框架，搭配4類試作模板加速素材生產 (proofPoint #3)，讓行銷節日不再倉促因應，而是有計畫地預備創意庫存，確保整年度的內容節奏完整且有結構。在健康、食品相關品類的廣告把關上，由律師團隊負責審核酒類、食品與醫療廣告法規紅線 (proofPoint #4)，確保AI加速生產後的素材仍符合台灣廣告規範，從源頭控管裁罰風險。KOL選用方面，以國家醫療專業考試通過加上1,000+粉絲為資格門檻 (proofPoint #2)，確保健康品類的推廣者具備真實的專業背書，而非單靠流量驅動，進而提升訊息可信度與受眾的實際轉換意願。",
+  "tags": [
+    "生成式AI",
+    "內容行銷合規",
+    "社群行事曆"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1
+}
