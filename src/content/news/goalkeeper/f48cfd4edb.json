@@ -1,0 +1,20 @@
+{
+  "target": "goalkeeper",
+  "title": "AI 會回答不代表答案都正確！醫師：醫療 AI 關鍵在能否提供可信資訊",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1EU1NTTnZhWl9LSHd4VEJLZkxNN2F3cUFGeVQ4Qk81LTVoZ2NvaG1nbUJfd1UyZkRKaXAtZnhJazM0RDA0T3huWVZMOXp0bDJiQjVpSEJqN1ZYdVB6TVJWbFZn0gFnQVVfeXFMTThqWHcyR2lUTkstQWRrV21FWWNZQ2tHbUJwbU9hVmlrYlhKODVQWTQwUXdMZEx0V0hVUnE2OUhPWmMtdE5UV1p2Rjl2WlRnSjlxSkp3Z1VRcDFhZW1ON0NPc3dGcVNjQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-05T07:00:00.000Z",
+  "fetchedAt": "2026-06-24T20:46:36.600Z",
+  "newsBrief": "鏡週刊引述醫師觀點，指出 AI 能回答並不代表答案正確，醫療 AI 的關鍵在於能否提供可信、可驗證的資訊。這點直指生成式 AI 在醫療場景中最核心的挑戰：幻覺內容與來源缺失，使得單憑「能給答案」遠不足以滿足醫療合規的基本要求。",
+  "issueAnalysis": "醫師的提醒揭示了一個結構性困境：生成式 AI 的流暢表達能力容易讓人誤以為輸出內容具備醫療可信度。事實上，幻覺、越權診斷與來源標註缺失是醫療 AI 三大系統性風險，而衛福部生成式 AI 指引雖已提供方向，醫療機構在落地執行時卻往往欠缺可操作的檢核工具。更深層的問題在於：當 AI 內容出錯時，責任歸屬與稽核軌跡的空白，才是導入風險的真正來源。",
+  "designResponse": "面對「AI 能回答≠答案可信」這個核心矛盾，goalkeeper 的設計思路是把「可信」從主觀感受轉化為可查核的結構化狀態。在每次 AI 內容輸出的審查環節，我們選擇回報五道獨立關卡的符合狀態，包含揭露免責、來源標註、越權診斷、個資外洩與幻覺查核，而不是給出一個籠統的「通過或不通過」結論 (proofPoint #1)；每道關卡並非主觀判斷，而是綁定具體台灣法源，讓合規依據可被追溯、可被審計 (proofPoint #2)。此外，為確保查核結果的重現性，規範版本可鎖定，每次查核皆留有稽核軌跡 (proofPoint #4)。這樣的設計讓醫療機構不需全盤信任系統的整體判斷，而是可以針對每道關卡獨立驗核——讓「可信資訊」真正有結構性依據支撐，而非僅依賴模型的自我宣稱。",
+  "tags": [
+    "醫療AI合規",
+    "幻覺查核",
+    "可信資訊"
+  ],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 1
+}

@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "圖神經網路平台崛起：GNN 如何加速老藥新用預測",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5SVXJwa2Y5TmN1ZlFYdi1MTUdkSl9EVWI0b0puZTB4R1NyVHZJSl9xWVoxV3U2MHRkYVB2MGE2ZDROQUhUdExvNFVRVEpTblFzb3c?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-02-10T17:18:49.000Z",
+  "fetchedAt": "2026-06-24T20:45:05.143Z",
+  "newsBrief": "圖神經網路（GNN）平台 graph-learn 近期在開發者社群引發廣泛討論，展示了 GNN 在多種應用場景的潛力。這類平台透過圖結構學習複雜關係，已逐漸應用於生醫領域的知識圖譜建構與藥物-標靶互動預測，成為老藥新用研究的重要技術基礎。",
+  "issueAnalysis": "圖神經網路技術的快速演進為生醫研究開啟新可能，但也凸顯兩大挑戰：藥物-疾病關係預測須整合分子、臨床、文獻等異質資料，單一深度學習方法難以處理這種結構化知識；加上多數 AI 預測停留於體外驗證，缺乏系統性臨床試驗證據佐證，難以在實際診療中落地應用。如何建立兼具理論深度與文獻可查核性的老藥新用工具，是生醫 AI 領域當前的核心命題。",
+  "designResponse": "面對生醫知識的異質性與複雜圖結構，單一深度學習方法難以同時兼顧既有知識的系統性與模式辨識能力。若採雙引擎並行架構，同時運用知識圖譜與深度學習方法（#1），可使預測在廣度與可解釋性之間取得平衡；再為每項預測附上 PubMed 文獻與 ClinicalTrials 試驗佐證（#4），臨床工作者即可直接追溯依據，而非只能信賴黑盒輸出。這樣的設計讓不同資料來源的藥物知識得以系統整合，使預測結果對研究者與醫療人員都具備實質可查核性，降低從研究到臨床判斷的落差。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": false,
+  "criticPasses": 3
+}
