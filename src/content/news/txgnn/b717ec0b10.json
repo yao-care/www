@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "AI藥物開發平台進軍國際舞台：老藥新用的臨床落地之路",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOUy1CczRiTk9xQlNKbURTZkozVXRjaFFLb0pLbWJPcHJObnF5TlBPVlVtbmNzRlRrWFR4WHM5LTg0VVdaVTZJYnRsbFU2NHc2SWhsanY5TzJjcTJFcDEwNnljMmEzaHpKSEtSd3FtOHVDUlFtV2xXb0p6R2NWbGpYUXpZZjZxMTlabEEwdDd1cGdTdw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-01-26T08:00:00.000Z",
+  "fetchedAt": "2026-06-25T20:54:20.950Z",
+  "newsBrief": "亞太生醫AI新創積極布局全球藥物開發市場，藉頂尖科技論壇展示AI輔助藥物平台研究成果，反映製藥業對「AI加速新藥發現」的高度期待持續升溫。",
+  "issueAnalysis": "新藥從研究到上市往往耗費十年以上，促使業界轉向以AI系統性挖掘已上市藥物的潛在新適應症。老藥新用路徑因安全性資料相對完整、臨床轉化效率理論上較高，但如何讓AI預測真正融入臨床決策流程、跨越EHR整合門檻，仍是多數平台待解的核心課題。",
+  "designResponse": "面對「可信度」與「跨院適用性」的雙重要求，老藥新用平台採雙引擎並行策略——知識圖譜捕捉結構性關聯、深度學習學習隱性模式，兩者互補以提升預測可信度 (proofPoint #1)。每筆預測均附帶PubMed文獻與ClinicalTrials試驗證據包，讓使用者能自行查核科學依據，而非單純信任模型輸出 (proofPoint #4)。平台已上架SMART on FHIR App Gallery，相容主流EHR系統，縮短AI洞察進入臨床參考的距離 (proofPoint #5)。",
+  "tags": [],
+  "relevance": 0.88,
+  "highlight": false,
+  "criticPasses": 2
+}

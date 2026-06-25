@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "從「熵減工程學」看 AI 如何讓中醫辨證走向可計算、可互通",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBQN3NwMGZGZUxUeVo4czRtUlRQdHdNT1VfS2tLZUFWSGN3WkNwVGNINVJKUkx6eGk1Tl92T01qQTRaVVlkUWZrRzFfVU9Rb1VRblVlQURNUzhKRlAzS0w2V1N4YjMzMFHSAWdBVV95cUxQUDdzcDBmRmVMVHlaOHM0bVJUUHR3TU9VX0trS2VBVkhjd1pDcFRjSDVSSlJMenhpNU5fdk9NakE0WlVZZFFma0cxX1VPUW9VUW5VZUFETVM4SkZQM0tMNldTeGIzMzBR?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-24T19:12:40.000Z",
+  "fetchedAt": "2026-06-25T20:53:03.689Z",
+  "newsBrief": "一篇以「熵減工程學」重新詮釋中醫的論述引發關注：作者認為中醫並非單純的經驗積累，而是透過陰陽五行等系統將人體「失序」收斂回穩態的工程邏輯。AI 的出現讓這套隱性規則有機會被形式化、可計算化，也讓中醫走向現代醫學對話成為可能。",
+  "issueAnalysis": "中醫長期被外界貼上「經驗醫學」標籤，原因在於其辨證過程缺乏形式化表達，難以被西方醫學框架驗證。「熵減」視角提供了新的切入點：中醫的四診合參與臟腑理論，本質上是在蒐集人體「熵增」訊號並尋找收斂路徑。問題不在於邏輯不存在，而在於這些規則長期以師徒口傳形式流傳，缺乏機器可讀的結構。AI 醫療的真正挑戰，正是將這套隱性知識外顯化、可審計化——讓中醫的「秩序工程」得以傳承與互通。",
+  "designResponse": "面對中醫辨證規則難以形式化的痛點，一個可行路徑是讓規則「先於模型存在」。八綱與臟腑辨證邏輯拆解為 128 條可讀規則，讓中醫師得以逐條檢視 (proofPoint #1)；混合推理以規則 ×0.6、LLM ×0.4 為架構，每個結論保留完整推理路徑與 RAG 證據 (proofPoint #2)(proofPoint #3)。證型同步對應 ICD-11 TM 並輸出 FHIR R4 Bundle (proofPoint #4)，使中醫資訊得以進入現代醫療資料流，而非孤立於傳統框架之外。",
+  "tags": [],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 2
+}

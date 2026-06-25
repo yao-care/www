@@ -1,0 +1,16 @@
+{
+  "target": "huatuo",
+  "title": "AI 中醫四診數位化：辨證邏輯可追溯是臨床落地的關鍵",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5RT0xLTWZRTWUzZWtmRHhidE9qRWZfdFlhbTJEbHBMekxaVkZzSGtiV19Xd09mbndwOFZLR1FjcEhGTVRKYnVqMWQwOHJmeGRNTkxYT3I1X1pFY3k0YTFJVmlhc1BYTXRSdm8tWURrWE1VR0R4dlBzcTF1RXE?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-24T19:18:44.000Z",
+  "fetchedAt": "2026-06-25T20:58:34.905Z",
+  "newsBrief": "AI 中醫技術正整合影像辨識、聲音分析與感測器，嘗試將望、聞、問、切四診數位化，在示範場域展現技術可行性。然而「黑箱輸出能否被臨床信任」的根本問題，仍是 AI 醫療落地的核心障礙。",
+  "issueAnalysis": "四診數位化的難關不只是感測精度，更在於「辨證邏輯能否被追溯」。中醫辨證依賴八綱、臟腑等系統性框架，這些框架蘊含大量隱性知識與師承差異。當 AI 介入判斷，若無法說明「為何得出此證型」，便難以獲得臨床信任，更無法融入以 ICD、FHIR 為基礎的現代醫療資訊體系。此外，中醫診斷若不能與西醫系統互通，便形成資訊孤島，限制了跨科整合場景的應用價值。",
+  "designResponse": "面對「黑箱」質疑，可追溯性是關鍵設計原則。128 條八綱與臟腑規則以結構化形式明確記錄，讓臨床使用者得以逐條查核，辨證邏輯不隱藏於模型權重之中 (#1)。每個辨證結論同步保留完整推理路徑與 RAG 證據，使用者得以理解「為何得出此證型」，而非只接收標籤式輸出 (#3)。在互通性設計上，證型對應 ICD-11 TM 章節並輸出 FHIR R4 Bundle，使診斷結果能與現有醫療資訊體系串接 (#4)。這樣的設計目標，是讓 AI 辨證成為可被查核、可被解釋、可被整合的決策支援架構。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 3
+}
