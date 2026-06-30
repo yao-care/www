@@ -5,9 +5,11 @@ interface Props {
   product: Product;
   /** Override what shows above the title; defaults to cardKicker */
   kicker?: string;
+  /** 標語在桌機（md+）強制單行；僅短標語適用，長標語勿開以免 md 溢出 */
+  taglineNowrap?: boolean;
 }
 
-const { product, kicker } = Astro.props;
+const { product, kicker, taglineNowrap = false } = Astro.props;
 const displayKicker = kicker ?? product.cardKicker;
 ---
 <section class="relative pt-10 pb-12 md:pt-14 md:pb-16 overflow-hidden bg-gradient-to-b from-orange-50/40 to-white">
@@ -21,7 +23,12 @@ const displayKicker = kicker ?? product.cardKicker;
     <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">
       {product.title}
     </h1>
-    <p class="mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed text-balance">
+    <p
+      class:list={[
+        'mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed',
+        taglineNowrap && 'md:whitespace-nowrap',
+      ]}
+    >
       {product.tagline}
     </p>
     {product.externalUrl && (
