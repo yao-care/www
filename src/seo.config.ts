@@ -58,6 +58,8 @@ export const ORG_AWARDS: readonly string[] = [
 export const ORG_PATENT = {
   number: 'TW202202123A',
   name: '用藥提醒與回報系統及其實施方法',
+  /** 被後續專利引用次數（第三方技術背書，可於全球專利檢索系統查證） */
+  citedBy: 2,
   note: '已獲外部醫療支援服務公司引用作為核心產品應用之一',
 } as const;
 

@@ -111,6 +111,14 @@ const headlineStats = [
             <span class="ml-2 font-mono text-sm text-[color:var(--color-ink-soft)]">{ORG_PATENT.number}</span>
           </h3>
           <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{ORG_PATENT.note}。</p>
+          <div class="mt-4 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-baseline gap-1.5 rounded-lg bg-[color:var(--color-brand)]/10 px-3 py-1.5">
+              <span class="text-xs text-[color:var(--color-ink-soft)]">被後續專利引用</span>
+              <span class="text-xl font-bold text-[color:var(--color-brand)] tabular-nums">{ORG_PATENT.citedBy}</span>
+              <span class="text-xs text-[color:var(--color-ink-soft)]">次</span>
+            </span>
+            <span class="text-xs text-[color:var(--color-ink-soft)]">第三方技術背書，可於全球專利檢索系統查證</span>
+          </div>
         </div>
         <figure class="md:col-span-2 rounded-xl overflow-hidden border border-neutral-200">
           <img
