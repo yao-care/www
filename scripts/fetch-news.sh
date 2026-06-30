@@ -57,4 +57,22 @@ LOG=/var/log/yaocare-news.log
   fi
 
   echo " fetch-news end: $(TWDATE '+%Y-%m-%d %H:%M:%S') (台北)"
-} 2>&1 | tee -a "$LOG"
+} 2>&1 | tee -a "$LOG" || echo "  ⚠ news 引擎失敗（不阻擋通報層；心跳會把失敗報出來）" | tee -a "$LOG"
+
+# ════════════════════════════════════════════════════════════
+# 通報層（接在 news 之後依序跑：📥 收集 → 📊✍️ 心跳 → 🤖 大腦）
+# 對齊 folk.tw 的 collect/heartbeat/brain；用既有 04:30 時段，不另開 cron。
+# 即使上面 news 失敗也照跑，各步驟自帶 || 護欄、心跳/大腦自報數據缺漏與失敗保底。
+# ════════════════════════════════════════════════════════════
+{
+  echo "──── 📥 seo-daily 收集 start: $(TWDATE '+%H:%M:%S') ────"
+  ./node_modules/.bin/tsx scripts/seo-daily.ts || echo "  ⚠ seo-daily 失敗（心跳會標數據暫缺）"
+
+  echo "──── 📊✍️ slack-heartbeat start: $(TWDATE '+%H:%M:%S') ────"
+  node scripts/slack-heartbeat.mjs || echo "  ⚠ slack-heartbeat 失敗"
+
+  echo "──── 🤖 seo-brain（自動優化）start: $(TWDATE '+%H:%M:%S') ────"
+  scripts/seo-brain-cron.sh || echo "  ⚠ seo-brain 非零退出（內含失敗保底通報）"
+
+  echo "──── 通報層 end: $(TWDATE '+%H:%M:%S') ────"
+} 2>&1 | tee -a "$LOG" || true

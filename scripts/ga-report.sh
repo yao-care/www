@@ -21,4 +21,11 @@ LOG=/var/log/yaocare-ga.log
   # 金鑰路徑由 ga-insights.ts 預設指向 $YAOCARE_SECRETS_DIR/ga4-sa.json
   ./node_modules/.bin/tsx scripts/ga-insights.ts
   echo "════════ ga-insights end:   $(date '+%Y-%m-%d %H:%M:%S') ════════"
-} 2>&1 | tee -a "$LOG"
+} 2>&1 | tee -a "$LOG" || echo "  ⚠ ga-insights 失敗（不阻擋週報）" | tee -a "$LOG"
+
+# ── 📈 週報 Slack（接在週訊號重產之後；即使上面失敗也照發，內部自報數據缺漏）──
+{
+  echo "──── seo-weekly（📈 Slack 週報）start: $(date '+%H:%M:%S') ────"
+  ./node_modules/.bin/tsx scripts/seo-weekly.ts || echo "  ⚠ seo-weekly 失敗"
+  echo "──── seo-weekly end: $(date '+%H:%M:%S') ────"
+} 2>&1 | tee -a "$LOG" || true

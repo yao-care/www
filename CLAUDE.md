@@ -179,6 +179,20 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - ⚠ **草稿不自動上線、不自動 commit**。`drafts/` 已 gitignore。採用流程：人工查證 `factCheckNotes` → 貼進 `src/guides.config.ts` 或 `src/glossary.config.ts` → `npm run deploy` → IndexNow。
 - 調參：門檻/頻次改 `content-gaps.ts` 檔內常數與 crontab。
 
+## § Slack 通報層（📊 數據心跳 / ✍️ 文章撰寫 / 🤖 大腦優化 / 📈 週報）
+
+仿 `folk.tw` 的四段式本機通報，**不另開 cron**，接在既有 wrapper 尾巴（用既有時段）。發到 `#藥提醒-yao-care`（`$SLACK_CHANNEL`）。Bot token 在 `$YAOCARE_SECRETS_DIR/slack-bot-token`（600、不入版控）。
+
+- **發送工具 `scripts/slack-notify.sh`**：`<CHANNEL> "訊息"` 或 stdin；缺 token/失敗都不中斷呼叫端（`|| true` 包）。
+- **每日**（接在 `fetch-news.sh` 尾，台灣 04:30 news 跑完後依序）：
+  1. 📥 **`scripts/seo-daily.ts`**（純資料）：拉 GA4（台灣活躍/來源/國別）+ GSC（totals / strikingDistance 排5-15 / highImpZeroClick / 旗艦頁 URL Inspection 索引）→ `reports/seo-daily/<台灣日>.json`。**鎖死 `sc-domain:yao.care`**（SA 同時掛 vuko.life 等多站，臨時腳本用「第一個 sc-domain」會誤抓）。
+  2. 📊✍️ **`scripts/slack-heartbeat.mjs`**（純 node、無 AI）：讀當日 JSON + news log + 當日 auto-fetch commit → 發一則「✍️ 今天寫了什麼（抓N→過濾→寫K，逐篇標題/relevance/✓索引或noindex）＋📊 數據心跳（台灣訪客趨勢/GSC/striking）」。首行 🚦 行動標籤；news 沒跑到/數據缺會標 🟡。
+  3. 🤖 **`scripts/seo-brain-cron.sh`**（headless `claude -p`、**Sonnet**、`IS_SANDBOX=1`）：讀當日數據 → 驗昨日賭注勝負（`reports/seo-daily/<日>-actions.md`）→ 定 **≤5 檔**優化（`guides.config.ts`/`glossary.config.ts`/`seo.config.ts`/頁面 meta/內鏈）→ `npm run build` gate → commit `[auto-claude-seo]` → push → `npm run deploy` → `indexnow-urls.mjs` 通知收錄 → 寫 actions.md → 發 🤖 Slack。**YMYL 鐵則**：補醫療事實必先 WebSearch 權威源；查無源只動不碰事實的東西。`DRY_RUN=1` 乾跑（不 commit/deploy/slack）。失敗時 wrapper 補發 🔴 保底。
+- **每週**（接在 `ga-report.sh` 尾，台灣週一 03:00 訊號重產後）：📈 **`scripts/seo-weekly.ts`**（純資料）：台灣 GA/GSC 週對週 + 本週語料增長 + per-target 權重/需求機會 → Slack。
+- **模型**：所有 headless cron 用 `claude-sonnet-4-6`；唯 `fetch-news.ts` 的 filter pass 刻意**留 Haiku**（每天過濾數百則 RSS，省成本、精準度影響小）。
+- **護欄**：`reports/` 為 gitignore（`seo-daily/*.json` 與 `*-actions.md` 是本機記憶，不入版控）；brain 殘留清理**只清 `src/`、不碰 `reports/`**（否則會刪掉 actions.md 記憶）。各腳本可 `--dry`/`DRY_RUN=1` 單測。
+- ⚠ **接點在既有 wrapper**：news 本體加了 `|| true` 使其失敗也不阻擋通報層；改 `fetch-news.sh`/`ga-report.sh` 尾段時勿破壞這結構。
+
 ## § 檔案結構
 
 ```
