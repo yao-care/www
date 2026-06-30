@@ -127,10 +127,14 @@ function globeCoordinateSnak(
   };
 }
 
-// 總部座標 — 取自官網 ContactMap 的 Google Maps 內嵌（pb !3d 緯度 / !2d 經度，
-// 內嵌地址編碼即「台灣大道二段239號13」），自家來源、可查證。
+// 總部座標 — Google 對「遠東金融商業大樓（台灣大道二段）」之地理編碼；
+// 公司門牌 2026-06 確認為 220號12樓（同棟大樓，舊址 239號13樓 已更正），
+// 座標指向同一棟樓故沿用；自家來源、可查證。
 const HQ_LAT = 24.1527914;
 const HQ_LNG = 120.6647072;
+
+// 街道地址（P6375）— 公司登記/服務建議書一致之現址。
+const HQ_STREET = '台中市西區台灣大道二段220號12樓';
 
 // 多語言描述 — 對應 en「health and AI technology company based in Taichung, Taiwan」，
 // 善用 30 國多語站的優勢，讓各語系知識面板都認得這家公司。
@@ -171,6 +175,8 @@ async function main() {
   }
   // P625 總部座標（自家 ContactMap 內嵌）
   if (!hasProp('P625')) newClaims.push(globeCoordinateSnak('P625', HQ_LAT, HQ_LNG));
+  // P6375 街道地址（現址 220號12樓）
+  if (!hasProp('P6375')) newClaims.push(monolingualSnak('P6375', 'zh-hant', HQ_STREET));
 
   // 多語言描述：只補目前還沒有的語言
   const descOps: Record<string, { language: string; value: string }> = {};
@@ -229,7 +235,7 @@ async function main() {
       id: QID,
       token,
       bot: '1',
-      summary: 'Enrich org entity: HQ coordinates (P625) + multilingual descriptions (ja/ko/fr/de/es/pt)',
+      summary: 'Enrich org entity: HQ street address (P6375); idempotent re-run',
       data: JSON.stringify(data),
     },
     'POST',
