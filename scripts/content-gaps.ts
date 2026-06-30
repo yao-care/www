@@ -39,7 +39,7 @@ const MIN_POSITION = opt('--min-pos', 6); // 平均排名比這差（數字大�
 const COVERED_THRESHOLD = 0.5; // 與既有內容的 bigram Jaccard ≥ 此值 → 視為已涵蓋，跳過
 const MAX_CANDIDATES = 15;
 const PER_RUN_DRAFT_CAP = 1; // 每次最多產 1 篇草稿（固定頻次、不瘋狂新增）
-const MODEL = 'claude-sonnet-4-6';
+const MODEL = 'claude-sonnet-5';
 
 const dlog = (...a: any[]) => DEBUG && console.error('[debug]', ...a);
 

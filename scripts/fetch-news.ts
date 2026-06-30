@@ -73,7 +73,7 @@ const DEBUG = flag('--debug');
 const MAX_ITEMS = parseInt(arg('--max-items') ?? '0', 10) || Infinity;
 
 const FILTER_MODEL = 'claude-haiku-4-5';
-const WRITER_MODEL = 'claude-sonnet-4-6';
+const WRITER_MODEL = 'claude-sonnet-5';
 /** 相關度門檻（提高 → 只寫真的切題的；「精準少量」策略） */
 const RELEVANCE_THRESHOLD = 0.72;
 const MAX_WRITER_ATTEMPTS = 3;

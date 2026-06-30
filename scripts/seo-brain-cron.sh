@@ -31,7 +31,7 @@ DRY_RUN="${DRY_RUN:-0}"
 DATE="$(date +%F)"   # TZ=Asia/Taipei → 已是台灣日期
 CHANNEL="${SLACK_CHANNEL:-$SLACK_CHANNEL}"   # #藥提醒-yao-care
 SLACK_NOTIFY="$REPO/scripts/slack-notify.sh"
-MODEL="${BRAIN_MODEL:-claude-sonnet-4-6}"
+MODEL="${BRAIN_MODEL:-claude-sonnet-5}"
 
 echo "===== [seo-brain] $DATE $(date '+%T %Z') 開始（DRY_RUN=$DRY_RUN, model=$MODEL）====="
 
