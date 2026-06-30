@@ -9,6 +9,7 @@ import SixServices from '../../components/SixServices.astro';
 import Verification from '../../components/Verification.astro';
 import Screenshots from '../../components/Screenshots.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
+import { ORG_AWARDS, ORG_PATENT } from '../../seo.config';
 
 const product = PRODUCT_BY_SLUG.yaocare;
 
@@ -68,6 +69,60 @@ const headlineStats = [
   <SixServices />
   <Verification />
   <Screenshots />
+
+  <!-- 實績與肯定 -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-6xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Recognition &amp; Patent</p>
+        <h2 class="section-title mt-2">實績與肯定</h2>
+        <p class="section-subtitle">獲政府主管機關、專業競賽與國家品質標章肯定，並取得發明專利</p>
+      </div>
+
+      <div class="grid md:grid-cols-5 gap-6 md:gap-8 items-center mb-8">
+        <figure class="md:col-span-2 rounded-2xl overflow-hidden border border-neutral-200 shadow-sm bg-white">
+          <img
+            src="/assets/images/credentials/snq-ceremony.jpg"
+            alt="SNQ 國家品質標章授證典禮"
+            class="w-full h-auto"
+            loading="lazy"
+          />
+          <figcaption class="px-4 py-3 text-xs text-[color:var(--color-ink-soft)] border-t border-neutral-100">
+            SNQ 國家品質標章授證典禮
+          </figcaption>
+        </figure>
+        <div class="md:col-span-3 space-y-4">
+          {ORG_AWARDS.map((a) => (
+            <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm flex items-start gap-4">
+              <span class="shrink-0 w-11 h-11 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+              </span>
+              <p class="text-sm md:text-base text-[color:var(--color-ink)] leading-relaxed">{a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-5 gap-6 md:gap-8 items-center rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] border-t border-r border-b border-neutral-200 p-6 md:p-8 shadow-sm">
+        <div class="md:col-span-3">
+          <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">Invention Patent</div>
+          <h3 class="font-bold text-base md:text-lg mb-1">
+            發明專利「{ORG_PATENT.name}」
+            <span class="ml-2 font-mono text-sm text-[color:var(--color-ink-soft)]">{ORG_PATENT.number}</span>
+          </h3>
+          <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{ORG_PATENT.note}。</p>
+        </div>
+        <figure class="md:col-span-2 rounded-xl overflow-hidden border border-neutral-200">
+          <img
+            src="/assets/images/credentials/patent-record.png"
+            alt="發明專利 TW202202123A 全球專利檢索系統紀錄"
+            class="w-full h-auto"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+    </div>
+  </section>
 
   <ProductCta
     product={product}

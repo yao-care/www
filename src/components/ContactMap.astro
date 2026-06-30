@@ -15,6 +15,12 @@ import { SITE } from '../site.config';
         </li>
         <li class="flex items-start gap-4">
           <span class="shrink-0 w-11 h-11 rounded-full bg-[color:var(--color-brand)]/10 text-[color:var(--color-brand)] flex items-center justify-center">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <a href={`tel:+886-4-2310-0969`} class="hover:text-[color:var(--color-brand)]">{SITE.phone}</a>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="shrink-0 w-11 h-11 rounded-full bg-[color:var(--color-brand)]/10 text-[color:var(--color-brand)] flex items-center justify-center">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </span>
           <a href={`mailto:${SITE.email}`} class="hover:text-[color:var(--color-brand)]">{SITE.email}</a>
@@ -23,8 +29,8 @@ import { SITE } from '../site.config';
     </div>
     <div class="min-h-80">
       <iframe
-        title="公司地圖 - 台中市西區台灣大道二段239號13樓"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.5398930581973!2d120.66470721536771!3d24.1527913792009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693d7632034fab%3A0x275a7c36193c13fc!2zNDAz5Y-w5Lit5biC6KW_5Y2A5Y-w54Gj5aSn6YGT5LqM5q61MjM56JmfMTM!5e0!3m2!1szh-TW!2stw!4v1597804171767!5m2!1szh-TW!2stw"
+        title="公司地圖 - 台中市西區台灣大道二段220號（遠東金融商業大樓）"
+        src="https://maps.google.com/maps?q=%E5%8F%B0%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%8D%80%E5%8F%B0%E7%81%A3%E5%A4%A7%E9%81%93%E4%BA%8C%E6%AE%B5220%E8%99%9F%20%E9%81%A0%E6%9D%B1%E9%87%91%E8%9E%8D%E5%95%86%E6%A5%AD%E5%A4%A7%E6%A8%93&t=&z=17&ie=UTF8&iwloc=&output=embed"
         loading="lazy"
         class="w-full h-full min-h-80 border-0"
         allowfullscreen

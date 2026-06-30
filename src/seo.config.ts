@@ -39,7 +39,27 @@ export const KNOWS_ABOUT: readonly string[] = [
   '醫療 AI 合規',
   '生成式 AI 醫療指引',
   'AI 內容治理 / 守門',
+  'ESG 碳盤查 / Scope 3',
+  '醫療機構能源管理',
+  '醫療淨零減碳',
 ];
+
+/**
+ * 公司獎項與肯定 — 對應 Organization.award，同時供頁面渲染為可見「實績」區塊。
+ * 來源：服務建議書實績佐證；事實為主、不誇大。
+ */
+export const ORG_AWARDS: readonly string[] = [
+  '2020 台灣醫療科技展，獲衛生福利部石崇良常務次長肯定服務表現',
+  '藥師臨床高血脂照護競賽 金牌',
+  'SNQ 國家品質標章認證',
+];
+
+/** 發明專利 — 對應 Organization.owns / 頁面實績區塊 */
+export const ORG_PATENT = {
+  number: 'TW202202123A',
+  name: '用藥提醒與回報系統及其實施方法',
+  note: '已獲外部醫療支援服務公司引用作為核心產品應用之一',
+} as const;
 
 /** TxGNN 老藥新用 30 國站台 — code 對應子網域 {code}txgnn.yao.care */
 export type TxgnnSite = { code: string; name: string; flag: string };
