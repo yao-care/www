@@ -17,6 +17,11 @@ const news = defineCollection({
     relevance: z.number().min(0).max(1),
     highlight: z.boolean(),
     criticPasses: z.number().int().min(1).max(5),
+    // 內容最後實質更新時間（去 AI 味重寫 / 大腦優化 → 蓋這欄）。
+    // 對外：餵 NewsArticle JSON-LD 的 dateModified 與 sitemap <lastmod>，向 Google 發「有在更新」訊號。
+    updatedAt: z.coerce.date().optional(),
+    // 文風修訂版號（見 scripts/style-guide.mjs 的 VOICE_REV）；backfill 據此判斷哪些舊文要重刷。
+    voiceRev: z.number().int().optional(),
   }),
 });
 

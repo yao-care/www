@@ -48,10 +48,12 @@ import {
   checkRegexGuards,
   checkLengths,
   checkSimplified,
+  checkVoice,
   normTitle,
   findNearDuplicate,
   titleSimilarity,
 } from './news-guards.mjs';
+import { VOICE_REV } from './style-guide.mjs';
 import { fixTerms } from './zh-tw.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -408,6 +410,7 @@ async function writeOne(
       ...checkRegexGuards(draft, target.proofPoints),
       ...checkLengths(draft),
       ...checkSimplified(draft),
+      ...checkVoice(draft),
     ];
     if (regexFails.length > 0) {
       log(`    regex fail (attempt ${attempt}): ${regexFails.map((v) => v.rule).join(',')}`);
@@ -473,6 +476,9 @@ function writeNewsFile(
     relevance: Math.round(relevance * 100) / 100,
     highlight,
     criticPasses: passes,
+    // 新文章已是去 AI 味 writer 的產出：updatedAt=fetchedAt、voiceRev 蓋當前版號 → 不會被 backfill 重刷
+    updatedAt: new Date().toISOString(),
+    voiceRev: VOICE_REV,
   };
   if (DRY_RUN) {
     log(`    [DRY-RUN] would write ${file}`);

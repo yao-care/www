@@ -9,15 +9,19 @@ import { isNewsIndexable } from './src/news.policy.mjs';
 // 避免「sitemap 收錄 vs noindex」互相矛盾的訊號。讀同一份政策，門檻不會 drift。
 const NEWS_DIR = 'src/content/news';
 const noindexNewsPaths = new Set();
+// 每篇 news 的真實「最後更新」時間 → 餵 sitemap <lastmod>（updatedAt 優先，否則 fetchedAt）。
+// 去 AI 味重寫 / 大腦優化會蓋 updatedAt，使 lastmod 反映實際更新，對 Google 發新鮮度訊號。
+const newsLastmod = new Map();
 for (const target of fs.readdirSync(NEWS_DIR)) {
   const dir = path.join(NEWS_DIR, target);
   if (!fs.statSync(dir).isDirectory()) continue;
   for (const file of fs.readdirSync(dir)) {
     if (!file.endsWith('.json')) continue;
     const data = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
-    if (!isNewsIndexable(data.relevance)) {
-      noindexNewsPaths.add(`/news/${target}/${file.replace(/\.json$/, '')}`);
-    }
+    const slugPath = `/news/${target}/${file.replace(/\.json$/, '')}`;
+    if (!isNewsIndexable(data.relevance)) noindexNewsPaths.add(slugPath);
+    const lm = data.updatedAt || data.fetchedAt;
+    if (lm) newsLastmod.set(slugPath, new Date(lm).toISOString());
   }
 }
 
@@ -29,6 +33,12 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !noindexNewsPaths.has(new URL(page).pathname.replace(/\/$/, '')),
+      serialize(item) {
+        const p = new URL(item.url).pathname.replace(/\/$/, '');
+        const lm = newsLastmod.get(p);
+        if (lm) item.lastmod = lm; // 每篇 news 用自己的 updatedAt 當 lastmod，非 build 時間
+        return item;
+      },
     }),
   ],
   vite: { plugins: [tailwindcss()] },

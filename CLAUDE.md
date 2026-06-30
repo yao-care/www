@@ -127,6 +127,17 @@ cd $WWW_REPO_DIR
 tail -50 /var/log/yaocare-news.log
 ```
 
+## § 去 AI 味 + 內容更新訊號（freshness）
+
+把語料「去掉 AI 腔、改寫成人話」，同時當「持續內容更新」來做，讓 Google 收到新鮮度訊號。
+
+- **文風單一 source of truth**：`scripts/style-guide.mjs` —— `BANNED_PHRASES`(口頭禪 regex)、`STYLE_RULES`(注入 prompt 的正向文風指南)、`checkVoice`(guard 規則 V)、`VOICE_REV`(文風版號)。writer / critic / rewrite / guard / backfill 全共用，不 drift。
+- **新文章**：`news-prompts.mjs` 的 writer 已去掉公式範例並注入 `STYLE_RULES`；critic 加 R10–R12(公式開頭/拔高總結/口頭禪)；`news-guards.mjs` 接 `checkVoice`。新文寫入即蓋 `voiceRev=VOICE_REV`、`updatedAt`，不會被 backfill 重跑。
+- **既有語料 backfill**：`scripts/rewrite-news-voice.ts` —— 只改 `voiceRev < VOICE_REV` 的舊文、**最舊先刷**、**每天 15–18 篇**(`VOICE_PER_RUN`/`VOICE_DAILY_CAP`)、Sonnet 5 重寫後過全部 guards、保留事實/proofPoint/字數/繁中。**原地更新、同 URL、不刪文**；改完蓋 `updatedAt`。由 `fetch-news.sh` 在抓新聞後呼叫，與新文同批 commit/build/deploy/IndexNow。手動：`--dry`/`--limit N`/`--target`/`--all`/`--debug`。
+- **更新訊號(給 Google)**：`updatedAt` →（a）`[slug].astro` 的 NewsArticle JSON-LD `dateModified`；（b）`astro.config.mjs` sitemap **per-article `<lastmod>`**(非 build 時間)。Google 不收 IndexNow，靠這兩個 + 自然重爬;IndexNow 順帶涵蓋 Bing/Yandex 等。
+- **大腦不破壞文風**：`seo-brain-cron.sh` prompt 已注入文風要求 + 改頁時蓋 `updatedAt`。
+- 調文風規則 → 改 `style-guide.mjs`;若大改 → `VOICE_REV +1`，340+ 篇會再分批重刷一輪。
+
 ## § 分析追蹤（GA4）
 
 > 📤 **對外面向看 `README.md`**：GA4/GSC 帳號總表、看成效指令、`news-insights.json` 怎麼解讀、曝光現況。本節只講**埋點與腳本機制**。
@@ -189,7 +200,7 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
   2. 📊✍️ **`scripts/slack-heartbeat.mjs`**（純 node、無 AI）：讀當日 JSON + news log + 當日 auto-fetch commit → 發一則「✍️ 今天寫了什麼（抓N→過濾→寫K，逐篇標題/relevance/✓索引或noindex）＋📊 數據心跳（台灣訪客趨勢/GSC/striking）」。首行 🚦 行動標籤；news 沒跑到/數據缺會標 🟡。
   3. 🤖 **`scripts/seo-brain-cron.sh`**（headless `claude -p`、**Sonnet**、`IS_SANDBOX=1`）：讀當日數據 → 驗昨日賭注勝負（`reports/seo-daily/<日>-actions.md`）→ 定 **≤5 檔**優化（`guides.config.ts`/`glossary.config.ts`/`seo.config.ts`/頁面 meta/內鏈）→ `npm run build` gate → commit `[auto-claude-seo]` → push → `npm run deploy` → `indexnow-urls.mjs` 通知收錄 → 寫 actions.md → 發 🤖 Slack。**YMYL 鐵則**：補醫療事實必先 WebSearch 權威源；查無源只動不碰事實的東西。`DRY_RUN=1` 乾跑（不 commit/deploy/slack）。失敗時 wrapper 補發 🔴 保底。
 - **每週**（接在 `ga-report.sh` 尾，台灣週一 03:00 訊號重產後）：📈 **`scripts/seo-weekly.ts`**（純資料）：台灣 GA/GSC 週對週 + 本週語料增長 + per-target 權重/需求機會 → Slack。
-- **模型**：所有 headless cron 用 `claude-sonnet-4-6`；唯 `fetch-news.ts` 的 filter pass 刻意**留 Haiku**（每天過濾數百則 RSS，省成本、精準度影響小）。
+- **模型**：所有 headless cron 用 `claude-sonnet-5`（2026-06 後發布的 Sonnet 5；CLI `--model claude-sonnet-5` 確認可用，1M context / 64K 輸出）；唯 `fetch-news.ts` 的 filter pass 刻意**留 Haiku**（`claude-haiku-4-5`，每天過濾數百則 RSS，省成本、精準度影響小）。
 - **護欄**：`reports/` 為 gitignore（`seo-daily/*.json` 與 `*-actions.md` 是本機記憶，不入版控）；brain 殘留清理**只清 `src/`、不碰 `reports/`**（否則會刪掉 actions.md 記憶）。各腳本可 `--dry`/`DRY_RUN=1` 單測。
 - ⚠ **接點在既有 wrapper**：news 本體加了 `|| true` 使其失敗也不阻擋通報層；改 `fetch-news.sh`/`ga-report.sh` 尾段時勿破壞這結構。
 

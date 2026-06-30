@@ -34,6 +34,10 @@ LOG=/var/log/yaocare-news.log
   # 1) 抓新聞 + 寫檔
   ./node_modules/.bin/tsx scripts/fetch-news.ts
 
+  # 1b) 去 AI 味 backfill：分批重寫舊文（每天 15–18 篇、自我限速）→ 蓋 updatedAt
+  #     與新文同批 commit/build/deploy/IndexNow；updatedAt 餵 dateModified+lastmod 對 Google 發新鮮度訊號。
+  ./node_modules/.bin/tsx scripts/rewrite-news-voice.ts || echo "  ⚠ voice backfill 失敗（不阻擋）"
+
   # 2) 有變化才 commit + push
   git add src/content/news
   if git diff --cached --quiet; then

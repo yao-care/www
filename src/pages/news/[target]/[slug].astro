@@ -64,7 +64,7 @@ const jsonLd = {
       description: data.newsBrief,
       url: canonical,
       datePublished: data.fetchedAt.toISOString(),
-      dateModified: data.fetchedAt.toISOString(),
+      dateModified: (data.updatedAt ?? data.fetchedAt).toISOString(),
       author: {
         '@type': ['Organization', 'MedicalOrganization'],
         '@id': `${SITE.url}/#organization`,

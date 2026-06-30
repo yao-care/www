@@ -48,6 +48,7 @@ PROMPT="$(cat <<PROMPTEOF
 3. 可改範圍僅限：src/guides.config.ts、src/glossary.config.ts、src/seo.config.ts（FAQ/knowsAbout）、src/pages/**（頁面 meta／標題／內鏈）、src/products.config.ts（僅描述/bullets 措辭，不動結構與路由）。**不要**動 scripts/、astro.config、layout 結構、track/Analytics。
 4. 改完自我驗證：npm run build。非零（build 失敗）→ git checkout -- src、今日不 push/deploy、跳步驟6發 Slack 標 🔴。
 5. 內容改動集中成一個 commit、訊息前綴 [auto-claude-seo]；commit 用作者 LightChang <$OWNER_EMAIL>（git 沒設 global identity，務必 -c 帶上）。
+6. 文風（去 AI 腔）：改寫任何對外文字（guides/glossary/meta/描述）時，開頭別用「面對這類議題…」公式、結尾別拔高（「整體邏輯是…」「正是…的關鍵」「才是…所在」）、少用「結構性／系統性」等抽象詞堆疊、破折號下定義與「可A可B」排比三連收斂、句長交錯、講人話。改動內容時順手蓋該頁對應資料的 updatedAt（若有此欄）以對 Google 發新鮮度訊號。
 
 # DRY_RUN
 本次 DRY_RUN=$DRY_RUN。若 =1：照常讀數據、可試改與 npm run build 驗證，但**絕不 git commit/push、不 deploy、不 indexnow、不發 Slack**；最後只在 stdout 印「乾跑提案摘要」（今天會改哪些檔、賭哪些 query/page、預期效果）後結束。

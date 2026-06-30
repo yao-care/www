@@ -1,6 +1,8 @@
 // Claude prompt 模板 — filter / writer / critic 三段
 // 全部要求 JSON 輸出，配合 claude -p --output-format json --json-schema
 
+import { STYLE_RULES } from './style-guide.mjs';
+
 /**
  * Filter pass: 給 30–50 筆 candidate，留下與 target 真相關的相關新聞
  * @param target NewsTarget
@@ -90,9 +92,9 @@ export function writerPrompt(target, item, hints) {
 3. 不可使用「未來將」「規劃中」「即將推出」「預計」這類空話。
 4. 不可宣稱「我們發現」「我們觀察到」「我們的研究」這類一手主張。
 5. designResponse 段必須引用以下 proofPoints 至少 2 條（用 (proofPoint #N) 格式標註）。
-6. designResponse 必須是「結構性設計敘事」而非「戰績宣告」。
-   ❌ 「藥提醒已協助 OO 縣...」
-   ✅ 「面對這類議題，藥提醒的設計思路是...」「在 ___ 環節，我們選擇 ___」
+6. designResponse 是「我們怎麼設計回應這個議題」的觀點，不是戰績宣告。
+   ❌ 「藥提醒已協助 OO 縣...」（戰績／具名，禁止）
+   ✅ 描述目前的設計選擇與取捨即可。但**不要用「面對這類議題…設計思路是…」這種公式開頭**（見下方文風要求）。
 7. 字數要求（嚴格遵守，這是硬規則）：
    - newsBrief：60–100 字（中文字符數）
    - issueAnalysis：100–180 字
@@ -102,6 +104,8 @@ export function writerPrompt(target, item, hints) {
    軟件→軟體、信息→資訊、網絡→網路、運營→營運、視頻→影片、音頻→音訊、屏幕→螢幕、
    默認→預設、激活→啟用、在線→線上、互聯網→網際網路、服務器→伺服器、內存→記憶體、
    硬盤→硬碟、智能→智慧、優化→最佳化、調研→調查、社交→社群。「台」字用「台」不用「臺」。
+
+${STYLE_RULES}
 
 【可用素材】
 我們的服務脈絡：
@@ -155,6 +159,8 @@ ${violText}
 3. 字數（嚴守）：newsBrief 60–100、issueAnalysis 100–180、designResponse 150–250
 4. 一律繁體中文（台灣用語），不可有簡體字；titleZh 必填且為繁體台灣標題
 
+${STYLE_RULES}
+
 【可用素材】
 proofPoints：
 ${target.proofPoints.map((p, i) => `  #${i + 1}. ${p}`).join('\n')}
@@ -198,7 +204,12 @@ R7. designResponse 是否引用至少 2 條 proofPoints？(用 #N 標註)
 R8. 三段字數是否在合理範圍？(newsBrief 30–200、issueAnalysis 50–280、designResponse 80–340)
 R9. 文章是否真的扣回該主題（${target.title}）？(避免題材飄走)
 
-寧可錯殺，任何模糊都標 violation。
+【文風層（AI 味）—— R1–R9 的事實/安全規則優先，但以下命中也算 violation】
+R10. 是否用公式化開頭？（「面對這類議題…」「設計思路是…」「隨著 X 的發展…」「面對 X 情境，…」）
+R11. 是否用拔高總結句收尾？（「整體邏輯是…」「正是…的關鍵」「才是…的關鍵所在/所在」「這正是…的核心」）
+R12. 是否堆砌抽象名詞或口頭禪？（「結構性」濫用、可A可B 三段排比、用「——」下定義、「本質上」「更根本的問題在於」「值得關注的是」「不容忽視」）
+
+事實/安全（R1–R9）寧可錯殺，任何模糊都標 violation；文風（R10–R12）明顯犯規才標，偶發一個可放行。
 
 僅以 JSON 回應，schema：
 {

@@ -5,6 +5,9 @@
 
 import * as OpenCC from 'opencc-js';
 
+// 文風護欄（規則 V，去 AI 味）：與 writer/critic 共用同一份口頭禪定義。
+export { checkVoice } from './style-guide.mjs';
+
 // ── 簡體字硬擋（規則 ZH）────────────────────────────────────────────
 // 偵測法：opencc cn→t 會把「簡體字」轉成不同的繁體字（如 联→聯）。逐字比對，
 // 凡是被轉掉的字即視為簡體。但「兩岸通用、台灣繁體也合法」的同形字（台/床/余/布
