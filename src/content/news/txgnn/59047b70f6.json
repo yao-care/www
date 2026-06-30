@@ -1,0 +1,16 @@
+{
+  "target": "txgnn",
+  "title": "源華智醫連登兩大國際舞台，AI 老藥新用研發實力受國際關注",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9DZjF0bTJ1c2VmQnVpbWVvTG04N2t2TmxRdWhxbkhmaUd0QXVqVkN5N21NRmxtT2FUbjN6S18wZXpvNWE3UUJYdG1HNk1tYjZIWGlnZkxzaEI?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-04-29T10:13:06.000Z",
+  "fetchedAt": "2026-06-30T20:43:00.627Z",
+  "newsBrief": "台灣 AI 醫療企業華安醫學旗下子公司源華智醫，近期連續亮相兩大國際學術與產業舞台，展示其在 AI 輔助藥物研發領域的技術能量，吸引國際社群對老藥新用與藥物重定向研究路徑的關注與討論。",
+  "issueAnalysis": "AI 輔助藥物研發正從學術實驗室邁向產業落地，老藥新用作為降低新藥研發高風險、縮短上市週期的策略，正受到國際資本與臨床機構的高度關注。然而，多數平台仍面臨跨國藥品資料覆蓋不足、預測結果缺乏臨床文獻佐證，以及與現有 EHR 系統整合度低等核心挑戰。這也凸顯市場對「可信、可驗、可接入」的 AI 藥物重定向工具的迫切需求。",
+  "designResponse": "老藥新用工具的設計難題在於預測可信度與資料覆蓋。整合 30 國以上 FDA 藥品資料可覆蓋跨國臨床場景（#2）；每筆藥物-疾病配對附帶 PubMed 文獻與 ClinicalTrials 試驗佐證，讓預測結果可查驗而非黑盒輸出（#4）。以 SMART on FHIR 接入 EHR 生態，可在現有醫療資訊系統中直接取用，無需機構另建整合流程（#5）。",
+  "tags": [],
+  "relevance": 0.95,
+  "highlight": true,
+  "criticPasses": 3
+}

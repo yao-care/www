@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "健保缺藥危機下，慢性病族群的服藥連續性如何保障？",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5uUFc5MkM4VFg5YlkwdzVaMnZOUXA0Z3JiS0hLMmwtRi1ZZnJteHZRaFphdUdOQWtwTEE4bXR2aTFlQTVqa0E1Um5sbTFqZkhJRVROUmhmbnRBNmJu0gFiQVVfeXFMTmxpSlRJeHJUc29MVmliV1BvdWR2bzlodzNXcEM2WTZYSS1zUkRXVmFId0kxYmhXMGlWRUpVTUd3WGp2US1QdmZFSGJ2dU91bkNENkNMLWkzWUdDVXV4VWlIUUE?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-25T07:00:00.000Z",
+  "fetchedAt": "2026-06-30T21:01:44.313Z",
+  "newsBrief": "健保藥價調整機制再受關注，藥品經濟效益低落導致廠商不願供貨，缺藥問題的結構性根源日益明確。供應鏈不穩定直接衝擊慢性病患者的持續用藥，也放大了多重用藥情境下的混淆與中斷風險。",
+  "issueAnalysis": "缺藥危機的衝擊不只是暫時缺貨，而是迫使患者頻繁換藥，在多重用藥情境下極易造成混淆。慢性處方箋領藥率本就偏低，缺藥擾動下中途停藥個案恐進一步增加，形成「開了藥卻沒完成療程」的醫療資源浪費。有效的機制需能在藥品異動後，仍讓患者正確辨識並持續服用當前用藥。",
+  "designResponse": "面對缺藥情境下的多重用藥混淆風險，設計上選擇從「正確辨識當前用藥」入手：提醒訊息附藥品外觀圖片，即便處方頻繁異動，患者仍可核對手中藥物 (#3)。在銜接健保資料的環節，採用 ATC 編碼自動對接處方資訊，換藥後的變動能即時反映在提醒內容中，無需藥師人工介入 (#1)。對於高齡慢性病族群，透過 LINE 推播觸達而無需安裝 App，降低操作門檻，讓提醒機制在藥品替換後仍能持續運作 (#2)。整體邏輯是：在系統層面減少人工摩擦，讓藥事人力聚焦於真正需要介入的高風險個案。",
+  "tags": [],
+  "relevance": 0.72,
+  "highlight": false,
+  "criticPasses": 2
+}

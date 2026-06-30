@@ -1,0 +1,20 @@
+{
+  "target": "geri",
+  "title": "別只看體重！醫示警：中年後走路變慢、握力下降恐是衰弱警訊",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBIMjh5ZWFpc0o1c3Vycng3LVF4YzVGWncwdEFxbzFNRGJRdnVYRHdQLW1remZuXzVaNnpJdXJxb0RVQzdVdEZ5U1JBbVlvZG9zWGlfdzRZNnNzT25a0gFiQVVfeXFMTUVpUU5Ld0ZmbGEzeGpiN2xWSHNNemJoVVk0TVQxTzRTYUJPUTJkNllqb1hiV19WcnFHanY2cHRCVXAwWVpKYkZicnFGNzdnRGk2cFctM3VqUjFFSWJhZHliMWc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-25T08:33:41.000Z",
+  "fetchedAt": "2026-06-30T20:44:20.884Z",
+  "newsBrief": "醫師示警，中年過後若出現走路速度變慢、握力下降等徵兆，可能不是單純老化，而是衰弱症的早期訊號。步態速度與握力是國際通用的衰弱評估核心指標；體重正常不代表身體功能健全，忽略這類動態警訊往往錯失黃金介入時機。",
+  "issueAnalysis": "衰弱（frailty）是高齡期功能退化的核心前驅狀態，卻因進展緩慢而常被誤作「正常老化」放任不管。走路變慢、握力下降等外顯徵兆，分散在不同量表與科別，難以在門診短暫時間內全面捕捉。更現實的挑戰是，家屬往往不易判斷長者是「自然老化」還是「需要就醫介入」，而結構化評估工具若只存在於特定醫療場域，社區長照據點人員根本無從使用，最終造成介入時機一再延誤。",
+  "designResponse": "面對衰弱識別分散、難以在日常環境中系統化執行的問題，Smart Geri 高齡周全性評估的設計思路從「讓評估真正可執行」出發。以臨床衰弱量表 CFS 1–9 為分層基準 (proofPoint #1)，讓評估結果具備國際通用的共通語言，而非各機構各自解讀。多面向評估涵蓋認知、情緒、營養、行動、用藥與社會支持 (proofPoint #3)，將原本散落在不同量表的衰弱指標整合成單一可重複流程；其中含以相機計時的五次坐站等動態功能測驗 (proofPoint #4)，讓步態與肌力這類關鍵衰弱訊號不再只靠臨床主觀印象判斷。評估完成後，結果以紅黃綠分級呈現並配對衛教內容 (proofPoint #5)，讓家屬與長照據點人員都能清楚掌握下一步建議，而非只拿到一個難以解讀的分數。",
+  "tags": [
+    "衰弱評估",
+    "高齡功能退化",
+    "肌少症"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1
+}

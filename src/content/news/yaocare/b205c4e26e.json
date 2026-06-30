@@ -1,0 +1,16 @@
+{
+  "target": "yaocare",
+  "title": "高齡者多重安眠藥風險：用藥週期追蹤如何填補管理缺口",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9QWnIzeXlqT0ZsVDFNU2l5ekhadkY3RjJsMDlST0JDc2xsbW1paWdnM0xDZHEtQ0JTbTZrWlg3NWpCUEduTUpHeVJfM0gxRFhsUTJ2ZmZRVUNRRDRL0gFiQVVfeXFMT3psU1R4Y0ltSUZoQ0E5dmhTWEl2aGNKRVBYVUpINWhCdzhPU2NyaF9YVWg2R1h1bmJ0QUpDUDZmeVpuS3IyR2M3VnZxQW1OaGJtejE5VFZ1cGlwTHgtUGJTRXc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-08T07:00:00.000Z",
+  "fetchedAt": "2026-06-30T20:49:01.946Z",
+  "newsBrief": "高齡族群因睡眠障礙同時服用多種安眠藥的情形相當普遍，醫師指出這往往與焦慮、憂鬱或慢性疼痛等共病密切相關。長期多重安眠藥不僅增加跌倒、認知退化風險，戒斷過程亦需醫師評估逐步減量，不可自行停藥。",
+  "issueAnalysis": "高齡患者的多重用藥（polypharmacy）問題長期被低估，安眠藥尤為典型案例。一位長者可能同時由不同科別醫師開立鎮靜、止痛、抗憂鬱等藥物，各自看診卻缺乏統一的用藥追蹤機制。安眠藥具有耐藥性，患者往往需要增加劑量才能維持效果，卻少有人在跨院領藥時被主動提醒。藥師是最後一道把關者，卻因缺乏跨領藥週期的追蹤工具，難以即時介入。這正是多重用藥安全管理的核心挑戰。",
+  "designResponse": "面對高齡族群多重安眠藥的風險管理，設計思路從「用藥週期」切入，而非只關注單次調劑。在提醒環節，選擇透過 LINE 推播讓長者毋需安裝 App 即可接收每日服藥提示 (proofPoint #2)，訊息並附藥品外觀圖片 (proofPoint #3)，幫助同時服用多種藥物的患者辨識正確藥品、降低混淆風險。在藥師端，介面設計上採用批次方式呈現追蹤對象的服藥回報狀況 (proofPoint #4)，讓藥師得以在下次領藥前掌握用藥實況，進而主動介入評估是否需要協助減量或調整計畫。多重安眠藥的核心問題在於缺乏跨調劑週期的持續觀察——結構性工具的介入，正是填補這段空白的關鍵。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 2
+}
