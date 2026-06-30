@@ -172,6 +172,8 @@ export const PRODUCT_FAQS: Partial<Record<ProductSlug, readonly Faq[]>> = {
     { q: '對齊哪些標準？', a: 'ISO 27001、SOC 2 TSC、OWASP ASVS、OWASP LLM Top 10，框架可重組為 ESG（GRI/TCFD/SASB）與醫院評鑑（醫策會 / JCI）。' },
     { q: '稽核包怎麼交付？', a: '以 GitHub Release 打包離線交付，並提供單頁離線 HTML 的 AI 稽核助理。' },
     { q: '導入需要額外架基礎設施嗎？', a: '不用。整套建構在 GitHub 生態（GitHub Actions + Release），無需額外伺服器；稽核顧問解壓稽核包、開啟 index.html 即可離線審查。' },
+    { q: 'SIQC 也能做 ESG 永續嗎？', a: '可以。同一套框架可重組為 ESG（GRI/TCFD/SASB），已與國際醫療減碳協會合作、協助 13 間醫院建置能源管理系統並落實 Scope 3 碳盤查。' },
+    { q: '敏感文件可以不上雲嗎？你們自己有在用嗎？', a: '可以在地端／離線的受控環境運作，敏感文件不外流。我們自家也以 SIQC 落實公司 ISO 27001／CNS 27001 資訊安全管理制度（Annex A 93 控制項對照）並自製 ISMS 知識助理——自用驗證過。' },
   ],
   triz: [
     { q: 'TRIZ AI 知識庫是什麼？', a: 'TRIZ 發明問題解決理論的 AI 知識庫，涵蓋 40 發明原則、39 工程參數、263 矛盾矩陣，由多角色 AI 協作解題。' },
