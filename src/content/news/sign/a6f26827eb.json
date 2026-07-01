@@ -1,0 +1,22 @@
+{
+  "target": "sign",
+  "title": "衛福部7月新制寶寶篩檢升級、長照科技輔具進家裡｜生活 - 中央社 CNA",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE00U3VmeDdDTDVISXZsOGtTeXdUZ213aXluakwzUzVudVlVdjNabE5HbmI3WllEcjdMcVBWZ1kyZDhUcjhUeml4Wkt0YjlvQ3lMSW80eTZDU0JEQkZyTDJN?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-30T04:13:00.000Z",
+  "fetchedAt": "2026-07-01T20:43:15.317Z",
+  "newsBrief": "衛福部7月起推動長照科技輔具進入家庭與據點，同時升級寶寶篩檢制度，兩項政策都指向同一件事：把照護的第一線從人力補進科技工具。",
+  "issueAnalysis": "科技輔具進到據點是一回事，據點願不願意用、用得起用得順是另一回事。人臉辨識這類技術聽起來先進，但長照現場真正卡住的常常是最基本的操作門檻——長者按不慣按鈕、記不住密碼，工作人員光是應付紙本簽到、月底湊名冊就耗掉大半心力。政策推輔具進場，據點端需要的其實是不用重新學、不用另外裝設備的東西。",
+  "designResponse": "所以走過鏡頭就辨識身分是第一個要顧的事，長者不用按、不用簽、不用先裝一個 App 才能用 (proofPoint #1)。時段到了系統會自動語音問早安或午安，這比任何操作提示都更貼近長者的習慣 (proofPoint #2)。輔具進家門、進據點,最常被問的另一件事是資料放哪裡——臉部特徵和報到紀錄都留在裝置瀏覽器本機，不上雲端傳輸 (proofPoint #3)。失智、走失風險的長者需要被多看一眼，系統內建黑白名單與風險分級,一走進鏡頭前就會跳警示 (proofPoint #4)。月底要交的簽到名冊也是每天自動產出,直接複製貼上政府社政平台格式,不用另外謄。",
+  "tags": [
+    "長照科技",
+    "人臉辨識報到",
+    "個資保護"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-01T20:43:15.318Z",
+  "voiceRev": 1
+}

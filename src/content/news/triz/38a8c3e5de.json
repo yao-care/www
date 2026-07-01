@@ -1,0 +1,18 @@
+{
+  "target": "triz",
+  "title": "424 頁 AI Agent 聖經爆紅，TRIZ 也卡在同一個門檻",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9wTmZDeXRCOS1hbHFsMm12STB2MnBxVFMxLTZCUjZxS0Q5X1ZOYUcyLThTbWpXV3BxMU5iNnUxR2VUVlF1SW5XbDVHNUc4d2kxbVBxeFF2bzhoUDM0UjN2WTNqamhaeDBhdFo1QUFZYnFoRXNoWjlxYXZ3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-27T05:34:39.000Z",
+  "fetchedAt": "2026-07-01T21:00:00.734Z",
+  "newsBrief": "Google 工程師撰寫的 424 頁 AI Agent 開發文件，被開發者社群封為必讀教材，內容涵蓋多步驟推理、工具串接與 Agent 架構設計等實務細節，反映這個領域目前仍缺乏標準化的入門教材。",
+  "issueAnalysis": "一份文件被捧成聖經，通常代表這個領域還沒有夠好的教科書，工程師只能各自摸索累積經驗。這處境跟創新方法論很像：TRIZ 累積了幾十年的原則與矛盾矩陣，理論齊全，但要在具體工程難題裡準確對應到正確的原則，經驗不夠的人常常卡在半路。AI Agent 要處理的多步驟推理、工具呼叫、知識庫串接，某種程度上也是把專家經驗結構化成可複用流程的老問題，只是換了個新載體。",
+  "designResponse": "一份厚重的文件擠進必讀清單，通常代表這個領域還沒有夠用的教科書。TRIZ 的處境也差不多：發明原則、工程參數、矛盾矩陣建成的向量庫（proofPoint #1）理論齊全，但實際工程難題要對到正確原則，經驗不夠的人常卡住。我們把識別矛盾和推薦原則拆給不同角色分工，用多角色 SYSTEM_PROMPT 協作，onStep callback 即時回報每一步在做什麼（proofPoint #4），不是丟一個黑盒結果出來。",
+  "tags": [],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 3,
+  "updatedAt": "2026-07-01T21:00:00.734Z",
+  "voiceRev": 1
+}

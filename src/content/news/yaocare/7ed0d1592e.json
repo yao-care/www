@@ -1,0 +1,22 @@
+{
+  "target": "yaocare",
+  "title": "衛生署提醒長者正確用藥 掌握四大要點顧健康",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi1wJBVV95cUxPT1gxTE1KOXBwbUVzeXdMOUhySWhHTEpLZEZFZW5ra1NhMm5sTDkyQVpjX2F1VW1lOGwtVUhKU1Q3dnhPdkdhR0ZBdWdwcVlZQldodHFKdmVUOXBDVjBPRndaYk56azV3ZUNRMzR4RjF6LWV1U3pESEtvNnpDVDhjOUt4aU8zbVh5SHpFVkhON3pTOFBTVl9lbHI2cWp4b0Y5Zlh0Ni1BbVBjTmhpcFg2RG9qWEJOWFhoY1lCSmpnR1AxcV92U3VpTk5oVllJdGtFSUk3cjZCMVN3SWlSYlB6RzBVVjBvYVVncDVVdEthVm8xS2FWNjBYZjNUT3h1WkUyWEhRNnZVdWJySTF5enRRQXlrQVR1cmJiZHlTckJtQm9qUW9TeF9TcjlnbldYTEFab3RJbUxEaVg0aUgzRS1pVEhldmlVbW9TNDJWenhUYWVqaXdMWVpF?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-26T01:28:27.000Z",
+  "fetchedAt": "2026-07-01T20:51:03.338Z",
+  "newsBrief": "衞生署最近提醒長者用藥要留意幾件事，包括按時服藥、留意藥物交互作用、不要自行停藥或調整劑量，以及定期請醫師或藥師檢視整體用藥情況。這類衛教提醒定期出現，反映長者用藥安全一直是沒有徹底解決的問題。",
+  "issueAnalysis": "用藥安全衛教常常停在「記得吃藥」這個層次，但長者實際面對的多半是多重用藥：同時吃好幾種慢性病藥物，外觀相近、服藥時段又交錯，光靠自己記很容易吃錯或漏吃。慢性處方箋領到第二次、第三次之後，服藥狀況通常更難掌握，藥師也缺乏能跨週期追蹤病人的工具，單靠衛教提醒能改變的其實有限。",
+  "designResponse": "多重用藥的問題不在記不記得吃藥，而在有沒有人幫忙核對藥品。提醒訊息附上藥品外觀圖片，讓長者或照顧者一眼就能比對，減少不同顆藥混在一起吃錯的風險(proofPoint #3)。推播走 LINE 和 Telegram，長者不必額外學裝 App，操作門檻降到最低(proofPoint #2)。在藥師端，我們選擇用批次檢視的介面設計，把追蹤對象的服藥狀況一次攤開看，不用一個個翻紀錄，就能看出誰在慢性處方箋領到後面幾次之後開始漏藥(proofPoint #4)。",
+  "tags": [
+    "長者用藥",
+    "多重用藥",
+    "藥師照護"
+  ],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 3,
+  "updatedAt": "2026-07-01T20:51:03.338Z",
+  "voiceRev": 1
+}

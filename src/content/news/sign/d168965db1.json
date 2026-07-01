@@ -1,0 +1,22 @@
+{
+  "target": "sign",
+  "title": "從AI智慧照顧到社區共融 中保科松隆社區長照機構正式啟用",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBjbkY2NEZtOTdxcEpFMTczaldrWVlJTzkydEdYdFhzVHpXcGNEWWpHYTl3cWUwYTNzWjdzb05XUDdZRWxxeU9WenZZQm1rQnc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-25T10:00:56.000Z",
+  "fetchedAt": "2026-07-01T20:52:51.531Z",
+  "newsBrief": "中保科集團旗下松隆社區長照機構本週正式啟用，訴求從AI智慧照顧延伸到社區共融，導入智慧設備輔助日常照護與長者社交互動，盼提升機構服務品質並串起社區關係。",
+  "issueAnalysis": "長者不熟觸控螢幕，App安裝更是門檻，但人工簽到耗時，機構還得手動謄出符合政府格式的名冊。雲端人臉辨識省了力氣，卻在長照場域碰上個資紅線，尤其失智、走失風險的長者需要主動示警，不只是打卡。中小型據點資源有限，這些需求疊在一起就成了難題。",
+  "designResponse": "社區長照機構要做智慧報到，卡關的往往不是設備，是長者會不會用。走過鏡頭就完成辨識，不用按鈕、不用簽名、不用裝App(proofPoint #1)，這對不熟悉觸控操作的長者友善很多。臉部資料留在裝置瀏覽器裡，不會傳到雲端(proofPoint #3)，長照場域資料一旦上雲，個資疑慮就跟著來。系統內建失蹤、失智、黑名單等風險分級，一旦異常會主動示警，不是等人事後翻紀錄才發現(proofPoint #4)。簽到名冊每天自動產出，格式可以直接貼進社政平台，省下機構手動謄寫的時間。",
+  "tags": [
+    "社區長照",
+    "無接觸報到",
+    "個資保護"
+  ],
+  "relevance": 0.8,
+  "highlight": false,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-01T20:52:51.531Z",
+  "voiceRev": 1
+}

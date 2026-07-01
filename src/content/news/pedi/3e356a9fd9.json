@@ -1,0 +1,18 @@
+{
+  "target": "pedi",
+  "title": "新北兒童發展篩檢送好禮，重點在那張檢核表怎麼判讀",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1oZGVLSjVIRmQzR25qYWdFR21aZ0hRV0lJWFh3REE1aEhSSk9CX1RpWjRHSTdRaGdCd0haamllQ0N4NWloeEhLenhlTHNBa3JPOHZrVnZRRFRRbFRFcW85TDF3UEc2bkRFLTgwM1l0Wl9RQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-29T04:21:26.000Z",
+  "fetchedAt": "2026-07-01T20:42:22.557Z",
+  "newsBrief": "新北市與 55 家藥局合作，推出兒童發展篩檢活動，家長帶孩子完成篩檢即可兌換限量好禮，盼透過誘因拉高篩檢參與度，及早掌握孩子的發展狀況。",
+  "issueAnalysis": "藥局能覆蓋到社區裡忙碌的家長，這個切入點抓得準。真正卡關的地方通常不是「要不要篩」，是篩完那張紙怎麼看。國健署手冊的檢核表勾完之後，家長拿到的常常只是一堆是非題答案，沒有判讀基準，也不知道下一步該找誰。活動能把人帶進來，但帶進來之後的判讀跟轉介路徑，決定孩子的狀況有沒有被正確接住。",
+  "designResponse": "篩檢入口好找只是第一步，接下來要看家長拿到的結果能不能直接用。我們把粗動作、精細動作、語言理解、語言表達、認知、社會情緒六大領域對齊國健署手冊與 ASQ-3 (proofPoint #2)，涵蓋 2 月至 6 歲共 7 個年齡帶 (proofPoint #1)，避免不同年齡混用同一套題目。判讀上用常模化分數，−2SD 直接標紅旗 (proofPoint #4)，不是丟一堆勾選結果讓家長自己猜。雷達圖對比同齡基準，紅黃綠分級給出觀察或轉介建議 (proofPoint #5)，家長看得懂「慢一點」跟「該轉介」的差別在哪。資料留在瀏覽器裡，家長要銜接醫療院所或 GCM 收案時再選擇上傳 (proofPoint #6)，篩檢本身不用先綁定任何機構。",
+  "tags": [],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 2,
+  "updatedAt": "2026-07-01T20:42:22.557Z",
+  "voiceRev": 1
+}
