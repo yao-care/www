@@ -48,9 +48,9 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     en: 'Anatomical Therapeutic Chemical Classification',
     category: 'medical',
     oneLiner:
-      '世界衛生組織制定的藥品分類系統，依藥物作用的器官系統與治療、化學特性，給每種藥一組標準代碼。',
+      'ATC（Anatomical Therapeutic Chemical Classification，ATC 碼）是世界衛生組織制定的藥品分類系統，依藥物作用的器官系統與治療、化學特性，給每種藥一組標準代碼。',
     paragraphs: [
-      'ATC 由 WHO 藥物統計方法合作中心（WHOCC）維護，共五個層級：從第一層的解剖學主群（如消化道、心血管系統）一路細分到第五層的化學物質，讓不同來源的處方資料能用同一套標準對齊。',
+      'ATC 碼由 WHO 藥物統計方法合作中心（WHOCC）維護，共五個層級：從第一層的解剖學主群（如消化道、心血管系統）一路細分到第五層的化學物質，讓不同來源的處方資料能用同一套標準對齊。',
       '在用藥提醒情境，ATC 碼能把健保處方自動對應到標準藥品，免去人工 key-in，並降低「同成分、不同商品名」造成的重複用藥與混淆風險。',
     ],
     keyPoints: [
