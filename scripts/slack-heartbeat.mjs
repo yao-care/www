@@ -9,11 +9,9 @@
 //   ・src/news.policy.mjs（relevance 索引門檻，標每篇 ✓索引/noindex）
 //
 // 用法：
-//   node scripts/slack-heartbeat.mjs             # 讀今天、發 Slack（✍️+📊 完整版，已退役勿排程）
-//   node scripts/slack-heartbeat.mjs --news-only # 只發 ✍️ 文章撰寫段（2026-07-02 起由 fetch-news.sh 尾呼叫；
-//                                                #   📊 數據心跳已移交 $SEO_OPS_DIR 統一框架，此模式不含 📊 避免重複）
-//   node scripts/slack-heartbeat.mjs --dry       # 只印訊息、不發送
-//   node scripts/slack-heartbeat.mjs 2026-06-30  # 指定日期
+//   node scripts/slack-heartbeat.mjs           # 讀今天、發 Slack
+//   node scripts/slack-heartbeat.mjs --dry      # 只印訊息、不發送
+//   node scripts/slack-heartbeat.mjs 2026-06-30 # 指定日期
 // 憑證：env SLACK_BOT_TOKEN，否則 $YAOCARE_SECRETS_DIR/slack-bot-token。
 // 頻道：env SLACK_CHANNEL，否則預設 $SLACK_CHANNEL（#藥提醒-yao-care）。
 
@@ -26,7 +24,6 @@ import { isNewsIndexable } from '../src/news.policy.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 const repo = join(here, '..');
 const DRY = process.argv.includes('--dry');
-const NEWS_ONLY = process.argv.includes('--news-only');
 const dateArg = process.argv.slice(2).find((a) => /^\d{4}-\d{2}-\d{2}$/.test(a));
 
 const TOKEN_FILE = '$YAOCARE_SECRETS_DIR/slack-bot-token';
@@ -118,18 +115,16 @@ function coverageLabel(state) {
 
 function buildMessage(date, news, daily, prevDaily) {
   const L = [];
-  // 🚦 行動標籤（news-only 模式只看文章面，📊 數據歸 seo-ops 心跳管）
+  // 🚦 行動標籤
   const dataMissing = !daily || daily.ga4?.error || daily.gsc?.error;
   const newsFailed = news.ran && news.ended === false; // 開始了沒結束 = 可能中斷
   const newsMissing = !news.ran;
   let flag = '🟢 系統自理,不用你出手';
   if (newsMissing) flag = '🟡 看一下:今晨 news 沒跑到（log 無當日 start）';
   else if (newsFailed) flag = '🟡 看一下:news 可能中斷（有 start 無 end），查 /var/log/yaocare-news.log';
-  else if (!NEWS_ONLY && dataMissing) flag = '🟡 看一下:GA/GSC 數據暫缺,文章面正常';
+  else if (dataMissing) flag = '🟡 看一下:GA/GSC 數據暫缺,文章面正常';
   L.push(`🚦 ${flag}`);
-  L.push('', NEWS_ONLY
-    ? `✍️ *yao.care 文章撰寫 · ${mdShort(date)}*（本機自動產出；📊 數據心跳另由 seo-ops 統一發送）`
-    : `📊 *yao.care 系統心跳 · ${mdShort(date)}*（本機自動產出）`);
+  L.push('', `📊 *yao.care 系統心跳 · ${mdShort(date)}*（本機自動產出）`);
 
   // ✍️ 文章撰寫
   L.push('', '✍️ *今天寫了什麼*');
@@ -146,8 +141,6 @@ function buildMessage(date, news, daily, prevDaily) {
     }
   }
   L.push(`・語料累積 *${corpusCount()}* 篇（永久累積、不砍文）`);
-
-  if (NEWS_ONLY) return L.join('\n'); // ✍️ 到此為止；📊/🤖 由 seo-ops 統一框架發送
 
   // 📊 數據心跳
   L.push('', '📊 *數據心跳*');

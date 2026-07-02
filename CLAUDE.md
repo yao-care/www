@@ -197,8 +197,9 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 > 站台參數 `seo-ops/sites/yao.care.json`、大腦站規 `seo-ops/playbooks/yao.care.md`）。
 > `fetch-news.sh` 已摘除通報層尾段（news 引擎本體保留原 cron 04:30 台）、`ga-report.sh` 已摘除週報呼叫
 >（ga-insights 訊號重產保留，fetch-news 選題權重依賴它）。
-> 「✍️ 文章撰寫」訊號已於同日救回：`slack-heartbeat.mjs --news-only`（只報 news 產出、不含 📊）
-> 掛在 fetch-news.sh 尾，news 跑完即發。本節下方為舊架構描述，僅供查考。
+> 「✍️ 文章撰寫」訊號由 seo-ops **內容產出層**統一發送（台 05:50，adapter＝
+> `$SEO_OPS_DIR/adapters/yao.care.mjs`，讀 news log＋git 當日 auto-fetch commit；新文/文風重刷分計）。
+> 本節下方為舊架構描述，僅供查考。
 
 仿 `folk.tw` 的四段式本機通報（**已退役**，見上方遷移註記）。發到 `#藥提醒-yao-care`（`$SLACK_CHANNEL`）。Bot token 在 `$YAOCARE_SECRETS_DIR/slack-bot-token`（600、不入版控）。
 

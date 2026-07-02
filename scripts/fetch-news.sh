@@ -68,11 +68,6 @@ LOG=/var/log/yaocare-news.log
 #   收集 20:00 UTC → 📊 心跳 20:20 → 🤖 大腦 21:30 → 📈 週報 週一 03:00
 # 本檔只保留上方 news 引擎本體。回滾：還原本區塊（備份見
 # $HOST_BACKUP_DIR/seo-cutover-20260702-023954/fetch-news.sh.bak）並移除 seo-ops 對應排程。
+# 註：「✍️ 文章撰寫」訊號由 seo-ops 內容產出層統一發送（/etc/cron.d/seo-ops，
+#     adapter＝$SEO_OPS_DIR/adapters/yao.care.mjs，台 05:50），本檔不再掛任何通報。
 # ════════════════════════════════════════════════════════════
-
-# ✍️ 文章撰寫心跳（獨立小訊息，2026-07-02 救回）：只報 news 引擎當日產出，
-# 不含 📊 數據段（歸 seo-ops 統一心跳）。失敗不阻擋。
-{
-  echo "──── ✍️ news-heartbeat start: $(TWDATE '+%H:%M:%S') ────"
-  node scripts/slack-heartbeat.mjs --news-only || echo "  ⚠ news-heartbeat 失敗"
-} 2>&1 | tee -a "$LOG" || true
