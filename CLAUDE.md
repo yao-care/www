@@ -190,9 +190,17 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - ⚠ **草稿不自動上線、不自動 commit**。`drafts/` 已 gitignore。採用流程：人工查證 `factCheckNotes` → 貼進 `src/guides.config.ts` 或 `src/glossary.config.ts` → `npm run deploy` → IndexNow。
 - 調參：門檻/頻次改 `content-gaps.ts` 檔內常數與 crontab。
 
-## § Slack 通報層（📊 數據心跳 / ✍️ 文章撰寫 / 🤖 大腦優化 / 📈 週報）
+## § Slack 通報層（📊 數據心跳 / 🤖 大腦優化 / 📈 週報）
 
-仿 `folk.tw` 的四段式本機通報，**不另開 cron**，接在既有 wrapper 尾巴（用既有時段）。發到 `#藥提醒-yao-care`（`$SLACK_CHANNEL`）。Bot token 在 `$YAOCARE_SECRETS_DIR/slack-bot-token`（600、不入版控）。
+> ⚠️ **2026-07-02 遷移**：SEO 通報層（收集/心跳/大腦/週報）移交統一框架 `$SEO_OPS_DIR`
+>（排程 `/etc/cron.d/seo-ops`：收集 20:00 UTC → 心跳 20:20 → 大腦 21:30 → 週報週一 03:00；
+> 站台參數 `seo-ops/sites/yao.care.json`、大腦站規 `seo-ops/playbooks/yao.care.md`）。
+> `fetch-news.sh` 已摘除通報層尾段（news 引擎本體保留原 cron 04:30 台）、`ga-report.sh` 已摘除週報呼叫
+>（ga-insights 訊號重產保留，fetch-news 選題權重依賴它）。
+> 「✍️ 文章撰寫」訊號已於同日救回：`slack-heartbeat.mjs --news-only`（只報 news 產出、不含 📊）
+> 掛在 fetch-news.sh 尾，news 跑完即發。本節下方為舊架構描述，僅供查考。
+
+仿 `folk.tw` 的四段式本機通報（**已退役**，見上方遷移註記）。發到 `#藥提醒-yao-care`（`$SLACK_CHANNEL`）。Bot token 在 `$YAOCARE_SECRETS_DIR/slack-bot-token`（600、不入版控）。
 
 - **發送工具 `scripts/slack-notify.sh`**：`<CHANNEL> "訊息"` 或 stdin；缺 token/失敗都不中斷呼叫端（`|| true` 包）。
 - **每日**（接在 `fetch-news.sh` 尾，台灣 04:30 news 跑完後依序）：

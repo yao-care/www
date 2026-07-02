@@ -23,9 +23,6 @@ LOG=/var/log/yaocare-ga.log
   echo "════════ ga-insights end:   $(date '+%Y-%m-%d %H:%M:%S') ════════"
 } 2>&1 | tee -a "$LOG" || echo "  ⚠ ga-insights 失敗（不阻擋週報）" | tee -a "$LOG"
 
-# ── 📈 週報 Slack（接在週訊號重產之後；即使上面失敗也照發，內部自報數據缺漏）──
-{
-  echo "──── seo-weekly（📈 Slack 週報）start: $(date '+%H:%M:%S') ────"
-  ./node_modules/.bin/tsx scripts/seo-weekly.ts || echo "  ⚠ seo-weekly 失敗"
-  echo "──── seo-weekly end: $(date '+%H:%M:%S') ────"
-} 2>&1 | tee -a "$LOG" || true
+# ── 📈 週報已於 2026-07-02 移交統一框架 $SEO_OPS_DIR（週一 03:00 UTC，/etc/cron.d/seo-ops）──
+# 本檔只保留上方 ga-insights 週訊號重產（fetch-news 選題權重依賴 reports/news-insights.json）。
+# 回滾：還原本區塊呼叫 scripts/seo-weekly.ts。

@@ -64,19 +64,15 @@ LOG=/var/log/yaocare-news.log
 } 2>&1 | tee -a "$LOG" || echo "  ⚠ news 引擎失敗（不阻擋通報層；心跳會把失敗報出來）" | tee -a "$LOG"
 
 # ════════════════════════════════════════════════════════════
-# 通報層（接在 news 之後依序跑：📥 收集 → 📊✍️ 心跳 → 🤖 大腦）
-# 對齊 folk.tw 的 collect/heartbeat/brain；用既有 04:30 時段，不另開 cron。
-# 即使上面 news 失敗也照跑，各步驟自帶 || 護欄、心跳/大腦自報數據缺漏與失敗保底。
+# 通報層已於 2026-07-02 移交統一框架 $SEO_OPS_DIR（/etc/cron.d/seo-ops）：
+#   收集 20:00 UTC → 📊 心跳 20:20 → 🤖 大腦 21:30 → 📈 週報 週一 03:00
+# 本檔只保留上方 news 引擎本體。回滾：還原本區塊（備份見
+# $HOST_BACKUP_DIR/seo-cutover-20260702-023954/fetch-news.sh.bak）並移除 seo-ops 對應排程。
 # ════════════════════════════════════════════════════════════
+
+# ✍️ 文章撰寫心跳（獨立小訊息，2026-07-02 救回）：只報 news 引擎當日產出，
+# 不含 📊 數據段（歸 seo-ops 統一心跳）。失敗不阻擋。
 {
-  echo "──── 📥 seo-daily 收集 start: $(TWDATE '+%H:%M:%S') ────"
-  ./node_modules/.bin/tsx scripts/seo-daily.ts || echo "  ⚠ seo-daily 失敗（心跳會標數據暫缺）"
-
-  echo "──── 📊✍️ slack-heartbeat start: $(TWDATE '+%H:%M:%S') ────"
-  node scripts/slack-heartbeat.mjs || echo "  ⚠ slack-heartbeat 失敗"
-
-  echo "──── 🤖 seo-brain（自動優化）start: $(TWDATE '+%H:%M:%S') ────"
-  scripts/seo-brain-cron.sh || echo "  ⚠ seo-brain 非零退出（內含失敗保底通報）"
-
-  echo "──── 通報層 end: $(TWDATE '+%H:%M:%S') ────"
+  echo "──── ✍️ news-heartbeat start: $(TWDATE '+%H:%M:%S') ────"
+  node scripts/slack-heartbeat.mjs --news-only || echo "  ⚠ news-heartbeat 失敗"
 } 2>&1 | tee -a "$LOG" || true
