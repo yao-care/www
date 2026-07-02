@@ -1,0 +1,22 @@
+{
+  "target": "sign",
+  "title": "長照科技輔具租賃補助最高6萬元 移動、沐浴到看視皆納入",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1MYUx4WUxHSUdRdHhRaTgyN0R4dVRwQUhEeG1LX2JhVHBLN1hsOTY5QjBTUHpXTDVhT2pQeklKRUw4YjVTYjlFM283V0Zhc0Q3Y3hNR1ZNWmVkM3BndFpz?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-01T04:40:00.000Z",
+  "fetchedAt": "2026-07-02T20:54:06.083Z",
+  "newsBrief": "衛福部推出長照科技輔具租賃補助，最高6萬元，項目涵蓋移動、沐浴到看視類設備，讓失能長者與家庭能以租代買取得輔具，減輕一次性購置的財務壓力，也讓中小型長照據點更有機會導入科技化設備。",
+  "issueAnalysis": "補助辦法解決的是「買不起」的問題，但科技輔具真正卡關的地方常常不是價格，而是導入門檻。看視類設備如人臉辨識報到系統，一旦牽涉雲端傳輸，據點端就得面對個資疑慮與網路環境限制；長者本人也未必能配合觸控或安裝操作。補助能降低取得成本，設備裝進據點之後，長者願不願意配合使用、資料放在哪裡，是另一層問題。",
+  "designResponse": "不裝App、不用觸控是我們一開始就設定的門檻。長者走過鏡頭就完成報到，免按鈕、免簽名（proofPoint #1），對失智或行動不便的長者來說，這比任何補助都更直接降低使用障礙。個資疑慮也不是靠事後承諾解決，臉部與紀錄資料留在裝置端的瀏覽器裡，不上雲端（proofPoint #3），據點主管不用擔心資料外洩找上門。風險分級警示（proofPoint #4）則是把「看視」這件事從人工巡視變成系統即時提醒，走失、黑名單人員一進門就有提示，這對人力本來就吃緊的中小型據點特別實用。",
+  "tags": [
+    "長照補助",
+    "科技輔具",
+    "無接觸報到"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-02T20:54:06.083Z",
+  "voiceRev": 1
+}

@@ -1,0 +1,22 @@
+{
+  "target": "yaocare",
+  "title": "避免春節用藥中斷 慢性處方箋可提前10天領藥",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9VQVRPX0ZwV1A1MzhsVWx5UlcwbEpNMjVvdzZPWmsxRDV0NFUtU08zamIzcERlc2xCU2c3djNUajVtMjRCRHZjaXpuMHJrdHhxOHpRVTBOTQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-01T00:45:10.000Z",
+  "fetchedAt": "2026-07-02T20:44:03.786Z",
+  "newsBrief": "春節前慢性處方箋可提前10天領藥，是每年連假前都會重申一次的老規定，目的是讓病人不必因為藥局公休或返鄉行程而斷藥。這種年年提醒的必要性，某種程度上也反映領藥時間點本身就容易被忽略。",
+  "issueAnalysis": "慢性病用藥的斷藥風險不只在連假前後才出現，第二次、第三次領藥率偏低的問題本來就存在，只是平常少有明確的觸發點被拿出來討論。連假前提早領藥解決的是短期供給缺口，但多重用藥（polypharmacy）病人真正容易出錯的地方，是藥品種類一多，病人自己記不清楚該吃哪一種、何時該回診領下一輪，這類斷點藥師端往往看不到。",
+  "designResponse": "多重用藥（polypharmacy）容易記混，靠病人自己對藥名不太可靠。比較實際的做法是把處方資料對到 ATC 編碼，讓藥品分類與交互作用判斷不必等藥師人工輸入（proofPoint #1）。提醒管道選 LINE 和 Telegram，不是圖新潮，是因為長輩不太可能為了一個提醒功能特地裝新 App（proofPoint #2）。每則提醒附上藥品外觀圖片，藥越多，光看藥名越容易認錯，圖片對得比文字快。藥師端則做成可以批次查看整批追蹤對象的服藥狀況，領藥率偏低這類訊號才有機會提早被注意到。",
+  "tags": [
+    "慢性處方箋",
+    "多重用藥",
+    "用藥提醒"
+  ],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-02T20:44:03.786Z",
+  "voiceRev": 1
+}

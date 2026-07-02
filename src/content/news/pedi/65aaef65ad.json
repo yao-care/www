@@ -1,0 +1,22 @@
+{
+  "target": "pedi",
+  "title": "兒童發展篩檢暑期總動員 相約親子館、繪本好禮帶回家",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi5wJBVV95cUxQQlotTl8xMVllTmdUd00xSTZXM2RHTzZmS3lybl83bTEyUTJ3aGpBRzJxd1BGZlFrTDVSVG5ha1NlQ0ZYRjRkUUlZcWxUY0hqYjlsRkZNSDhiclJGYjVTVlVGMTY1bTZTRE5oak1YYmVrVVRQT2tYQXFsM241SnhOSkVGd2lEeDkzSk5ocjhEMExZWmdWSmtCMVl2bFF3LTlJR2dYLVpEdkFkZ0JXUFFLcUplTFVFY2YzbXB3aFF6OTAwdHpvTjF6aHY0YVh1Zm5WclBYd1hDUi1uRmhEaF9sQ2tsNmtUdG4zTE1CdzJaMzg0dnRRdDZVWG1qOUZaYU5lUDBNSjJoQ0VtcmJRYXZCYTJCOW12ekczYWJQNlp4dkphc1Y1RHNENzhyZEphTzRjWEtXVnZOTjdQSFRnVzhLUDJLLUZnaFloaHVxOHlfeEZma2ZCSWxNNnFSUl9xRFpQaldsX3BiVQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-29T15:33:53.000Z",
+  "fetchedAt": "2026-07-02T20:45:45.869Z",
+  "newsBrief": "地方政府近期於暑假期間串聯親子館舉辦兒童發展篩檢活動，結合繪本贈禮吸引家長帶孩子參與，盼透過親子館這類低門檻場域提高篩檢覆蓋率，讓發展遲緩能及早被發現、及早介入。",
+  "issueAnalysis": "親子館辦篩檢活動解決的是「入口」問題，用繪本把家長帶進場域。但紙本檢核表本身沒變：家長勾完表格，多半看不懂該歸類成正常變異還是該轉介，這一步比把人找來更難。忙碌家庭或距離親子館遠的家庭，連第一步都到不了，篩檢覆蓋率的提升就有天花板。",
+  "designResponse": "篩檢入口和判讀能力，是我們把工具拆成兩件事處理的原因。年齡帶切到兩個月到六歲共七段(proofPoint #1)，是因為這個區間發展速度變化太快，籠統問卷會漏掉細節。六大領域對齊國健署手冊與 ASQ-3(proofPoint #2)，家長填的東西和醫療院所看的是同一套語言，不用重新翻譯。分數不是打勾就算，而是常模化後拿負二個標準差當紅旗，配雷達圖看孩子跟同齡差在哪個領域，不是一句正常或異常就打發。資料留在瀏覽器裡，要不要往下走轉介，由家長自己按上傳(proofPoint #6)。工具解決得了判讀，解決不了家長會不會點開這個網頁。",
+  "tags": [
+    "兒童發展篩檢",
+    "親子館",
+    "早期療育"
+  ],
+  "relevance": 0.87,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-02T20:45:45.869Z",
+  "voiceRev": 1
+}
