@@ -239,7 +239,7 @@ export const PRODUCTS: readonly Product[] = [
     title: 'Smart Geri 高齡周全性評估',
     tagline: 'CFS 衰弱量表 + 多面向 CGA，公眾自篩與專業臨床雙模式，SMART on FHIR',
     description:
-      '針對高齡長者的周全性評估（CGA）系統，以臨床衰弱量表（CFS 1–9）為基準，延伸評估認知、情緒、營養、行動步態、用藥、社會支持等多個面向。提供「公眾／家屬自篩」與「專業臨床」雙模式，智慧分支由短篩到深評；含五次坐站等相機計時功能測驗，結果以紅黃綠分級給出轉介建議，並自動配對衛教內容。離線可用 PWA，資料留在裝置，可選擇上傳醫院 FHIR 或 GCM 收案。',
+      'Smart Geri 的 Geri 取自老年醫學（Geriatric Medicine）；這是針對高齡長者的周全性評估（CGA）系統，以臨床衰弱量表（CFS 1–9）為基準，延伸評估認知、情緒、營養、行動步態、用藥、社會支持等多個面向。提供「公眾／家屬自篩」與「專業臨床」雙模式，智慧分支由短篩到深評；含五次坐站等相機計時功能測驗，結果以紅黃綠分級給出轉介建議，並自動配對衛教內容。離線可用 PWA，資料留在裝置，可選擇上傳醫院 FHIR 或 GCM 收案。',
     ogTitle: 'Smart Geri',
     ogStat: 'CGA',
     ogStatLabel: 'CFS 1–9 · FRAILTY',
