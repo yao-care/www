@@ -1,0 +1,22 @@
+{
+  "target": "func",
+  "title": "被亞健康困擾，總覺得渾身不對勁？《中國中醫藥大會》（第三季）帶您調衡固本找回好狀態",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5GRWVwUk10OFozMnBtaUxPakNNT3JTMzVETTlPU1dFOHNIbWlaNlRrcG1TSkRmM09PM1AwQ2tYVkZrdFoybTBjV3ZqQVNpM0J4NnBnU0tLZzVkbXBuaEZtQ1FoR1YwZw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-02T09:47:57.000Z",
+  "fetchedAt": "2026-07-03T20:48:06.835Z",
+  "newsBrief": "《中國中醫藥大會》第三季報導以中醫角度談亞健康，指許多人常覺得渾身不對勁卻查不出具體病因，強調調衡固本、找回身體平衡狀態，內容聚焦體質調理，並未提出可量化的功能評估方式。",
+  "issueAnalysis": "渾身不對勁、卻說不出具體哪裡有問題，是很多成人常見的自我描述，但這類主觀感受很難被量化，也不容易對應到具體的健康行動。一般健檢多聚焦血糖、血脂等生化數值，較少涵蓋行動力、認知反應、情緒狀態這類「功能面」的變化。心理與認知的早期衰退尤其不易自我察覺，等到出現明顯症狀時，往往已經拖了一段時間。健康的人也需要一個低門檻、能快速自我檢視的入口。",
+  "designResponse": "渾身不對勁，但檢查報告一切正常。這種落差常卡在中醫調理與西醫健檢之間，兩邊都沒有工具能直接回答「我的功能到底退了多少」。我們把 WHO 內在能力框架的五大面向（活力、行動、認知、心理、感官）拆成幾組容易上手的題目，用智慧分支讓狀況穩定的人很快通過，只有出現警訊才會被帶進更細的題目(proofPoint #1)(proofPoint #2)。認知部分不是問卷打勾，而是用反應、配對這類小測驗，把「說不清楚哪裡怪」變成可比對的數字(proofPoint #3)。整份評估留在瀏覽器端運算，要接到合作院所或 GCM 收案時才另外走 SMART on FHIR(proofPoint #6)。",
+  "tags": [
+    "亞健康",
+    "功能評估",
+    "內在能力"
+  ],
+  "relevance": 0.72,
+  "highlight": true,
+  "criticPasses": 2,
+  "updatedAt": "2026-07-03T20:48:06.835Z",
+  "voiceRev": 1
+}

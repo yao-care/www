@@ -1,0 +1,22 @@
+{
+  "target": "sign",
+  "title": "心有餘悸！醫美針孔偷拍連環爆 衛福部最快8月公布新版「隱私規範」",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9GbDZNaFo5UHlFd25ra1hVb0lUenBabC0xT1NjNkFkOXFBRnZpVm85eHlTLTlkSy15ZDBFV3dWS3ZTY3pYdzdOWEhYZjl6UFpVMVRhc0hmeVdHUdIBX0FVX3lxTFBhamladl83R0p4TnFxOVZqOElhQTQ3UHJUY2VTekJCekJ2T0Z1cnotX0EyaEpodWt4M1JuZ296eEg5VW0xOWtMakNrSDBQYTlIV0l1VThFeUJSY243MXZn?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-22T12:00:28.000Z",
+  "fetchedAt": "2026-07-03T20:49:20.503Z",
+  "newsBrief": "醫美診所接連爆出針孔偷拍案，受害者心理創傷難平復。衛福部因此加快腳步，最快8月將公布新版隱私規範，要求醫療美容場域對影像蒐集與儲存訂出更明確的管理機制。",
+  "issueAnalysis": "針孔偷拍案曝光後，民眾對任何裝有鏡頭的場所都會多一分戒心。長照據點如果導入人臉辨識報到，家屬第一句問的往往不是準不準，而是影像存在哪、誰看得到。失智長者更依賴他人替自己把關隱私，這層信任一旦動搖，設備再方便也難推廣。",
+  "designResponse": "鏡頭裝在報到口，資料到底流去哪，這是我們一開始就得回答的問題。做法是把辨識運算全部留在裝置瀏覽器裡跑，臉部特徵與每天的簽到紀錄都不上傳任何雲端伺服器(proofPoint #3)。長者不用學怎麼操作，走過去就完成報到，不必按鈕、不必安裝App、也不用記密碼(proofPoint #1)。碰到失智、走失風險比較高的長者，系統會依事先設定的名單跳出分級警示，讓值班人員第一時間留意，而不是等到人不見了才發現(proofPoint #4)。每天的簽到名冊也是自動產出，據點不用另外花人力謄寫給主管機關(proofPoint #5)。攝影機這件事本身沒有對錯，差別在資料流向誰能看見、又留在哪裡。",
+  "tags": [
+    "個資隱私",
+    "長照",
+    "人臉辨識"
+  ],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-03T20:49:20.503Z",
+  "voiceRev": 1
+}

@@ -1,0 +1,22 @@
+{
+  "target": "txgnn",
+  "title": "三醫學中心病歷即時互通 FHIR 將列醫院評鑑 - CIO Taiwan",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTE9FSWk1ZFJscjdqcmRvMXpHNTBHbENIQ2o1NW5lanppSVcwOG9QT2RGQ2ZOVGh0RWVLNW5RZjhaTWk1QU9t?oc=5",
+  "source": "Google News",
+  "publishedAt": "2025-12-16T08:00:00.000Z",
+  "fetchedAt": "2026-07-03T20:56:49.285Z",
+  "newsBrief": "三家醫學中心公布病歷資料能透過FHIR標準即時互通，衛福部研議把這項能力納入醫院評鑑指標。過去互通多半停留在示範專案，一旦寫進評鑑，就等於變成醫院資訊系統的硬指標。",
+  "issueAnalysis": "醫院間病歷互通長期卡在各自系統的資料格式不同，FHIR原本是選配的加值功能，一旦被納入評鑑，變成每家醫院都得達到的基本門檻。這對院內導入的臨床決策系統也有連帶影響：如果一套工具沒辦法用標準化的FHIR資源介接，日後串接電子病歷或跨院共用資料時就會卡關，重新開發介面的成本會比一開始就用標準規格高出許多。",
+  "designResponse": "老藥新用的預測結果如果只能留在自己系統裡看，對臨床端幫助有限。這個平台把資料上架到SMART on FHIR App Gallery，相容Epic與Cerner（proofPoint #5），介接走OAuth加PKCE的標準認證流程（proofPoint #7），跟醫院原本在用的病歷系統用同一套語言，不必再談一套專屬介面。每筆預測都附上PubMed文獻與臨床試驗證據（proofPoint #4），醫師看到建議時，也看得到背後的出處。",
+  "tags": [
+    "FHIR互通",
+    "醫院評鑑",
+    "老藥新用"
+  ],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-03T20:56:49.285Z",
+  "voiceRev": 1
+}

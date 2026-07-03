@@ -1,0 +1,22 @@
+{
+  "target": "huatuo",
+  "title": "醫學界退化？中醫看病被爆用AI作弊找資料 網友酸：起碼用Gemini啦",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMi-AJBVV95cUxORjlKZTVKTFhqdEh5Y1VhTjRhUy1uRmwzT3BsMlJ5eU90dEtkaGU2QjhudEF4X1JRZ29mdlROYndlX2lmNVBkaFNjM01rUHFBVzFCR003NngxNmtldE5XVERFaER0Wm01bThId1Jodm5Ya0Nrbmp1cTkwN2pzMjZmSEZRUmY1TjBGRXlpZFVMekMwZ09TNHVheHVIaGtXYWlOQ0REMXF5ZHZtWjJrSkRMMXVmOTcwb1pEXzdLN09mMUtwWmhxRVYwNkVsYnVpS0dYN1ZJcHBCd0lxOUtGSjJkY3Nhdkw2ZnV5U2daUURTb3FLN1Nqb19HbGpfZVJJdG4zNnRYV3oxdDdLVUlUTzNXNUhHYkx6S2Rha3BRNGNQdE5EVXZVTVF4cEE3bzZVa2Rna1k5UndiNEU2U3ZjNWJORXpxYnI3WjBmNEdrN2N1OERsV29yTENQa2JZQmtiTmNoZ1NNWjZIZTZlT3Z1QlRNNUs3UmRTQVVm?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-25T06:05:00.000Z",
+  "fetchedAt": "2026-07-03T20:55:18.994Z",
+  "newsBrief": "香港傳出中醫師看診時偷用AI查資料，被截圖流出後網友群嘲，直言「起碼用Gemini」，質疑診間到底發生了什麼事。這類爆料戳中的，其實是中醫師用AI該不該讓病人知道的問題。",
+  "issueAnalysis": "中醫問診靠的是醫師的經驗判斷，患者通常看不到診間裡到底發生了什麼。這次爭議的重點不是能不能用AI，是用得不透明。偷偷查資料跟攤在陽光下用工具，是兩件事。後者需要病人能看懂AI給了什麼建議、依據是什麼。中醫四診本來就難標準化，如果AI介入的過程沒辦法被檢視，只會讓外界對中醫更沒信心。",
+  "designResponse": "AI華佗的做法很直接：辨證推理不藏起來，128條八綱與臟腑規則寫在syndromes.json裡，中醫師可以逐條打開來看系統怎麼判斷（proofPoint #1）。規則權重0.6、LLM權重0.4混合辨證，兩邊各佔多少比重是寫死的，不是誰暗中調的參數（proofPoint #2）。每個結論後面都掛著完整的推理路徑跟RAG證據來源，醫師要查證，點開就看得到，不必靠對話截圖外流才知道AI到底說了什麼。",
+  "tags": [
+    "中醫AI",
+    "診間透明度",
+    "AI信任"
+  ],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-03T20:55:18.994Z",
+  "voiceRev": 1
+}
