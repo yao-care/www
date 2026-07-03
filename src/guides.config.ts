@@ -25,6 +25,11 @@ export type Guide = {
   related?: readonly ProductSlug[];
   /** 相關名詞（glossary slug） */
   relatedTerms?: readonly string[];
+  /**
+   * 延伸資源（非 yao.care 自家產品的外部連結）。
+   * 只在真的相關、免費／開源／公益的資源才放，且全站只挑最相關的一兩則，避免浮濫互連。
+   */
+  externalResources?: readonly { before: string; label: string; url: string; after: string }[];
 };
 
 export const AUDIENCE_LABEL: Record<Guide['audience'], string> = {
@@ -183,6 +188,14 @@ export const GUIDES: readonly Guide[] = [
     ],
     related: ['func'],
     relatedTerms: ['intrinsic-capacity'],
+    externalResources: [
+      {
+        before: '若睡眠是主要困擾，也可以先試試非藥物的輔助方式，例如',
+        label: 'Vuko',
+        url: 'https://www.vuko.life/',
+        after: '——一款免費開源的呼吸節奏引導 Web App，透過雙耳拍頻幫助放鬆與入睡。',
+      },
+    ],
   },
   {
     slug: 'medical-ai-content-compliance',

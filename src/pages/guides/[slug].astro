@@ -107,6 +107,19 @@ const jsonLd = {
           </section>
         ))}
       </div>
+
+      {guide.externalResources && guide.externalResources.length > 0 && (
+        <div class="mt-10 pt-6 border-t border-neutral-200 text-sm text-[color:var(--color-ink-soft)]">
+          <p class="font-medium text-[color:var(--color-ink)] mb-2">延伸資源</p>
+          {guide.externalResources.map((r) => (
+            <p class="leading-relaxed">
+              {r.before}{' '}
+              <a href={r.url} target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">{r.label}</a>
+              {r.after}
+            </p>
+          ))}
+        </div>
+      )}
     </article>
 
     <!-- tool callout + related products -->
