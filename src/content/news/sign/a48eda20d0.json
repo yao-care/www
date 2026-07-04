@@ -1,0 +1,22 @@
+{
+  "target": "sign",
+  "title": "就醫拍照、攝影「新隱私指引」來了！衛福部：8月上路",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE4wa0R0cWJpU2tPYzVadHliNUYxdF9yeGV2bjdfdVE0cFlvelJZTFZYM0stb2FqWDVsSm40bkRmNnBadW1zaFdOQUFxS2R0MkRidU9GcmJPbG1haWxOeThlcQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-22T07:00:00.000Z",
+  "fetchedAt": "2026-07-04T20:53:27.117Z",
+  "newsBrief": "衛福部推出就醫拍照與攝影的新版隱私指引，8月上路，針對醫療場域內的影像蒐集訂出更明確的規範，牽動長照據點日常運作中的拍攝與記錄習慣。",
+  "issueAnalysis": "長照據點的日常紀錄本來就常碰到「拍了誰、存在哪」這種模糊地帶，簽到照片、活動側拍都算數。指引上路後，據點得回答影像從蒐集到刪除的每一步，但多數場所的系統設計從一開始就沒把這個問題考慮進去，事後補規範往往比重新設計更費工。",
+  "designResponse": "我們的判斷是別把個資保護當成事後補的合規文件，而是從系統架構就決定資料留在哪裡。臉部與紀錄資料留在裝置端瀏覽器，不上雲端傳輸(proofPoint #3)，等於從源頭減少「影像流向誰」這個問題的答案數量。走過鏡頭自動辨識、免按鈕免簽名(proofPoint #1)也是同一個邏輯的延伸：少一道操作，就少一次額外蒐集個資的環節。名冊產出直接對接政府社政平台格式(proofPoint #5)，讓據點不用另外整理一份「影像使用說明」給稽核看，系統本身的資料流向就是答案。指引怎麼寫我們不去預測，但資料不離開裝置這件事，不會因為條文細節改變而需要重新設計。",
+  "tags": [
+    "個資保護",
+    "長照法規",
+    "人臉辨識"
+  ],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-04T20:53:27.117Z",
+  "voiceRev": 1
+}

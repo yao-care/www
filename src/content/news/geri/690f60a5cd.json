@@ -1,0 +1,22 @@
+{
+  "target": "geri",
+  "title": "從補辦證件發現警訊 新北失智早篩全國第一",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiuwJBVV95cUxNZ1JxLUVwX1RPRDNadW5xdlRnMU9mSmxjVmlScDZjR1M0V0d2QjFvRGE4VzVtSzRjdUFVMFlsanU3WmNLRmtWa19Na1RwQ25yMTVnbDJ6Z29tc2NRaGhhMWprMmI5YXlfcG5sbWV2UWdFQkpNdUZvbFg0MUFRMGtYZ2FyeHo5UlhBcjBmSnVCSHB3bVl4WmRpVjA1ZzVuYlR1U3FFLXZHMS1HLWNGTTI5OElzbTE0c2N4bUVUdnZfYW1yMFVnLUI4eVpnYXpSVkRycGZDM2pxZm90XzJVczFLMEV6WWhBUGdJWXJrcXFEeHV6Z0E5TGNqVGlTak9sbmZnZDN6SnBFRk85SmRBQ3NDeEN6YUhTNFphMW40Z3pMUllSdzFHSHg0WGhZT3pPOTljZ0tzRVRmMWF5Vnc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-01T06:52:39.000Z",
+  "fetchedAt": "2026-07-04T20:50:53.417Z",
+  "newsBrief": "有報導指出，長者到戶所補辦證件時，因應對異常被承辦人員察覺，意外揪出失智警訊，促成地方政府近年大力推動失智早期篩檢，篩檢量全國數一數二。順手辦件也能撈出警訊，這種案例並不罕見。",
+  "issueAnalysis": "失智徵兆很多時候不是在診間被發現，而是辦事、領藥、繳費這類生活小事裡冒出來的。工作人員憑經驗抓到異常，靠的是運氣與個人敏感度，換一個窗口、換一批人力就可能漏掉。這也點出一個老問題：多數長者的認知與功能退化長期被當成「上了年紀本來就這樣」，缺乏一套能反覆使用、不靠特定人眼力的評估工具，篩檢才會這麼依賴偶然。",
+  "designResponse": "與其等哪個窗口剛好有心的人發現，不如讓長者或家屬自己先測一次。系統用臨床衰弱量表 CFS 1–9 分層(proofPoint #1)，同時開放公眾自篩與專業臨床兩種模式(proofPoint #2)，不需要先掛號、也不用等家人剛好想到才能知道大概落在哪一段。評估涵蓋認知、情緒、營養、行動、用藥與社會支持(proofPoint #3)，五次坐站等測驗直接用相機計時，不用額外器材(proofPoint #4)。做完會給紅黃綠分級與對應的轉介建議(proofPoint #5)，資料留在裝置上，要接軌醫療院所再選擇上傳(proofPoint #6)。平常在家測，有需要再找醫療院所看診，比等一次補辦證件的巧合更可控。",
+  "tags": [
+    "失智早篩",
+    "高齡衰弱評估",
+    "周全性評估"
+  ],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-04T20:50:53.417Z",
+  "voiceRev": 1
+}

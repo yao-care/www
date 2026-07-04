@@ -1,0 +1,18 @@
+{
+  "target": "func",
+  "title": "智慧健康監測結合高齡照護 AI 應用，拓展照護新模式",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE0wdFZDMlF0XzQ2QmZvNkItV1Y0d3h2Qy1yS25GNWJkNU5yVDVoMnVmQXQxZ1dCVDU1cENQeVdlRmE0el9nY1dpdnJIREN2RC01YXFFUzk5blRSenJmMXhR?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-27T01:48:00.000Z",
+  "fetchedAt": "2026-07-04T20:52:33.541Z",
+  "newsBrief": "工商時報報導，智慧健康監測正結合高齡照護AI應用，往「照護新模式」的方向拓展，反映健康監測工具與照護場景整合已成產業關注方向。",
+  "issueAnalysis": "健康監測跟照護服務常常是兩套系統：一套量數據，一套接人力。中間缺的是判讀，量到的數字要轉成「這個人現在該不該關心、該轉去哪裡」才有用。多數監測工具停在生化指標或活動量，對認知、心理這類早期不易自己發現的功能變化，往往沒有對應的分級與轉介機制，量了也不知道下一步。",
+  "designResponse": "我們把重心放在「量完之後怎麼分流」這件事上。用 WHO 內在能力(IC) 框架涵蓋活力、行動、認知、心理、感官五大面向(proofPoint #1)，健康的人很快就能做完，真的有警訊的人才會被多問幾題(proofPoint #2)，認知面向也不是勾選題，而是實際做反應、配對這類小測驗來抓變化(proofPoint #3)。心理量表偵測到憂鬱或自傷風險時，畫面會直接跳出1925、1995、119這些求助專線(proofPoint #4)，不是留在報告裡等使用者自己翻。運算全部在瀏覽器端完成，要接院所或收案系統時才透過SMART on FHIR上傳(proofPoint #6)，資料流向由使用者自己決定。",
+  "tags": [],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 2,
+  "updatedAt": "2026-07-04T20:52:33.541Z",
+  "voiceRev": 1
+}

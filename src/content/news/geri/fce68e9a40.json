@@ -1,0 +1,22 @@
+{
+  "target": "geri",
+  "title": "台中市啟動高風險族群早篩新制 失智照護升級",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMixAJBVV95cUxQMTJpN0hLY3JkaVZoalhuVUJ3dl8zR29BN2FoRzlncGNSTGdrTXVyZnRrS3hCdnN5RXpFa2xwSWpJR0RMZk9pallEcGZZZ1lZc0lEdThiM01UNDkwUjBHMUdlRUN3LU1ubFRoM05GSFM4V2l3MUJQLTByVVFpUlN6YUYxS0NmeGFVMXJBZFRKYUFqdUp1RHRCQ1BPRXdZcE9Wb21qNGlLc2tDQi1IQlZrd0xrZ2JPeUR5aGNOcmpwWHNKTEJIenc2R3FXbGI1anh3OE9WVHZDaWw1WVRtSTFFYm0zeVI1OGJSb0tmWHJidmI0X3NPR2YxUExKc1NlSWlWVVVld1FuSkpmTFBlaklzNHR3THRQLVNUNzhPUFB1MHB2ZGRRa2lnQ1hzRHhIV1FnT3V1NE1ZcWtZb0lDWG9TM1B1QU4?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-04T07:19:00.000Z",
+  "fetchedAt": "2026-07-04T20:48:56.193Z",
+  "newsBrief": "地方政府近日推出高風險族群早期篩檢新制，鎖定失智照護前端把關，透過分級機制篩出需要進一步評估的長者。這類制度上路容易，難的是篩檢工具能不能重複使用、結果能不能被下一個接手的人看懂。",
+  "issueAnalysis": "失智與衰弱篩檢常卡在同一個問題：政府推新制、社區辦活動，但用的量表五花八門，這次篩出來的結果換一個機構可能就看不懂。長者本人或家屬也常搞不清楚，量表分數落在哪一格該去醫院、哪一格先自己觀察就好。跌倒、肌少、營養不良這些風險因子各自有各自的評估工具，很少被放在同一套流程裡一起看，篩檢結果也很少能跟醫療端的病歷系統對得起來，等於篩了一次就斷線。",
+  "designResponse": "衰弱和失智的篩檢不缺工具，缺的是同一套邏輯能不能重複用。我們把臨床衰弱量表 CFS 1–9 當分層基準 (proofPoint #1)，公眾或家屬可以先自己篩一次，覺得不對勁再轉給臨床端，用同一套基準往下評估 (proofPoint #2)。認知、情緒、營養、行動、用藥、社會支持這幾塊常常被拆開看，我們讓它們出現在同一次評估裡 (proofPoint #3)，包括用手機相機計時的五次坐站測驗 (proofPoint #4)，動作本身就是資料，不必另外找人手動測。評估完不是丟一個分數了事，紅黃綠分級直接帶出轉介建議，該觀察還是該就醫講清楚，也可以選擇把結果上傳醫院端或走 GCM 收案，篩檢結果不會停在裝置裡就沒了下文。",
+  "tags": [
+    "高齡衰弱篩檢",
+    "失智照護",
+    "周全性評估"
+  ],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-04T20:48:56.193Z",
+  "voiceRev": 1
+}

@@ -1,0 +1,22 @@
+{
+  "target": "marketing",
+  "title": "AI換臉詐騙入侵醫療廣告，衛生機關示警：買藥品務必循合法管道",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5BYWo3WG1NaVhseFJ2aGd1ei15blZjSXFpUlRHWXdlT1F5ZVJ6TXp4aDlTb1RVNjhaLTVCRElMeDN6bTRRY1pZM3lEazlKZHhOUHc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-24T07:00:00.000Z",
+  "fetchedAt": "2026-07-04T20:56:41.329Z",
+  "newsBrief": "近期出現利用AI換臉技術偽造醫師或名人代言的醫療廣告詐騙案例，地方衛生機關示警，提醒民眾購買藥品務必透過合法藥局或醫療管道，切勿因社群廣告的名人背書而受騙上當。",
+  "issueAnalysis": "醫療與保健品廣告長期倚賴專業或名人背書取得信任，AI換臉詐騙鎖定的正是這個信任機制，民眾看到熟悉的臉孔說話，戒心自然下降。假冒醫師或名人的影片能低成本量產，消費者和廣告平台都很難即時分辨真偽，衛生機關多半只能事後稽查與呼籲，難以趕在假影片擴散社群前攔截。這也讓合法品牌在找人背書時，資格能不能被驗證，變得比以前更重要。",
+  "designResponse": "假冒醫師代言的詐騙影片會瘋傳，是因為觀眾根本看不出這個「醫師」到底有沒有真的在執業。我們合作的醫友資格卡在國家醫療專業考試加上千人以上粉絲數(proofPoint #2)，等於先設一道能被反查的門檻，不是穿白袍講兩句話就算數。醫療類的投放素材另外要先過律師團隊審查酒類、食品、醫療法規的紅線(proofPoint #4)，投放前那一關卡住的，往往就是誇大療效或未經核准的用語。這兩道關卡加起來，比事後被冒名詐騙才澄清，成本低得多。",
+  "tags": [
+    "AI詐騙防範",
+    "醫療廣告法規",
+    "KOL背書驗證"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-04T20:56:41.329Z",
+  "voiceRev": 1
+}
