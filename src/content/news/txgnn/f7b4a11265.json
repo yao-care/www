@@ -1,0 +1,21 @@
+{
+  "target": "txgnn",
+  "title": "〈焦點股〉華安AI老藥新用平台成果將登輝達GTC大會 觸及漲停",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE00Z1ZsdmxGaVpJWE1SQVhxbk9henRLZHBGVUNXU2dBNjlzWmhyb0xRNVh1YUNGWjZ3aXJxOE9RV0Z4dmNxOTFTVnFRR2IyNDdCS3o4ZXd3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-01-23T08:00:00.000Z",
+  "fetchedAt": "2026-07-07T20:45:43.465Z",
+  "newsBrief": "台股一家從事AI老藥新用平台開發的公司，傳出成果將登上輝達GTC大會，消息激勵股價當日觸及漲停。老藥新用題材近來屢屢牽動資本市場情緒，反映的是市場對AI加速藥物開發的高度期待。",
+  "issueAnalysis": "股價漲停反映的是想像，不是驗證。老藥新用要成立，得先證明一款已上市藥物真的有未被發現的新適應症，這件事牽涉的資料量很大：海量文獻、臨床試驗紀錄，還要跟既有病歷系統對得起來。多數團隊卡關的地方不是模型跑不出預測，而是預測出來後沒有證據佐證，臨床端沒辦法信，更別提要接進醫院系統，光是資料格式就是一道關卡。",
+  "designResponse": "老藥新用要從題材變成臨床能用的工具，缺的是證據鏈。設計上採知識圖譜與深度學習雙引擎互相印證，不只靠單一模型出結果(proofPoint #1)。每個預測都附上 PubMed 文獻與 ClinicalTrials 試驗紀錄，讓臨床端可以自己核對(proofPoint #4)。資料涵蓋 30 多國 FDA 藥品，不侷限單一市場的藥證資訊(proofPoint #2)。要接進醫院系統，這部分已上架 SMART on FHIR App Gallery，相容 Epic 與 Cerner(proofPoint #5)。",
+  "tags": [
+    "老藥新用",
+    "AI醫療投資"
+  ],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-07T20:45:43.465Z",
+  "voiceRev": 1
+}

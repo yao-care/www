@@ -1,0 +1,22 @@
+{
+  "target": "pedi",
+  "title": "新北免費兒童發展篩檢 社會局籲把握療育黃金期",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1SNXVOcllkR29BYlVrcmRFOXdtSU5XX2EwYTM5MHNHNDBLeWZRdGRQbWJ4UF92REZ1RHpZa2pDajliYlNhQnJyemdoOWxIeFpiOWc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-06T21:10:00.000Z",
+  "fetchedAt": "2026-07-07T20:41:36.952Z",
+  "newsBrief": "新北市社會局推出免費兒童發展篩檢服務,呼籲家長把握療育黃金期,及早發現孩子在動作、語言、認知等領域是否有發展遲緩跡象,及早介入處理。",
+  "issueAnalysis": "多數家長對「發展遲緩」的判斷仍停留在直覺比較,像是「隔壁小孩已經會走路了」,但缺乏具體量化的參照標準。健康手冊裡的檢核表通常是紙本勾選,家長勾完不知道該怎麼解讀分數,也不確定哪些落差算正常、哪些該轉介。等到真正察覺不對勁時,常常已經錯過語言或動作發展的關鍵時期。",
+  "designResponse": "篩檢工具設計上先解決「怎麼問」的問題:依 2 月到 6 歲共 7 個年齡帶給不同題組,避免用單一問卷套用所有孩子(proofPoint #1)。六大領域對齊國健署手冊與 ASQ-3(proofPoint #2),家長勾完不是只看到一堆勾選格,而是拿到常模化分數,−2SD 標紅旗(proofPoint #4),再用雷達圖對比同齡基準,直接看出孩子在哪個領域偏弱、偏弱到什麼程度(proofPoint #5)。這樣家長不用自己猜「這樣算不算慢」,系統會給出紅黃綠的觀察或轉介建議。資料預設留在瀏覽器,家長可以自己選擇要不要上傳給醫療院所,把主導權留在家長手上。",
+  "tags": [
+    "兒童發展篩檢",
+    "黃金療育期",
+    "發展遲緩"
+  ],
+  "relevance": 0.88,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-07T20:41:36.952Z",
+  "voiceRev": 1
+}
