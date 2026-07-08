@@ -1,0 +1,22 @@
+{
+  "target": "geri",
+  "title": "AI 健康照護應用落地，直擊台灣團隊如何用科技對抗銀老族肌少症通病 - TechNews 科技新報",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE93SWppQWtqa3Ffa3lUTlhENFpDNVNHcGFnODRTNVVKMWtLMXZ5RXdvdWE4TkVkT0tyaE1MOElDZThGeGQtcV9hV1dYOGFoelhKRlZUcnpuQ0lpc2hOb0FzV1lhMmNDN2dW?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-08T01:22:18.000Z",
+  "fetchedAt": "2026-07-08T20:52:52.876Z",
+  "newsBrief": "有台灣團隊開發健康照護應用，鎖定銀髮族常見的肌少症，用科技工具協助辨識肌力流失問題，作為近期 AI 落地照護場景的案例之一，反映肌少症篩檢正走向數位化與居家化。",
+  "issueAnalysis": "肌少症常被當成老化的正常現象，等到明顯無力、跌倒才被注意到，介入時機已經晚了。長照據點常缺乏一套可重複執行的周全性評估流程，肌力、營養、認知這些風險散落在不同量表裡，家屬也很難判斷長者現在該自己多留意，還是該直接掛號。評估結果之後要不要接回醫療端，又是另一個斷點。",
+  "designResponse": "肌少症篩檢常常只看肌力這一塊，其他風險被晾在一邊。系統用 CFS 1–9 當分層基準（proofPoint #1），同一套流程把認知、情緒、營養、行動、用藥、社會支持一起評（proofPoint #3），肌力測驗不是自填問卷，而是用相機計時的五次坐站抓實際表現（proofPoint #4）。篩出來的結果直接對到紅黃綠分級，該轉介或該衛教都先講清楚（proofPoint #5），資料留在裝置上，要接回醫院系統再選擇上傳（proofPoint #6）。",
+  "tags": [
+    "肌少症",
+    "衰弱評估",
+    "高齡照護"
+  ],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-08T20:52:52.876Z",
+  "voiceRev": 1
+}
