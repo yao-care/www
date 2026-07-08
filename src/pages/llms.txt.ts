@@ -60,7 +60,7 @@ export const GET: APIRoute = () => {
   lines.push('');
   lines.push(`- [醫療 AI 名詞解釋總覽](${u('/glossary')}): 醫療資訊與 AI 關鍵名詞的清楚定義。`);
   for (const t of GLOSSARY) {
-    lines.push(`- [${t.term}](${u(`/glossary/${t.slug}`)}): ${t.oneLiner}`);
+    lines.push(`- [${t.term}](${u(`/glossary/${t.slug}/`)}): ${t.oneLiner}`);
   }
   lines.push('');
 

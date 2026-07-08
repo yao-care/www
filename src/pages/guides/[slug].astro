@@ -166,7 +166,7 @@ const jsonLd = {
               <p class="text-sm font-medium text-[color:var(--color-ink)] mb-3">相關名詞解釋</p>
               <div class="flex flex-wrap gap-2">
                 {terms.map((t) => (
-                  <a href={`/glossary/${t.slug}`} class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-sm text-[color:var(--color-ink-soft)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors">
+                  <a href={`/glossary/${t.slug}/`} class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-sm text-[color:var(--color-ink-soft)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors">
                     {t.term}
                   </a>
                 ))}

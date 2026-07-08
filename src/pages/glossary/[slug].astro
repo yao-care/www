@@ -18,7 +18,7 @@ const related = (term.related ?? []).map((s) => PRODUCT_BY_SLUG[s]);
 
 const pageTitle = `${term.term} 是什麼？ · yao.care`;
 const pageDescription = term.oneLiner;
-const canonical = new URL(`/glossary/${term.slug}`, SITE.url).toString();
+const canonical = new URL(`/glossary/${term.slug}/`, SITE.url).toString();
 
 const jsonLd = {
   '@context': 'https://schema.org',
