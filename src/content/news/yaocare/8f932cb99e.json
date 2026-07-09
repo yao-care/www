@@ -1,0 +1,22 @@
+{
+  "target": "yaocare",
+  "title": "吃慢箋藥注意！慢箋藥可提前春節10天領　1月10日起回診可提早領藥",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE81Qk13QzV6T1lBU3o5dmR1TExXZEJnZ0JYSTFRN1dNd09hX1NSc3pURERFdEc0eUdicXBCbkNqLWJrbjBwXzdmbdIBTEFVX3lxTE1vSW1RZC1nWDdydUVUbndtOVcwU3IyX19VOTU3QnFIV293YkZJS1BrejBLV3AzN3BWSVdDUHJhMkh5THhZWUdoTmlLWUg?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-08T16:25:03.000Z",
+  "fetchedAt": "2026-07-09T20:48:50.077Z",
+  "newsBrief": "健保署公告，領慢性病連續處方箋的患者，農曆春節前可提前領藥因應假期停診，2027年1月10日起回診就可提早領取，方便患者安排領藥時間，避免年節前藥局人潮擠爆。",
+  "issueAnalysis": "慢箋提前領藥規定每年都會公告，但真正的痛點是患者常常忘記這件事，等到快過年才發現藥快沒了，臨時衝去藥局或診所補領。加上不少長輩同時領好幾種慢箋藥，時間點對不上，一次領藥還要記兩三個回診日，光靠自己記很容易出包。",
+  "designResponse": "領藥時間一改，最麻煩的不是政策本身，是提醒誰、什麼時候提醒。我們用LINE和Telegram推播，不用另外裝App，長輩機齡舊、記不住新軟體操作，這件事就先解決一半(proofPoint #2)。處方資料直接對接健保ATC編碼，藥局不用另外key資料，日期異動時提醒也能同步跟著調(proofPoint #1)。同一個人同時領幾種慢箋藥、劇名混在一起分不清，提醒訊息附藥品外觀圖片，至少不會拿錯或漏領(proofPoint #3)。像春節提前領藥這種一年一次、規則又會變的事，靠人腦記不如靠系統排。",
+  "tags": [
+    "慢性病連續處方箋",
+    "用藥提醒",
+    "多重用藥"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-09T20:48:50.077Z",
+  "voiceRev": 1
+}

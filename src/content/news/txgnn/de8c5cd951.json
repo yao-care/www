@@ -1,0 +1,22 @@
+{
+  "target": "txgnn",
+  "title": "破解晚期肺癌！偏頭痛老藥新用 台大攜手哈佛揭「神經斷電」策略",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMikANBVV95cUxONnBEY0VyNC1JSTRmSnJ3S3VFcTFYYk9vd05KdkJGWUdiWkRudDJzdkl2MzdjM3ZMUll1WThLaDJ0b2EwbG5kR01RUXpDekhRSFhRZWV6RzVJcFE5ZXhSWExJa2VIWHhFeWgteWtjdE5QNjZrYTZxa1BoanktV1Q2OXlDbTIydGpXY1V0VVNEY0w3enVmTjNQR3ozQUVieU9Bc3Q4UExYdURMS0h5dHJDMnU3TVN1UmJJdlJEU1AyRWFKVVRhZVNfV29zZnd2QXptUGYwTUxPQU1NbFBFUFI5dm5KRzdaSXZBeFZfODlsb1kta0E2R2hQOFlKa3hydGxUNHRUUDdhQWlzNWphVXBMX2dDWExPX1l3NUhKTXZTYXYzaTdCb214cm5Ba1lhS3A3ZHZvVFBhTTFVSFBRcmZnSUU3VFJFY3YtSHA3dkQ0SWV6YXJfZ1RiempTbzBzY0NVMTdobEhoQTVPbnRXeDg0a0FONk5XVFJmLVV6dW96bldBWHpUVXlnTk1QZWNPdi1W?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-09T15:15:00.000Z",
+  "fetchedAt": "2026-07-09T20:47:47.662Z",
+  "newsBrief": "台大與哈佛團隊發現,原本用於治療偏頭痛的藥物,透過阻斷神經訊號傳遞,可能對晚期肺癌有治療效果,是老藥新用的最新案例,顯示既有藥物資料庫仍有未被系統挖掘的潛在適應症。",
+  "issueAnalysis": "藥物研發要花十幾年時間與龐大成本,而已核准上市的藥物其實藏著大量還沒被系統性驗證的潛在用途。偏頭痛藥物拿去試肺癌這類案例,通常是研究者累積多年的假設,再回頭找證據補齊。問題是,這類假設散落在各自的論文與試驗紀錄裡,沒有共同資料庫讓臨床端快速查到某顆藥還可能治什麼,也難判斷證據夠不夠支撐下一步試驗。",
+  "designResponse": "老藥新用平台不靠單一模型判斷,而是同時跑知識圖譜與深度學習兩條路徑,交叉比對出的候選才留下來(proofPoint #1)。範圍涵蓋30多個國家的FDA核准藥品,偏頭痛用藥這類個案放進資料庫時,能跟其他國家的核准紀錄與適應症並排比較,而不是只看單一藥物單一疾病(proofPoint #2)。每一筆預測背後都附上對應的PubMed文獻與ClinicalTrials試驗紀錄,臨床端不用自己再去查證據強度夠不夠(proofPoint #4)。系統也產出16,700多個藥物頁面,方便查找同類老藥新用案例(proofPoint #3)。",
+  "tags": [
+    "老藥新用",
+    "肺癌治療",
+    "藥物再利用"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-09T20:47:47.662Z",
+  "voiceRev": 1
+}

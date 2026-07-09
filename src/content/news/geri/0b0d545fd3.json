@@ -1,0 +1,22 @@
+{
+  "target": "geri",
+  "title": "9縣市上看38度高溫不只中暑！ 醫：脫水恐讓肌力下滑、增跌倒風險",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBIS1N1MlNkWkR6UTl4RnFBNm9YdE1NTXBhcnJTLWpCRHVYVG0zRW1iNXJERlRhUmhham1wRG9oRjBDb0FDQzVLSTRmWFg5U1h50gFWQVVfeXFMUF9TU0Flb3pkb0tjYk1HSnZmUUlKbURrRWVITkNsMThGV0VDbGQxZHhjRF9abGlkSC1CTjZiOFJCMEFiLVRfNnRuM2d3Yk9aVElVLWlPMWc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-05T04:52:20.000Z",
+  "fetchedAt": "2026-07-09T20:52:59.743Z",
+  "newsBrief": "近期多縣市高溫上看38度，醫師提醒高溫不只增加中暑風險，脫水也會讓肌肉力量下滑，長者因此更容易跌倒，呼籲留意補水與肌力狀況。",
+  "issueAnalysis": "高溫下的跌倒風險常被簡化成「多喝水」的提醒，但脫水對長者的影響其實是連鎖的：先是肌力下滑，動作變慢變不穩，才反映到跌倒這個結果。問題是家屬很難從外觀判斷長者是不是已經進入這個狀態，等到真的跌倒才驚覺，介入時機已經晚了。缺乏一個能定期記錄、比較前後差異的評估方式，是這類風險常常被忽略的原因。",
+  "designResponse": "肌力這種會隨天氣、水分狀況波動的指標，光靠家屬觀察很難抓到變化的起點，所以我們把五次坐站這類動作測驗做成用手機相機計時就能完成的功能測驗，讓長者或家屬可以自己在家重複測，看的是變化趨勢而不是單次數字(proofPoint #4)。測驗結果不會單獨存在，而是併入認知、營養、行動等多面向評估，用臨床衰弱量表 CFS 1–9 分層，避免把單一天的表現當成整體判斷(proofPoint #1、#3)。分級結果對應紅黃綠轉介建議，高溫這類環境風險造成的短期衰退，也能被同一套流程接住(proofPoint #5)。",
+  "tags": [
+    "高溫風險",
+    "肌少症",
+    "跌倒預防"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-09T20:52:59.744Z",
+  "voiceRev": 1
+}

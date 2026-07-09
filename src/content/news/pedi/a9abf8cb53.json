@@ -1,0 +1,18 @@
+{
+  "target": "pedi",
+  "title": "新北兒童發展篩檢送禮物 55家藥局響應",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9hbHRlYXNGdnFCS3FLZm50RmxFUTVGSHhKS2l5WEdnaU1VamdMOTBSZUFQa0lhYklMN2JPVzJwcDBsZHhqTENWVmlabTFMMEtCU2M0?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-29T07:00:00.000Z",
+  "fetchedAt": "2026-07-09T20:44:38.884Z",
+  "newsBrief": "新北市推動兒童發展篩檢，家長帶孩子完成篩檢後可到當地55家合作藥局領取小禮物，希望藉此提高篩檢的完成意願，讓更多學齡前孩子被早期發現發展警訊。",
+  "issueAnalysis": "發放禮物能拉高篩檢完成率，但完成篩檢只是第一步。紙本檢核表填完後，家長多半看不懂數字代表什麼，也不知道落在哪個區間該觀察、哪個區間該轉介。誘因解決了「要不要做」，沒解決「做完之後看得懂嗎」的問題，兩者其實是分開的兩件事。",
+  "designResponse": "領完禮物、拿到檢核表，家長常常還是看不懂那些數字。我們把2月到6歲分成7個年齡帶（proofPoint #1），六大發展領域對齊國健署手冊與ASQ-3（proofPoint #2），分數不是自己看，是用常模化計算，−2SD列為紅旗（proofPoint #4），畫成雷達圖跟同齡基準比對，紅黃綠分級直接給觀察或轉介建議（proofPoint #5）。填完就有結果，不用等回診才知道要不要在意。資料先留在瀏覽器，要轉介再選擇上傳醫療院所或GCM收案（proofPoint #6）。",
+  "tags": [],
+  "relevance": 0.87,
+  "highlight": true,
+  "criticPasses": 2,
+  "updatedAt": "2026-07-09T20:44:38.884Z",
+  "voiceRev": 1
+}
