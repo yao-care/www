@@ -20,7 +20,7 @@ const terms = (guide.relatedTerms ?? []).map((s) => GLOSSARY_BY_SLUG[s]).filter(
 
 const pageTitle = `${guide.question} · yao.care`;
 const pageDescription = guide.answer;
-const canonical = new URL(`/guides/${guide.slug}`, SITE.url).toString();
+const canonical = new URL(`/guides/${guide.slug}/`, SITE.url).toString();
 
 const jsonLd = {
   '@context': 'https://schema.org',

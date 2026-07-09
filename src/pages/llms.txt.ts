@@ -52,7 +52,7 @@ export const GET: APIRoute = () => {
   lines.push('');
   lines.push(`- [情境指南總覽](${u('/guides')}): 從使用者會搜尋的問題出發，給直接解答與對應工具。`);
   for (const g of GUIDES) {
-    lines.push(`- [${g.question}](${u(`/guides/${g.slug}`)}): ${g.answer}`);
+    lines.push(`- [${g.question}](${u(`/guides/${g.slug}/`)}): ${g.answer}`);
   }
   lines.push('');
 
