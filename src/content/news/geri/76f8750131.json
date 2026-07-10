@@ -1,0 +1,22 @@
+{
+  "target": "geri",
+  "title": "桃園復興區導入健保全人照護 增設失智症遠距門診共築照護網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1JeGtqdWlweGQ3dmFOeEZ4UHNLTDF0T0Q3UUxXWXpQc3o4OXUwQkhzQ1paS0tIMUpRWFNyc0xkTUV6UVBoTlZZZ0VZZzZ1X190U2c?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-05T04:49:00.000Z",
+  "fetchedAt": "2026-07-10T20:50:08.989Z",
+  "newsBrief": "桃園復興區被納入健保全人照護試辦範圍，新增失智症遠距門診，讓山區長者不必下山就能看專科醫師，地方也同步串連照護資源，盼補上偏遠地區長期照護的缺口。",
+  "issueAnalysis": "遠距門診解決的是地理距離，但長者從功能退化到真正走進診間之間，常隔著一段模糊期：家人把記性變差、走路變慢當成正常老化，等症狀明顯才就醫，介入空間已經小很多。山區資源有限，缺的往往不是單次門診，而是能讓家屬、照護人員重複使用、看得懂結果的評估工具，把「該觀察」和「該就醫」的界線畫清楚。",
+  "designResponse": "遠距門診補的是「看得到醫生」這一段，長者從功能退化到走進診間之間的空窗期，其實還是沒人管。我們把評估工具設計成公眾自篩與專業臨床雙模式(proofPoint #2)，讓家屬在家先評估一輪，看到黃燈、紅燈才決定要不要安排就醫。分級基礎是臨床衰弱量表 CFS 1–9(proofPoint #1)，疊上認知、情緒、營養、行動、用藥等面向(proofPoint #3)，把跌倒、肌少、營養不良放進同一份紀錄，不必拆成好幾張各自為政的量表。整套工具離線可用，需要才選擇上傳給醫院或收案系統(proofPoint #6)，這種設計在網路不穩定的山區反而更實際。",
+  "tags": [
+    "高齡衰弱",
+    "偏鄉照護",
+    "遠距醫療"
+  ],
+  "relevance": 0.75,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-10T20:50:08.989Z",
+  "voiceRev": 1
+}
