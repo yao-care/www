@@ -1,0 +1,22 @@
+{
+  "target": "huatuo",
+  "title": "AI讓中醫脈診「看得見」 中亞聯大團隊奪IMIS 2026最佳論文獎",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBnczVUR3VnU3haN25HTEkxcWtvQ20yVndGeVNJM2VtMHV5Y3JnZ1JHa0U3MFNnd0swUGQ2OVFwSENVOUEtQ1RKZ19Da2R3SEZZaHc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-06T02:38:00.000Z",
+  "fetchedAt": "2026-07-11T20:49:21.450Z",
+  "newsBrief": "一組台灣研究團隊用AI技術讓中醫脈診資料化,把脈時的觸感轉成可量測的訊號,於IMIS 2026國際研討會拿下最佳論文獎,呼應近期「中醫AI」相關的搜尋熱度。",
+  "issueAnalysis": "把脈這件事,好的中醫師靠手感判斷寸關尺的浮沉遲數,但這套判斷從沒有一致的量測標準,換一個人把脈可能得出不同結論。這不只是教學傳承的問題,也讓中醫資料很難跟西醫的檢驗數字放在同一張病歷裡對照。沒有可量化的輸入,規則系統跟語言模型都無從下手,決策支援工具也就無所依附。",
+  "designResponse": "脈診要量化,首先得決定拿什麼當輸入。我們的做法是在四診層直接抓數據:舌診交給GPT-4o Vision看,聞診收音訊,脈象用指尖rPPG量測(proofPoint #5)。拿到數據後,判讀不是丟給語言模型自由發揮,128條八綱與臟腑規則寫在syndromes.json裡,中醫師能逐條打開來看(proofPoint #1),再以規則0.6、LLM 0.4的權重混合辨證(proofPoint #2)。兩邊各自的判斷佔多少比重都能拆開檢視,換來的是每個證型結論都能回頭追蹤是規則判定還是模型判定。",
+  "tags": [
+    "中醫脈診",
+    "AI辨證",
+    "四診標準化"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-11T20:49:21.450Z",
+  "voiceRev": 1
+}

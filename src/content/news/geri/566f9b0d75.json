@@ -1,0 +1,22 @@
+{
+  "target": "geri",
+  "title": "地方政府啟動高風險族群早篩新制 失智照護升級",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE41LXhIeFZqRXhRYkVNcVJweXFJdEhwckUtQXRsemU3dXU4TmlPREd1Mk5ETGlEM09aLTVRTXF2aTI0VlBXU3gwcnZBdlctQVJxd1lVSk1PZXZwSTZ2OUZr?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-04T07:19:00.000Z",
+  "fetchedAt": "2026-07-11T20:47:27.276Z",
+  "newsBrief": "地方政府近期推出高風險族群失智早篩新制，將篩檢資源導入社區與長照據點，目標是讓認知退化及早被發現、及早銜接照護資源，而非等到症狀明顯才就醫。",
+  "issueAnalysis": "早篩政策的難處不在篩檢本身，而在篩出來之後怎麼接。多數早篩工具鎖定認知功能單一面向，衰弱、肌少、營養不良等其他退化訊號往往缺席，而這些常常是同一個人身上一起發生的。政策端擴大篩檢覆蓋率，第一線據點卻不一定有結構化、可重複使用的評估工具去承接篩出來的個案，也不一定有清楚的後續轉介路徑，篩了但沒接住的落差就在這裡。",
+  "designResponse": "早篩要接得住，工具得先把「這個人現在整體狀況如何」講清楚，而不只是單一指標過不過關。我們用臨床衰弱量表 CFS 1–9 分層(proofPoint #1)，評估涵蓋認知、情緒、營養、行動、用藥、社會支持等多面向(proofPoint #3)，避免衰弱只被當成孤立的認知問題處理。公眾自篩與專業臨床雙模式並存(proofPoint #2)，家屬先自己測一輪心裡有底，第一線人員再用同一套邏輯做正式評估，兩邊講的是同一種語言。功能測驗這塊不只靠問卷，五次坐站等項目用相機計時量化(proofPoint #4)，減少主觀判斷落差。評估完給紅黃綠分級與轉介建議(proofPoint #5)，讓「篩出來之後怎麼辦」有明確答案，不是留一堆分數自己解讀。",
+  "tags": [
+    "失智早篩",
+    "衰弱評估",
+    "長照銜接"
+  ],
+  "relevance": 0.8,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-11T20:47:27.276Z",
+  "voiceRev": 1
+}

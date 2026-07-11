@@ -1,0 +1,18 @@
+{
+  "target": "txgnn",
+  "title": "GTC秀AI醫療,老藥新用平台拚的是證據能不能被查",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5ZdDVpOWVHLTRFS2ctejI1ODVSMnVhT0dfYnlWSFRDRjNBZHV2N0FvUlhtWVlHLWk5Tmlya0VwT1FzMmQtbW1CdE9wa002V2R4R01TN3d3?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-02T07:00:00.000Z",
+  "fetchedAt": "2026-07-11T20:46:09.871Z",
+  "newsBrief": "GTC Taipei近期以AI醫療為焦點，多家台灣廠商藉展會秀技術實力，嘗試在國際場合爭取能見度。這類展會逐漸成為觀察AI醫療技術從實驗室走向市場的一個窗口，也反映資本市場對這塊題材的關注升溫。",
+  "issueAnalysis": "AI醫療展會愈來愈多，廠商都想證明自己的模型夠強、夠準。但展場上秀出來的技術實力，和一項工具能不能真的被醫院、被醫師拿來用，中間隔著不小的距離。決定一套AI醫療工具能不能落地的，往往不是簡報做得多亮眼，而是資料來源夠不夠紮實、預測結果能不能被查證、系統能不能接進醫院既有的資訊架構。這幾個基本問題，比國際能見度更難回答。",
+  "designResponse": "老藥新用要讓人信，不能只講模型準，得讓人查得到來源。TxGNN同時跑知識圖譜與深度學習兩種方法(#1)，資料橫跨30多國FDA藥品(#2)，累積16,700多個藥物頁面(#3)。每筆預測都附PubMed文獻與臨床試驗證據包(#4)，醫師看到結果可以自己回頭核對，不用只憑一個黑盒子分數。系統也上架SMART on FHIR App Gallery，相容Epic與Cerner(#5)，要接進醫院既有流程，靠的是OAuth加PKCE這套認證(#7)。",
+  "tags": [],
+  "relevance": 0.88,
+  "highlight": false,
+  "criticPasses": 2,
+  "updatedAt": "2026-07-11T20:46:09.871Z",
+  "voiceRev": 1
+}
