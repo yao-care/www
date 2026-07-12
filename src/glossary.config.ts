@@ -158,7 +158,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     en: 'Clinical Decision Support System',
     category: 'medical',
     oneLiner:
-      '一種協助醫事人員做臨床判斷的軟體，分析資料後提供提醒、建議或證據，但最終決定仍由臨床人員負責。',
+      'CDSS（Clinical Decision Support System，臨床決策支援系統）是協助醫事人員做臨床判斷的軟體，分析資料後提供提醒、建議或證據，但最終決定仍由臨床人員負責。',
     paragraphs: [
       'CDSS（Clinical Decision Support System）是輔助醫事人員臨床判斷的軟體，應用範圍涵蓋用藥安全提醒、鑑別診斷建議與治療計畫。設計良好的 CDSS 強調可解釋與可追溯：臨床人員能逐條檢視每項建議的依據，而非僅接受系統輸出。',
       '它通常透過 SMART on FHIR 與電子病歷（EHR）整合，使建議在診療當下即時呈現。在台灣，CDSS 的輸出亦須符合衛福部生成式 AI 指引對揭露與可追溯的要求。',
