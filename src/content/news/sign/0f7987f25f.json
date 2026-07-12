@@ -1,0 +1,22 @@
+{
+  "target": "sign",
+  "title": "長照走進企業!科技業設日照中心 照顧員工父母也留住人才 - TVBS新聞網",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFAzMDItZ1FyMU9HUnpjQXY5Y0tyQ21Ub0RJckswcHVfTVdZV1plcXNaR1NiS3JkN3kzeGttS2hFLXVVMWMzdERFQWZPZEU2Zw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-08T14:00:00.000Z",
+  "fetchedAt": "2026-07-12T20:53:57.080Z",
+  "newsBrief": "科技業開始在企業內附設日照中心,讓員工能就近照顧失能或失智的父母,同時當作留才誘因。這類企業內部的日照據點,一樣得面對每天報到、簽退、產出名冊這些行政工作,只是人力編制通常比外部機構更精簡。",
+  "issueAnalysis": "企業自設日照中心,規模通常比長照機構小,行政人力也更吃緊,長者觸控簽到、安裝App這類介面對失智長輩尤其不友善。名冊還得符合政府社政平台格式,人工謄寫容易出錯又耗時。加上企業場域對個資保護的要求不會比長照機構低,雲端人臉辨識方案在這裡同樣會踩到疑慮。中小型據點想導入智慧報到,預算通常比大型機構緊。",
+  "designResponse": "日照中心不管開在社區還是企業裡,報到這關都一樣:走過鏡頭自動辨識身分,免按鈕、免簽名、免裝App(proofPoint #1),對手不靈活、記性退化的長者比觸控螢幕友善很多。企業附設據點常是一人要兼行政又顧照護,名冊能自動產出、格式直接貼上社政平台,省下謄寫工夫(proofPoint #5)。人臉資料只留在裝置瀏覽器,不上雲端(proofPoint #3),企業場域一樣得顧個資,不會因為規模小就能將就;失智長者走失風險也不會因為換了場域就消失,分級警示照樣內建(proofPoint #4)。",
+  "tags": [
+    "長照據點",
+    "企業日照",
+    "人臉辨識報到"
+  ],
+  "relevance": 0.75,
+  "highlight": false,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-12T20:53:57.080Z",
+  "voiceRev": 1
+}

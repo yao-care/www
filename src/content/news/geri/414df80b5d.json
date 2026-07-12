@@ -1,0 +1,22 @@
+{
+  "target": "geri",
+  "title": "新北失智早期發現成果全國第一 侯友宜：打造失智友善城市 守護每個家庭",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5EZlFuZ0pFVzhIX04zOXk0c29sb2NIRnpIdTgxMXFpaHE4QnR4NENUOFpOVUNaaXVfN21wT2dOb3RqZC1LNi1sLTNKRjBNQjR2WWc?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-01T07:00:00.000Z",
+  "fetchedAt": "2026-07-12T20:52:49.904Z",
+  "newsBrief": "地方政府公布失智早期發現成果全國第一，宣示要打造失智友善城市，強調及早篩檢與社區支持網路，能讓失智長者與家庭在病程惡化前就先獲得資源介入，不必等到狀況明顯惡化才求助醫療體系，盼藉此讓照顧壓力提早被看見。",
+  "issueAnalysis": "失智篩檢做得早值得肯定，但多數篩檢工具只鎖定認知功能，容易忽略衰弱、跌倒、肌少、營養不良等問題其實常同時出現，彼此互為因果。長照據點手上的量表分散，一位長者可能被貼上「疑似失智」標籤，卻沒人追蹤他是否同時在走下坡，肌力、營養、用藥交互影響同樣可能是主因，家屬也不容易判斷該持續觀察還是立刻就醫。",
+  "designResponse": "我們沒有另外做一個失智篩檢工具，而是把CFS 1–9當共同量尺(proofPoint #1)，讓認知、情緒、營養、行動、用藥、社會支持一次評完(proofPoint #3)，失智只是其中一塊，不會被抽出來單獨看。介面分成公眾自篩與專業臨床兩種模式(proofPoint #2)，家屬想先看看狀況，或專業人員要決定轉不轉介，走的是同一套邏輯但深度不同。行動能力這塊不只靠問卷，還加了五次坐站測驗，用手機相機計時(proofPoint #4)，數字比自我感覺可靠。結果給紅黃綠三級(proofPoint #5)，綠燈配衛教內容，黃紅燈直接給下一步建議，資料留在裝置上，要接醫院或轉介GCM收案時才選擇上傳(proofPoint #6)。",
+  "tags": [
+    "衰弱評估",
+    "失智篩檢",
+    "周全性評估"
+  ],
+  "relevance": 0.72,
+  "highlight": false,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-12T20:52:49.904Z",
+  "voiceRev": 1
+}

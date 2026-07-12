@@ -1,0 +1,22 @@
+{
+  "target": "yaocare",
+  "title": "中美醫藥攜手慈濟推健康平權 深入全台社區守護長者用藥安全",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE8tNi1EMGJaSXZZOVc5ckJ1ZFZwRlFPQUxYOXhyVndic19teUFzUE1Qekt4QjV1Z2kwc1dCYnJpNk41NzFKQ1I4SkNB0gFSQVVfeXFMTTVLMUd6a1YyM011cFFSVS1oRGJ0WWFaSXBNMDZlZW9mRVZ4dlR4STZxeDRuZXlTZGFUckRvX2hGcjB2cXJmYUZ2aGt0b19hZmwwZw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-17T07:00:00.000Z",
+  "fetchedAt": "2026-07-12T20:49:19.924Z",
+  "newsBrief": "日前有藥廠與慈善團體合作，把用藥安全服務送進社區，鎖定行動不便、獨居的長輩，盼透過在地據點協助追蹤慢性病用藥狀況，呼應健康平權的訴求。",
+  "issueAnalysis": "長者用藥安全的問題不只是有沒有領到藥，而是領了藥之後有沒有照時間吃、有沒有跟其他藥物混著吃出問題。家屬和藥師往往兩個都想掌握服藥狀況，但慢性處方箋領到第二次、第三次時，追蹤就容易斷線，尤其獨居或行動不便的長輩更難靠回診補回這段空窗。多重用藥（polypharmacy）帶來的交互作用風險，也常常要等出事才被發現。",
+  "designResponse": "長輩不裝App、藥師不用手動輸入處方，是我們一開始就定下的兩個限制。提醒直接走LINE或Telegram推播，長輩不用學新介面，家人也能同步收到通知(proofPoint #2)。處方資料串接健保的ATC編碼，藥師端不用逐筆key資料，省下的時間才有機會用在真正需要人工判斷的多重用藥風險上(proofPoint #1)。至於領藥領到一半就斷線追蹤的問題，藥師介面可以批次看每個追蹤對象的服藥狀況，不用一個一個電話問(proofPoint #4)，多重藥物之間容易搞混的部分，則靠提醒訊息附上藥品外觀圖片來降低誤認機率(proofPoint #3)。",
+  "tags": [
+    "長者用藥安全",
+    "多重用藥",
+    "健康平權"
+  ],
+  "relevance": 0.76,
+  "highlight": false,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-12T20:49:19.924Z",
+  "voiceRev": 1
+}

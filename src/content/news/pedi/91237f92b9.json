@@ -1,0 +1,22 @@
+{
+  "target": "pedi",
+  "title": "新北祭百元好禮鼓勵兒童發展篩檢 攜手55家大樹藥局限量兌換",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5QMHhuZU5iSHlTOU5uSE1uTks2VGpPZU5UcDliSC1DWGZJSXZrbzlOSWtsYklHanFSS2xsTE85NThQdHM0ZENwU3V2NlJzVmlaS3FRQUFSSWROc0E?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-29T07:00:00.000Z",
+  "fetchedAt": "2026-07-12T20:43:06.099Z",
+  "newsBrief": "新北市推出兒童發展篩檢獎勵措施，家長帶孩子完成篩檢可獲百元好禮，並與55家大樹藥局合作限量兌換，盼提高家長帶孩子做發展篩檢的意願。",
+  "issueAnalysis": "用小額誘因換篩檢完成率，反映一個現實：光靠衛教宣導，家長不一定會主動排時間帶孩子篩檢。多數家長真正卡住的地方，其實是拿到紙本檢核表後看不懂怎麼判讀，或是想篩檢但找不到方便的管道，而不是缺乏誘因。獎勵可以拉高第一次的參與率，但填完表之後怎麼解讀分數、要不要轉介，仍是另一個需要解決的問題。",
+  "designResponse": "紙本檢核表最大的落差在填完之後——家長勾完題目，通常還是看不出孩子是慢一點還是該轉介了。這也是為什麼判讀要交給系統做：涵蓋2月到6歲共7個年齡帶(proofPoint #1)，六大發展領域對齊國健署手冊與ASQ-3(proofPoint #2)，填完直接用常模化分數判讀，−2SD自動標紅旗(proofPoint #4)，再用雷達圖對比同齡基準給紅黃綠建議(proofPoint #5)。這樣的設計不需要靠外部獎勵吸引家長來一次，而是讓每次填完都有明確的下一步可以看，家長自己就知道要不要進一步就醫。資料留在瀏覽器，要銜接醫療院所再上傳即可(proofPoint #6)。",
+  "tags": [
+    "兒童發展篩檢",
+    "篩檢誘因",
+    "發展遲緩早期發現"
+  ],
+  "relevance": 0.85,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-12T20:43:06.099Z",
+  "voiceRev": 1
+}

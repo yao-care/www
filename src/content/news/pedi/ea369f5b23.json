@@ -1,0 +1,22 @@
+{
+  "target": "pedi",
+  "title": "衛生福利部國民健康署－兒童預防保健7+2新制：手冊領取與使用－hpa.gov.tw",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1jNjlRZXlNZnNDaHpJSDZvQy1iS3hKTGZ1NV9OdkN1dC1RdEowSmpYTDJJUHpiRVhMUk5sY2thUDJqQmZsanpYdDJYNXNxQ09FZ21tei0yZ1YtRllfV0k0?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-26T12:51:29.000Z",
+  "fetchedAt": "2026-07-12T20:42:43.590Z",
+  "newsBrief": "國健署兒童預防保健新制擴充為7次一般檢查加2次超音波，家長領取手冊後可依時程帶孩子做發展檢核，內容涵蓋粗動作、語言等發展里程碑追蹤。",
+  "issueAnalysis": "手冊上的檢核表通常是一頁勾選項目，家長勾完不知道分數落在哪個區間，也看不出跟同齡孩子比起來算正常還是該注意。門診時間短，醫護很難一項項解釋每個「是」或「否」代表什麼，家長只能憑感覺判斷孩子是不是「慢一點沒關係」。",
+  "designResponse": "紙本檢核表最大的問題是沒有基準線可比。我們把六大發展領域對齊手冊與 ASQ-3 的分類（proofPoint #2），依 2 月到 6 歲共 7 個年齡帶給出對應題目（proofPoint #1），這樣家長在家填完就不是單純打勾，而是能看到分數落在同齡的哪個位置。判讀用常模化分數，−2SD 設紅旗（proofPoint #4），再用雷達圖畫出紅黃綠分級（proofPoint #5），家長看得懂哪個領域偏弱，該觀察還是該轉介，也有依據可以帶去門診跟醫護討論，而不是空口描述「感覺比較慢」。",
+  "tags": [
+    "兒童發展篩檢",
+    "國健署手冊",
+    "ASQ-3"
+  ],
+  "relevance": 0.9,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-12T20:42:43.590Z",
+  "voiceRev": 1
+}
