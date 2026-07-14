@@ -1,0 +1,22 @@
+{
+  "target": "txgnn",
+  "title": "AI醫療決策支援系統市場看漲 2033年上看33.4億美元",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE5ERHNjcGpsVDZrVjAyNnNLSDJkemNzUUZ6a3lzWnZiVWY5MXhOUGZRYmZaQTJBS1Bpa3VRRDd2RDRxZw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-14T07:00:00.000Z",
+  "fetchedAt": "2026-07-14T20:49:01.216Z",
+  "newsBrief": "市場報告預測，AI醫療決策支援系統規模將於2033年成長至33.4億美元。這類數字常被拿來說明產業趨勢正在起飛，但對臨床端而言，重點從來不是市場多大，而是這些工具真正落地時能不能用、好不好接進既有系統。",
+  "issueAnalysis": "新藥研發一顆藥平均要花十幾年、燒掉數十億美元，這是老問題。比較少人談的是，市面上已核准上市的藥物裡，藏著大量還沒被系統性盤點過的新適應症可能性。加上多數EHR系統跟AI模型整合度不高，臨床端就算想用預測結果，也常卡在系統銜接跟證據佐證這兩關，模型吐出一個建議，沒有文獻支撐，醫師也不敢採信。",
+  "designResponse": "老藥新用平台一開始就走雙軌設計，知識圖譜方法跟深度學習方法一起跑，兩邊互相校對，不只信單一模型(proofPoint #1)。資料範圍涵蓋30多國FDA核准藥品(proofPoint #2)，同一款藥在不同市場的核准狀況能對得上，不是只看單一國家的藥證去猜。前面提到模型建議沒文獻撐腰、醫師不敢採信這件事，做法是每筆預測都附上對應的PubMed文獻與ClinicalTrials證據包(proofPoint #4)，讓使用者自己判斷證據強弱。系統也已上架SMART on FHIR App Gallery、相容Epic與Cerner(proofPoint #5)，省下另外接系統的工夫。",
+  "tags": [
+    "AI醫療決策支援",
+    "老藥新用",
+    "藥物再利用"
+  ],
+  "relevance": 0.78,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-14T20:49:01.216Z",
+  "voiceRev": 1
+}

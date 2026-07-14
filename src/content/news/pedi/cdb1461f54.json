@@ -1,0 +1,22 @@
+{
+  "target": "pedi",
+  "title": "新北免費兒童發展篩檢 社會局籲把握療育黃金期",
+  "titleZh": null,
+  "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNWlZvWkUyd2NFdURjR05XUzhyZEplQXBTQ254cldyS21MME1wMm5ZMXZXQWtjSmJCeTd3ME1nOWR6bFd0LUFXd01Wd01PTkFmbVN6VjFVQWI0SDBMWklwS2pudG9nbTMxVkxOQzhVcjI5Mi0yLUF3aHJKLWRsTW5WNHFhVjQ1UmRx?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-07-06T13:10:21.000Z",
+  "fetchedAt": "2026-07-14T20:45:26.971Z",
+  "newsBrief": "地方政府社會局推出免費兒童發展篩檢，提醒家長留意孩子在動作、語言、認知與社會情緒等面向的發展狀況，並呼籲把握療育黃金期，及早發現、及早介入，別等到入學才驚覺孩子落後同齡。",
+  "issueAnalysis": "發展遲緩的黃金療育期短，但多數家長靠直覺判斷孩子「是不是比較慢」，很難拿捏何時該就醫。兒童健康手冊裡的檢核表雖然免費，卻是紙本勾選，家長自己看不太懂分數代表什麼，也不確定該觀察還是該轉介。偏鄉或雙薪家庭光是排出時間帶孩子做篩檢就不容易，篩檢做完了，結果又常常沒有一個能直接交給醫療院所的格式，等於每次都要重新從頭說明。",
+  "designResponse": "這類公費篩檢現場多半還是靠填表跟人工判讀，家長拿到分數也常常看不懂高低代表什麼。我們把工具設計成依年齡出題，六大發展領域對齊國健署手冊與 ASQ-3(proofPoint #2)，題目不只是勾選，也可以用圖卡辨識、繪圖描摹或語音錄製這類互動測驗替代(proofPoint #3)，比較貼近孩子平常的反應方式。分數不是丟一個數字了事，而是用常模對照、−2SD 標紅旗，再畫成雷達圖跟同齡孩子比對，紅黃綠分級直接告訴家長下一步是繼續觀察還是該找人轉介(proofPoint #5)。整個流程資料留在瀏覽器端，要不要往下交給醫療院所或收案端，由家長自己決定。",
+  "tags": [
+    "兒童發展篩檢",
+    "早期療育",
+    "發展遲緩"
+  ],
+  "relevance": 0.88,
+  "highlight": true,
+  "criticPasses": 1,
+  "updatedAt": "2026-07-14T20:45:26.971Z",
+  "voiceRev": 1
+}
