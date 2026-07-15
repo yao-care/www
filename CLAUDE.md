@@ -73,6 +73,8 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 
 ## § News 議題追蹤模組（自動議題評論引擎）
 
+> 🔄 **2026-07-15 Phase 2 產線反轉（內容重構）**：引擎預設改為 **feed 模式**（`NEWS_MODE=feed`）——通過 filter 的新聞**不再寫成獨立文章頁**，改寫成主題頁「近期動態」條目（`src/content/topicFeed/<topic>/<id>.json`，一句 takeaway＋原文連結，日上限 12、target→topic 映射見 `src/topics.config.ts` 的 newsTargets）。主題頁 lastmod＝最新動態時間（astro.config 接好）。**回滾保險絲：`NEWS_MODE=legacy`** 即回舊行為。voice backfill（rewrite-news-voice）已停役（舊語料將分批 301 收斂，重刷即將退場的頁是浪費）。存量已回填每主題最近 12 篇（takeaway=newsBrief）。既有 `/news/` 頁面照常 serve，收斂見重構計畫 Phase 4。本節以下的 writer/critic 三段文流程描述僅適用 legacy 模式。
+
 `/news/` 區塊每天自動抓 Google News、由 Claude 生成「議題分析 + 設計回應」對照文章，每篇都連回對應產品頁。**這是這個 repo 跑得最多的東西**，但 `src/` 與 `dist/` 都由 cron 自動更新，平時不用手動碰。
 
 ### 設定（單一 source of truth）
