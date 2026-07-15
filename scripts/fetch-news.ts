@@ -53,12 +53,20 @@ import {
   findNearDuplicate,
   titleSimilarity,
 } from './news-guards.mjs';
-import { VOICE_REV } from './style-guide.mjs';
+import { VOICE_REV, findTics } from './style-guide.mjs';
+import { TOPICS } from '../src/topics.config';
 import { fixTerms } from './zh-tw.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(__dirname, '..');
 const NEWS_DIR = join(PROJECT_ROOT, 'src/content/news');
+const FEED_DIR = join(PROJECT_ROOT, 'src/content/topicFeed');
+
+// target → 主題（feed 路由；映射唯一來源＝topics.config 的 newsTargets）
+const TARGET_TOPIC = new Map<NewsTargetSlug, { slug: string; title: string }>();
+for (const tp of TOPICS) {
+  for (const nt of tp.newsTargets) TARGET_TOPIC.set(nt as NewsTargetSlug, { slug: tp.slug, title: tp.title });
+}
 
 // ─── CLI 參數 ───────────────────────────────────────
 const args = process.argv.slice(2);
@@ -74,6 +82,11 @@ const DRY_RUN = flag('--dry-run');
 const DEBUG = flag('--debug');
 const MAX_ITEMS = parseInt(arg('--max-items') ?? '0', 10) || Infinity;
 
+// ─── 產線模式（內容重構 Phase 2，2026-07-15）─────────────────
+// feed（預設）：新聞 → 主題頁「近期動態」條目（src/content/topicFeed/<topic>/<id>.json），不再生獨立文章頁。
+// legacy：舊行為（寫 src/content/news/<target>/ 三段短文）。回滾保險絲：NEWS_MODE=legacy。
+const NEWS_MODE = (process.env.NEWS_MODE || 'feed') as 'feed' | 'legacy';
+
 const FILTER_MODEL = 'claude-haiku-4-5';
 const WRITER_MODEL = 'claude-sonnet-5';
 /** 相關度門檻（提高 → 只寫真的切題的；「精準少量」策略） */
@@ -85,7 +98,9 @@ const PER_QUERY_LIMIT = 12;
 /** 送進 filter LLM 的最大 candidate 數 */
 const FILTER_BATCH_SIZE = 25;
 /** 一次 cron 全部 target 加總最多寫幾篇（不砍文後改少量精選） */
-const MAX_WRITE_TOTAL = 5; // 2026-07-15 10→5：內容重構觀察窗過渡調降（Phase 2 產線改餵主題頁後本常數退役）
+const MAX_WRITE_TOTAL = 5;
+/** feed 模式日上限（動態便宜且不生頁，可比文章模式寬） */
+const MAX_FEED_TOTAL = 12; // 2026-07-15 10→5：內容重構觀察窗過渡調降（Phase 2 產線改餵主題頁後本常數退役）
 /** 單一 target 一天最多寫幾篇（避免單線洗版，保留多樣性） */
 const PER_TARGET_DAILY_CAP = 3;
 /** 命中 GSC 真實搜尋字的需求加成（疊在 relevance 上影響「挑哪篇」） */
@@ -682,6 +697,91 @@ function selectDemandAware(
   return picked;
 }
 
+// ─── Feed 模式（Phase 2）：一句 takeaway → 主題「近期動態」────────────
+
+function takeawayPrompt(topicTitle: string, item: RawItem): string {
+  return [
+    `你替 yao.care 官網主題頁「${topicTitle}」維護「近期動態」清單。針對下面這則新聞，用台灣繁體中文寫一句 60–120 字的重點。`,
+    `寫法：先講發生了什麼（保留具體主詞、機構、數字），再半句點出與「${topicTitle}」的關聯。平實敘述，像懂行的人隨手記重點。`,
+    `禁止：醫療結論或療效判斷；「不是X而是Y」「不僅」「值得注意的是」「隨著…」開頭等腔調；驚嘆號；粗體或用引號框住全句。`,
+    `只輸出 JSON：{"takeaway":"..."}`,
+    ``,
+    `新聞標題：${item.title}`,
+    `來源：${item.source || 'Google News'}（${item.pubDate}）`,
+    `摘要：${(item.snippet || '').slice(0, 300)}`,
+  ].join('\n');
+}
+
+/** 常見簡體字快篩（takeaway 層級的最後防線；主要靠 prompt 要求台灣繁體） */
+const SIMPLIFIED_CHARS = /[们东华发达见识药医疗经过说难题应该网络问务动实现观点买卖办广据]/;
+
+async function writeFeedItem(picked: KeptItem, stats: Stats) {
+  const { target, item, relevance } = picked;
+  const topic = TARGET_TOPIC.get(target.slug);
+  if (!topic) {
+    log(`    ✗ DROP: ${target.slug} 無對應主題`);
+    stats.dropped++;
+    stats.dropReasons.push(`${target.slug}:no-topic`);
+    return;
+  }
+  const id = sha10(item.link);
+  const dir = join(FEED_DIR, topic.slug);
+  const file = join(dir, `${id}.json`);
+  if (existsSync(file)) {
+    log(`    ↩ feed 已有同 URL 條目，跳過`);
+    return;
+  }
+  log(`  ▸ [feed:${topic.slug} ← ${target.slug}] "${item.title.slice(0, 40)}..." (rel=${relevance.toFixed(2)})`);
+
+  let takeaway = '';
+  let lastErr = 'unknown';
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const raw = callClaude(WRITER_MODEL, takeawayPrompt(topic.title, item));
+      const t = fixTerms(String(raw.takeaway ?? '').trim());
+      const tics = findTics(t);
+      if (t.length < 20 || t.length > 220) lastErr = `長度 ${t.length}`;
+      else if (tics.length > 0) lastErr = `AI 腔：${tics.join('、')}`;
+      else if (/不是[^，。]{1,14}，?而是/.test(t)) lastErr = '「不是…而是」句式';
+      else if (SIMPLIFIED_CHARS.test(t)) lastErr = '疑似簡體字';
+      else {
+        takeaway = t;
+        break;
+      }
+      log(`    takeaway fail (attempt ${attempt}): ${lastErr}`);
+    } catch (e: any) {
+      lastErr = e.message;
+    }
+  }
+  if (!takeaway) {
+    log(`    ✗ DROP: takeaway 2 attempts failed（${lastErr}）`);
+    stats.dropped++;
+    stats.dropReasons.push(`${target.slug}:takeaway:${lastErr}`);
+    return;
+  }
+
+  const data = {
+    topic: topic.slug,
+    products: [target.slug],
+    title: fixTerms(item.title),
+    url: item.link,
+    source: item.source || 'Google News',
+    publishedAt: new Date(item.pubDate).toISOString(),
+    fetchedAt: new Date().toISOString(),
+    takeaway,
+    relevance: Math.round(relevance * 100) / 100,
+  };
+  if (DRY_RUN) {
+    log(`    [DRY-RUN] would write ${file}`);
+    log(`      takeaway: ${takeaway}`);
+  } else {
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(file, JSON.stringify(data, null, 2) + '\n', 'utf8');
+    log(`    ✓ feed wrote ${file}`);
+  }
+  stats.written++;
+}
+
 /** Phase 3: 對單一已選 item 跑 writer + regex，寫檔 */
 async function writeOneSelected(picked: KeptItem, stats: Stats, hint?: WriterHint) {
   const { target, item, relevance, highlight } = picked;
@@ -698,7 +798,7 @@ async function writeOneSelected(picked: KeptItem, stats: Stats, hint?: WriterHin
 }
 
 async function main() {
-  log(`fetch-news 啟動 ${DRY_RUN ? '(dry-run)' : ''}`);
+  log(`fetch-news 啟動 mode=${NEWS_MODE} ${DRY_RUN ? '(dry-run)' : ''}`);
   const targets = ONLY_TARGET
     ? NEWS_TARGETS.filter((t) => t.slug === ONLY_TARGET)
     : NEWS_TARGETS;
@@ -735,7 +835,7 @@ async function main() {
   //   - 單 target（--target）：直接取該 target 前 N（依 score），cap = MAX_ITEMS
   const totalCap = ONLY_TARGET
     ? Math.min(MAX_ITEMS, byTarget.get(ONLY_TARGET)?.length ?? 0)
-    : Math.min(MAX_ITEMS, MAX_WRITE_TOTAL);
+    : Math.min(MAX_ITEMS, NEWS_MODE === 'feed' ? MAX_FEED_TOTAL : MAX_WRITE_TOTAL);
   // 全域路徑先跨 target 去重（同新聞只留引用價值較高者），再做需求感知選題
   const globalPool = ONLY_TARGET ? allKept : dedupeAcrossTargets(allKept);
   const picked: KeptItem[] = ONLY_TARGET
@@ -752,9 +852,10 @@ async function main() {
   }
 
   // ─── Phase 3: 依序寫每篇 ──────────────────────────────
-  log(`\n══════ Phase 3: Writer ══════`);
+  log(`\n══════ Phase 3: ${NEWS_MODE === 'feed' ? 'Feed（主題動態）' : 'Writer'} ══════`);
   for (const p of picked) {
-    await writeOneSelected(p, stats, insights.hints.get(p.target.slug));
+    if (NEWS_MODE === 'feed') await writeFeedItem(p, stats);
+    else await writeOneSelected(p, stats, insights.hints.get(p.target.slug));
   }
 
   // ─── 不再刪文 ───

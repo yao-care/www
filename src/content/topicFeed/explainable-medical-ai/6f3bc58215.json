@@ -1,0 +1,13 @@
+{
+  "topic": "explainable-medical-ai",
+  "products": [
+    "txgnn"
+  ],
+  "title": "告別單一標靶思維，哈佛 AI 模型用「組合技」逆轉疾病",
+  "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5kVzlRNlVIOXJQQXVnNG5lUmJzRmNIdlFHdWdFR3J3NU9yREpFZ3BPSGlJSjg4cUVVSEdfRS1abllNbnhvVWNsUGtsemQyWUxMOERR?oc=5",
+  "source": "Google News",
+  "publishedAt": "2025-10-16T07:00:00.000Z",
+  "fetchedAt": "2026-07-01T20:54:26.220Z",
+  "takeaway": "哈佛團隊發表新一代藥物重定位模型，跳脫「一個標靶配一種藥」的思路，改用多種藥物組合去推算能不能逆轉疾病進程，報導稱這種做法為「組合技」。",
+  "relevance": 0.85
+}

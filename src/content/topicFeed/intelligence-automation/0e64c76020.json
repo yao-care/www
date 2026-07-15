@@ -1,0 +1,13 @@
+{
+  "topic": "intelligence-automation",
+  "products": [
+    "intel"
+  ],
+  "title": "SlowMist：Rust供應鏈惡意軟體IronWorm正攻擊開發者環境與Web3加密生態 - Bitget",
+  "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBlTDc3aHpoM1I4R080bWlSbFNSTTVfS2NzZlFsV2FudHRQNXdnTVNVX3lnNDZjdF9pNDdOU1BiYUUtNnh4MkRvcC1xZ2E3WUJ6ZzI3WTBBNlRpUXRwU1c2bmkzbGdfZ9IBa0FVX3lxTE9Bc09VbW9jMEVXVDFxMmVkbGFESVJWZ2YxVENIbzhCVlhRTG9jc0NpUmIzdjM4NjExWnlGTDF4cGx3TXdsazVOXzAtajZOZjdpWjRqUExuejU3WWQzRmw0V2pnLU56cnRuMnE0?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-03T15:53:07.000Z",
+  "fetchedAt": "2026-06-10T20:54:48.753Z",
+  "takeaway": "資安公司 SlowMist 發出警告，一款名為 IronWorm 的 Rust 語言供應鏈惡意軟體，正鎖定開發者環境與 Web3 加密生態系。該惡意軟體偽裝成合法套件滲透開發工具鏈，可竊取憑證並植入後門，攻擊面橫跨多個主流開源生態。",
+  "relevance": 0.65
+}

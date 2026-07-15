@@ -25,4 +25,26 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { news };
+// 主題動態（內容重構 Phase 2，2026-07-15）：新聞不再各自成頁，改為掛在主題頁的「近期動態」。
+// 初始批次由既有 news 語料回填（takeaway=newsBrief）；之後由 fetch-news.ts feed 模式每日寫入。
+const topicFeed = defineCollection({
+  type: 'data',
+  schema: z.object({
+    topic: z.enum([
+      'medication-safety', 'elder-care-frailty', 'child-development',
+      'preventive-function-health', 'explainable-medical-ai', 'medical-ai-governance',
+      'intelligence-automation', 'innovation-methods', 'healthcare-marketing-compliance',
+    ]),
+    products: z.array(z.enum(['yaocare', 'huatuo', 'txgnn', 'func', 'geri', 'pedi', 'intel', 'siqc', 'triz', 'goalkeeper', 'sign', 'marketing'])).min(1).max(3),
+    title: z.string(),
+    url: z.string().url(),
+    source: z.string(),
+    publishedAt: z.coerce.date(),
+    fetchedAt: z.coerce.date(),
+    // 一句話重點＋與本主題何關（取代原三段短文；不下醫療結論）
+    takeaway: z.string().min(20).max(220),
+    relevance: z.number().min(0).max(1),
+  }),
+});
+
+export const collections = { news, topicFeed };

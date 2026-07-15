@@ -1,0 +1,13 @@
+{
+  "topic": "innovation-methods",
+  "products": [
+    "triz"
+  ],
+  "title": "Ollama本機獨立運行 打造專屬資安顧問機器人 - netadmin.com.tw",
+  "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPRHdDNlJERzctV3dvTWhLMFVlRTJnTjg4bG95Zzl3TDlFNmkzMHZQTF9HQjF6RzlsaWt5YmtmcnZsSml1b3Vfa1lSd21Pd1JhdTh6N2hKNzJNQWE0Zk1RUkMzQi1aSHZlTzBXbnM1b2NKMGNsWU5mNXJqV1phR1ZGM3N5SXQxNzBxa1pEaHhWTQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-18T16:03:42.000Z",
+  "fetchedAt": "2026-05-30T20:52:57.060Z",
+  "takeaway": "本地端 LLM 工具 Ollama 的興起，讓企業得以在不連線雲端的環境中，自行建置領域專屬的 AI 顧問機器人。這種本機獨立運行的模式，在確保敏感資料不外流的同時，也讓結構化知識推理成為可能，正成為中小規模技術團隊探索知識型 AI 應用的新起點。",
+  "relevance": 0.75
+}

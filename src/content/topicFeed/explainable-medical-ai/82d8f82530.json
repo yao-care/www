@@ -1,0 +1,13 @@
+{
+  "topic": "explainable-medical-ai",
+  "products": [
+    "txgnn"
+  ],
+  "title": "三醫學中心病歷即時互通 FHIR 將列醫院評鑑 - CIO Taiwan",
+  "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTE9FSWk1ZFJscjdqcmRvMXpHNTBHbENIQ2o1NW5lanppSVcwOG9QT2RGQ2ZOVGh0RWVLNW5RZjhaTWk1QU9t?oc=5",
+  "source": "Google News",
+  "publishedAt": "2025-12-16T08:00:00.000Z",
+  "fetchedAt": "2026-07-03T20:56:49.285Z",
+  "takeaway": "三家醫學中心公布病歷資料能透過FHIR標準即時互通，衛福部研議把這項能力納入醫院評鑑指標。過去互通多半停留在示範專案，一旦寫進評鑑，就等於變成醫院資訊系統的硬指標。",
+  "relevance": 0.75
+}

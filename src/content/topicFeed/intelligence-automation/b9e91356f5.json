@@ -1,0 +1,13 @@
+{
+  "topic": "intelligence-automation",
+  "products": [
+    "intel"
+  ],
+  "title": "Anthropic調整Claude訂閱用量計算，Agent SDK等程式化使用改走專屬月額度 - iThome",
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5mdUh0c0tvd1N1cUt2dFZJZEZreC1IVTVTUmhfZGdtZi14YzRsckQySFdiVWNnNnY1dlBPY09LTjVwZWFiZ0ZXMkNTRGpidw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-14T07:00:00.000Z",
+  "fetchedAt": "2026-06-03T20:47:05.761Z",
+  "takeaway": "Anthropic 宣布調整 Claude 訂閱方案的用量計算規則，Agent SDK 及其他程式化呼叫方式將從原本的共用配額中分離，改為獨立的月額度計費。此舉意味著 AI 工具的企業級程式化使用將受到更明確的資源管控，也反映出 AI Agent 自動化應用正快速成為主流使用情境。",
+  "relevance": 0.85
+}

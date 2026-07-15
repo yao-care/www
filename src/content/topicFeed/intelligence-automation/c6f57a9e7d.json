@@ -1,0 +1,13 @@
+{
+  "topic": "intelligence-automation",
+  "products": [
+    "intel"
+  ],
+  "title": "GitHub出現大規模自動化活動Megalodon，六小時推送近6千筆惡意提交、5,500個儲存庫受害 - iThome",
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5adVpaTXNSUmpsTDg1Tm4xRjdjMTZ4UHNEZDBmN2lBNUhnNmFKYWlhUmdPd3RvSmlOUHgxdlRKQ25wU2hDb0tyZE1vbnpqQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-25T12:34:17.000Z",
+  "fetchedAt": "2026-05-27T20:40:55.610Z",
+  "takeaway": "GitHub 爆發名為 Megalodon 的大規模自動化惡意活動，攻擊者在六小時內推送近六千筆惡意提交，超過五千五百個儲存庫受到波及。此事件顯示，自動化腳本可在極短時間內對開發協作平台形成大範圍滲透，對以 GitHub 作為核心基礎設施的開發團隊構成實質安全威脅。",
+  "relevance": 0.75
+}

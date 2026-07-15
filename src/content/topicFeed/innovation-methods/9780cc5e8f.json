@@ -1,0 +1,13 @@
+{
+  "topic": "innovation-methods",
+  "products": [
+    "triz"
+  ],
+  "title": "AI 知識庫存取控制：RAG 管線如何實現角色型權限判斷",
+  "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBuRHRlTTdWWmpYbFRQcjJNblFOMVNaLXctTC1RVG1WNlVmdFh0bFE3VFl1NU5UTlI3MUsxR0d1YVNiZkNzZ01rc1NBUEpoLTRfYm5COFZXbU1jZHfSAWBBVV95cUxQVVExSnBvVHE1TDJXZi1EXy1lR0hvSnhsT0VEOXFzdW9uM2EtdHlmYkpyWjlVRXZ0NGZBSGQ2X1hzaW1YWlhnWDVxQVd0ajlxZGJOM2xnUkN6QnVCazRKbnk?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-06-17T07:47:54.000Z",
+  "fetchedAt": "2026-06-20T20:49:38.533Z",
+  "takeaway": "企業導入 AI 問答系統時，除了回答品質，「誰能問什麼」的權限管控同樣關鍵。叡揚資訊將 RAG（檢索增強生成）機制結合角色型權限判斷，讓不同層級使用者只能存取授權知識範圍，降低資料外洩風險，也讓 AI 場景應用更符合企業合規需求。",
+  "relevance": 0.76
+}

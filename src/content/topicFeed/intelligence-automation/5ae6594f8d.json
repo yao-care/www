@@ -1,0 +1,13 @@
+{
+  "topic": "intelligence-automation",
+  "products": [
+    "intel"
+  ],
+  "title": "Mini Shai-Hulud供應鏈攻擊波及GitHub，近3800個內部儲存庫遭外洩 - iThome",
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFA4SnRScUJpZ1lkS3hFODVzd1BuRHltS2RfNmtNQmxzWUozQ01UUzhVem81eGtyTFhEaV9mdHFyVmZfX1hFekxrTHVkVTJjQQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-21T03:26:07.000Z",
+  "fetchedAt": "2026-05-27T20:51:41.071Z",
+  "takeaway": "名為 Mini Shai-Hulud 的供應鏈攻擊波及 GitHub，近 3,800 個內部儲存庫遭到外洩。攻擊者透過污染開源相依套件，在開發者毫無察覺的情況下滲入環境竊取機密。此事件凸顯開源生態中第三方依賴所帶來的廣泛攻擊面，以及企業情報資產在供應鏈層級的高度暴露風險。",
+  "relevance": 0.65
+}

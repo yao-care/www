@@ -25,6 +25,23 @@ for (const target of fs.readdirSync(NEWS_DIR)) {
   }
 }
 
+// 主題頁 <lastmod> = 該主題最新一筆動態的 fetchedAt（真實內容變更；產線每日餵 topicFeed 即每日更新）。
+const FEED_DIR = 'src/content/topicFeed';
+const topicLastmod = new Map();
+if (fs.existsSync(FEED_DIR)) {
+  for (const topic of fs.readdirSync(FEED_DIR)) {
+    const dir = path.join(FEED_DIR, topic);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    let latest = '';
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith('.json')) continue;
+      const data = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+      if (data.fetchedAt && data.fetchedAt > latest) latest = data.fetchedAt;
+    }
+    if (latest) topicLastmod.set(`/topics/${topic}`, new Date(latest).toISOString());
+  }
+}
+
 export default defineConfig({
   site: 'https://www.yao.care',
   trailingSlash: 'ignore',
@@ -35,8 +52,8 @@ export default defineConfig({
         !noindexNewsPaths.has(new URL(page).pathname.replace(/\/$/, '')),
       serialize(item) {
         const p = new URL(item.url).pathname.replace(/\/$/, '');
-        const lm = newsLastmod.get(p);
-        if (lm) item.lastmod = lm; // 每篇 news 用自己的 updatedAt 當 lastmod，非 build 時間
+        const lm = newsLastmod.get(p) || topicLastmod.get(p);
+        if (lm) item.lastmod = lm; // news 用自己的 updatedAt、主題頁用最新動態時間當 lastmod，非 build 時間
         return item;
       },
     }),

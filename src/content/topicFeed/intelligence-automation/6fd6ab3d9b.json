@@ -1,0 +1,13 @@
+{
+  "topic": "intelligence-automation",
+  "products": [
+    "intel"
+  ],
+  "title": "GitHub 爆「Megalodon」供應鏈攻擊！惡意自動化提交 6 小時內植入逾 5,500 個儲存庫 - TechOrange 科技報橘",
+  "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxONjEtSWNKS0ZpVHNubkFWRFlXTVNBaXJfN001cDM1OFBDT1psYlpCVnZMOHFSLVlZcGVQUFpvdDVFUnFuU0pVaVNQMHdXVHF1YW5FVDRUNzRwMzhtZEFUUm5YbDhGcXFlVG5yNzB1WjZ1dk5xRk94eFN1ZTEzMW5JSmQwUVRYS3VoMzZHVDFIWjJmUHcxcmswNDBySjR5MEU?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-26T06:40:37.000Z",
+  "fetchedAt": "2026-05-30T20:40:32.194Z",
+  "takeaway": "GitHub 平台爆發「Megalodon」供應鏈攻擊，惡意自動化機制在 6 小時內向超過 5,500 個儲存庫植入後門提交，攻擊範圍極廣、速度驚人。此事件揭示開源生態對自動化惡意操作的脆弱性，被動式人工巡查已難以跟上攻擊節奏。",
+  "relevance": 0.85
+}

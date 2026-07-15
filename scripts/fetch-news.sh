@@ -53,17 +53,19 @@ fi
   # 1) 抓新聞 + 寫檔
   ./node_modules/.bin/tsx scripts/fetch-news.ts
 
-  # 1b) 去 AI 味 backfill：分批重寫舊文（每天 15–18 篇、自我限速）→ 蓋 updatedAt
-  #     與新文同批 commit/build/deploy/IndexNow；updatedAt 餵 dateModified+lastmod 對 Google 發新鮮度訊號。
-  ./node_modules/.bin/tsx scripts/rewrite-news-voice.ts || echo "  ⚠ voice backfill 失敗（不阻擋）"
+  # 1b) 去 AI 味 backfill —— 2026-07-15 停役（內容重構 Phase 2）：
+  #     news 舊語料將分批 301 收斂進主題頁，重刷即將退場的頁面是浪費；新鮮度訊號改由
+  #     topicFeed 動態（主題頁 lastmod）承擔。要臨時恢復：取消下行註解。
+  # ./node_modules/.bin/tsx scripts/rewrite-news-voice.ts || echo "  ⚠ voice backfill 失敗（不阻擋）"
 
-  # 2) 有變化才 commit + push
-  git add src/content/news
+  # 2) 有變化才 commit + push（feed 模式寫 topicFeed；legacy 模式寫 news，兩者都收）
+  git add src/content/news src/content/topicFeed
   if git diff --cached --quiet; then
     echo "  no changes; skip commit/build"
   else
-    # 先記下這次變動的文章檔（供 IndexNow 提交；commit 後 staged 清單會清空）
+    # 先記下這次變動的檔案（供 IndexNow 提交；commit 後 staged 清單會清空）
     CHANGED_NEWS=$(git diff --cached --name-only -- src/content/news)
+    CHANGED_FEED=$(git diff --cached --name-only -- src/content/topicFeed)
 
     git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
       commit -m "chore(news): auto fetch $(TWDATE '+%Y-%m-%d')"
@@ -73,9 +75,14 @@ fi
     npm run build
     rsync -a --delete dist/ $WWW_SITE_DIR/
 
-    # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（只送可索引文章，失敗不阻擋）
+    # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（失敗不阻擋）
     if [ -n "$CHANGED_NEWS" ]; then
       node scripts/indexnow.mjs $CHANGED_NEWS || echo "  ⚠ IndexNow 提交失敗（不阻擋）"
+    fi
+    # feed 模式：有新動態的主題頁提交收錄（動態＝頁面實質更新）
+    if [ -n "$CHANGED_FEED" ]; then
+      TOPIC_URLS=$(echo "$CHANGED_FEED" | sed -E 's#src/content/topicFeed/([^/]+)/.*#https://www.yao.care/topics/\1/#' | sort -u)
+      node scripts/indexnow-urls.mjs $TOPIC_URLS || echo "  ⚠ IndexNow(topics) 提交失敗（不阻擋）"
     fi
   fi
 
