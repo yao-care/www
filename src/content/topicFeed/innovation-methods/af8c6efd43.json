@@ -1,0 +1,13 @@
+{
+  "topic": "innovation-methods",
+  "products": [
+    "triz"
+  ],
+  "title": "向量資料庫Pinecone推出AI代理知識引擎Nexus，主打以預先編譯知識改善RAG檢索問題 - iThome",
+  "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1jcU5NM29DUGhyQXJFUmJPQjVHMzg2YkhCMXo5NldBRVZCLXZLdy1uZ3FIdXltZDJ2Q01ZaDZQRkFoc3NxeHJlU3FLYlNMUQ?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-05-12T07:36:15.000Z",
+  "fetchedAt": "2026-05-13T20:44:11.497Z",
+  "takeaway": "Pinecone推出新一代AI代理知識引擎Nexus，主打用「預先編譯知識」取代即時向量檢索，想解決傳統RAG在多步推理任務裡召回不準的老問題。",
+  "relevance": 0.8
+}
