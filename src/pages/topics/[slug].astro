@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import FooterLinks from '../../components/FooterLinks.astro';
+import ContactMap from '../../components/ContactMap.astro';
+import { TOPICS, TOPIC_BY_SLUG } from '../../topics.config';
+import { NEWS_TARGET_BY_SLUG } from '../../news.config';
+import { SITE } from '../../site.config';
+
+export function getStaticPaths() {
+  return TOPICS.map((t) => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const topic = TOPIC_BY_SLUG[slug!];
+const products = topic.products.map((p) => NEWS_TARGET_BY_SLUG[p]).filter(Boolean);
+
+const pageTitle = `${topic.title} · yao.care`;
+const pageDescription = topic.answerFirst;
+const canonical = new URL(`/topics/${topic.slug}/`, SITE.url).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      headline: topic.title,
+      description: topic.answerFirst,
+      inLanguage: 'zh-TW',
+      mainEntityOfPage: canonical,
+      author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE.name,
+        url: SITE.url,
+        logo: { '@type': 'ImageObject', url: `${SITE.url}/assets/images/logo.png` },
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: '主題', item: new URL('/topics', SITE.url).toString() },
+        { '@type': 'ListItem', position: 3, name: topic.title, item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: topic.faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+};
+---
+<BaseLayout title={pageTitle} description={pageDescription} ogType="article" jsonLd={jsonLd}>
+  <Nav />
+  <main class="pt-20">
+    <!-- breadcrumb -->
+    <div class="max-w-3xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
+      <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
+      <span class="mx-1.5">›</span>
+      <a href="/topics" class="hover:text-[color:var(--color-brand)]">主題</a>
+      <span class="mx-1.5">›</span>
+      <span class="text-[color:var(--color-ink)]">{topic.title}</span>
+    </div>
+
+    <article class="max-w-3xl mx-auto px-4 lg:px-6 py-8 md:py-12">
+      <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">{topic.lens}</p>
+      <h1 class="mt-2 text-3xl md:text-4xl font-bold leading-tight">{topic.title}</h1>
+
+      <!-- answer first -->
+      <p class="mt-5 text-lg md:text-xl text-[color:var(--color-ink)] leading-relaxed font-medium border-l-4 border-[color:var(--color-brand)] pl-4">
+        {topic.answerFirst}
+      </p>
+
+      <!-- sections -->
+      <div class="mt-10 space-y-10 topic-body">
+        {topic.sections.map((s) => (
+          <section>
+            <h2 class="text-xl md:text-2xl font-bold text-[color:var(--color-ink)]">{s.heading}</h2>
+            <div class="mt-3 space-y-3 text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+              {s.paragraphs.map((p) => <p set:html={p} />)}
+            </div>
+            {s.bullets && (
+              <ul class="mt-4 space-y-2.5">
+                {s.bullets.map((b) => (
+                  <li class="flex items-start gap-2.5 text-[color:var(--color-ink)]">
+                    <svg class="w-5 h-5 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span set:html={b} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+      </div>
+    </article>
+
+    <!-- product response -->
+    <section class="py-12 md:py-16 bg-neutral-50">
+      <div class="max-w-3xl mx-auto px-4 lg:px-6">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">yao.care 怎麼回應</p>
+        <div class="mt-5 space-y-5">
+          {topic.ctas.map((c) => {
+            const t = NEWS_TARGET_BY_SLUG[c.product];
+            return (
+              <div class="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <a href={t.pageUrl} class="text-lg font-bold text-[color:var(--color-ink)] hover:text-[color:var(--color-brand)] transition-colors">{t.title}</a>
+                <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed topic-body" set:html={c.text} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-14 md:py-20">
+      <div class="max-w-3xl mx-auto px-4 lg:px-6">
+        <div class="mb-8">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">FAQ</p>
+          <h2 class="mt-2 text-2xl md:text-3xl font-bold">常見問題</h2>
+        </div>
+        <div class="space-y-3">
+          {topic.faqs.map((f) => (
+            <details class="group rounded-xl bg-white border border-neutral-200 shadow-sm overflow-hidden">
+              <summary class="cursor-pointer p-5 md:p-6 flex items-start gap-4 list-none">
+                <span class="flex-1 font-bold text-[color:var(--color-ink)]">{f.q}</span>
+                <svg class="shrink-0 w-5 h-5 mt-0.5 text-[color:var(--color-ink-soft)] transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </summary>
+              <div class="px-5 md:px-6 pb-5 md:pb-6 pt-0 text-[color:var(--color-ink-soft)] leading-relaxed border-t border-neutral-100">
+                <p class="pt-4">{f.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <!-- sources -->
+        <div class="mt-10 pt-6 border-t border-neutral-200 text-sm text-[color:var(--color-ink-soft)]">
+          <p class="font-medium text-[color:var(--color-ink)] mb-2">引用來源</p>
+          <ul class="space-y-1.5">
+            {topic.sources.map((s) => (
+              <li class="leading-relaxed">
+                <a href={s.url} target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline underline-offset-2 break-all">{s.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- related products chips -->
+        {products.length > 0 && (
+          <div class="mt-10 pt-6 border-t border-neutral-200">
+            <p class="text-sm font-medium text-[color:var(--color-ink)] mb-3">相關服務</p>
+            <div class="flex flex-wrap gap-2">
+              {products.map((p) => (
+                <a href={p.pageUrl} class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-sm text-[color:var(--color-ink-soft)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors">
+                  {p.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- back -->
+    <div class="max-w-3xl mx-auto px-4 lg:px-6 pb-12">
+      <a href="/topics" class="inline-flex items-center gap-2 text-sm text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        看更多主題
+      </a>
+    </div>
+
+    <ContactMap />
+  </main>
+  <FooterLinks />
+</BaseLayout>
+
+<style is:global>
+  .topic-body a { color: var(--color-brand); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, var(--color-brand) 40%, transparent); word-break: break-all; }
+  .topic-body a:hover { text-decoration-color: var(--color-brand); }
+</style>

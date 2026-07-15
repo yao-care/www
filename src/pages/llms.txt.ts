@@ -7,6 +7,7 @@ import { NEWS_TARGETS } from '../news.config';
 import { KNOWS_ABOUT, TXGNN_SITES, txgnnSiteUrl } from '../seo.config';
 import { GLOSSARY } from '../glossary.config';
 import { GUIDES } from '../guides.config';
+import { TOPICS } from '../topics.config';
 
 export const GET: APIRoute = () => {
   const u = (path: string) => new URL(path, SITE.url).toString();
@@ -37,6 +38,14 @@ export const GET: APIRoute = () => {
     }
     lines.push('');
   }
+
+  lines.push('## 主題（角度式彙整頁）');
+  lines.push('');
+  lines.push(`- [主題總覽](${u('/topics')}): 每個主題一個判斷角度，整理該領域現況、數據與 yao.care 的回應。`);
+  for (const t of TOPICS) {
+    lines.push(`- [${t.title}](${u(`/topics/${t.slug}/`)}): ${t.answerFirst}`);
+  }
+  lines.push('');
 
   lines.push('## 議題追蹤（每日自動更新）');
   lines.push('');

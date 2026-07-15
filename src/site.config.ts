@@ -28,6 +28,7 @@ export const NAV = [
   { href: '/ai', label: 'AI 系統' },
   { href: '/care', label: '高齡友善' },
   { href: '/marketing', label: '數位行銷' },
+  { href: '/topics', label: '主題' },
   { href: '/news', label: '議題追蹤' },
   { href: '/#contact', label: '聯絡' },
 ] as const;
