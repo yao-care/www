@@ -102,7 +102,11 @@ Prompt 模板在 `scripts/news-prompts.mjs`，CLI 旗標：`--target <slug>` / `
 ```
 30 20 * * *  $WWW_REPO_DIR/scripts/fetch-news.sh
 ```
-台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：抓新聞 → 若 `src/content/news` 有變化 → 自動 commit（作者 LightChang）+ push + `npm run build` + `rsync dist/ → $WWW_SITE_DIR/` → **IndexNow 即時通知**。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。
+台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：**取 seo-ops 共用鎖** → 抓新聞 → 若 `src/content/news` 有變化 → 自動 commit（作者 LightChang）+ push + `npm run build` + `rsync dist/ → $WWW_SITE_DIR/` → **IndexNow 即時通知**。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。實測全程 **45~50 分鐘**（07-12 44 分 / 07-13 45 分 / 07-15 50 分），不是一瞬間。
+
+> 🔒 **開頭的 `flock` 不可拿掉（2026-07-15 新增）**：本腳本與 seo-ops 的反思（台 04:55）/大腦（台 05:30）**共寫同一個工作樹**，三方靠 `/tmp/seo-claude-yao.care.lock`（fd 200）序列化。
+> 拿掉的後果有實例：本腳本 04:30→05:20 的窗把反思 04:55 整個包住 → 反思護欄看到本腳本新生的 `src/content/news/**` 判定「改動越界」→ **反思 07-10~07-15 連 5 天全被回退**，且反思回退用的 `git clean -fdq` 把本腳本剛寫出、尚未 commit 的文章**刪掉 3 篇**。
+> 改本腳本或改 cron 時間時，鎖檔名與 fd 必須與 `$SEO_OPS_DIR/bin/seo-reflect.sh`、`seo-brain.sh` 完全一致。詳見 `$SEO_OPS_DIR/MAINTENANCE.md` §二。
 
 > **IndexNow**（`scripts/indexnow.mjs`）：部署後把當天變動的文章 URL POST 給 `api.indexnow.org`（Bing/Yandex/Naver/Seznam 同 endpoint），讓新內容「當天」被收，而非等爬蟲。金鑰檔 `public/1be01cbeef8111fdeccbc36e95ec07c1.txt`（檔名＝金鑰，build 後出現在網站根目錄供驗證；換金鑰要同步改 `indexnow.mjs` 的 `KEY` 常數）。**只提交可索引文章**（共用 `src/news.policy.mjs` 的 relevance 門檻，與 noindex 政策一致，不送低相關文）。提交失敗不阻擋部署。
 

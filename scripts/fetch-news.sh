@@ -25,6 +25,25 @@ TWDATE() { TZ=Asia/Taipei date "$@"; }
 unset CLAUDECODE CLAUDE_CODE_ENTRYPOINT CLAUDE_CODE_SSE_PORT
 
 LOG=/var/log/yaocare-news.log
+
+# ── 與 seo-ops 反思/大腦共用 per-站 claude 鎖（2026-07-15 新增，勿拿掉）──────────────
+# 三方都會改同一個工作樹：本腳本寫 src/content/news/** 並 commit/push/build；
+# seo-ops 的反思（/etc/cron.d/seo-ops，台 04:55）與大腦（台 05:30）改 src/pages/** 等。
+# 事故：本腳本 04:30 起跑、實測要 45~50 分（07-12 44 分、07-13 45 分、07-15 50 分），反思
+# 04:55 正好撞進窗內 → 反思的機械護欄看到本腳本新生的 src/content/news/** 判定「改動越界」→
+# 反思 07-10/11/12/13/15 連 5 天全被回退，無一落地；且反思回退用的 `git clean -fdq` 會把本腳本
+# 剛寫出、還沒 commit 的文章直接刪掉（07-15 就被刪掉 3 篇）。
+# 對策：三方序列化，誰先拿到鎖誰跑，其餘排隊（反思/大腦的等鎖上限各 65 分，夠本腳本跑完）。
+# ⚠ 鎖檔名與 fd 必須與 seo-reflect.sh / seo-brain.sh 完全一致（/tmp/seo-claude-<站>.lock、fd 200），改名即失效。
+exec 200>/tmp/seo-claude-yao.care.lock
+if ! flock -n 200; then
+  echo " fetch-news: 工作樹被 seo-ops（反思/大腦）佔用，等它讓出… $(TWDATE '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
+  flock -w 3600 200 || {
+    echo " fetch-news: 等鎖逾時（>60 分），跳過本次 $(TWDATE '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
+    exit 1
+  }
+fi
+
 {
   echo ""
   echo "════════════════════════════════════════"
