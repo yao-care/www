@@ -52,7 +52,7 @@ const relatedTerms = GLOSSARY.filter((g) =>
 
 const pageTitle = `${data.titleZh ?? data.title} · ${target.title} 議題追蹤`;
 const pageDescription = data.newsBrief;
-const canonical = new URL(Astro.url.pathname, SITE.url).toString();
+const canonical = new URL(`/news/${data.target}/${hrefSlug(entry)}/`, SITE.url).toString();
 
 // JSON-LD：NewsArticle（isBasedOn 標明是對原新聞的衍生評論）+ BreadcrumbList
 const jsonLd = {
@@ -127,7 +127,7 @@ const noindex = !isNewsIndexable(data.relevance);
           <ul class="mt-4 space-y-3">
             {relatedNews.map((r) => (
               <li>
-                <a href={`/news/${r.data.target}/${hrefSlug(r)}`} class="group block">
+                <a href={`/news/${r.data.target}/${hrefSlug(r)}/`} class="group block">
                   <span class="font-medium text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors">{r.data.titleZh ?? r.data.title}</span>
                   <span class="block text-sm text-[color:var(--color-ink-soft)] mt-0.5 line-clamp-1">{r.data.newsBrief}</span>
                 </a>
