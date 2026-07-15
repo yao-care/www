@@ -39,31 +39,31 @@ export const TOPICS: readonly Topic[] = [
       {
         heading: "開對的方子，一半沒吃進肚",
         paragraphs: [
-          "人命至重，有貴千金。一帖方子救回一條命，比千金還貴重；可是方子再好，總得吃下去才算數。世界衛生組織 2003 年《長期治療依從性》報告估計，已開發國家慢性病患者的服藥依從率平均只有約 50%，開發中國家還更低（2003 年，<a href=\"https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem\" target=\"_blank\" rel=\"noopener\">https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem</a>）。醫師開出去的處方，有一半左右沒有被規律執行。高血壓、氣喘、憂鬱症都是重災區。",
-          "WHO 發布報告時說得很直接：「依從性不佳，是病人無法從藥物獲得完整健康效益的首要原因。」（Poor adherence is the primary reason for not achieving the full health benefits medicines can provide to patients.）（<a href=\"https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem\" target=\"_blank\" rel=\"noopener\">https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem</a>）",
+          "人命至重，有貴千金。一帖方子救回一條命，比千金還貴重；可是方子再好，總得吃下去才算數。世界衛生組織 2003 年《長期治療依從性》報告估計，已開發國家慢性病患者的服藥依從率平均只有約 50%，開發中國家還更低（2003 年，<a href=\"https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem\" target=\"_blank\" rel=\"noopener\">WHO</a>）。醫師開出去的處方，有一半左右沒有被規律執行。高血壓、氣喘、憂鬱症都是重災區。",
+          "WHO 發布報告時說得很直接：「依從性不佳，是病人無法從藥物獲得完整健康效益的首要原因。」（Poor adherence is the primary reason for not achieving the full health benefits medicines can provide to patients.）（<a href=\"https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem\" target=\"_blank\" rel=\"noopener\">WHO</a>）",
           "為什麼吃不下去？血壓藥吃了沒有立即的感覺，忘一天也不會怎樣，「偶爾忘」便慢慢養成「常常忘」。等症狀出來，往往已是併發症。這件事二十年來沒有太大改善。",
         ],
       },
       {
         heading: "長輩的藥袋，比你想的還厚",
         paragraphs: [
-          "配藥的老規矩講君臣佐使，幾味藥同用，彼此要能照應。如今一位長輩看三、四個科是常態，每個科各開各的藥，藥袋就這樣一層層堆起來。國家衛生研究院引用的研究數據顯示，台灣 65 歲以上長輩高達 5 成同時使用 5 種以上藥物，等於每兩位就有一位有多重用藥的情形（2023 年，<a href=\"https://genx.nhri.edu.tw/servicedetail_tw.php?id=5404\" target=\"_blank\" rel=\"noopener\">https://genx.nhri.edu.tw/servicedetail_tw.php?id=5404</a>）。藥多未必是錯，但每多一味，交互作用與重複用藥的機率就往上疊一層。",
-          "慢性病是主因。依食藥署藥物食品安全週報的資料，54 歲以上中老年人超過 7 成至少有一種慢性病，75 歲以上更超過 9 成（2024 年，<a href=\"https://www.fda.gov.tw/tc/PublishOtherEpaperContent.aspx?id=1533&tid=&r=1455944892\" target=\"_blank\" rel=\"noopener\">https://www.fda.gov.tw/tc/PublishOtherEpaperContent.aspx?id=1533&tid=&r=1455944892</a>）。三高之外還有骨關節、腸胃、睡眠的毛病，科別一多，藥就跟著多。",
-          "國衛院高齡醫學暨健康福祉研究中心的研究人員家訪時，常看到藥物雜亂、混著保健食品和中草藥一起吃的情況。報告裡提醒：「如果家人能稍微花一點時間，關心長輩的藥物使用狀況、陪伴整理藥物，很容易就會發現問題，每個人都能成為高齡用藥安全的守門員！」（<a href=\"https://genx.nhri.edu.tw/servicedetail_tw.php?id=5404\" target=\"_blank\" rel=\"noopener\">https://genx.nhri.edu.tw/servicedetail_tw.php?id=5404</a>）這些問題，家人其實看得出來。",
+          "配藥的老規矩講君臣佐使，幾味藥同用，彼此要能照應。如今一位長輩看三、四個科是常態，每個科各開各的藥，藥袋就這樣一層層堆起來。國家衛生研究院引用的研究數據顯示，台灣 65 歲以上長輩高達 5 成同時使用 5 種以上藥物，等於每兩位就有一位有多重用藥的情形（2023 年，<a href=\"https://genx.nhri.edu.tw/servicedetail_tw.php?id=5404\" target=\"_blank\" rel=\"noopener\">國家衛生研究院 高齡醫學暨健康福祉研究中心（高齡多重用藥專題）</a>）。藥多未必是錯，但每多一味，交互作用與重複用藥的機率就往上疊一層。",
+          "慢性病是主因。依食藥署藥物食品安全週報的資料，54 歲以上中老年人超過 7 成至少有一種慢性病，75 歲以上更超過 9 成（2024 年，<a href=\"https://www.fda.gov.tw/tc/PublishOtherEpaperContent.aspx?id=1533&tid=&r=1455944892\" target=\"_blank\" rel=\"noopener\">長輩用藥安全知多少</a>）。三高之外還有骨關節、腸胃、睡眠的毛病，科別一多，藥就跟著多。",
+          "國衛院高齡醫學暨健康福祉研究中心的研究人員家訪時，常看到藥物雜亂、混著保健食品和中草藥一起吃的情況。報告裡提醒：「如果家人能稍微花一點時間，關心長輩的藥物使用狀況、陪伴整理藥物，很容易就會發現問題，每個人都能成為高齡用藥安全的守門員！」（<a href=\"https://genx.nhri.edu.tw/servicedetail_tw.php?id=5404\" target=\"_blank\" rel=\"noopener\">國家衛生研究院 高齡醫學暨健康福祉研究中心（高齡多重用藥專題）</a>）這些問題，家人其實看得出來。",
         ],
       },
       {
         heading: "安眠藥這一味，最容易被小看",
         paragraphs: [
-          "安神助眠的方子，古往今來都有人求。規模有多大？健保署統計，民國 110 年至 114 年，台灣每年約有 190 萬人使用安眠藥，其中 65 歲以上約占 4 成、將近 76 萬人（2026 年，<a href=\"https://www.cna.com.tw/news/ahel/202606080277.aspx\" target=\"_blank\" rel=\"noopener\">https://www.cna.com.tw/news/ahel/202606080277.aspx</a>）。部分 BZD 與 Z-drug 類藥物的每日用量，是韓國的 2 倍、澳洲的 3 倍。",
-          "健保署已把「65 歲以上、同時使用 3 種以上安眠類藥物」列入審查重點。健保署指出，多重安眠用藥在 65 歲以上長者易導致跌倒與骨折風險（2026 年，<a href=\"https://www.cna.com.tw/news/ahel/202606080277.aspx\" target=\"_blank\" rel=\"noopener\">https://www.cna.com.tw/news/ahel/202606080277.aspx</a>）。道理想一想就明白：安眠藥在夜裡作用，正好是長輩起身如廁的時段，肌力與平衡又比年輕時差，一跤下去，可能就是髖部骨折加長期臥床。",
+          "安神助眠的方子，古往今來都有人求。規模有多大？健保署統計，民國 110 年至 114 年，台灣每年約有 190 萬人使用安眠藥，其中 65 歲以上約占 4 成、將近 76 萬人（2026 年，<a href=\"https://www.cna.com.tw/news/ahel/202606080277.aspx\" target=\"_blank\" rel=\"noopener\">中央社</a>）。部分 BZD 與 Z-drug 類藥物的每日用量，是韓國的 2 倍、澳洲的 3 倍。",
+          "健保署已把「65 歲以上、同時使用 3 種以上安眠類藥物」列入審查重點。健保署指出，多重安眠用藥在 65 歲以上長者易導致跌倒與骨折風險（2026 年，<a href=\"https://www.cna.com.tw/news/ahel/202606080277.aspx\" target=\"_blank\" rel=\"noopener\">中央社</a>）。道理想一想就明白：安眠藥在夜裡作用，正好是長輩起身如廁的時段，肌力與平衡又比年輕時差，一跤下去，可能就是髖部骨折加長期臥床。",
           "家裡若有長輩同時吃著好幾種助眠藥物，別自行停藥。帶著全部藥袋回診，請醫師或藥師把整體用藥看過一次，這條路最穩妥。",
         ],
       },
       {
         heading: "慢箋領了第一回，第二、三回呢",
         paragraphs: [
-          "慢性處方箋讓病情穩定的慢性病人不必每個月掛號，可以分次直接到藥局領藥（<a href=\"https://www.nhi.gov.tw/ch/cp-6085-b87dc-2958-1.html\" target=\"_blank\" rel=\"noopener\">https://www.nhi.gov.tw/ch/cp-6085-b87dc-2958-1.html</a>）。制度立意好，卡在一個環節：頭一次領藥有醫囑當場交代，第二、三次全靠病人自己記得回去領。",
+          "慢性處方箋讓病情穩定的慢性病人不必每個月掛號，可以分次直接到藥局領藥（<a href=\"https://www.nhi.gov.tw/ch/cp-6085-b87dc-2958-1.html\" target=\"_blank\" rel=\"noopener\">慢性病連續處方箋說明頁</a>）。制度立意好，卡在一個環節：頭一次領藥有醫囑當場交代，第二、三次全靠病人自己記得回去領。",
           "靠記憶，就會有忘記。忘了領，治療便中斷；回診時數據變差，醫師只看得到結果，看不到中間那段空窗。藥師這頭也一樣，病人離開藥局之後有沒有按時吃、下回會不會回來領，過去幾乎沒有工具可以追。",
           "提醒機制接手的就是這一段：領藥日前推播、服藥時間到了出聲，把「靠記憶」換成「靠系統」。",
         ],
@@ -139,7 +139,7 @@ export const TOPICS: readonly Topic[] = [
     ctas: [
       {
         product: "yaocare",
-        text: "藥提醒從 LINE 與 Telegram 推播用藥與領藥提醒，免安裝 App，訊息附藥品外觀圖片，藥師端可批次查看服藥達成率，想試看看 → 加入藥提醒 LINE：<a href=\"https://lin.ee/1F7s4pP\" target=\"_blank\" rel=\"noopener\">https://lin.ee/1F7s4pP</a>",
+        text: "藥提醒從 LINE 與 Telegram 推播用藥與領藥提醒，免安裝 App，訊息附藥品外觀圖片，藥師端可批次查看服藥達成率，想<a href=\"https://lin.ee/1F7s4pP\" target=\"_blank\" rel=\"noopener\">試看看 → 加入藥提醒 LINE</a>",
       },
     ],
     products: [
@@ -158,31 +158,31 @@ export const TOPICS: readonly Topic[] = [
       {
         heading: "這個社會，從來沒這麼老過",
         paragraphs: [
-          "2025 年 12 月，台灣 65 歲以上人口達 467 萬 3,155 人、占總人口 20.06%，依內政部戶口統計正式跨過超高齡社會門檻（2025 年，<a href=\"https://www.cna.com.tw/news/ahel/202601090067.aspx\" target=\"_blank\" rel=\"noopener\">https://www.cna.com.tw/news/ahel/202601090067.aspx</a>）。每 5 個人就有 1 位是長者，比例還會繼續往上。這是好事，前提是要老得起。",
+          "2025 年 12 月，台灣 65 歲以上人口達 467 萬 3,155 人、占總人口 20.06%，依內政部戶口統計正式跨過超高齡社會門檻（2025 年，<a href=\"https://www.cna.com.tw/news/ahel/202601090067.aspx\" target=\"_blank\" rel=\"noopener\">中央社</a>）。每 5 個人就有 1 位是長者，比例還會繼續往上。這是好事，前提是要老得起。",
           "人口一老，照護的分工跟著變。醫院顧不了每天的日常，日常落在家庭和社區據點身上；家人和據點人員沒受過醫療訓練，卻是最早看到「怪怪的」那群人。走路變慢、飯量變小、叫名字反應慢半拍，這些變化出現在診間之外。",
-          "聯合國把 2021 到 2030 年訂為「健康老化十年」。WHO 宣布時說，唯有整個體系一起行動，「我們才不只是為生命增添歲月，更為歲月增添生命」（not only add years to life, but also life to years）（2020 年，<a href=\"https://www.who.int/news/item/14-12-2020-decade-of-healthy-ageing-a-new-un-wide-initiative\" target=\"_blank\" rel=\"noopener\">https://www.who.int/news/item/14-12-2020-decade-of-healthy-ageing-a-new-un-wide-initiative</a>）。把老後的日子過好，這門功課全世界都在補。",
+          "聯合國把 2021 到 2030 年訂為「健康老化十年」。WHO 宣布時說，唯有整個體系一起行動，「我們才不只是為生命增添歲月，更為歲月增添生命」（not only add years to life, but also life to years）（2020 年，<a href=\"https://www.who.int/news/item/14-12-2020-decade-of-healthy-ageing-a-new-un-wide-initiative\" target=\"_blank\" rel=\"noopener\">WHO</a>）。把老後的日子過好，這門功課全世界都在補。",
         ],
       },
       {
         heading: "「老了都這樣」？這話不必照單全收",
         paragraphs: [
-          "衰弱（frailty）是一種量得出來的狀態。國健署 2019 年對 20 萬名 65 歲以上社區長者做衰弱評估，結果攤開來看：65 到 74 歲有 8.2% 處於衰弱前期、1.3% 已衰弱；75 到 84 歲升到 15% 與 3%；85 歲以上則有 26.9% 衰弱前期、6.9% 衰弱，等於每 4 人就有 1 人可能衰弱（2019 年篩檢，<a href=\"https://www.mohw.gov.tw/fp-16-54550-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/fp-16-54550-1.html</a>）。",
+          "衰弱（frailty）是一種量得出來的狀態。國健署 2019 年對 20 萬名 65 歲以上社區長者做衰弱評估，結果攤開來看：65 到 74 歲有 8.2% 處於衰弱前期、1.3% 已衰弱；75 到 84 歲升到 15% 與 3%；85 歲以上則有 26.9% 衰弱前期、6.9% 衰弱，等於每 4 人就有 1 人可能衰弱（2019 年篩檢，<a href=\"https://www.mohw.gov.tw/fp-16-54550-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。",
           "同一份數字換個方向讀：即使 85 歲以上，多數長者仍然沒有衰弱。差別在有沒有及早發現、及早介入。衰弱前期是最值得把握的窗口，這個階段靠運動與營養介入，狀態有機會回得去；等到明顯失能才處理，能做的就少了。養生的法子古今傳了千百種，講來講去就一個字：動。",
-          "臨床上常用臨床衰弱量表（CFS）把長者整體狀態分成 1 到 9 級，從非常健壯到末期，「他最近變差了」這種印象，就變成可以追蹤、可以比較的分數。WHO 的高齡整合照護指南（ICOPE）從認知、行動、營養、視力、聽力、憂鬱六個面向做整合評估，國健署據此推出「長者量六力」（<a href=\"https://www.mohw.gov.tw/fp-16-54550-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/fp-16-54550-1.html</a>）。",
+          "臨床上常用臨床衰弱量表（CFS）把長者整體狀態分成 1 到 9 級，從非常健壯到末期，「他最近變差了」這種印象，就變成可以追蹤、可以比較的分數。WHO 的高齡整合照護指南（ICOPE）從認知、行動、營養、視力、聽力、憂鬱六個面向做整合評估，國健署據此推出「長者量六力」（<a href=\"https://www.mohw.gov.tw/fp-16-54550-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。",
         ],
       },
       {
         heading: "活得再久，也怕一跤",
         paragraphs: [
-          "歲數大了，最大的敵人常常是地板。依衛福部 113 年死因統計，跌倒是 65 歲以上事故傷害死亡原因第二名；國健署 110 年國民健康訪問調查則發現，每 6 位長者就有 1 位曾經跌倒，每 12 位就有 1 位曾因跌倒就醫（<a href=\"https://www.mohw.gov.tw/cp-7396-85653-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-7396-85653-1.html</a>）。再往前看，110 年死因統計中跌倒（落）致死 1,482 人，占事故傷害死亡的 21.9%（2021 年，<a href=\"https://www.mohw.gov.tw/cp-6566-73952-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-6566-73952-1.html</a>）。",
-          "跌倒多半發生在自以為安全的地方。國健署調查顯示，長者跌傷地點有 52% 在室內（<a href=\"https://www.mohw.gov.tw/cp-6566-73952-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-6566-73952-1.html</a>）。浴室、床邊、夜裡去廁所那條走道，都是熱區。藥也有份，前一晚的安眠藥、降壓藥，都可能讓起身那一刻站不穩。",
-          "官方的功課其實都備好了。國健署呼籲，家人與長輩可加入國健署「長者量六力」LINE 官方帳號，從行動、認知、營養、視力、聽力與憂鬱六大面向自我評估（2026 年，<a href=\"https://www.mohw.gov.tw/cp-7396-85653-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-7396-85653-1.html</a>）；國健署也在防跌宣導中提醒，長者及親友可參考國健署出版的《長者防跌妙招手冊》（2023 年，<a href=\"https://www.mohw.gov.tw/cp-6566-73952-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-6566-73952-1.html</a>）。工具免費，缺的通常是有人開始做。",
+          "歲數大了，最大的敵人常常是地板。依衛福部 113 年死因統計，跌倒是 65 歲以上事故傷害死亡原因第二名；國健署 110 年國民健康訪問調查則發現，每 6 位長者就有 1 位曾經跌倒，每 12 位就有 1 位曾因跌倒就醫（<a href=\"https://www.mohw.gov.tw/cp-7396-85653-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。再往前看，110 年死因統計中跌倒（落）致死 1,482 人，占事故傷害死亡的 21.9%（2021 年，<a href=\"https://www.mohw.gov.tw/cp-6566-73952-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。",
+          "跌倒多半發生在自以為安全的地方。國健署調查顯示，長者跌傷地點有 52% 在室內（<a href=\"https://www.mohw.gov.tw/cp-6566-73952-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。浴室、床邊、夜裡去廁所那條走道，都是熱區。藥也有份，前一晚的安眠藥、降壓藥，都可能讓起身那一刻站不穩。",
+          "官方的功課其實都備好了。國健署呼籲，家人與長輩可加入國健署「長者量六力」LINE 官方帳號，從行動、認知、營養、視力、聽力與憂鬱六大面向自我評估（2026 年，<a href=\"https://www.mohw.gov.tw/cp-7396-85653-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）；國健署也在防跌宣導中提醒，長者及親友可參考國健署出版的《長者防跌妙招手冊》（2023 年，<a href=\"https://www.mohw.gov.tw/cp-6566-73952-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。工具免費，缺的通常是有人開始做。",
         ],
       },
       {
         heading: "35 萬人的日常課題",
         paragraphs: [
-          "衛福部委託國衛院執行的全國社區失智症流行病學調查（民國 109 至 112 年）顯示，65 歲以上長者失智症盛行率為 7.99%，推估 113 年失智人口約 35 萬人（2024 年公布，<a href=\"https://www.mohw.gov.tw/cp-16-78102-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-16-78102-1.html</a>）。年齡是最大的因子：65 到 69 歲盛行率 2.40%，85 歲以上達 23.23%。",
+          "衛福部委託國衛院執行的全國社區失智症流行病學調查（民國 109 至 112 年）顯示，65 歲以上長者失智症盛行率為 7.99%，推估 113 年失智人口約 35 萬人（2024 年公布，<a href=\"https://www.mohw.gov.tw/cp-16-78102-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。年齡是最大的因子：65 到 69 歲盛行率 2.40%，85 歲以上達 23.23%。",
           "難處各家不同。家庭端的難是無法時刻盯著；日照中心與長照據點的難在人力，一位照服員同時看十幾位長輩，誰今天沒來、誰狀態不對，哪位有走失紀錄的長輩正往門口走，全靠人眼盯。報到簽名這種例行事又吃掉大把時間，失智或手部退化的長輩，簽個名可能要幾分鐘。",
           "科技幫得上忙，前提是別增加長輩的負擔。把辨識做進環境裡就是一條路：長輩走過鏡頭就完成報到，免按鈕免簽名，也不必學任何新東西；有失蹤或失智紀錄的長輩出現時，系統主動警示工作人員。個資的顧慮用架構解決，臉部資料全部留在現場裝置、不上雲端。走過去，就這一個動作，誰都會。",
         ],
@@ -259,11 +259,11 @@ export const TOPICS: readonly Topic[] = [
     ctas: [
       {
         product: "geri",
-        text: "Smart Geri 以臨床衰弱量表 CFS 1–9 為分層基準，涵蓋認知、情緒、營養、行動、用藥、社會支持多面向，紅黃綠分級給出轉介建議，免費自我評估 → <a href=\"https://smart-geri-cds.yao.care/\" target=\"_blank\" rel=\"noopener\">https://smart-geri-cds.yao.care/</a>",
+        text: "Smart Geri 以臨床衰弱量表 CFS 1–9 為分層基準，涵蓋認知、情緒、營養、行動、用藥、社會支持多面向，紅黃綠分級給出轉介建議，<a href=\"https://smart-geri-cds.yao.care/\" target=\"_blank\" rel=\"noopener\">免費自我評估</a>",
       },
       {
         product: "sign",
-        text: "長者走過鏡頭即自動辨識報到，免按鈕、免簽名、免安裝 App，臉部與紀錄 100% 留在裝置零雲端，並自動產出每日簽到名冊，看線上服務站 → <a href=\"https://sign.yao.care/\" target=\"_blank\" rel=\"noopener\">https://sign.yao.care/</a>",
+        text: "長者走過鏡頭即自動辨識報到，免按鈕、免簽名、免安裝 App，臉部與紀錄 100% 留在裝置零雲端，並自動產出每日簽到名冊，<a href=\"https://sign.yao.care/\" target=\"_blank\" rel=\"noopener\">看線上服務站</a>",
       },
     ],
     products: [
@@ -285,23 +285,23 @@ export const TOPICS: readonly Topic[] = [
         heading: "大隻雞慢啼？先拿尺量過再說",
         paragraphs: [
           "「男生本來就比較慢」「阿公也是三歲才會講話」。這些話安慰了家長，也可能耽誤了孩子。沒有量表的年代，看小兒只能靠大人端詳神色、形態、動作，一樣樣猜。今日不同了。分辨個別差異和發展遲緩有尺可量，把孩子的粗大動作、精細動作、語言、社會發展拿去和同齡常模比較，落後到一定程度，就該進一步評估。",
-          "發展問題比多數家長以為的常見。美國 CDC 研究團隊發表於《Pediatrics》的全國調查顯示，2015 至 2017 年間，美國 3 到 17 歲兒童有 17.8% 至少有一種發展障礙，約每 6 個孩子就有 1 個，且比例較 2009 至 2011 年的 16.2% 持續上升（2019 年，<a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC7076808/\" target=\"_blank\" rel=\"noopener\">https://pmc.ncbi.nlm.nih.gov/articles/PMC7076808/</a>）。換成教室裡的畫面，每個班級都可能坐著幾個需要早期支持的孩子。",
-          "台灣的處境多一層急迫。2025 年全年新生兒只有 10 萬 7,812 人，連續第十年下探（2025 年，內政部統計，<a href=\"https://www.cna.com.tw/news/ahel/202601090067.aspx\" target=\"_blank\" rel=\"noopener\">https://www.cna.com.tw/news/ahel/202601090067.aspx</a>）。孩子少了，每一個孩子的發展都更輸不起，篩檢漏接的代價比過去任何時候都高。",
+          "發展問題比多數家長以為的常見。美國 CDC 研究團隊發表於《Pediatrics》的全國調查顯示，2015 至 2017 年間，美國 3 到 17 歲兒童有 17.8% 至少有一種發展障礙，約每 6 個孩子就有 1 個，且比例較 2009 至 2011 年的 16.2% 持續上升（2019 年，<a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC7076808/\" target=\"_blank\" rel=\"noopener\">Pediatrics 2019</a>）。換成教室裡的畫面，每個班級都可能坐著幾個需要早期支持的孩子。",
+          "台灣的處境多一層急迫。2025 年全年新生兒只有 10 萬 7,812 人，連續第十年下探（2025 年，內政部統計，<a href=\"https://www.cna.com.tw/news/ahel/202601090067.aspx\" target=\"_blank\" rel=\"noopener\">中央社</a>）。孩子少了，每一個孩子的發展都更輸不起，篩檢漏接的代價比過去任何時候都高。",
         ],
       },
       {
         heading: "未滿 7 歲，6 次公費篩檢",
         paragraphs: [
-          "2024 年 7 月 1 日，台灣的兒童發展篩檢跨了一大步。國健署新增 6 次「兒童發展篩檢服務」，未滿 7 歲兒童在 6 至 10 個月、10 個月至 1 歲 6 個月、1 歲 6 個月至 2 歲、2 至 3 歲、3 至 5 歲、5 至未滿 7 歲共六個階段，各接受一次由受訓醫師執行的標準化篩檢，涵蓋粗大動作、精細動作、語言認知、社會發展四大面向（2024 年，<a href=\"https://www.mohw.gov.tw/cp-16-79140-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-16-79140-1.html</a>）。衛福部在記者會上宣布這項新制上路（2024 年，<a href=\"https://www.cna.com.tw/news/ahel/202406250106.aspx\" target=\"_blank\" rel=\"noopener\">https://www.cna.com.tw/news/ahel/202406250106.aspx</a>）。",
-          "在此之前，發展檢核主要靠兒童健康手冊裡的紙本題目和健兒門診的有限時間。國健署婦幼健康組說明，0 至 6 歲兒童身體不斷成長，在認知、語言、動作、社會適應行為或情緒等各面向，形成一定的發展（<a href=\"https://www.cna.com.tw/news/ahel/202406250106.aspx\" target=\"_blank\" rel=\"noopener\">https://www.cna.com.tw/news/ahel/202406250106.aspx</a>）。新制的差別在標準化，同一套工具、同一套判準，跨醫師、跨縣市可以比較。",
-          "馬偕紀念醫院早療評估中心的醫師這樣形容篩檢的意義：「這就像是開創一把萬能鑰匙，開啟孩子所有可能的未來。」（2024 年，<a href=\"https://www.cna.com.tw/news/ahel/202406250106.aspx\" target=\"_blank\" rel=\"noopener\">https://www.cna.com.tw/news/ahel/202406250106.aspx</a>）她分享的個案是一名常鬧脾氣的 3 歲女童，家長以為是情緒問題，篩檢發現粗大與精細動作未通過，進一步檢查才確診先天性肌肉張力低下。沒有全面篩檢，這樣的孩子很容易被貼上「難帶」的標籤，錯過介入。",
+          "2024 年 7 月 1 日，台灣的兒童發展篩檢跨了一大步。國健署新增 6 次「兒童發展篩檢服務」，未滿 7 歲兒童在 6 至 10 個月、10 個月至 1 歲 6 個月、1 歲 6 個月至 2 歲、2 至 3 歲、3 至 5 歲、5 至未滿 7 歲共六個階段，各接受一次由受訓醫師執行的標準化篩檢，涵蓋粗大動作、精細動作、語言認知、社會發展四大面向（2024 年，<a href=\"https://www.mohw.gov.tw/cp-16-79140-1.html\" target=\"_blank\" rel=\"noopener\">衛福部</a>）。衛福部在記者會上宣布這項新制上路（2024 年，<a href=\"https://www.cna.com.tw/news/ahel/202406250106.aspx\" target=\"_blank\" rel=\"noopener\">中央社</a>）。",
+          "在此之前，發展檢核主要靠兒童健康手冊裡的紙本題目和健兒門診的有限時間。國健署婦幼健康組說明，0 至 6 歲兒童身體不斷成長，在認知、語言、動作、社會適應行為或情緒等各面向，形成一定的發展（<a href=\"https://www.cna.com.tw/news/ahel/202406250106.aspx\" target=\"_blank\" rel=\"noopener\">中央社</a>）。新制的差別在標準化，同一套工具、同一套判準，跨醫師、跨縣市可以比較。",
+          "馬偕紀念醫院早療評估中心的醫師這樣形容篩檢的意義：「這就像是開創一把萬能鑰匙，開啟孩子所有可能的未來。」（2024 年，<a href=\"https://www.cna.com.tw/news/ahel/202406250106.aspx\" target=\"_blank\" rel=\"noopener\">中央社</a>）她分享的個案是一名常鬧脾氣的 3 歲女童，家長以為是情緒問題，篩檢發現粗大與精細動作未通過，進一步檢查才確診先天性肌肉張力低下。沒有全面篩檢，這樣的孩子很容易被貼上「難帶」的標籤，錯過介入。",
         ],
       },
       {
         heading: "一到三歲，異常檢出的高峰",
         paragraphs: [
-          "新制跑滿一年，數字開口說話了。國健署統計，兒童發展篩檢上路一年服務超過 40 萬人次，整體異常轉介率約 6%；分年齡看，18 至 24 個月與 2 至 3 歲兩個階段的異常轉介率高於 26%，3 歲後快速下降到 7% 至 8%（2026 年 1 月報導，<a href=\"https://kids.heho.com.tw/archives/172857\" target=\"_blank\" rel=\"noopener\">https://kids.heho.com.tw/archives/172857</a>）。",
-          "一到三歲正是語言和動作變化最劇烈的階段，問題最容易在這時浮現，也最值得在這時介入。第一線評估醫師解讀這份數據時指出，發展遲緩與缺乏刺激、忽視、慢性壓力、育兒支持不佳都有關，而且「早期介入並不專指醫療復健」，增加親子互動與生活經驗往往更關鍵（2026 年，<a href=\"https://kids.heho.com.tw/archives/172857\" target=\"_blank\" rel=\"noopener\">https://kids.heho.com.tw/archives/172857</a>）。篩出來的孩子，有一部分需要的是大人改變陪伴的方式。",
+          "新制跑滿一年，數字開口說話了。國健署統計，兒童發展篩檢上路一年服務超過 40 萬人次，整體異常轉介率約 6%；分年齡看，18 至 24 個月與 2 至 3 歲兩個階段的異常轉介率高於 26%，3 歲後快速下降到 7% 至 8%（2026 年 1 月報導，<a href=\"https://kids.heho.com.tw/archives/172857\" target=\"_blank\" rel=\"noopener\">Heho 親子</a>）。",
+          "一到三歲正是語言和動作變化最劇烈的階段，問題最容易在這時浮現，也最值得在這時介入。第一線評估醫師解讀這份數據時指出，發展遲緩與缺乏刺激、忽視、慢性壓力、育兒支持不佳都有關，而且「早期介入並不專指醫療復健」，增加親子互動與生活經驗往往更關鍵（2026 年，<a href=\"https://kids.heho.com.tw/archives/172857\" target=\"_blank\" rel=\"noopener\">Heho 親子</a>）。篩出來的孩子，有一部分需要的是大人改變陪伴的方式。",
           "給家長一句具體的話：一到三歲的篩檢時段不要跳過。這個年紀的孩子還不會把異常「表現」給你看，落後藏在細節裡；標準化題目，就是設計來抓這些細節的。",
         ],
       },
@@ -377,7 +377,7 @@ export const TOPICS: readonly Topic[] = [
     ctas: [
       {
         product: "pedi",
-        text: "Smart Pedi 涵蓋 2 個月到 6 歲共 7 個年齡帶，六大發展領域對齊國健署兒童健康手冊與 ASQ-3，以常模化分數與雷達圖對比同齡、紅黃綠分級給出觀察或轉介建議，免費自我評估 → <a href=\"https://smart-pedi-cds.yao.care/\" target=\"_blank\" rel=\"noopener\">https://smart-pedi-cds.yao.care/</a>",
+        text: "Smart Pedi 涵蓋 2 個月到 6 歲共 7 個年齡帶，六大發展領域對齊國健署兒童健康手冊與 ASQ-3，以常模化分數與雷達圖對比同齡、紅黃綠分級給出觀察或轉介建議，<a href=\"https://smart-pedi-cds.yao.care/\" target=\"_blank\" rel=\"noopener\">免費自我評估</a>",
       },
     ],
     products: [
@@ -751,14 +751,14 @@ export const TOPICS: readonly Topic[] = [
           "做產業研究、競爭情報的人，共同的處境是資料太多、人手太少。每天重複同一套動作：開財報網站抄數字、翻新聞、查機構持倉、更新試算表。來源分屬不同系統，格式互不相容，人工彙整的速度追不上資訊更新的速度。等你整理完，事已經過了。",
           "這一頁的判斷標準只有一條：情報先於行動。凡是能提前自動送到眼前的資訊，就不該等人記得去查。所謂料事如神，其實是情報收得勤、到得早。",
           "自動化接手的是「查、抄、整理」這段粗活。機器每天定時去抓來源，抓完自動清洗成統一格式，再依規則標註與比對。人只在兩處出手：起初定義規則，收到告警後做判斷。至於找一個 AI 代筆寫結論，那是另一回事，這一頁也不勸你做。",
-          "這段粗活占的時間，比多數人以為的多。McKinsey 在 2023 年 6 月的報告寫道：「Current generative AI and other technologies have the potential to automate work activities that absorb 60 to 70 percent of employees' time today.」（現有的生成式 AI 與其他技術，有潛力自動化如今占員工工時 60% 至 70% 的工作活動。）同一份報告估計，生成式 AI 可能為全球經濟每年增加 2.6 兆至 4.4 兆美元的價值（McKinsey Global Institute, The economic potential of generative AI, 2023，<a href=\"https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier\" target=\"_blank\" rel=\"noopener\">https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier</a>）。資訊搜集正好是其中自動化難度最低的一塊。",
+          "這段粗活占的時間，比多數人以為的多。McKinsey 在 2023 年 6 月的報告寫道：「Current generative AI and other technologies have the potential to automate work activities that absorb 60 to 70 percent of employees' time today.」（現有的生成式 AI 與其他技術，有潛力自動化如今占員工工時 60% 至 70% 的工作活動。）同一份報告估計，生成式 AI 可能為全球經濟每年增加 2.6 兆至 4.4 兆美元的價值（McKinsey Global Institute, The economic potential of generative AI, 2023，<a href=\"https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier\" target=\"_blank\" rel=\"noopener\">McKinsey Global Institute</a>）。資訊搜集正好是其中自動化難度最低的一塊。",
         ],
       },
       {
         heading: "觀大勢：自動化從加分項變成基本盤",
         paragraphs: [
-          "看勢要看數字往哪邊走。Gartner 在 2021 年 4 月的預測給了一個量級：全球超自動化（hyperautomation）相關軟體市場從 2020 年的 4,816 億美元，成長到 2022 年的 5,966 億美元（Gartner 新聞稿，<a href=\"https://www.gartner.com/en/newsroom/press-releases/2021-04-28-gartner-forecasts-worldwide-hyperautomation-enabling-software-market-to-reach-nearly-600-billion-by-2022\" target=\"_blank\" rel=\"noopener\">https://www.gartner.com/en/newsroom/press-releases/2021-04-28-gartner-forecasts-worldwide-hyperautomation-enabling-software-market-to-reach-nearly-600-billion-by-2022</a>）。同一份新聞稿裡，Gartner 說得很直接：「Hyperautomation has shifted from an option to a condition of survival.」（超自動化已從一個選項，變成生存條件。來源同上）",
-          "台灣的數字也在動。資策會 MIC 於 2024 年 11 月對電子資訊製造業的調查顯示，28% 的企業已導入 AI、46% 在規劃階段，已導入者 2024 年平均投入約 209 萬元（Techniche 科技島報導資策會調查，<a href=\"https://www.technice.com.tw/experience/gov/167113/\" target=\"_blank\" rel=\"noopener\">https://www.technice.com.tw/experience/gov/167113/</a>）。同一份調查中，資策會 MIC 的分析指出，資料品質是影響 AI 預測效能的主要因素，並建議企業用「以終為始」的方式準備資料。這句話值錢：管線好建，餵進去的資料乾不乾淨，決定產出可不可用。",
+          "看勢要看數字往哪邊走。Gartner 在 2021 年 4 月的預測給了一個量級：全球超自動化（hyperautomation）相關軟體市場從 2020 年的 4,816 億美元，成長到 2022 年的 5,966 億美元（Gartner 新聞稿，<a href=\"https://www.gartner.com/en/newsroom/press-releases/2021-04-28-gartner-forecasts-worldwide-hyperautomation-enabling-software-market-to-reach-nearly-600-billion-by-2022\" target=\"_blank\" rel=\"noopener\">Gartner 新聞稿</a>）。同一份新聞稿裡，Gartner 說得很直接：「Hyperautomation has shifted from an option to a condition of survival.」（超自動化已從一個選項，變成生存條件。來源同上）",
+          "台灣的數字也在動。資策會 MIC 於 2024 年 11 月對電子資訊製造業的調查顯示，28% 的企業已導入 AI、46% 在規劃階段，已導入者 2024 年平均投入約 209 萬元（Techniche 科技島報導資策會調查，<a href=\"https://www.technice.com.tw/experience/gov/167113/\" target=\"_blank\" rel=\"noopener\">Techniche 科技島</a>）。同一份調查中，資策會 MIC 的分析指出，資料品質是影響 AI 預測效能的主要因素，並建議企業用「以終為始」的方式準備資料。這句話值錢：管線好建，餵進去的資料乾不乾淨，決定產出可不可用。",
           "中小團隊怎麼讀這些數字？大戶已經在花錢建自動化。你不必跟他們比預算，但至少別讓自己的耳目繼續靠人力硬撐。以弱敵強，先求不盲。",
         ],
       },
@@ -783,7 +783,7 @@ export const TOPICS: readonly Topic[] = [
       {
         heading: "眾人皆會問 AI，少有人接成生產線",
         paragraphs: [
-          "工具普及得快。資策會 MIC 在 2025 年 6 月發布的調查顯示，46% 的台灣網友用過生成式 AI 工具，18 至 25 歲族群達 69%，但每天使用一次以上的重度使用者只有 9%（資策會 MIC，<a href=\"https://mic.iii.org.tw/research.aspx?id=726\" target=\"_blank\" rel=\"noopener\">https://mic.iii.org.tw/research.aspx?id=726</a>）。資策會 MIC 在同一份調查中表示：「生成式 AI 工具已成為企業與個人提升競爭力的關鍵，近兩年企業對於善用生成式 AI 工具人才越發重視。」（來源同上）",
+          "工具普及得快。資策會 MIC 在 2025 年 6 月發布的調查顯示，46% 的台灣網友用過生成式 AI 工具，18 至 25 歲族群達 69%，但每天使用一次以上的重度使用者只有 9%（資策會 MIC，<a href=\"https://mic.iii.org.tw/research.aspx?id=726\" target=\"_blank\" rel=\"noopener\">生成式 AI 消費者調查</a>）。資策會 MIC 在同一份調查中表示：「生成式 AI 工具已成為企業與個人提升競爭力的關鍵，近兩年企業對於善用生成式 AI 工具人才越發重視。」（來源同上）",
           "這組數字放到情報工作上，讀法很明白：多數人停在「有事才問一下 AI」，離「每天自動產出、異常主動找上門」還有一段路。前者靠人記得去問，後者不靠任何人的自律。差距不在工具，在有沒有把工具接成固定運轉的流程。",
           "同一條生產線也不限於供應鏈或投資情報。換掉來源與標註規則，就能改組成政策追蹤、競品動態、研究文獻綜述。管線是通用的，領域知識放在規則層。",
         ],
@@ -860,9 +860,9 @@ export const TOPICS: readonly Topic[] = [
         heading: "靈感之前，先有問題：發明不靠等",
         paragraphs: [
           "靈感從不憑空掉下來，它落在準備好的問題上。發明史上每一聲「想通了」，前面都排著好幾天翻來覆去的提問。真正可複製的，是提問的方法。",
-          "蘇聯工程師 Genrich Altshuller 把這件事做成了學問。他從 1946 年起在裏海海軍專利部門工作，開始系統性地分析專利。他研究了 20 萬件專利後歸納出結論：技術矛盾大約只有 1,500 種，而化解這些矛盾的手法可以整理成 40 個發明原則（Altshuller Institute 傳記，<a href=\"https://www.aitriz.org/116-altshuller/775-genrich-altshuller\" target=\"_blank\" rel=\"noopener\">https://www.aitriz.org/116-altshuller/775-genrich-altshuller</a>）。",
-          "第一篇學術論文《On the Psychology of Inventive Creation》在 1956 年發表於《Voprosy Psikhologii》期刊（Wikipedia: TRIZ，<a href=\"https://en.wikipedia.org/wiki/TRIZ\" target=\"_blank\" rel=\"noopener\">https://en.wikipedia.org/wiki/TRIZ</a>）。體系隨後成形：40 個發明原則、39 個工程參數，以及把兩者接起來的矛盾矩陣。工程師把自己的難題翻譯成參數衝突，查矩陣，就能拿到前人在類似矛盾上用過的原則清單。",
-          "Altshuller 對這套方法的價值有一句流傳很廣的說法：「You can wait a hundred years for enlightenment, or you can solve the problem in 15 minutes with these principles.」（你可以等一百年等靈感，也可以用這些原則十五分鐘解掉問題。Altshuller Institute 傳記，<a href=\"https://www.aitriz.org/116-altshuller/775-genrich-altshuller\" target=\"_blank\" rel=\"noopener\">https://www.aitriz.org/116-altshuller/775-genrich-altshuller</a>）話說得滿。方向倒值得舉雙手贊成：把「想創意」變成「查前例、套模式、再驗證」。",
+          "蘇聯工程師 Genrich Altshuller 把這件事做成了學問。他從 1946 年起在裏海海軍專利部門工作，開始系統性地分析專利。他研究了 20 萬件專利後歸納出結論：技術矛盾大約只有 1,500 種，而化解這些矛盾的手法可以整理成 40 個發明原則（Altshuller Institute 傳記，<a href=\"https://www.aitriz.org/116-altshuller/775-genrich-altshuller\" target=\"_blank\" rel=\"noopener\">Altshuller Institute</a>）。",
+          "第一篇學術論文《On the Psychology of Inventive Creation》在 1956 年發表於《Voprosy Psikhologii》期刊（Wikipedia: TRIZ，<a href=\"https://en.wikipedia.org/wiki/TRIZ\" target=\"_blank\" rel=\"noopener\">TRIZ</a>）。體系隨後成形：40 個發明原則、39 個工程參數，以及把兩者接起來的矛盾矩陣。工程師把自己的難題翻譯成參數衝突，查矩陣，就能拿到前人在類似矛盾上用過的原則清單。",
+          "Altshuller 對這套方法的價值有一句流傳很廣的說法：「You can wait a hundred years for enlightenment, or you can solve the problem in 15 minutes with these principles.」（你可以等一百年等靈感，也可以用這些原則十五分鐘解掉問題。Altshuller Institute 傳記，<a href=\"https://www.aitriz.org/116-altshuller/775-genrich-altshuller\" target=\"_blank\" rel=\"noopener\">Altshuller Institute</a>）話說得滿。方向倒值得舉雙手贊成：把「想創意」變成「查前例、套模式、再驗證」。",
         ],
       },
       {
@@ -878,8 +878,8 @@ export const TOPICS: readonly Topic[] = [
         heading: "綁進日常才見效：三星怎麼用 TRIZ",
         paragraphs: [
           "方法臨陣抱不了佛腳，得先綁進日常的開發流程，這在 TRIZ 有公開記錄的產業成績裡看得最清楚。",
-          "三星在 2000 年代初把俄籍 TRIZ 工程師聘進首爾實驗室。依 Altshuller Institute 刊出的記述：「In 2003 TRIZ led to 50 new patents for Samsung and in 2004 one project alone, a DVD pick-up innovation, saved Samsung over $100 million.」（2003 年 TRIZ 為三星帶來 50 項新專利；2004 年單一個 DVD 讀取頭專案就省下超過一億美元。<a href=\"https://www.aitriz.org/triz-articles/triz-features/754-samsung-an-innovative-company\" target=\"_blank\" rel=\"noopener\">https://www.aitriz.org/triz-articles/triz-features/754-samsung-an-innovative-company</a>）",
-          "同一篇記述也提到規模：三星內部撰寫韓文 TRIZ 教材的專家，光 2004 年就在集團內訓練了超過 1,000 名工程師（來源同上）。Forbes 在 2013 年回顧三星創新體系時，也把 TRIZ 列為其中一個環節（<a href=\"https://www.forbes.com/sites/haydnshaughnessy/2013/03/07/why-is-samsung-such-an-innovative-company/\" target=\"_blank\" rel=\"noopener\">https://www.forbes.com/sites/haydnshaughnessy/2013/03/07/why-is-samsung-such-an-innovative-company/</a>）。",
+          "三星在 2000 年代初把俄籍 TRIZ 工程師聘進首爾實驗室。依 Altshuller Institute 刊出的記述：「In 2003 TRIZ led to 50 new patents for Samsung and in 2004 one project alone, a DVD pick-up innovation, saved Samsung over $100 million.」（2003 年 TRIZ 為三星帶來 50 項新專利；2004 年單一個 DVD 讀取頭專案就省下超過一億美元。<a href=\"https://www.aitriz.org/triz-articles/triz-features/754-samsung-an-innovative-company\" target=\"_blank\" rel=\"noopener\">Altshuller Institute</a>）",
+          "同一篇記述也提到規模：三星內部撰寫韓文 TRIZ 教材的專家，光 2004 年就在集團內訓練了超過 1,000 名工程師（來源同上）。Forbes 在 2013 年回顧三星創新體系時，也把 TRIZ 列為其中一個環節（<a href=\"https://www.forbes.com/sites/haydnshaughnessy/2013/03/07/why-is-samsung-such-an-innovative-company/\" target=\"_blank\" rel=\"noopener\">來源</a>）。",
           "讀這個案例，該盯的是投入方式。三星把專家聘來長駐，把訓練與開發流程綁在一起；辦幾場工作坊發發證書，換不來這種成績。成效跟投入深度綁在一起，這對想導入的公司是提醒：方法有效的前提，是它真的被用在日常專案上。",
         ],
       },
@@ -895,7 +895,7 @@ export const TOPICS: readonly Topic[] = [
       {
         heading: "AI 把查表的功夫接走了",
         paragraphs: [
-          "大型語言模型改變的是「翻譯」這一步。2024 年發表的 AutoTRIZ 研究（arXiv:2403.13002）讓 LLM 依 TRIZ 的推理步驟自動運作：使用者用白話描述問題，系統自動識別矛盾、對映參數、推薦原則、產出解法報告，並以教科書案例與電池熱管理系統的實際設計做了驗證。論文對這個取徑的定位是：「By leveraging LLMs' vast pre-trained knowledge and advanced reasoning capabilities, AutoTRIZ offers a novel, generative, and interpretable approach to engineering innovation.」（藉助 LLM 的預訓練知識與推理能力，AutoTRIZ 為工程創新提供一種新的、生成式且可解釋的做法。<a href=\"https://arxiv.org/abs/2403.13002\" target=\"_blank\" rel=\"noopener\">https://arxiv.org/abs/2403.13002</a>）",
+          "大型語言模型改變的是「翻譯」這一步。2024 年發表的 AutoTRIZ 研究（arXiv:2403.13002）讓 LLM 依 TRIZ 的推理步驟自動運作：使用者用白話描述問題，系統自動識別矛盾、對映參數、推薦原則、產出解法報告，並以教科書案例與電池熱管理系統的實際設計做了驗證。論文對這個取徑的定位是：「By leveraging LLMs' vast pre-trained knowledge and advanced reasoning capabilities, AutoTRIZ offers a novel, generative, and interpretable approach to engineering innovation.」（藉助 LLM 的預訓練知識與推理能力，AutoTRIZ 為工程創新提供一種新的、生成式且可解釋的做法。<a href=\"https://arxiv.org/abs/2403.13002\" target=\"_blank\" rel=\"noopener\">arXiv</a>）",
           "可解釋，這三個字是重點。直接叫聊天機器人「幫我想十個點子」，拿到的是無法追溯的輸出；讓模型沿著 TRIZ 步驟走，每個建議都掛在某條原則、某個矛盾上，工程師可以逐步檢查推理對不對。好的證明每一步都攤開給人檢驗，就是要讓人挑得了錯。方法論在這裡的角色，是給 AI 上軌道，讓生成過程留下可以審的軌跡。",
           "工程實作上，標準做法是 RAG：把原則、參數、矛盾矩陣、分離原理、效應庫、案例集全部向量化建庫，模型回答前先檢索，再依檢索到的條目推理。我們自己的系統就是這樣建的：40 發明原則、39 工程參數、263 矛盾矩陣建成完整向量庫，涵蓋 4 分離原理、Oxford Effects 與 AutoTRIZ 案例，用 crawl、chunk、embed 三階段管線維護，多角色 AI 從描述問題一路走到生成解法。過去要專家陪跑的翻譯與查表，現在是幾分鐘的自動流程；專家的時間留給驗證解法。",
         ],
@@ -972,30 +972,30 @@ export const TOPICS: readonly Topic[] = [
         heading: "先認貨，再開口：一個產品一部法",
         paragraphs: [
           "做買賣頭一件事是認貨：糧有糧的行情，畜有畜的規矩，混著算必虧。廣告也一樣，受哪部法管，看的是「賣什麼」，不是「怎麼寫」。醫療機構的診療服務歸醫療法；藥品與醫療器材歸藥事法；食品（包括所有保健食品）歸食品安全衛生管理法；化粧品歸化粧品衛生安全管理法。這四類都碰不到的一般商品，後頭還有公平交易法第 21 條的虛偽不實廣告等著。",
-          "罰鍰級距差得驚人。違規醫療廣告依醫療法第 103 條處 5 萬至 25 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=103\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=103</a>）；藥物廣告未經核准刊播，依藥事法第 92 條處 20 萬至 500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030001&flno=92\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030001&flno=92</a>）；食品廣告涉醫療效能，依食安法第 45 條處 60 萬至 500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0040001&flno=45\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0040001&flno=45</a>）；一般廣告不實，公平會依公平交易法第 42 條可處 5 萬至 2,500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0150002&flno=42\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0150002&flno=42</a>）。同一句「有效改善」，放在不同產品上，代價可以差一百倍以上。",
+          "罰鍰級距差得驚人。違規醫療廣告依醫療法第 103 條處 5 萬至 25 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=103\" target=\"_blank\" rel=\"noopener\">醫療法第 103 條</a>）；藥物廣告未經核准刊播，依藥事法第 92 條處 20 萬至 500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030001&flno=92\" target=\"_blank\" rel=\"noopener\">藥事法第 92 條</a>）；食品廣告涉醫療效能，依食安法第 45 條處 60 萬至 500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0040001&flno=45\" target=\"_blank\" rel=\"noopener\">全國法規資料庫</a>）；一般廣告不實，公平會依公平交易法第 42 條可處 5 萬至 2,500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0150002&flno=42\" target=\"_blank\" rel=\"noopener\">公平交易法第 42 條</a>）。同一句「有效改善」，放在不同產品上，代價可以差一百倍以上。",
           "行銷團隊最常犯的錯，是拿別的行業慣用的文案套健康產品。電商寫「回購率第一」沒事，保健食品寫「調節免疫」就進了衛生局的裁罰清單。分類這一步做錯，後面每一步都在替自己攢學費。",
         ],
       },
       {
         heading: "醫療廣告：沒掛那塊招牌，就不能吆喝那門生意",
         paragraphs: [
-          "醫療法第 84 條只有一句話：「非醫療機構，不得為醫療廣告。」（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=84\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=84</a>）換成生意話：沒掛那塊招牌，就不能替那門生意吆喝。行銷公司、平台、藥局、生技公司替診療服務打廣告，資格本身就不存在。合作模式得設計成由醫療機構具名刊播，代理商只做執行。",
-          "能寫什麼，醫療法第 85 條採正面表列：機構名稱與開業執照字號、醫師姓名學經歷與證書字號、健保特約字樣、診療科別與時間、開業歇業遷移日期，加上中央主管機關公告容許的事項（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=85\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=85</a>）。第 86 條再從方式面禁止七種手法：假借他人名義宣傳、以出售或贈與醫療刊物宣傳、公開祖傳秘方或公開答問、摘錄醫學刊物內容、藉採訪或報導宣傳、與違規內容聯合並排，以及概括的「其他不正當方式」（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=86\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=86</a>）。常見的「記者實地走訪某診所」業配文，就是第 86 條第五款的教科書案例。",
+          "醫療法第 84 條只有一句話：「非醫療機構，不得為醫療廣告。」（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=84\" target=\"_blank\" rel=\"noopener\">醫療法第 84 條</a>）換成生意話：沒掛那塊招牌，就不能替那門生意吆喝。行銷公司、平台、藥局、生技公司替診療服務打廣告，資格本身就不存在。合作模式得設計成由醫療機構具名刊播，代理商只做執行。",
+          "能寫什麼，醫療法第 85 條採正面表列：機構名稱與開業執照字號、醫師姓名學經歷與證書字號、健保特約字樣、診療科別與時間、開業歇業遷移日期，加上中央主管機關公告容許的事項（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=85\" target=\"_blank\" rel=\"noopener\">醫療法第 85 條</a>）。第 86 條再從方式面禁止七種手法：假借他人名義宣傳、以出售或贈與醫療刊物宣傳、公開祖傳秘方或公開答問、摘錄醫學刊物內容、藉採訪或報導宣傳、與違規內容聯合並排，以及概括的「其他不正當方式」（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0020021&flno=86\" target=\"_blank\" rel=\"noopener\">醫療法第 86 條</a>）。常見的「記者實地走訪某診所」業配文，就是第 86 條第五款的教科書案例。",
           "違規的代價不只罰錢。廣告內容虛偽、誇張、歪曲事實者，除罰鍰外可處一個月以上一年以下停業處分或廢止開業執照，並吊銷負責醫師的醫師證書一年（醫療法第 103 條）。對診所來說，這比 25 萬元罰鍰重得多。店關了可以再開，招牌砸了難再立。第 85 條對廣播電視與網際網路另有補充規定，社群貼文、官網、Google 商家檔案都在管轄範圍內，別以為只有買版面才算廣告。",
         ],
       },
       {
         heading: "藥品事前核准，食品化粧品碰不得療效",
         paragraphs: [
-          "貨要過關，先驗印信。藥物廣告同一個道理，採事前核准制。藥事法第 66 條要求藥商刊播前，把所有文字、圖畫、言詞送中央或直轄市衛生主管機關核准，並向傳播業者送驗核准文件；核准後不得變更內容；傳播業者也不得刊播未經核准的藥物廣告，且要保存委託刊播者資料六個月備查（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030001&flno=66\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030001&flno=66</a>）。實務上這代表藥品行銷的排程要把送審時間算進去，而且 A/B 測試不能改到核准文案的實質內容。",
-          "食品的規則反過來：不用事前送審，但紅線畫得很清楚。食安法第 28 條規定標示、宣傳或廣告不得有不實、誇張或易生誤解之情形，食品更不得為醫療效能之標示、宣傳或廣告（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0040001&flno=28\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0040001&flno=28</a>）。「幫助入睡」可能落在誇張易生誤解（4 萬至 400 萬元），「治療失眠」則直接踩醫療效能（60 萬至 500 萬元），兩者都在第 45 條，級距差 15 倍。情節重大者還要在 30 日內自費刊播更正廣告，等於花錢昭告天下自己違了規。算遍各種賠本生意，沒有一樁比這更虧。",
-          "化粧品是同一套帳。化粧品衛生安全管理法第 10 條：標示宣傳廣告不得虛偽誇大，不得為醫療效能之標示宣傳廣告（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030013&flno=10\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030013&flno=10</a>）。罰則在第 20 條：虛偽誇大處 4 萬至 20 萬元，宣稱醫療效能處 60 萬至 500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030013&flno=20\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030013&flno=20</a>）。保養品文案寫「消炎」「除皺」「促進膠原蛋白增生」，在主管機關眼中多數屬於誇大甚至醫療效能，後面的裁罰統計會看到這幾個詞出現的頻率。",
+          "貨要過關，先驗印信。藥物廣告同一個道理，採事前核准制。藥事法第 66 條要求藥商刊播前，把所有文字、圖畫、言詞送中央或直轄市衛生主管機關核准，並向傳播業者送驗核准文件；核准後不得變更內容；傳播業者也不得刊播未經核准的藥物廣告，且要保存委託刊播者資料六個月備查（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030001&flno=66\" target=\"_blank\" rel=\"noopener\">藥事法第 66 條</a>）。實務上這代表藥品行銷的排程要把送審時間算進去，而且 A/B 測試不能改到核准文案的實質內容。",
+          "食品的規則反過來：不用事前送審，但紅線畫得很清楚。食安法第 28 條規定標示、宣傳或廣告不得有不實、誇張或易生誤解之情形，食品更不得為醫療效能之標示、宣傳或廣告（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0040001&flno=28\" target=\"_blank\" rel=\"noopener\">全國法規資料庫</a>）。「幫助入睡」可能落在誇張易生誤解（4 萬至 400 萬元），「治療失眠」則直接踩醫療效能（60 萬至 500 萬元），兩者都在第 45 條，級距差 15 倍。情節重大者還要在 30 日內自費刊播更正廣告，等於花錢昭告天下自己違了規。算遍各種賠本生意，沒有一樁比這更虧。",
+          "化粧品是同一套帳。化粧品衛生安全管理法第 10 條：標示宣傳廣告不得虛偽誇大，不得為醫療效能之標示宣傳廣告（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030013&flno=10\" target=\"_blank\" rel=\"noopener\">全國法規資料庫</a>）。罰則在第 20 條：虛偽誇大處 4 萬至 20 萬元，宣稱醫療效能處 60 萬至 500 萬元（<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0030013&flno=20\" target=\"_blank\" rel=\"noopener\">全國法規資料庫</a>）。保養品文案寫「消炎」「除皺」「促進膠原蛋白增生」，在主管機關眼中多數屬於誇大甚至醫療效能，後面的裁罰統計會看到這幾個詞出現的頻率。",
         ],
       },
       {
         heading: "網紅與代言：收了錢，帳就記在你名下",
         paragraphs: [
-          "替人吆喝而收了錢，就是入了夥，這是自古的行規。公平交易法第 21 條除了禁止事業為虛偽不實或引人錯誤的表示，也把薦證者拉進責任圈。條文寫得直接：「廣告薦證者明知或可得而知其所從事之薦證有引人錯誤之虞，而仍為薦證者，與廣告主負連帶損害賠償責任。」（公平交易法第 21 條，<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0150002&flno=21\" target=\"_blank\" rel=\"noopener\">https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0150002&flno=21</a>）名人、專業人士與機構負完整連帶責任；非知名的素人薦證者，賠償責任以所受報酬十倍為上限。廣告代理業與媒體業明知或可得而知仍製作、傳播，同樣連帶。",
+          "替人吆喝而收了錢，就是入了夥，這是自古的行規。公平交易法第 21 條除了禁止事業為虛偽不實或引人錯誤的表示，也把薦證者拉進責任圈。條文寫得直接：「廣告薦證者明知或可得而知其所從事之薦證有引人錯誤之虞，而仍為薦證者，與廣告主負連帶損害賠償責任。」（公平交易法第 21 條，<a href=\"https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0150002&flno=21\" target=\"_blank\" rel=\"noopener\">公平交易法第 21 條</a>）名人、專業人士與機構負完整連帶責任；非知名的素人薦證者，賠償責任以所受報酬十倍為上限。廣告代理業與媒體業明知或可得而知仍製作、傳播，同樣連帶。",
           "對品牌端的實務意義：網紅合作合約裡的「內容由創作者自行負責」條款，擋不掉廣告主自己依第 42 條被罰 5 萬至 2,500 萬元的行政責任。對創作者端的意義：收了錢的「使用心得」在法律上是薦證，講出來的功效自己也要負責。健康類產品再疊一層，網紅替保健食品講療效，食安法第 28 條與公平法第 21 條可以同時成立。",
           "比較穩的做法是把審稿權寫進合約。腳本與貼文在上線前過一次法規檢核，敏感字眼（療效、痊癒、根治、醫師推薦）先攔下來，比事後要求創作者刪文有效得多。刪文抹不掉已成立的違規事實，衛生局裁罰看的是「曾經刊播」。",
         ],
@@ -1003,10 +1003,10 @@ export const TOPICS: readonly Topic[] = [
       {
         heading: "裁罰統計：每年上萬件，這學費繳得冤",
         paragraphs: [
-          "看行情要看成交紀錄，看合規要看裁罰紀錄。食藥署彙整全國衛生機關的裁處結果：112 年度（2023）食品、藥物、化粧品違規廣告共裁處 10,645 件，罰鍰 4 億 3,628 萬元（衛福部，<a href=\"https://www.mohw.gov.tw/cp-16-78245-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-16-78245-1.html</a>）；113 年度（2024）裁處 8,006 件，罰鍰 3 億 7,765 萬元（食藥署，<a href=\"https://www.fda.gov.tw/tc/newsContent.aspx?cid=4&id=t623454\" target=\"_blank\" rel=\"noopener\">https://www.fda.gov.tw/tc/newsContent.aspx?cid=4&id=t623454</a>）。113 年度的十大違規案例全數涉及醫療效能與不實宣稱，其中有產品廣告直接寫「治療肌少症，逆轉肌肉萎縮」。這不算灰色地帶被誤傷，是整句踩在紅線正中央。",
-          "看單一縣市的帳，更能對到日常文案。台北市衛生局公布 113 年（2024）查緝結果：共開罰 669 件、7,588 萬元，食品占 460 件、5,204 萬元。違規食品廣告最常見的宣稱是提升免疫力（69 件、15.0%）與減肥瘦身（68 件、14.8%）；違規化粧品廣告第一名是消炎消腫（53 件、30.8%），其次是促進細胞活動或膠原蛋白增生（43 件、25.0%）（台北市衛生局，<a href=\"https://health.gov.taipei/News_Content.aspx?n=BB5A41BA1E6CA260&sms=72544237BBE4C5F6&s=8D3542BBC41F7316\" target=\"_blank\" rel=\"noopener\">https://health.gov.taipei/News_Content.aspx?n=BB5A41BA1E6CA260&sms=72544237BBE4C5F6&s=8D3542BBC41F7316</a>）。你的文案裡若有這幾個詞，等於自己走進查緝的取樣範圍。",
-          "食藥署在年度新聞稿裡的呼籲寫得很白：「凡是廣告內容太神奇、太吸引人的，務必提高警覺，聰明判斷產品資訊，尤其是宣稱具有療效的廣告內容更勿輕信、勿衝動購買，以免花錢受騙！」（食藥署 112 年度十大違規食藥廣告新聞稿，<a href=\"https://www.mohw.gov.tw/cp-16-78245-1.html\" target=\"_blank\" rel=\"noopener\">https://www.mohw.gov.tw/cp-16-78245-1.html</a>）主管機關教消費者辨認的特徵，翻過來就是行銷團隊的自檢清單。",
-          "新的管制還在加。再生醫療法引入廣告預審制後，衛福部醫事司在 2026 年 1 月對媒體表示，當時尚無任何外泌體醫療廣告申請預審，市面上所見廣告「通通違法」，且「對於違法再生醫療廣告也會嚴格查辦，今年元旦迄今，已有四案轉交調查，若確認有違法情事，依據《再生醫療法》可開罰兩百至兩千萬」（太報／Yahoo 新聞，<a href=\"https://tw.news.yahoo.com/%E5%9D%8A%E9%96%93%E5%A4%96%E6%B3%8C%E9%AB%94%E9%86%AB%E7%BE%8E%E5%BB%A3%E5%91%8A%E9%80%9A%E9%80%9A%E9%81%95%E6%B3%95-%E8%A1%9B%E7%A6%8F%E9%83%A8-%E9%A6%96%E6%B3%A2%E7%96%91%E4%BC%BC%E9%81%95%E8%A6%8F4%E4%BB%B6-%E6%9C%80%E9%87%8D%E5%8F%AF%E7%BD%B02%E5%8D%83%E8%90%AC-072322880.html\" target=\"_blank\" rel=\"noopener\">https://tw.news.yahoo.com/%E5%9D%8A%E9%96%93%E5%A4%96%E6%B3%8C%E9%AB%94%E9%86%AB%E7%BE%8E%E5%BB%A3%E5%91%8A%E9%80%9A%E9%80%9A%E9%81%95%E6%B3%95-%E8%A1%9B%E7%A6%8F%E9%83%A8-%E9%A6%96%E6%B3%A2%E7%96%91%E4%BC%BC%E9%81%95%E8%A6%8F4%E4%BB%B6-%E6%9C%80%E9%87%8D%E5%8F%AF%E7%BD%B02%E5%8D%83%E8%90%AC-072322880.html</a>）。醫事司並提醒，診間內張貼宣稱外泌體療效的文宣同樣屬於可檢舉的違規廣告。外泌體、幹細胞這類題材，查得只會愈來愈緊。",
+          "看行情要看成交紀錄，看合規要看裁罰紀錄。食藥署彙整全國衛生機關的裁處結果：112 年度（2023）食品、藥物、化粧品違規廣告共裁處 10,645 件，罰鍰 4 億 3,628 萬元（衛福部，<a href=\"https://www.mohw.gov.tw/cp-16-78245-1.html\" target=\"_blank\" rel=\"noopener\">衛福部／食藥署</a>）；113 年度（2024）裁處 8,006 件，罰鍰 3 億 7,765 萬元（食藥署，<a href=\"https://www.fda.gov.tw/tc/newsContent.aspx?cid=4&id=t623454\" target=\"_blank\" rel=\"noopener\">食藥署</a>）。113 年度的十大違規案例全數涉及醫療效能與不實宣稱，其中有產品廣告直接寫「治療肌少症，逆轉肌肉萎縮」。這不算灰色地帶被誤傷，是整句踩在紅線正中央。",
+          "看單一縣市的帳，更能對到日常文案。台北市衛生局公布 113 年（2024）查緝結果：共開罰 669 件、7,588 萬元，食品占 460 件、5,204 萬元。違規食品廣告最常見的宣稱是提升免疫力（69 件、15.0%）與減肥瘦身（68 件、14.8%）；違規化粧品廣告第一名是消炎消腫（53 件、30.8%），其次是促進細胞活動或膠原蛋白增生（43 件、25.0%）（台北市衛生局，<a href=\"https://health.gov.taipei/News_Content.aspx?n=BB5A41BA1E6CA260&sms=72544237BBE4C5F6&s=8D3542BBC41F7316\" target=\"_blank\" rel=\"noopener\">113 年違規廣告查緝情形</a>）。你的文案裡若有這幾個詞，等於自己走進查緝的取樣範圍。",
+          "食藥署在年度新聞稿裡的呼籲寫得很白：「凡是廣告內容太神奇、太吸引人的，務必提高警覺，聰明判斷產品資訊，尤其是宣稱具有療效的廣告內容更勿輕信、勿衝動購買，以免花錢受騙！」（食藥署 112 年度十大違規食藥廣告新聞稿，<a href=\"https://www.mohw.gov.tw/cp-16-78245-1.html\" target=\"_blank\" rel=\"noopener\">衛福部／食藥署</a>）主管機關教消費者辨認的特徵，翻過來就是行銷團隊的自檢清單。",
+          "新的管制還在加。再生醫療法引入廣告預審制後，衛福部醫事司在 2026 年 1 月對媒體表示，當時尚無任何外泌體醫療廣告申請預審，市面上所見廣告「通通違法」，且「對於違法再生醫療廣告也會嚴格查辦，今年元旦迄今，已有四案轉交調查，若確認有違法情事，依據《再生醫療法》可開罰兩百至兩千萬」（太報／Yahoo 新聞，<a href=\"https://tw.news.yahoo.com/%E5%9D%8A%E9%96%93%E5%A4%96%E6%B3%8C%E9%AB%94%E9%86%AB%E7%BE%8E%E5%BB%A3%E5%91%8A%E9%80%9A%E9%80%9A%E9%81%95%E6%B3%95-%E8%A1%9B%E7%A6%8F%E9%83%A8-%E9%A6%96%E6%B3%A2%E7%96%91%E4%BC%BC%E9%81%95%E8%A6%8F4%E4%BB%B6-%E6%9C%80%E9%87%8D%E5%8F%AF%E7%BD%B02%E5%8D%83%E8%90%AC-072322880.html\" target=\"_blank\" rel=\"noopener\">太報／Yahoo 新聞</a>）。醫事司並提醒，診間內張貼宣稱外泌體療效的文宣同樣屬於可檢舉的違規廣告。外泌體、幹細胞這類題材，查得只會愈來愈緊。",
         ],
       },
       {

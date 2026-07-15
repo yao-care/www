@@ -82,7 +82,7 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 - `proofPoints`: 白名單 — `designResponse` 段落只能引用這些事實，每條附 `#N` 索引（regex guard 會檢查）
 - `ctaText / ctaHref`: 文章底部 CTA
 
-> **策略（2026-06）：精準少量 + 永久累積。** 文章是常青議題分析，**不再砍文**（已移除 `pruneOld` / `KEEP_PER_TARGET`），長期累積以建主題深度與 SEO 權重。每天**少寫、寫準、不重複**（門檻 `RELEVANCE_THRESHOLD=0.72`、每日 `MAX_WRITE_TOTAL=10`、每 target `PER_TARGET_DAILY_CAP=3`，皆 `fetch-news.ts` 檔內常數）。
+> **策略（2026-06）：精準少量 + 永久累積。** 文章是常青議題分析，**不再砍文**（已移除 `pruneOld` / `KEEP_PER_TARGET`），長期累積以建主題深度與 SEO 權重。每天**少寫、寫準、不重複**（門檻 `RELEVANCE_THRESHOLD=0.72`、每日 `MAX_WRITE_TOTAL=5`（2026-07-15 由 10 調降，重構過渡）、每 target `PER_TARGET_DAILY_CAP=3`，皆 `fetch-news.ts` 檔內常數）。
 
 ### 內容存放
 `src/content/news/<target>/<id>.json` — 走 Astro content collection，schema 定義在 `src/content/config.ts`（含 `newsBrief / issueAnalysis / designResponse / relevance / highlight / criticPasses` 等欄位與長度限制）。檔名 `<id>` 是 URL hash。
@@ -249,6 +249,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── glossary.config.ts     ← 名詞解釋（10 則）：定義 + 段落 + related 產品 + 來源（GEO 用）
 │   ├── guides.config.ts       ← 情境指南（7 則）：使用者搜尋原話為題 + answer-first + 工具帶入（GEO 用）
 │   ├── news.config.ts         ← 12 個 news target（queries / voicePoints / proofPoints / CTA）
+│   ├── topics.config.ts       ← 9 個主題頁內容（2026-07-15 新增：lens 判斷角度 / answerFirst / sections / faqs / sources / ctas；來源經逐條實開查證）
 │   ├── content/
 │   │   ├── config.ts          ← news collection schema（Zod）
 │   │   └── news/<target>/*.json ← 自動產生的議題評論文章（cron 寫入）
@@ -282,6 +283,9 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   ├── news/
 │   │   │   ├── index.astro            ← 議題追蹤總覽（依 target / category 過濾）
 │   │   │   └── [target]/[slug].astro  ← 全文頁（NewsArticle JSON-LD）
+│   │   ├── topics/
+│   │   │   ├── index.astro            ← 主題總覽（ItemList）
+│   │   │   └── [slug].astro           ← 主題頁（Article + FAQPage + Breadcrumb；議題×產品彙整，吃 topics.config）
 │   │   ├── glossary/
 │   │   │   ├── index.astro            ← 名詞解釋總覽（DefinedTermSet）
 │   │   │   └── [slug].astro           ← 名詞頁（DefinedTerm + Breadcrumb；交叉連回產品）
@@ -348,9 +352,14 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 - `TxGNN.astro` 末尾的 `<script>` 標籤是計數動畫邏輯
 - D3 已 `import * as d3 from 'd3'` 直接用
 
+### 調整主題頁（/topics/）內容
+- 九頁內容單一來源：`src/topics.config.ts`（答案、章節、FAQ、來源、產品回應）；模板在 `src/pages/topics/`
+- 鐵則：已查證數字與來源連結不可亂改；新增事實先查權威來源；文風禁 AI 味（比照 style-guide 精神）
+- 改完 `npm run deploy` 上線，並用 `node scripts/indexnow-urls.mjs <改動頁URL>` 通知收錄
+
 ### 調整 news 抓取範圍 / 角度
 - 加搜尋關鍵字、改痛點 / 設計 proof：編 `src/news.config.ts` 對應 target
-- 調精準度 / 產量：`fetch-news.ts` 檔內常數 `RELEVANCE_THRESHOLD`(0.72) / `MAX_WRITE_TOTAL`(10) / `PER_TARGET_DAILY_CAP`(3) / `DUP_TITLE_THRESHOLD`(0.6)
+- 調精準度 / 產量：`fetch-news.ts` 檔內常數 `RELEVANCE_THRESHOLD`(0.72) / `MAX_WRITE_TOTAL`(5) / `PER_TARGET_DAILY_CAP`(3) / `DUP_TITLE_THRESHOLD`(0.6)
 - 調各 target 的「引用價值傾斜」：`CITATION_PRIORITY`（選題加減分）與 `TARGET_DAILY_CAP`（單 target 日上限覆寫），同在 `fetch-news.ts`
 - 改 writer / critic 的 prompt：`scripts/news-prompts.mjs`
 - 改長度 / proofPoint 引用規則：`scripts/news-guards.mjs` + `src/content/config.ts` 的 Zod schema 要一致

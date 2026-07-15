@@ -1,6 +1,7 @@
 ---
 import { SITE } from '../site.config';
 import { CATEGORIES, productsByCategory, LINE_TEAM } from '../products.config';
+import { TOPICS } from '../topics.config';
 
 const medicalProducts = productsByCategory('medical');
 const aiProducts = productsByCategory('ai');
@@ -110,6 +111,9 @@ const year = new Date().getFullYear();
             <a href="/guides" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">情境指南</a>
           </li>
           <li>
+            <a href="/topics" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">主題</a>
+          </li>
+          <li>
             <a href="/news" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">議題追蹤</a>
           </li>
           <li>
@@ -132,6 +136,16 @@ const year = new Date().getFullYear();
             </li>
           ))}
         </ul>
+      </div>
+    </div>
+
+    <!-- 主題（9 個角度式彙整頁，全站內鏈；2026-07-15 內容重構 Phase 1） -->
+    <div class="mt-10 pt-6 border-t border-neutral-200">
+      <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-3">主題</p>
+      <div class="flex flex-wrap gap-x-4 gap-y-2">
+        {TOPICS.map((t) => (
+          <a href={`/topics/${t.slug}/`} class="text-sm text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">{t.title}</a>
+        ))}
       </div>
     </div>
 

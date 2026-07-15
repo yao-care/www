@@ -85,7 +85,7 @@ const PER_QUERY_LIMIT = 12;
 /** 送進 filter LLM 的最大 candidate 數 */
 const FILTER_BATCH_SIZE = 25;
 /** 一次 cron 全部 target 加總最多寫幾篇（不砍文後改少量精選） */
-const MAX_WRITE_TOTAL = 10;
+const MAX_WRITE_TOTAL = 5; // 2026-07-15 10→5：內容重構觀察窗過渡調降（Phase 2 產線改餵主題頁後本常數退役）
 /** 單一 target 一天最多寫幾篇（避免單線洗版，保留多樣性） */
 const PER_TARGET_DAILY_CAP = 3;
 /** 命中 GSC 真實搜尋字的需求加成（疊在 relevance 上影響「挑哪篇」） */
