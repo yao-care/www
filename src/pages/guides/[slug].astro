@@ -7,6 +7,7 @@ import ProductCard from '../../components/products/ProductCard.astro';
 import { GUIDES, GUIDE_BY_SLUG } from '../../guides.config';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 import { GLOSSARY_BY_SLUG } from '../../glossary.config';
+import { TOPIC_BY_SLUG } from '../../topics.config';
 import { SITE } from '../../site.config';
 
 export function getStaticPaths() {
@@ -17,6 +18,7 @@ const { slug } = Astro.params;
 const guide = GUIDE_BY_SLUG[slug!];
 const related = (guide.related ?? []).map((s) => PRODUCT_BY_SLUG[s]);
 const terms = (guide.relatedTerms ?? []).map((s) => GLOSSARY_BY_SLUG[s]).filter(Boolean);
+const topicOf = guide.topic ? TOPIC_BY_SLUG[guide.topic] : undefined;
 
 const pageTitle = `${guide.question} · yao.care`;
 const pageDescription = guide.answer;
@@ -31,6 +33,7 @@ const jsonLd = {
       description: guide.answer,
       inLanguage: 'zh-TW',
       mainEntityOfPage: canonical,
+      ...(topicOf ? { isPartOf: { '@type': 'WebPage', '@id': new URL(`/topics/${topicOf.slug}/`, SITE.url).toString(), name: topicOf.title } } : {}),
       author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
       publisher: {
         '@type': 'Organization',
@@ -179,6 +182,13 @@ const jsonLd = {
 
     <!-- back -->
     <div class="max-w-3xl mx-auto px-4 lg:px-6 pb-12">
+      {topicOf && (
+        <p class="mb-3">
+          <a href={`/topics/${topicOf.slug}/`} class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline underline-offset-2">
+            所屬主題：{topicOf.title}
+          </a>
+        </p>
+      )}
       <a href="/guides" class="inline-flex items-center gap-2 text-sm text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)]">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
         看更多情境指南

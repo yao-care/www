@@ -5,6 +5,8 @@ import type { ProductSlug } from './products.config';
 
 export type GlossaryTerm = {
   slug: string;
+  /** 所屬主題（/topics/<slug>；2026-07-15 Phase 3 掛靠，可選） */
+  topic?: string;
   term: string;
   /** 英文 / 全名 / 別名 */
   en: string;
@@ -22,6 +24,7 @@ export type GlossaryTerm = {
 export const GLOSSARY: readonly GlossaryTerm[] = [
   {
     slug: 'smart-on-fhir',
+    topic: 'explainable-medical-ai',
     term: 'SMART on FHIR',
     en: 'Substitutable Medical Apps, Reusable Technology on FHIR',
     category: 'medical',
@@ -44,6 +47,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'atc',
+    topic: 'medication-safety',
     term: 'ATC 藥品分類碼',
     en: 'Anatomical Therapeutic Chemical Classification',
     category: 'medical',
@@ -63,6 +67,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cfs',
+    topic: 'elder-care-frailty',
     term: '臨床衰弱量表 CFS',
     en: 'Clinical Frailty Scale',
     category: 'care',
@@ -81,6 +86,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cga',
+    topic: 'elder-care-frailty',
     term: '高齡周全性評估 CGA',
     en: 'Comprehensive Geriatric Assessment',
     category: 'care',
@@ -99,6 +105,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'asq3',
+    topic: 'child-development',
     term: 'ASQ-3 兒童發展篩檢',
     en: 'Ages & Stages Questionnaires, Third Edition',
     category: 'medical',
@@ -117,6 +124,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'intrinsic-capacity',
+    topic: 'preventive-function-health',
     term: 'WHO 內在能力（IC）',
     en: 'Intrinsic Capacity',
     category: 'medical',
@@ -136,6 +144,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'drug-repurposing',
+    topic: 'explainable-medical-ai',
     term: '老藥新用（Drug Repurposing）',
     en: 'Drug Repurposing / Repositioning',
     category: 'medical',
@@ -154,6 +163,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cdss',
+    topic: 'explainable-medical-ai',
     term: '臨床決策支援系統 CDSS',
     en: 'Clinical Decision Support System',
     category: 'medical',
@@ -172,6 +182,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'genai-medical-guidance',
+    topic: 'medical-ai-governance',
     term: '醫療機構應用生成式 AI 指引',
     en: 'MOHW Generative AI Guidance for Healthcare',
     category: 'ai',
@@ -190,6 +201,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'mcp',
+    topic: 'medical-ai-governance',
     term: 'MCP（Model Context Protocol）',
     en: 'Model Context Protocol',
     category: 'ai',
@@ -209,6 +221,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'contactless-checkin',
+    topic: 'elder-care-frailty',
     term: '無接觸報到 / 人臉辨識報到',
     en: 'Contactless Check-in / Facial Recognition Attendance',
     category: 'care',
@@ -227,6 +240,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'triz-theory',
+    topic: 'innovation-methods',
     term: 'TRIZ 發明問題解決理論',
     en: 'Theory of Inventive Problem Solving',
     category: 'ai',

@@ -6,6 +6,8 @@ import FooterLinks from '../../components/FooterLinks.astro';
 import ContactMap from '../../components/ContactMap.astro';
 import { TOPICS, TOPIC_BY_SLUG } from '../../topics.config';
 import { NEWS_TARGET_BY_SLUG } from '../../news.config';
+import { GUIDES } from '../../guides.config';
+import { GLOSSARY } from '../../glossary.config';
 import { SITE } from '../../site.config';
 
 export function getStaticPaths() {
@@ -15,6 +17,9 @@ export function getStaticPaths() {
 const { slug } = Astro.params;
 const topic = TOPIC_BY_SLUG[slug!];
 const products = topic.products.map((p) => NEWS_TARGET_BY_SLUG[p]).filter(Boolean);
+// Phase 3 掛靠：同主題的解答層（guides）與名詞層（glossary），URL 不動、僅內鏈與 isPartOf
+const relGuides = GUIDES.filter((g) => g.topic === topic.slug);
+const relTerms = GLOSSARY.filter((t) => t.topic === topic.slug);
 
 // 近期動態：產線每日餵進來的新聞條目（初始批次由既有語料回填），最新 10 筆
 const feedAll = await getCollection('topicFeed', (e) => e.data.topic === topic.slug);
@@ -184,6 +189,21 @@ const jsonLd = {
             ))}
           </ul>
         </div>
+
+        <!-- 深入閱讀：掛靠的指南與名詞（Phase 3） -->
+        {(relGuides.length > 0 || relTerms.length > 0) && (
+          <div class="mt-10 pt-6 border-t border-neutral-200">
+            <p class="text-sm font-medium text-[color:var(--color-ink)] mb-3">深入閱讀</p>
+            <div class="flex flex-wrap gap-2">
+              {relGuides.map((g) => (
+                <a href={`/guides/${g.slug}/`} class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-sm text-[color:var(--color-ink-soft)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors">{g.question}</a>
+              ))}
+              {relTerms.map((t) => (
+                <a href={`/glossary/${t.slug}/`} class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-sm text-[color:var(--color-ink-soft)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors">{t.term}</a>
+              ))}
+            </div>
+          </div>
+        )}
 
         <!-- related products chips -->
         {products.length > 0 && (

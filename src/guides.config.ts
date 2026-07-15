@@ -11,6 +11,8 @@ export type GuideSection = {
 
 export type Guide = {
   slug: string;
+  /** 所屬主題（/topics/<slug>；2026-07-15 Phase 3 掛靠，可選） */
+  topic?: string;
   /** H1 / og title 的問題（使用者原話） */
   question: string;
   /** 同義問法（補關鍵字變體、列在頁面「常見問法」） */
@@ -43,6 +45,7 @@ export const AUDIENCE_LABEL: Record<Guide['audience'], string> = {
 export const GUIDES: readonly Guide[] = [
   {
     slug: 'elder-frailty-assessment',
+    topic: 'elder-care-frailty',
     question: '長輩體力變差、走路變慢、常跌倒，要做什麼評估？',
     searchPhrases: ['長輩走路變慢', '老人家容易累', '長者常跌倒怎麼辦', '長輩體力下降看哪科', '長者衰弱評估'],
     audience: 'caregiver',
@@ -88,6 +91,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'elder-multiple-medications',
+    topic: 'medication-safety',
     question: '長輩同時吃很多種藥，怎麼避免吃錯、漏吃？',
     searchPhrases: ['長輩吃很多種藥', '多重用藥怎麼辦', '老人家忘記吃藥', '慢性病領藥提醒', '吃錯藥怎麼預防'],
     audience: 'caregiver',
@@ -119,6 +123,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'child-development-delay',
+    topic: 'child-development',
     question: '小孩 2 歲還不太會說話，發展正常嗎？',
     searchPhrases: ['小孩2歲不會說話', '幼兒語言發展遲緩', '兒童發展正常嗎', '發展遲緩徵兆', '小孩走路晚正常嗎'],
     audience: 'parent',
@@ -155,6 +160,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'adult-functional-decline',
+    topic: 'preventive-function-health',
     question: '成人體力、記憶、睡眠變差，是正常老化還是亞健康？',
     searchPhrases: ['體力變差原因', '記憶力下降', '睡不好容易累', '亞健康自我檢測', '健康檢查功能評估'],
     audience: 'adult',
@@ -199,6 +205,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'medical-ai-content-compliance',
+    topic: 'medical-ai-governance',
     question: '用 AI 生成的醫療／衛教內容，會不會違反法規？怎麼自我檢查？',
     searchPhrases: ['AI生成醫療內容法規', '衛教文章AI合法嗎', '生成式AI醫療指引', '醫療廣告AI', 'AI醫療內容免責'],
     audience: 'b2b',
@@ -233,6 +240,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'daycare-checkin-roster',
+    topic: 'elder-care-frailty',
     question: '日照中心／長照據點怎麼做報到，又能交出政府要的名冊？',
     searchPhrases: ['日照中心簽到', '長照據點報到系統', '長者簽到名冊', '長照出席政府平台', '人臉辨識報到長者'],
     audience: 'b2b',
@@ -264,6 +272,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'which-health-self-assessment',
+    topic: 'preventive-function-health',
     question: '不同年齡的健康自我評估怎麼選？',
     searchPhrases: ['健康自我評估工具', '線上健康檢測', '發展功能衰弱評估差別', '全齡健康評估', '免費健康自評'],
     audience: 'all',
@@ -301,6 +310,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'tcm-ai-trustworthy',
+    topic: 'explainable-medical-ai',
     question: 'AI 看中醫、線上中醫問診的辨證結果可信嗎？',
     searchPhrases: ['AI 中醫可信嗎', '線上中醫問診準嗎', 'AI 把脈舌診準確嗎', '中醫 AI 會不會亂講', 'AI 辨證可靠嗎'],
     audience: 'all',
@@ -343,6 +353,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'drug-repurposing-for-rare-disease',
+    topic: 'explainable-medical-ai',
     question: '罕見疾病或現有藥物無效，有沒有「現成的藥」可以試？',
     searchPhrases: ['老藥新用', '罕見疾病有藥嗎', '舊藥新用途', 'drug repurposing 中文', '現有藥物治療罕病', '藥物再利用'],
     audience: 'all',
@@ -386,6 +397,7 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'fhir-connectathon',
+    topic: 'explainable-medical-ai',
     question: 'FHIR 聯測是什麼？系統要參加前要先準備什麼？',
     searchPhrases: ['fhir 聯測', 'fhir connectathon', 'fhir 互通測試', 'fhir 介接測試', 'smart on fhir 測試', 'fhir 驗證工具'],
     audience: 'b2b',
