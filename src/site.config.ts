@@ -22,13 +22,4 @@ export const SITE = {
   mapsLink: 'https://goo.gl/maps/ZkbwDs6SoqaGHjPo8',
 } as const;
 
-export const NAV = [
-  { href: '/', label: '首頁' },
-  { href: '/medical/', label: '智慧醫療' },
-  { href: '/ai/', label: 'AI 系統' },
-  { href: '/care/', label: '高齡友善' },
-  { href: '/marketing/', label: '數位行銷' },
-  { href: '/topics/', label: '主題' },
-  { href: '/news/', label: '議題追蹤' },
-  { href: '/#contact', label: '聯絡' },
-] as const;
+// NAV 已拆至 src/nav.config.ts（2026-07-17：導覽屬經營層，開放給 seo-ops 反思白名單；本檔其餘欄位仍鎖人工）
