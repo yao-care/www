@@ -31,7 +31,7 @@ export const GET: APIRoute = () => {
     if (products.length > 0) {
       lines.push(`- [${cat.label} 總覽](${u(cat.href)}): ${cat.tagline}`);
       for (const p of products) {
-        lines.push(`- [${p.title}](${u(`${cat.href}/${p.slug}`)}): ${p.tagline}`);
+        lines.push(`- [${p.title}](${u(`${cat.href}${p.slug}/`)}): ${p.tagline}`);
       }
     } else {
       lines.push(`- [${cat.label}](${u(cat.href)}): ${cat.tagline}`);

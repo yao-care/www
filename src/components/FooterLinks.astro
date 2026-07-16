@@ -50,13 +50,13 @@ const year = new Date().getFullYear();
         <ul class="space-y-3">
           {medicalProducts.map((p) => (
             <li>
-              <a href={`/medical/${p.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+              <a href={`/medical/${p.slug}/`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
                 {p.ogTitle}
               </a>
             </li>
           ))}
           <li>
-            <a href="/medical" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+            <a href="/medical/" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
           </li>
         </ul>
       </div>
@@ -67,13 +67,13 @@ const year = new Date().getFullYear();
         <ul class="space-y-3">
           {aiProducts.map((p) => (
             <li>
-              <a href={`/ai/${p.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+              <a href={`/ai/${p.slug}/`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
                 {p.ogTitle}
               </a>
             </li>
           ))}
           <li>
-            <a href="/ai" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+            <a href="/ai/" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
           </li>
         </ul>
       </div>
@@ -84,18 +84,18 @@ const year = new Date().getFullYear();
         <ul class="space-y-3">
           {careProducts.map((p) => (
             <li>
-              <a href={`/care/${p.slug}`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+              <a href={`/care/${p.slug}/`} class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
                 {p.ogTitle}
               </a>
             </li>
           ))}
           <li>
-            <a href="/medical/geri" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
+            <a href="/medical/geri/" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">
               Smart Geri 評估
             </a>
           </li>
           <li>
-            <a href="/care" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
+            <a href="/care/" class="text-sm font-medium text-[color:var(--color-brand)] hover:underline">看全部 →</a>
           </li>
         </ul>
       </div>
@@ -105,19 +105,19 @@ const year = new Date().getFullYear();
         <p class="text-xs font-semibold tracking-widest uppercase text-[color:var(--color-brand)] mb-4">行銷</p>
         <ul class="space-y-3">
           <li>
-            <a href="/marketing" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">數位行銷服務</a>
+            <a href="/marketing/" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">數位行銷服務</a>
           </li>
           <li>
-            <a href="/guides" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">情境指南</a>
+            <a href="/guides/" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">情境指南</a>
           </li>
           <li>
-            <a href="/topics" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">主題</a>
+            <a href="/topics/" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">主題</a>
           </li>
           <li>
-            <a href="/news" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">議題追蹤</a>
+            <a href="/news/" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">議題追蹤</a>
           </li>
           <li>
-            <a href="/glossary" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">知識庫</a>
+            <a href="/glossary/" class="text-base text-[color:var(--color-ink-soft)] hover:text-[color:var(--color-brand)] transition-colors">知識庫</a>
           </li>
         </ul>
       </div>

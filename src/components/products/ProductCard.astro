@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { product, variant = 'hub' } = Astro.props;
-const href = `${CATEGORY_BY_SLUG[product.category].href}/${product.slug}`;
+const href = `${CATEGORY_BY_SLUG[product.category].href}${product.slug}/`;
 ---
 <a
   href={href}

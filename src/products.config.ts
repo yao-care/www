@@ -31,7 +31,7 @@ export const CATEGORIES: readonly Category[] = [
     slug: 'medical',
     label: '智慧醫療',
     kicker: 'Smart Healthcare',
-    href: '/medical',
+    href: '/medical/',
     tagline: '以病人為中心，AI 從用藥提醒到診斷推理',
     description:
       '結合 LINE/Telegram 通訊軟體、ATC 藥品編碼、SMART on FHIR 互通協定，從基層用藥到醫療 AI 一條龍。',
@@ -45,7 +45,7 @@ export const CATEGORIES: readonly Category[] = [
     slug: 'ai',
     label: 'AI 系統',
     kicker: 'AI Systems',
-    href: '/ai',
+    href: '/ai/',
     tagline: '把專業知識變成自動化、可重複跑的 AI 系統',
     description:
       '情報追蹤、合規自動化、創新方法庫 — 用 RAG + 多角色 Agent 把專業領域的決策結構化。',
@@ -59,7 +59,7 @@ export const CATEGORIES: readonly Category[] = [
     slug: 'care',
     label: '高齡友善',
     kicker: 'Age-Friendly Care',
-    href: '/care',
+    href: '/care/',
     tagline: '面對超高齡社會，讓長者被看見、被陪伴 — 無接觸報到 × 高齡周全性評估',
     description:
       '台灣 2025 邁入超高齡社會。我們以「高齡友善」為核心，結合長者友善無接觸報到與高齡周全性評估，從據點報到到衰弱篩檢，串起 SMART on FHIR 預防醫學閉環，呼應 GCM 預防醫學發展協會的公益使命。',
@@ -73,7 +73,7 @@ export const CATEGORIES: readonly Category[] = [
     slug: 'marketing',
     label: '數位行銷',
     kicker: 'Digital Marketing',
-    href: '/marketing',
+    href: '/marketing/',
     tagline: '醫友 × 節氣 × 合規 — 不靠硬廣的整合行銷閉環',
     description:
       '與 GCM 預防醫學發展協會 900+ 醫療專業合作，從策略診斷、內容製作、KOL 操盤、廣告投放到法規合規一條龍。',
