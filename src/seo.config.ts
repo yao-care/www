@@ -34,6 +34,8 @@ export const KNOWS_ABOUT: readonly string[] = [
   'TRIZ 創新方法',
   'RAG 知識庫',
   'AI Agent',
+  'MCP（Model Context Protocol）',
+  'LLM 大型語言模型',
   '數位行銷',
   '醫療法規合規',
   '醫療 AI 合規',
