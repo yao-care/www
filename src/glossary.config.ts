@@ -295,6 +295,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'ai-agent',
+    topic: 'intelligence-automation',
     term: 'AI Agent（AI 代理）',
     en: 'AI Agent',
     category: 'ai',
@@ -313,6 +314,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'rag',
+    topic: 'intelligence-automation',
     term: 'RAG 檢索增強生成',
     en: 'Retrieval-Augmented Generation',
     category: 'ai',
@@ -331,6 +333,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'llm',
+    topic: 'medical-ai-governance',
     term: '大型語言模型（LLM）',
     en: 'Large Language Model',
     category: 'ai',
