@@ -11,6 +11,7 @@
 | 部署方式 | `npm run deploy` → build 到本地 `dist/` → rsync 同步到服務目錄 → nginx 直接提供 |
 | 版本控制 | Git → https://github.com/yao-care/www（private） |
 | Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
+| Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
 | 技術棧 | Astro 5 + Tailwind v4 + D3 v7 + TypeScript |
 | NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
