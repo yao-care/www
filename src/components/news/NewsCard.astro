@@ -15,7 +15,7 @@ const target = NEWS_TARGET_BY_SLUG[data.target];
 const slugPath = entry.id.replace(/\.(json|yaml|yml)$/, '');
 const lastSlash = slugPath.lastIndexOf('/');
 const slug = lastSlash >= 0 ? slugPath.substring(lastSlash + 1) : slugPath;
-const fullUrl = `/news/${data.target}/${slug}`;
+const fullUrl = `/news/${data.target}/${slug}/`;
 
 const dateStr = data.publishedAt.toLocaleDateString('zh-TW', {
   month: 'long',

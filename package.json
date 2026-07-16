@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-internal-links.mjs",
     "publish": "rsync -a --delete dist/ $WWW_SITE_DIR/",
-    "deploy": "astro build && rsync -a --delete dist/ $WWW_SITE_DIR/",
+    "deploy": "astro build && node scripts/check-internal-links.mjs && rsync -a --delete dist/ $WWW_SITE_DIR/",
     "preview": "astro preview",
     "astro": "astro",
     "fetch-news": "tsx scripts/fetch-news.ts"

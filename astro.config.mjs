@@ -61,11 +61,11 @@ export default defineConfig({
   vite: { plugins: [tailwindcss()] },
   redirects: {
     '/works': '/',
-    '/works/twtxgnn': '/medical/txgnn',
-    '/works/intel': '/ai/intel',
-    '/works/siqc': '/ai/siqc',
-    '/works/marketing': '/marketing',
-    '/cases': '/medical/yaocare',
-    '/medical/gcm': '/medical/fhir-server',
+    '/works/twtxgnn': '/medical/txgnn/',
+    '/works/intel': '/ai/intel/',
+    '/works/siqc': '/ai/siqc/',
+    '/works/marketing': '/marketing/',
+    '/cases': '/medical/yaocare/',
+    '/medical/gcm': '/medical/fhir-server/',
   },
 });

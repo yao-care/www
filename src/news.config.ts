@@ -29,7 +29,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'yaocare',
     title: '藥提醒',
-    pageUrl: '/medical/yaocare',
+    pageUrl: '/medical/yaocare/',
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
@@ -63,7 +63,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'huatuo',
     title: 'AI 華佗',
-    pageUrl: '/medical/huatuo',
+    pageUrl: '/medical/huatuo/',
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
@@ -98,7 +98,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'txgnn',
     title: 'TxGNN 老藥新用',
-    pageUrl: '/medical/txgnn',
+    pageUrl: '/medical/txgnn/',
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
@@ -133,7 +133,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'func',
     title: 'Smart Func 成人功能健康評估',
-    pageUrl: '/medical/func',
+    pageUrl: '/medical/func/',
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
@@ -167,7 +167,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'geri',
     title: 'Smart Geri 高齡周全性評估',
-    pageUrl: '/medical/geri',
+    pageUrl: '/medical/geri/',
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
@@ -201,7 +201,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'pedi',
     title: 'Smart Pedi 兒童發展評估',
-    pageUrl: '/medical/pedi',
+    pageUrl: '/medical/pedi/',
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
@@ -235,7 +235,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'intel',
     title: '情報自動化系統',
-    pageUrl: '/ai/intel',
+    pageUrl: '/ai/intel/',
     category: 'ai',
     categoryLabel: 'AI 系統',
     serviceContext:
@@ -269,7 +269,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'siqc',
     title: 'SIQC 稽核 AI',
-    pageUrl: '/ai/siqc',
+    pageUrl: '/ai/siqc/',
     category: 'ai',
     categoryLabel: 'AI 系統',
     serviceContext:
@@ -304,7 +304,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'triz',
     title: 'TRIZ AI 知識庫',
-    pageUrl: '/ai/triz',
+    pageUrl: '/ai/triz/',
     category: 'ai',
     categoryLabel: 'AI 系統',
     serviceContext:
@@ -338,7 +338,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'goalkeeper',
     title: 'goalkeeper 醫療 AI 合規守門',
-    pageUrl: '/ai/goalkeeper',
+    pageUrl: '/ai/goalkeeper/',
     category: 'ai',
     categoryLabel: 'AI 系統',
     serviceContext:
@@ -372,7 +372,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'sign',
     title: '長者友善無接觸報到',
-    pageUrl: '/care/sign',
+    pageUrl: '/care/sign/',
     category: 'care',
     categoryLabel: '高齡友善',
     serviceContext:
@@ -406,7 +406,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
   {
     slug: 'marketing',
     title: '數位行銷',
-    pageUrl: '/marketing',
+    pageUrl: '/marketing/',
     category: 'marketing',
     categoryLabel: '數位行銷',
     serviceContext:
