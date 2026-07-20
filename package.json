@@ -8,7 +8,7 @@
     "build": "node scripts/check-design.mjs && astro build && node scripts/check-internal-links.mjs",
     "check:design": "node scripts/check-design.mjs",
     "publish": "rsync -a --delete dist/ $WWW_SITE_DIR/",
-    "deploy": "astro build && node scripts/check-internal-links.mjs && rsync -a --delete dist/ $WWW_SITE_DIR/",
+    "deploy": "npm run build && rsync -a --delete dist/ $WWW_SITE_DIR/",
     "preview": "astro preview",
     "astro": "astro",
     "fetch-news": "tsx scripts/fetch-news.ts"

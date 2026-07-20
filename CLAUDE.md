@@ -12,7 +12,7 @@
 | 版本控制 | Git → https://github.com/yao-care/www（private） |
 | Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
 | Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
-| Build gate（2026-07-20 起） | `npm run build` 最前段先跑 `scripts/check-design.mjs`（**設計規範守門 v2**，見下「§ 修改外觀」五條）；違規即 build fail。存量 64 處硬編色以 `LEGACY_COLOR_BUDGET` per-檔凍結（禁再擴充），清理後同步下修預算 |
+| Build gate（2026-07-20 起） | `npm run build` 最前段先跑 `scripts/check-design.mjs`（**設計規範守門 v2**，見下「§ 修改外觀」五條）；違規即 build fail。`npm run deploy` 亦改為經由 `npm run build`（同日修，守門不可繞過）。存量 64 處硬編色以 `LEGACY_COLOR_BUDGET` per-檔凍結（禁再擴充），清理後同步下修預算 |
 | 技術棧 | Astro 5 + Tailwind v4 + D3 v7 + TypeScript |
 | NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
@@ -49,7 +49,7 @@ npm run dev              # http://localhost:4321
 # 改完後 Ctrl+C 結束 dev server
 
 # 3. build + 發佈 → 上線（一鍵）
-npm run deploy           # = astro build && rsync dist/ → $WWW_SITE_DIR/
+npm run deploy           # = npm run build（含設計守門+內鏈檢查）&& rsync dist/ → $WWW_SITE_DIR/
 curl -sI https://www.yao.care/ | head -3   # 驗證 200
 
 # 4. Commit + push
