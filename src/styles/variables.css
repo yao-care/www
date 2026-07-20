@@ -1,0 +1,103 @@
+/* ============================================================
+   設計 token 單一來源（設計規範守門 v2，2026-07-20 全站統一）：
+   1. font-size 禁用 px — 一律 var(--text-*) 階梯（最小 18px）
+   2. 顏色（hex / rgb() / hsl()）只准出現在本檔
+   3. 禁 important 覆寫（調整選擇器權重，不硬壓）
+   4. 禁外部 CDN（Google Fonts、cdnjs、unpkg、jsdelivr 等；字型/資源自託管或系統堆疊）
+   5. 統一 css 檔：src/ 下只准 src/styles/{variables,global}.css
+      （元件樣式寫 .astro scoped <style> 或進 global.css）
+   守門腳本：scripts/check-design.mjs（npm run build 前自動跑）
+   ============================================================ */
+@theme {
+  /* ──────────────────────────────────────────────────────────
+     TYPE SCALE — minimum 18px, no exceptions.
+     line-height 1.6 for body sizes, tighter for display.
+     ────────────────────────────────────────────────────────── */
+  --text-xs: 1.125rem;          /* 18px — badges, kickers, smallest */
+  --text-xs--line-height: 1.6;
+  --text-sm: 1.25rem;           /* 20px — table body, captions */
+  --text-sm--line-height: 1.6;
+  --text-base: 1.5rem;          /* 24px — body default */
+  --text-base--line-height: 1.6;
+  --text-lg: 1.75rem;           /* 28px — emphasis */
+  --text-lg--line-height: 1.55;
+  --text-xl: 2rem;              /* 32px — section heading */
+  --text-xl--line-height: 1.4;
+  --text-2xl: 3rem;             /* 48px — summary numbers */
+  --text-2xl--line-height: 1.2;
+  --text-3xl: 3.5rem;           /* 56px — report title */
+  --text-3xl--line-height: 1.15;
+  --text-4xl: 4rem;             /* 64px — hero */
+  --text-4xl--line-height: 1.1;
+  --text-5xl: 4.5rem;           /* 72px — hero md+ */
+  --text-5xl--line-height: 1.05;
+  --text-6xl: 5rem;             /* 80px — hero display */
+  --text-6xl--line-height: 1.0;
+
+  /* ──────────────────────────────────────────────────────────
+     FONT STACK — system + CJK fallback.
+     ────────────────────────────────────────────────────────── */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, "PingFang TC", "Noto Sans TC",
+               "Microsoft JhengHei", "微軟正黑體", system-ui, sans-serif;
+  --font-display: var(--font-sans);
+
+  /* ──────────────────────────────────────────────────────────
+     BRAND — primary orange-red.
+     ────────────────────────────────────────────────────────── */
+  --color-brand: #c6461c;
+  --color-brand-soft: #e85a2e;
+  --color-brand-deep: #9c3414;
+  --color-line: #06c755;
+
+  /* ──────────────────────────────────────────────────────────
+     NEUTRAL RAMP — warm tone (hue ≈ 25), overrides Tailwind's
+     cool defaults. Existing `bg-neutral-*` / `border-neutral-*`
+     usages pick up the warm palette automatically.
+     ────────────────────────────────────────────────────────── */
+  --color-neutral-50:  #f3ede7;  /* alt section background */
+  --color-neutral-100: #ebe3da;  /* tags, table head, progress track */
+  --color-neutral-200: #d8cec3;  /* default border */
+  --color-neutral-300: #c2b6aa;  /* emphasis border */
+  --color-neutral-400: #968a7d;  /* muted text */
+  --color-neutral-500: #756a5e;
+  --color-neutral-600: #5a5147;
+  --color-neutral-700: #423a32;
+  --color-neutral-800: #2a221c;
+  --color-neutral-900: #1a130e;
+
+  /* Brand-tinted ramp (replaces Tailwind's amber-leaning orange-*) */
+  --color-orange-50:  #fdf2eb;
+  --color-orange-100: #fbe0d2;
+  --color-orange-200: #f6c0a4;
+
+  /* ──────────────────────────────────────────────────────────
+     SURFACES — semantic aliases over the neutral ramp.
+     ────────────────────────────────────────────────────────── */
+  --color-bg-base:    #faf6f3;             /* page (warm L≈0.96) */
+  --color-bg-surface: var(--color-neutral-50);
+  --color-bg-overlay: var(--color-neutral-100);
+
+  /* ──────────────────────────────────────────────────────────
+     TEXT — warm slate, L ≈ 0.20–0.62. WCAG AA on bg-base.
+     ────────────────────────────────────────────────────────── */
+  --color-ink: #2a221c;          /* primary */
+  --color-ink-soft: #6b5e51;     /* secondary */
+  --color-ink-muted: #968a7d;    /* muted */
+
+  /* ──────────────────────────────────────────────────────────
+     BORDERS
+     ────────────────────────────────────────────────────────── */
+  --color-border-subtle: var(--color-neutral-200);
+
+  /* ──────────────────────────────────────────────────────────
+     SEVERITY / STATUS — WCAG AA 4.5:1+ on bg-base.
+     Brand orange-red owns High; Critical pulls a cooler red so
+     it stays distinguishable from the brand voice.
+     ────────────────────────────────────────────────────────── */
+  --color-critical: #c93135;
+  --color-high: #c6461c;        /* aliased to brand */
+  --color-medium: #8a7020;
+  --color-low: #2a6bb8;
+  --color-pass: #1e8050;
+}

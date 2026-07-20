@@ -12,6 +12,7 @@
 | 版本控制 | Git → https://github.com/yao-care/www（private） |
 | Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
 | Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
+| Build gate（2026-07-20 起） | `npm run build` 最前段先跑 `scripts/check-design.mjs`（**設計規範守門 v2**，見下「§ 修改外觀」五條）；違規即 build fail。存量 64 處硬編色以 `LEGACY_COLOR_BUDGET` per-檔凍結（禁再擴充），清理後同步下修預算 |
 | 技術棧 | Astro 5 + Tailwind v4 + D3 v7 + TypeScript |
 | NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
@@ -258,7 +259,8 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   ├── config.ts          ← news collection schema（Zod）
 │   │   └── news/<target>/*.json ← 自動產生的議題評論文章（cron 寫入）
 │   ├── scripts/track.ts       ← GA4 互動事件（捲動 / 讀完 / 互動時間 / CTA），由 Analytics.astro 全站載入
-│   ├── styles/global.css      ← Tailwind 入口 + 主題變數 + 共用 class
+│   ├── styles/variables.css   ← 設計 token 單一來源（@theme：字級階梯/色票；守門規則見檔頭）
+│   ├── styles/global.css      ← Tailwind 入口（import variables.css）+ base 樣式 + 共用 class
 │   ├── layouts/
 │   │   ├── BaseLayout.astro   ← <html> + meta + JSON-LD（Organization）+ favicon
 │   │   │                         可接 ogImage / ogType / jsonLd props
@@ -331,10 +333,18 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 - 全域字串（站名、聯絡、外站連結）→ `src/site.config.ts`
 - Build：`npm run build`
 
-### 修改外觀
-- 主色 `#c6461c` 已注入 Tailwind theme（`var(--color-brand)`）
-- 共用 button class（`.btn-line`、`.btn-brand`）在 `src/styles/global.css`
-- 元件內樣式直接用 Tailwind utility classes
+### 修改外觀（設計規範守門 v2，2026-07-20 全站統一）
+`npm run build` 前自動跑 `scripts/check-design.mjs`（單獨跑：`npm run check:design`），掃 `src/` 下 .css/.astro/.svelte，五條規則違規即 fail：
+1. **font-size 禁用 px** — 一律 `var(--text-*)` 階梯（最小 18px；階梯定義在 `src/styles/variables.css`）
+2. **顏色（hex / rgb() / hsl()）只准出現在 `src/styles/variables.css`** — 其他地方一律 `var(--color-*)`
+3. **禁 important 覆寫** — 調整選擇器權重，不硬壓
+4. **禁外部 CDN**（Google Fonts、cdnjs、unpkg、jsdelivr 等）— 字型/資源自託管或系統堆疊
+5. **統一 css 檔** — `src/` 下的 .css 只准 `src/styles/{variables,global}.css`；元件樣式寫 .astro scoped `<style>` 或進 global.css
+
+實作備忘：
+- 主色 `#c6461c` 已注入 Tailwind theme（`var(--color-brand)`）；**token 一律定義在 `src/styles/variables.css` 的 `@theme`**，`global.css` 只留 base 樣式與共用 class（`.btn-line`、`.btn-brand`）
+- 元件內樣式直接用 Tailwind utility classes（色值用 `var(--color-*)`，禁 arbitrary 硬編色如 `bg-[#123456]`）
+- ⚠ **遷移遞延（TODO）**：存量 64 處硬編色（SmartHealthcare/intel/marketing/txgnn/news-index，多為 D3 圖表 JS 與 Tailwind arbitrary 色值，需視覺判斷）以 `scripts/check-design.mjs` 的 `LEGACY_COLOR_BUDGET` per-檔凍結——**禁再擴充**，清一處下修一處，全清完刪掉整段回到 0 容忍
 
 ### 新增頁面
 - 建 `src/pages/<route>.astro`，import `BaseLayout` 包起來
