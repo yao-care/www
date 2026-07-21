@@ -346,6 +346,15 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 - 元件內樣式直接用 Tailwind utility classes（色值用 `var(--color-*)`，禁 arbitrary 硬編色如 `bg-[#123456]`）
 - ⚠ **遷移遞延（TODO）**：存量 64 處硬編色（SmartHealthcare/intel/marketing/txgnn/news-index，多為 D3 圖表 JS 與 Tailwind arbitrary 色值，需視覺判斷）以 `scripts/check-design.mjs` 的 `LEGACY_COLOR_BUDGET` per-檔凍結——**禁再擴充**，清一處下修一處，全清完刪掉整段回到 0 容忍
 
+### 內容守門（去 AI 味，build gate 掃 md/mdx，2026-07-21 全站統一）
+`npm run build` 在 `check-design.mjs` 之後、`astro build` 之前跑 `scripts/check-content.mjs`（單獨跑：`npm run check:content`；全站盤點：`npm run check:content:all`），對「相對 origin/main 變動的 `src/**/*.md(x)`」掃去 AI 味，強指紋單一命中即擋、軟訊號跨 ≥3 層才升級擋。`npm run deploy` 已改為經 `npm run build`，故 build gate 即涵蓋部署；seo-ops `sites/yao.care.json` 的 `brain.gates=["npm run build"]` 亦隨之繼承此守門。
+
+> **兩層分工（勿混淆，勿互相取代）**：
+> - **本 gate = build/CI 檔案 gate**：掃 `src/**/*.md(x)` 的**檔案**，在 build 當下擋。**yao 目前 0 個 md/mdx**（news 是 content collection **JSON**），故此 gate 現階段等於**防守未來手寫頁**（新增 `.md/.mdx` 內容頁時自動生效）。
+> - **`scripts/style-guide.mjs` 的 `checkVoice` = 產線 runtime gate**：在 `fetch-news.ts` 的 writer/critic 迴圈對 **draft 物件**跑（擋「產文當下」的 JSON news），**保留不動**。這是不同層的護欄，與本 build gate 互補、不重疊。
+> - **引擎單一來源**：`scripts/check-content.mjs` 直接取自統一模板 `$HOST_SKILLS_DIR/new-astro-site/templates/check-content.mjs`（核心跨站規則勿改），yao 顧問腔特化規則 port 進檔內 `SITE_ERROR_TELLS`／`SITE_WARN_LAYERS`（`設計思路是`/`整體邏輯`/`核心邏輯`/`更根本的問題在於`/`面對這類議題`/`不容忽視`＝ERROR；`本質上是`/`設計上選擇`/`面對…情境，`/`這是…的核心`＝WARN），核心已有的（值得…的是、隨著…的發展、化繁為簡…）未重複。
+> - **JSON news 涵蓋列遞延**：統一腳本預設只掃 md/mdx；要讓本 gate 也掃 news JSON 的文字欄位（`newsBrief/issueAnalysis/designResponse`）需擴充腳本讀 JSON——因 runtime `checkVoice` 已在產文當下擋住 JSON news，**此擴充遞延**、非當務之急。
+
 ### 新增頁面
 - 建 `src/pages/<route>.astro`，import `BaseLayout` 包起來
 - @astrojs/sitemap 會自動把它加進 `sitemap-index.xml`
