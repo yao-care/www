@@ -4,7 +4,10 @@
 
 // 文風修訂版號：每篇文章存 voiceRev；backfill 只改 voiceRev < VOICE_REV 的舊文。
 // 新文章由（已去 AI 味的）writer 產出，寫入時即蓋 voiceRev=VOICE_REV，不會被 backfill 重跑。
-// 未來若再大改文風規則 → 把 VOICE_REV +1，340 篇會再被分批重刷一輪。
+// ⚠ 2026-07-21：VOICE_REV 升到 2 是為了對齊全站統一去 AI 味清單（見 CLAUDE.md 內容守門段），
+//   但 rewrite-news-voice backfill 已於 2026-07-15 Phase 2 停役（fetch-news.sh 呼叫行已註解）、
+//   舊 /news/ 正逐批 301 收斂——**不要為了這個 bump 去復活 backfill 重刷 329 篇待淘汰的頁**（浪費、
+//   且違反「邊改邊清、不批次預清」拍板）。新文靠 writer/critic 的 checkVoice 邊產邊清即可。
 export const VOICE_REV = 2;
 
 // ── 口頭禪黑名單（高精準度；命中 → 計一個 tic）──────────────────
