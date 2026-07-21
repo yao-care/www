@@ -19,6 +19,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getGscInsights } from './gsc';
+import { STYLE_RULES } from './style-guide.mjs';
 import { GUIDES } from '../src/guides.config';
 import { GLOSSARY } from '../src/glossary.config';
 import { PRODUCTS } from '../src/products.config';
@@ -151,6 +152,8 @@ function draftPrompt(c: Candidate): string {
     `2. answer-first：開頭直接回答問題。語氣中立、衛教取向，不下診斷、不取代專業。`,
     `3. 自然語言、繁體中文台灣用語。`,
     productCtx,
+    ``,
+    STYLE_RULES,
     ``,
     styleGuide,
     ``,

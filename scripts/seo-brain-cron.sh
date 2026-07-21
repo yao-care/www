@@ -48,7 +48,7 @@ PROMPT="$(cat <<PROMPTEOF
 3. 可改範圍僅限：src/guides.config.ts、src/glossary.config.ts、src/seo.config.ts（FAQ/knowsAbout）、src/pages/**（頁面 meta／標題／內鏈）、src/products.config.ts（僅描述/bullets 措辭，不動結構與路由）。**不要**動 scripts/、astro.config、layout 結構、track/Analytics。
 4. 改完自我驗證：npm run build。非零（build 失敗）→ git checkout -- src、今日不 push/deploy、跳步驟6發 Slack 標 🔴。
 5. 內容改動集中成一個 commit、訊息前綴 [auto-claude-seo]；commit 用作者 LightChang <$OWNER_EMAIL>（git 沒設 global identity，務必 -c 帶上）。
-6. 文風（去 AI 腔）：改寫任何對外文字（guides/glossary/meta/描述）時，開頭別用「面對這類議題…」公式、結尾別拔高（「整體邏輯是…」「正是…的關鍵」「才是…所在」）、少用「結構性／系統性」等抽象詞堆疊、破折號下定義與「可A可B」排比三連收斂、句長交錯、講人話。改動內容時順手蓋該頁對應資料的 updatedAt（若有此欄）以對 Google 發新鮮度訊號。
+6. 文風（去 AI 腔，與 scripts/style-guide.mjs 的 STYLE_RULES 同步）：改寫任何對外文字（guides/glossary/meta/描述）時——(a) 開頭別用「面對這類議題…」「在…的今天」公式，也別用模板化第一人稱開場（「我認為」「讓我們」「在這篇文章中」）；(b) 結尾別拔高（「整體邏輯是…」「正是…的關鍵」「才是…所在」）也別空泛收束（「總的來說」「綜上所述」「總而言之」「歸根結底」「整體而言」）；(c) 別用對比公式「不是X，而是Y」「並非…而是」「不僅…更/還」「不只是…而是」；(d) 別用「值得注意的是」「值得一提的是」「換句話說」作文腔轉折；(e) 別用「至關重要／不可或缺／舉足輕重」程度詞堆疊，也少用「結構性／系統性」等抽象詞；(f) 別用「研究顯示／有研究指出／專家認為／普遍認為」模糊引用，有具體來源就寫出、查不到就不寫；(g) 破折號下定義與「可A可B」排比三連收斂、句長交錯、講台灣口語人話。改動內容時順手蓋該頁對應資料的 updatedAt（若有此欄）以對 Google 發新鮮度訊號。
 
 # DRY_RUN
 本次 DRY_RUN=$DRY_RUN。若 =1：照常讀數據、可試改與 npm run build 驗證，但**絕不 git commit/push、不 deploy、不 indexnow、不發 Slack**；最後只在 stdout 印「乾跑提案摘要」（今天會改哪些檔、賭哪些 query/page、預期效果）後結束。
