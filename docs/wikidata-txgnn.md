@@ -146,36 +146,37 @@ Wayback Machine 無法佐證——`twtxgnn.yao.care` 從未被爬存（CDX 查�
 ### 步驟
 
 1. **在未被封鎖的網路**（家用／公司網路，**不是**這台主機）開瀏覽器。
-2. 打開 <https://quickstatements.toolforge.org/#/batch>。
-3. 右上角點 **Log in** → 用 Wikidata 帳號授權（OAuth，第一次會跳同意頁，之後記住）。
-4. 確認頁面上方的格式選擇是 **V1**（不是 CSV）。
-5. 把批次語法**整份貼進大文字框**。
-6. 按 **Import V1 commands** → 再按 **Run**（或 **Run in background**）。
-7. 執行完會逐行顯示綠色 ✓ 或紅色錯誤。
+2. 打開 <https://quickstatements.toolforge.org/>，右上角登入（OAuth 授權，第一次會跳同意頁）。
+3. **按右邊藍色的「New batch」按鈕。** ← 首頁只有這個按鈕和 Manage 區塊，**文字框在下一頁才出現**，不要在首頁找。
+4. 下一頁的文字區域，把批次語法**整份貼進去**。
+5. 按 **Import V1 commands** —— 這會把指令轉成人看得懂的預覽，供你核對。
+6. 核對無誤後按 **Run**（在瀏覽器跑）或 **Run in the background**（丟到伺服器背景跑）。
+7. 執行時會逐行顯示成功或錯誤。
 
 ### 整份貼上是安全的
 
 腳本輸出的是**完整清單**，包含已經建好的那些（P31、P178、P856…）。QuickStatements 遇到已存在且值相同的敘述會**跳過**，不會重複建立；遇到已存在但缺 reference 的，會**把 reference 補上去**——`Q140265007 P1830` 那條正是靠這個行為修好的。所以不必自己挑哪幾行要貼。
 
-### 兩個常見的坑
+### 分隔符用 `|`，不用 Tab
 
-- **Tab 會變空格。** V1 語法用 Tab 分隔欄位，從網頁或聊天視窗複製時 Tab 常被轉成空格，貼上後會整批失敗。保險做法是用產出的 `.txt` 檔（`scripts/wikidata-txgnn.ts --quickstatements > batch.txt`）或用下面的直連網址。
-- **日期格式**。`+2026-02-09T00:00:00Z/11` 結尾的 `/11` 是精確度（11 = 精確到日），不能省。
+V1 語法兩種都吃，但 Tab 經過網頁或聊天視窗複製時常被轉成空格，整批就失敗。腳本輸出一律用 `|`，沒有這個風險。
+
+另一個要注意的是日期格式：`+2026-02-09T00:00:00Z/11` 結尾的 `/11` 是精確度（11 = 精確到日），不能省。
 
 ### 免貼上的直連網址
 
-QuickStatements 支援把指令編碼進網址，點開就自動填好，省掉複製貼上與 Tab 問題：
+`#/v1=` 參數仍然支援，把指令編碼進網址，點開就自動填好：
 
 ```bash
 ./node_modules/.bin/tsx scripts/wikidata-txgnn.ts --quickstatements | \
   python3 -c "
 import sys, urllib.parse
-rows = [l for l in sys.stdin.read().split('\n') if l and (l[0] == 'Q' or l == 'CREATE' or l.startswith('LAST'))]
+rows = [l for l in sys.stdin.read().split('\n') if l.startswith('Q') or l == 'CREATE' or l.startswith('LAST')]
 print('https://quickstatements.toolforge.org/#/v1=' + urllib.parse.quote('\n'.join(rows), safe=''))
 "
 ```
 
-打開產出的網址 → 授權 → 按 **Run**。
+打開產出的網址 → 登入 → 按 **Run**。這條路會跳過「New batch」那一步，指令已經填好。
 
 ### 或者手動加（六、七條而已）
 

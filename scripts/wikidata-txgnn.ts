@@ -234,12 +234,16 @@ async function findExisting(): Promise<string | null> {
 /**
  * 產生 QuickStatements V1 批次語法。
  *
+ * 分隔符用 `|` 而非 Tab：兩者 QuickStatements 都吃，但 Tab 經過網頁／聊天視窗複製時
+ * 常被轉成空格，整批就失敗；pipe 沒有這個風險。
+ *
  * 為什麼需要這條路：本主機（Linode）的 IPv4 與 IPv6 皆在 Wikimedia 全域封鎖名單內
  * （2026-07-23 起，理由 Open proxy/Webhost），API 寫入一律回 permissiondenied ——
  * 連編輯既有項目都不行。規避封鎖違反 Wikimedia 政策，所以改由人在未被封鎖的網路執行。
  * 語法一律從本檔上方同一組常數生成，不另抄一份，避免兩邊 drift。
  */
 function printQuickStatements(existingQid: string | null) {
+  const T = '|'; // 欄位分隔符，見上方註解
   const q = (v: string) => `"${v}"`;
   // 項目已存在 → 主語直接用它的 QID（QuickStatements 遇到既有 statement 會補
   // reference 而非重複建立）；尚未存在 → CREATE + LAST。
@@ -247,20 +251,20 @@ function printQuickStatements(existingQid: string | null) {
   const rows: string[] = existingQid ? [] : ['CREATE'];
 
   if (!existingQid) {
-    for (const [lang, v] of Object.entries(LABELS)) rows.push(`${S}\tL${lang}\t${q(v)}`);
-    for (const [lang, v] of Object.entries(DESCRIPTIONS)) rows.push(`${S}\tD${lang}\t${q(v)}`);
+    for (const [lang, v] of Object.entries(LABELS)) rows.push(`${S}${T}L${lang}${T}${q(v)}`);
+    for (const [lang, v] of Object.entries(DESCRIPTIONS)) rows.push(`${S}${T}D${lang}${T}${q(v)}`);
     for (const [lang, vs] of Object.entries(ALIASES))
-      for (const v of vs) rows.push(`${S}\tA${lang}\t${q(v)}`);
+      for (const v of vs) rows.push(`${S}${T}A${lang}${T}${q(v)}`);
   }
   for (const [prop, id] of ITEM_CLAIMS) {
-    const ref = prop === 'P178' || prop === 'P127' ? `\tS854\t${q(REF_URL)}` : '';
-    rows.push(`${S}\t${prop}\tQ${id}${ref}`);
+    const ref = prop === 'P178' || prop === 'P127' ? `${T}S854${T}${q(REF_URL)}` : '';
+    rows.push(`${S}${T}${prop}${T}Q${id}${ref}`);
   }
-  for (const [prop, v] of URL_CLAIMS) rows.push(`${S}\t${prop}\t${q(v)}`);
-  for (const [prop, t] of TIME_CLAIMS) rows.push(`${S}\t${prop}\t${t}/11`);
+  for (const [prop, v] of URL_CLAIMS) rows.push(`${S}${T}${prop}${T}${q(v)}`);
+  for (const [prop, t] of TIME_CLAIMS) rows.push(`${S}${T}${prop}${T}${t}/11`);
   // 反向邊（含出處）+ 公司項目缺的 zh-tw label
-  rows.push(`${ORG_QID}\tP1830\t${existingQid ?? '<QID>'}\tS854\t${q(REF_URL)}`);
-  rows.push(`${ORG_QID}\tLzh-tw\t${q('藥提醒科技有限公司')}`);
+  rows.push(`${ORG_QID}${T}P1830${T}${existingQid ?? '<QID>'}${T}S854${T}${q(REF_URL)}`);
+  rows.push(`${ORG_QID}${T}Lzh-tw${T}${q('藥提醒科技有限公司')}`);
 
   console.log(
     existingQid
