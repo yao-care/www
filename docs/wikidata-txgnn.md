@@ -42,14 +42,14 @@ Q140265007      --P1830 owner of--> TwTxGNN(新項目)
 
 ### 1. QuickStatements（最省事，瀏覽器操作）
 
-在**未被封鎖的網路**（家用／公司網路）打開 <https://quickstatements.toolforge.org/#/batch>，用 Wikidata 帳號授權後貼上批次語法。語法用這個指令生成，不要手抄：
+在**未被封鎖的網路**（家用／公司網路）用瀏覽器操作。語法用這個指令生成，不要手抄：
 
 ```bash
 cd $WWW_REPO_DIR
 ./node_modules/.bin/tsx scripts/wikidata-txgnn.ts --quickstatements
 ```
 
-分兩批：批次一 `CREATE` 新項目；批次二把批次一產生的 QID 填進 `Q140265007 P1830 <QID>`。**兩批都要跑完，只跑批次一等於只有單向邊，白做。**
+腳本會先查 Wikidata（唯讀，不受封鎖影響）決定該產哪種語法：項目**還不存在**時產 `CREATE` 批次；**已存在**時直接以該 QID 為主語產補強語句。逐步操作見文末「怎麼加」。
 
 ### 2. 換一台機器跑同一支腳本
 
@@ -81,8 +81,12 @@ cd $WWW_REPO_DIR
 | P17 country | Q865（Taiwan） |
 | P921 main subject | Q5308921（drug repositioning） |
 | P2283 uses | Q107750691（graph neural network） |
+| P275 copyright license | Q334661（MIT License，repo LICENSE 確認） |
+| P571 inception | 2026-02-09（GitHub Pages 首次部署，見下方考證） |
 | P856 official website | https://twtxgnn.yao.care/ |
 | P1324 source code repository | https://github.com/yao-care/TwTxGNN |
+| P973 described at URL | https://www.yao.care/medical/txgnn/（官網產品頁） |
+| P973 described at URL | https://apps.smarthealthit.org/app/twtxgnn-smart-app（第三方目錄） |
 
 改內容一律改 `scripts/wikidata-txgnn.ts` 上方常數，QuickStatements 語法與 API 寫入都從那裡生成。
 
@@ -106,28 +110,73 @@ curl -s "https://www.wikidata.org/wiki/Special:EntityData/Q140265007.json" | \
 
 ## 後續補強（2026-07-25 盤點）
 
-核心關係已完整，以下是查核後發現的缺漏。都不影響「LLM 認得歸屬」這件事，但補上會讓項目更禁得起 notability 檢視。同樣用 QuickStatements 在未封鎖的網路執行：
+核心關係建立時已成立，以下是事後查核發現的缺漏。都不影響「LLM 認得歸屬」這件事，但補上會讓項目更禁得起 notability 檢視。
 
+| 要補的 | 為什麼 |
+|--------|--------|
+| `Q140265007` 的 `P1830` 補 reference | 建立時反向那條**沒吃到出處**（TwTxGNN 側的 P178/P127 都有，只有回指這條光禿禿）。沒出處的聲明在 Wikidata 容易被其他編輯者質疑或移除 |
+| `P973` → 官網產品頁 | Wikidata 這側**沒有任何一條指回 www.yao.care**。官網那側的 `sameAs` 已經指過來了，補這條才對稱 |
+| `P973` → SMART App Gallery | **notability 的主要辯護**。SMART Health IT（哈佛醫學院孵化）的第三方目錄，實測 HTTP 200。項目被提刪時，非自家來源比再多自家連結都管用 |
+| `P275` → Q334661（MIT） | repo 的 LICENSE 確認是 MIT。授權是軟體類項目的常規欄位，缺了會被 Wikidata 品質檢查標記 |
+| `P571` → 2026-02-09 | 見下方考證 |
+| `Q140265007` 的 `zh-tw` label | 公司項目只有 `zh-hant` / `mul` / `en`，缺 `zh-tw`。介面會 fallback，影響小，順手補 |
+
+### P571（inception）的日期考證
+
+四個候選日期，只有一個對：
+
+| 日期 | 是什麼 | 可查證來源 |
+|------|--------|-----------|
+| 2026-01-11 | repo 建立 | GitHub API `created_at` ——**只是開始寫程式的日子** |
+| **2026-02-09** | **GitHub Pages 首次部署**——站台第一次真的存在於網路上 | `GET /repos/yao-care/TwTxGNN/deployments?per_page=100&page=2` 最早一筆 `2026-02-09T02:17:51Z`（共 153 筆，要翻到最後一頁才看得到） |
+| 2026-02-11 | CNAME 加入，`twtxgnn.yao.care` 這個網址開始生效 | commit `Add custom domain CNAME for twtxgnn.yao.care` |
+| 2026-02-19 | 站台 schema 的 `datePublished` / `lastReviewed` | 寫死在 `head_custom.html`，套用在**所有**藥品頁上——是內容審核基準日，不是上線日 |
+
+採 **2026-02-09**：`P571` 對「平台」這個實體問的是它何時開始存在，首次部署就是那一刻，而且第三方可從 GitHub API 查證。若認為該以自訂網域生效為準，改 `2026-02-11` 也站得住，差兩天。
+
+Wayback Machine 無法佐證——`twtxgnn.yao.care` 從未被爬存（CDX 查詢無任何快照）。
+
+### 刻意不加的
+
+- **其餘 29 國站台的獨立項目**——30 個近乎相同的項目會踩到 notability，而且沒有額外好處。各國站在自己的 schema 用 `sameAs` 指向 Q140692750 就夠了（見 `docs/txgnn-sites-entity-fix.md` 第八節）。
+- `P144`（based on）→ 哈佛 TxGNN 模型——**Wikidata 上還沒有 TxGNN 模型的項目**，那篇 Nature Medicine 論文也沒有。要補這條得先建模型項目，屬於另一件事。
+
+## 怎麼加
+
+### 步驟
+
+1. **在未被封鎖的網路**（家用／公司網路，**不是**這台主機）開瀏覽器。
+2. 打開 <https://quickstatements.toolforge.org/#/batch>。
+3. 右上角點 **Log in** → 用 Wikidata 帳號授權（OAuth，第一次會跳同意頁，之後記住）。
+4. 確認頁面上方的格式選擇是 **V1**（不是 CSV）。
+5. 把批次語法**整份貼進大文字框**。
+6. 按 **Import V1 commands** → 再按 **Run**（或 **Run in background**）。
+7. 執行完會逐行顯示綠色 ✓ 或紅色錯誤。
+
+### 整份貼上是安全的
+
+腳本輸出的是**完整清單**，包含已經建好的那些（P31、P178、P856…）。QuickStatements 遇到已存在且值相同的敘述會**跳過**，不會重複建立；遇到已存在但缺 reference 的，會**把 reference 補上去**——`Q140265007 P1830` 那條正是靠這個行為修好的。所以不必自己挑哪幾行要貼。
+
+### 兩個常見的坑
+
+- **Tab 會變空格。** V1 語法用 Tab 分隔欄位，從網頁或聊天視窗複製時 Tab 常被轉成空格，貼上後會整批失敗。保險做法是用產出的 `.txt` 檔（`scripts/wikidata-txgnn.ts --quickstatements > batch.txt`）或用下面的直連網址。
+- **日期格式**。`+2026-02-09T00:00:00Z/11` 結尾的 `/11` 是精確度（11 = 精確到日），不能省。
+
+### 免貼上的直連網址
+
+QuickStatements 支援把指令編碼進網址，點開就自動填好，省掉複製貼上與 Tab 問題：
+
+```bash
+./node_modules/.bin/tsx scripts/wikidata-txgnn.ts --quickstatements | \
+  python3 -c "
+import sys, urllib.parse
+rows = [l for l in sys.stdin.read().split('\n') if l and (l[0] == 'Q' or l == 'CREATE' or l.startswith('LAST'))]
+print('https://quickstatements.toolforge.org/#/v1=' + urllib.parse.quote('\n'.join(rows), safe=''))
+"
 ```
-Q140265007	P1830	Q140692750	S854	"https://www.yao.care/medical/txgnn/"
-Q140692750	P973	"https://www.yao.care/medical/txgnn/"
-Q140692750	P973	"https://apps.smarthealthit.org/app/twtxgnn-smart-app"
-Q140692750	P275	Q334661
-Q140265007	Lzh-tw	"藥提醒科技有限公司"
-```
 
-逐條理由：
+打開產出的網址 → 授權 → 按 **Run**。
 
-| 語句 | 為什麼 |
-|------|--------|
-| `Q140265007 P1830 … S854` | 建立時反向那條**沒吃到 reference**（TwTxGNN 側的 P178/P127 都有，只有回指這條光禿禿）。QuickStatements 遇到已存在的 statement 會補 reference 上去，不會重複建立。 |
-| `P973 → www.yao.care/medical/txgnn/` | 目前 Wikidata 這側**沒有任何一條指回官網產品頁**。官網那側的 `sameAs` 已經指過來了，補這條才對稱。 |
-| `P973 → SMART App Gallery` | **notability 的關鍵**。這是 SMART Health IT（哈佛醫學院孵化的開源組織）的第三方目錄，實測 HTTP 200。若日後項目被提刪，非自家來源的背書是最有效的辯護，比再多自家連結都管用。 |
-| `P275 → Q334661`（MIT License） | repo 的 LICENSE 確認是 MIT。授權資訊是軟體類項目的常規欄位，缺了會被 Wikidata 的品質檢查標記。 |
-| `Q140265007 Lzh-tw` | 公司項目目前只有 `zh-hant` / `mul` / `en` 三個 label，缺 `zh-tw`。zh-tw 介面會 fallback 到 zh-hant，影響小，順手補。 |
+### 或者手動加（六、七條而已）
 
-**刻意不加的**：
-
-- `P571`（inception）—— 沒有可靠日期。repo 建立於 2026-01-11、站台 schema 的 `datePublished` 寫 2026-02-19，但那是內容審核日不是平台上線日。寧可留空也不要填一個猜的數字進權威資料庫。若你知道實際上線日，格式是 `Q140692750 P571 +2026-01-11T00:00:00Z/11`。
-- **其餘 29 國站台的獨立項目** —— 30 個近乎相同的項目會踩到 notability，而且沒有額外好處。各國站在自己的 schema 裡用 `sameAs` 指向 Q140692750 就夠了（見 `docs/txgnn-sites-entity-fix.md` 第八節）。
-- `P144`（based on）→ 哈佛 TxGNN 模型 —— **Wikidata 上還沒有 TxGNN 模型的項目**。那篇 Nature Medicine 論文也還沒建項目。要補這條得先建模型項目，屬於另一件事。
+不想碰工具的話，直接在 Wikidata 網頁上編輯也行：打開 <https://www.wikidata.org/wiki/Q140692750>，按 **+ 新增敘述**，屬性欄輸入 `P973`、值貼網址，存檔。reference 則是點該敘述下方的 **+ 新增參考資料**，屬性選 `P854`（reference URL）。條數不多，手動反而直觀，缺點是沒有紀錄可重跑。

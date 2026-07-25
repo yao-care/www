@@ -33,6 +33,8 @@ const SITE_URL = 'https://twtxgnn.yao.care/';
 const REPO_URL = 'https://github.com/yao-care/TwTxGNN';
 /** 佐證用：公司官網明列本平台為自家資產的頁面 */
 const REF_URL = 'https://www.yao.care/medical/txgnn/';
+/** 第三方目錄上架頁（SMART Health IT）——唯一的非自家來源 */
+const SMART_GALLERY_URL = 'https://apps.smarthealthit.org/app/twtxgnn-smart-app';
 
 const LABELS: Record<string, string> = {
   en: 'TwTxGNN',
@@ -58,11 +60,25 @@ const ITEM_CLAIMS: [string, number, string][] = [
   ['P17', 865, 'country: Taiwan'],
   ['P921', 5308921, 'main subject: drug repositioning'],
   ['P2283', 107750691, 'uses: graph neural network'],
+  ['P275', 334661, 'copyright license: MIT License（repo LICENSE 確認）'],
 ];
 /** 要建立的 url 型 claim */
 const URL_CLAIMS: [string, string, string][] = [
   ['P856', SITE_URL, 'official website'],
   ['P1324', REPO_URL, 'source code repository URL'],
+  ['P973', REF_URL, 'described at URL: 官網產品頁（Wikidata → 官網的回指）'],
+  // 第三方目錄（SMART Health IT，哈佛醫學院孵化）——非自家來源，notability 的主要辯護
+  ['P973', SMART_GALLERY_URL, 'described at URL: SMART on FHIR App Gallery 上架頁'],
+];
+/**
+ * 要建立的 time 型 claim。
+ * P571 用 GitHub Pages 首次部署時間 2026-02-09T02:17:51Z（deployments API 翻到最後一頁的
+ * 最早一筆），那是站台第一次真的存在於網路上的時刻，且第三方可查證。
+ * 刻意不用 repo 建立日 2026-01-11（只是開始寫程式）或 head_custom.html 寫死的
+ * 2026-02-19（那是內容審核基準日，套用在所有藥品頁上，不是上線日）。
+ */
+const TIME_CLAIMS: [string, string, string][] = [
+  ['P571', '+2026-02-09T00:00:00Z', 'inception: GitHub Pages 首次部署'],
 ];
 
 // ─── 極簡 cookie jar（MediaWiki 登入需要帶 cookie）────────────
@@ -173,6 +189,28 @@ function urlSnak(property: string, value: string) {
     rank: 'normal',
   };
 }
+/** precision 11 = 精確到「日」 */
+function timeSnak(property: string, time: string) {
+  return {
+    mainsnak: {
+      snaktype: 'value',
+      property,
+      datavalue: {
+        value: {
+          time,
+          timezone: 0,
+          before: 0,
+          after: 0,
+          precision: 11,
+          calendarmodel: 'http://www.wikidata.org/entity/Q1985727',
+        },
+        type: 'time',
+      },
+    },
+    type: 'statement',
+    rank: 'normal',
+  };
+}
 
 /** 以 label 搜尋既有的 TwTxGNN 項目（冪等：重跑不重複建立） */
 async function findExisting(): Promise<string | null> {
@@ -201,31 +239,45 @@ async function findExisting(): Promise<string | null> {
  * 連編輯既有項目都不行。規避封鎖違反 Wikimedia 政策，所以改由人在未被封鎖的網路執行。
  * 語法一律從本檔上方同一組常數生成，不另抄一份，避免兩邊 drift。
  */
-function printQuickStatements() {
+function printQuickStatements(existingQid: string | null) {
   const q = (v: string) => `"${v}"`;
-  const rows: string[] = ['CREATE'];
-  for (const [lang, v] of Object.entries(LABELS)) rows.push(`LAST\tL${lang}\t${q(v)}`);
-  for (const [lang, v] of Object.entries(DESCRIPTIONS)) rows.push(`LAST\tD${lang}\t${q(v)}`);
-  for (const [lang, vs] of Object.entries(ALIASES))
-    for (const v of vs) rows.push(`LAST\tA${lang}\t${q(v)}`);
+  // 項目已存在 → 主語直接用它的 QID（QuickStatements 遇到既有 statement 會補
+  // reference 而非重複建立）；尚未存在 → CREATE + LAST。
+  const S = existingQid ?? 'LAST';
+  const rows: string[] = existingQid ? [] : ['CREATE'];
+
+  if (!existingQid) {
+    for (const [lang, v] of Object.entries(LABELS)) rows.push(`${S}\tL${lang}\t${q(v)}`);
+    for (const [lang, v] of Object.entries(DESCRIPTIONS)) rows.push(`${S}\tD${lang}\t${q(v)}`);
+    for (const [lang, vs] of Object.entries(ALIASES))
+      for (const v of vs) rows.push(`${S}\tA${lang}\t${q(v)}`);
+  }
   for (const [prop, id] of ITEM_CLAIMS) {
     const ref = prop === 'P178' || prop === 'P127' ? `\tS854\t${q(REF_URL)}` : '';
-    rows.push(`LAST\t${prop}\tQ${id}${ref}`);
+    rows.push(`${S}\t${prop}\tQ${id}${ref}`);
   }
-  for (const [prop, v] of URL_CLAIMS) rows.push(`LAST\t${prop}\t${q(v)}`);
+  for (const [prop, v] of URL_CLAIMS) rows.push(`${S}\t${prop}\t${q(v)}`);
+  for (const [prop, t] of TIME_CLAIMS) rows.push(`${S}\t${prop}\t${t}/11`);
+  // 反向邊（含出處）+ 公司項目缺的 zh-tw label
+  rows.push(`${ORG_QID}\tP1830\t${existingQid ?? '<QID>'}\tS854\t${q(REF_URL)}`);
+  rows.push(`${ORG_QID}\tLzh-tw\t${q('藥提醒科技有限公司')}`);
 
-  console.log('=== 批次一：建立 TwTxGNN 項目 ===');
-  console.log('貼到 https://quickstatements.toolforge.org/#/batch （需先用 Wikidata 帳號授權）\n');
+  console.log(
+    existingQid
+      ? `=== 補強既有項目 ${existingQid}（已存在的敘述會自動跳過，不會重複）===`
+      : '=== 建立 TwTxGNN 項目 ===',
+  );
+  console.log('用法見 docs/wikidata-txgnn.md「怎麼加」一節。\n');
   console.log(rows.join('\n'));
-  console.log('\n=== 批次二：公司項目補反向連結（把 <QID> 換成批次一產生的新項目編號）===\n');
-  console.log(`${ORG_QID}\tP1830\t<QID>\tS854\t${q(REF_URL)}`);
-  console.log('\n關係成立的判準：新項目有 P178/P127 → ' + ORG_QID + '，且 ' + ORG_QID + ' 有 P1830 → 新項目。');
+  console.log(
+    `\n關係成立的判準：TwTxGNN 項目有 P178/P127 → ${ORG_QID}，且 ${ORG_QID} 有 P1830 → TwTxGNN 項目。`,
+  );
 }
 
 async function main() {
-  if (QS) return printQuickStatements();
-
+  // QS 模式也要先查（只讀，不受 IP 封鎖影響），才知道該產 CREATE 還是補強語法
   const existingQid = await findExisting();
+  if (QS) return printQuickStatements(existingQid);
 
   // ── 1. 建立或補強 TwTxGNN 項目 ────────────────────────────
   let appQid = existingQid;
@@ -258,6 +310,12 @@ async function main() {
         console.log(`   + ${prop} → ${v}（${note}）`);
       }
     }
+    for (const [prop, t, note] of TIME_CLAIMS) {
+      if (!(claims[prop] ?? []).length) {
+        newClaims.push(timeSnak(prop, t));
+        console.log(`   + ${prop} → ${t}（${note}）`);
+      }
+    }
     appData = newClaims.length ? { claims: newClaims } : null;
   } else {
     console.log('ℹ️  Wikidata 上尚無 TwTxGNN 項目 —— 將新建。');
@@ -277,6 +335,7 @@ async function main() {
       claims: [
         ...ITEM_CLAIMS.map(([p, id]) => itemSnak(p, id, p === 'P178' || p === 'P127')),
         ...URL_CLAIMS.map(([p, v]) => urlSnak(p, v)),
+        ...TIME_CLAIMS.map(([p, t]) => timeSnak(p, t)),
       ],
     };
   }
