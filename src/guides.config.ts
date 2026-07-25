@@ -32,6 +32,11 @@ export type Guide = {
    * 只在真的相關、免費／開源／公益的資源才放，且全站只挑最相關的一兩則，避免浮濫互連。
    */
   externalResources?: readonly { before: string; label: string; url: string; after: string }[];
+  /**
+   * 權威來源（供 MedicalWebPage 的 schema `citation` 使用；GEO 用）。
+   * 只放實開查證過的權威文獻／官方頁；來源與 glossary/topics 既有 sources 一致。
+   */
+  sources?: readonly { label: string; url: string }[];
 };
 
 export const AUDIENCE_LABEL: Record<Guide['audience'], string> = {
@@ -394,6 +399,12 @@ export const GUIDES: readonly Guide[] = [
     ],
     related: ['txgnn'],
     relatedTerms: ['drug-repurposing', 'smart-on-fhir'],
+    sources: [
+      { label: 'TxGNN 原始論文：An explainable foundation model for drug repurposing，《Nature Medicine》2024', url: 'https://www.nature.com/articles/s41591-024-03333-8' },
+      { label: 'PubMed Central — 預印本全文（PMC11326339）', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11326339/' },
+      { label: '哈佛醫學院 Zitnik Lab：TxGNN 專案頁', url: 'https://zitniklab.hms.harvard.edu/projects/TxGNN/' },
+      { label: 'GitHub — mims-harvard/TxGNN（原始碼）', url: 'https://github.com/mims-harvard/TxGNN' },
+    ],
   },
   {
     slug: 'fhir-connectathon',
