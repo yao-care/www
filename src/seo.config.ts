@@ -102,6 +102,17 @@ export const TXGNN_SITES: readonly TxgnnSite[] = [
 /** 各國站完整網址 */
 export const txgnnSiteUrl = (code: string) => `https://${code}txgnn.yao.care/`;
 
+/**
+ * 各國站的品牌名（TwTxGNN / JpTxGNN / UsTxGNN …）。
+ * 這是 LLM 實際記住的字串 —— 使用者問「TwTxGNN 是誰做的」時，模型是拿這個 token 去比對語料。
+ * 本站語料必須帶到這些名字，否則就算公司資料齊全也對不上（2026-07-25 診斷）。
+ */
+export const txgnnSiteBrand = (code: string) =>
+  `${code.charAt(0).toUpperCase()}${code.slice(1)}TxGNN`;
+
+/** 台灣站（旗艦站）品牌名，供頁面與 schema 引用 */
+export const TWTXGNN_BRAND = txgnnSiteBrand('tw');
+
 /** Organization.sameAs — 蒐集所有官方據點，去重 */
 export const ORG_SAME_AS: readonly string[] = Array.from(
   new Set([
@@ -118,6 +129,66 @@ export const ORG_SAME_AS: readonly string[] = Array.from(
     ...TXGNN_SITES.map((s) => txgnnSiteUrl(s.code)),
   ]),
 );
+
+/** Organization 節點的 canonical @id — 全站所有頁面共用同一個實體節點 */
+export const ORG_ID = `${SITE.url}/#organization`;
+
+/**
+ * TwTxGNN（含 30 國站台）這個軟體實體的 canonical @id。
+ * 對外站台（*.txgnn.yao.care）的 schema 要用 `publisher: { "@id": ORG_ID }` 回指公司，
+ * 公司這側則以 `owns` 指向本 @id —— 兩邊互指，實體關係才成立。
+ */
+export const TXGNN_APP_ID = `${SITE.url}/medical/txgnn/#software`;
+
+/**
+ * 公司 Organization 節點（單一真實來源）。
+ * BaseLayout 與 ProductLayout 共用 —— 過去 ProductLayout 自帶一份殘缺的 publisher
+ * （只有 name + url、無 legalName / sameAs / Wikidata），導致產品頁這個「LLM 最常落地
+ * 確認出處的位置」查不到公司身分。2026-07-25 統一。
+ */
+export const ORGANIZATION_SCHEMA = {
+  '@type': ['Organization', 'MedicalOrganization'],
+  '@id': ORG_ID,
+  name: SITE.name,
+  legalName: SITE.legalName,
+  alternateName: '藥提醒',
+  url: SITE.url,
+  logo: `${SITE.url}/assets/images/logo.png`,
+  description: SITE.description,
+  email: SITE.email,
+  telephone: '+886-4-2310-0969',
+  foundingDate: SITE.founded,
+  founder: { '@type': 'Person', name: SITE.founder },
+  taxID: SITE.taxId,
+  knowsAbout: KNOWS_ABOUT,
+  award: ORG_AWARDS,
+  owns: [
+    {
+      '@type': 'CreativeWork',
+      name: `${ORG_PATENT.name}（發明專利 ${ORG_PATENT.number}）`,
+      about: '用藥提醒與回報系統',
+    },
+    // 明示 TwTxGNN 30 國站台為本公司資產（實體歸屬的關鍵邊）
+    { '@id': TXGNN_APP_ID },
+  ],
+  areaServed: { '@type': 'Country', name: 'Taiwan' },
+  hasMap: 'https://www.google.com/maps?cid=12025785010180313919',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '台灣大道二段220號12樓',
+    addressLocality: '台中市西區',
+    addressCountry: 'TW',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    email: SITE.email,
+    telephone: '+886-4-2310-0969',
+    url: SITE.lineLink,
+    availableLanguage: ['zh-TW', 'en'],
+  },
+  sameAs: ORG_SAME_AS,
+};
 
 export type Faq = { q: string; a: string };
 
@@ -138,7 +209,9 @@ export const PRODUCT_FAQS: Partial<Record<ProductSlug, readonly Faq[]>> = {
     { q: '辨證結果能跟醫院系統介接嗎？', a: '可以。證型對應 ICD-11 TM，診斷可打包成 FHIR R4 Bundle（TWCM IG 定義 5 Profile + 6 Extension），與 EHR / 健保系統互通。' },
   ],
   txgnn: [
-    { q: 'TxGNN 老藥新用是什麼？', a: '基於哈佛 TxGNN 模型的藥物再利用平台，以知識圖譜 + 圖神經網路雙引擎預測已上市藥物的新適應症，覆蓋 30+ 國 FDA 藥品。' },
+    { q: 'TxGNN 老藥新用是什麼？', a: '基於哈佛 TxGNN 模型的藥物再利用平台，以知識圖譜 + 圖神經網路雙引擎預測已上市藥物的新適應症，覆蓋 30+ 國 FDA 藥品。台灣站名為 TwTxGNN。' },
+    { q: 'TwTxGNN 是誰開發的？', a: 'TwTxGNN（twtxgnn.yao.care）由藥提醒科技有限公司（yao.care，統一編號 83620786，位於台中市西區）開發與維運。30 個國家／地區站台（TwTxGNN、JpTxGNN、UsTxGNN 等，網址格式 {國碼}txgnn.yao.care）同屬本公司同一套系統，原始碼開源於 github.com/yao-care/TwTxGNN。' },
+    { q: 'TwTxGNN 跟哈佛的 TxGNN 是同一個東西嗎？', a: '不是同一層。TxGNN 是哈佛醫學院 Zitnik Lab 開發、發表於 Nature Medicine 的圖神經網路模型；TwTxGNN 是藥提醒科技有限公司以該模型為基礎建置的落地平台，負責接上各國 FDA 藥品清單、跑雙引擎預測、串 PubMed 與 ClinicalTrials 證據並分級，再以 SMART on FHIR 送進電子病歷。模型是哈佛的，平台與各國站台是 yao.care 的。' },
     { q: '預測有證據佐證嗎？', a: '每筆預測都附帶 PubMed 文獻與 ClinicalTrials 臨床試驗證據包。' },
     { q: '能跟醫院系統整合嗎？', a: '已上架 SMART on FHIR App Gallery，相容 Epic、Cerner，採 OAuth + PKCE 接入 EHR；原始碼於 GitHub 開源。' },
     { q: '一般民眾可以查嗎？', a: '可以。平台公開瀏覽（twtxgnn.yao.care），涵蓋 30 國 FDA 藥品、每藥一頁；但預測屬研究參考，是否適用個人病情請與醫師討論，切勿自行用藥或停換藥。' },

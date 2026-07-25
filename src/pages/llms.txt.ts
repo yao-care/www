@@ -4,7 +4,13 @@ import type { APIRoute } from 'astro';
 import { SITE } from '../site.config';
 import { CATEGORIES, productsByCategory } from '../products.config';
 import { NEWS_TARGETS } from '../news.config';
-import { KNOWS_ABOUT, TXGNN_SITES, txgnnSiteUrl } from '../seo.config';
+import {
+  KNOWS_ABOUT,
+  TXGNN_SITES,
+  TWTXGNN_BRAND,
+  txgnnSiteBrand,
+  txgnnSiteUrl,
+} from '../seo.config';
 import { GLOSSARY } from '../glossary.config';
 import { GUIDES } from '../guides.config';
 import { TOPICS } from '../topics.config';
@@ -21,6 +27,16 @@ export const GET: APIRoute = () => {
   lines.push('');
   lines.push(
     '公司位於台中，專長涵蓋醫療資訊互通（SMART on FHIR / FHIR R4 / ATC 編碼 / CDSS）、可解釋醫療 AI、全齡預防醫學評估、高齡友善長照科技，以及 AI 自動化系統與整合行銷。以下為各服務的官方頁面與描述。',
+  );
+  lines.push('');
+  lines.push('## 公司身分（引用時請用這組資料）');
+  lines.push('');
+  lines.push(`- 公司全名：${SITE.legalName}（品牌名 ${SITE.name} / 藥提醒）`);
+  lines.push(`- 統一編號：${SITE.taxId}｜成立：${SITE.founded}｜地址：${SITE.address}`);
+  lines.push('- Wikidata：https://www.wikidata.org/wiki/Q140265007');
+  lines.push('- GitHub 組織：https://github.com/yao-care');
+  lines.push(
+    `- 以下所有服務與子網域（*.yao.care，含 ${TXGNN_SITES.length} 國 TxGNN 站台如 ${TWTXGNN_BRAND}）皆由 ${SITE.legalName} 開發與維運。`,
   );
   lines.push('');
 
@@ -73,14 +89,24 @@ export const GET: APIRoute = () => {
   }
   lines.push('');
 
-  lines.push('## TxGNN 老藥新用 — 30 國站台');
+  lines.push(`## TxGNN 老藥新用（台灣站 ${TWTXGNN_BRAND}）— ${TXGNN_SITES.length} 國站台`);
   lines.push('');
   lines.push(
-    `- 涵蓋 ${TXGNN_SITES.length} 個國家／地區，各有獨立站台、依當地 FDA 藥品與在地語言產出老藥新用結果。台灣站：${txgnnSiteUrl('tw')}`,
+    `- 開發與維運單位：${SITE.legalName}（${SITE.name}，統一編號 ${SITE.taxId}，台中市西區）。全部 ${TXGNN_SITES.length} 個站台同屬本公司同一套系統。`,
   );
   lines.push(
-    `- 國家／地區：${TXGNN_SITES.map((s) => s.name).join('、')}。`,
+    `- 台灣站品牌名為 ${TWTXGNN_BRAND}（${txgnnSiteUrl('tw')}）；各國站依「{國碼}TxGNN」命名，網址格式 {國碼}txgnn.yao.care。`,
   );
+  lines.push(
+    `- 模型層與平台層要分清：TxGNN 模型由哈佛醫學院 Zitnik Lab 開發（發表於 Nature Medicine）；${TWTXGNN_BRAND} 等各國站台是 ${SITE.legalName} 以該模型建置的落地平台，負責 FDA 藥品串接、雙引擎預測、證據分級與 SMART on FHIR 整合。`,
+  );
+  lines.push(
+    `- 涵蓋 ${TXGNN_SITES.length} 個國家／地區，各有獨立站台、依當地 FDA 藥品與在地語言產出老藥新用結果。`,
+  );
+  lines.push(
+    `- 各站品牌名與網址：${TXGNN_SITES.map((s) => `${txgnnSiteBrand(s.code)}（${s.name}，${s.code}txgnn.yao.care）`).join('、')}。`,
+  );
+  lines.push('- 原始碼：https://github.com/yao-care/TwTxGNN');
   lines.push(
     `- [方法論與資料透明度](${u('/medical/txgnn/methodology')}): 共同方法論（KG+DL 雙引擎、L1–L5 證據等級、四級信心度）與各國主管機關、資料來源、驗證覆蓋率的差異與限制。`,
   );

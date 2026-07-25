@@ -196,9 +196,10 @@ const stats = [
       <p class="text-base md:text-lg">
         老藥新用（Drug Repurposing）是把已上市的藥物用於原本未核准的新適應症 ——
         因為已通過安全性驗證，研發成本與時間遠低於開發新藥。
-        我們以哈佛大學 TxGNN 模型為基礎，
-        <strong class="text-[color:var(--color-brand)]">把它從台灣擴展到 30 個國家</strong>，
-        並把預測流程與 EHR 系統打通，讓臨床端能在病患用藥當下即時看到老藥新用建議。
+        <strong>藥提醒科技有限公司（yao.care）</strong>以哈佛大學 TxGNN 模型為基礎建置了這個平台，
+        台灣站名為 <strong class="text-[color:var(--color-brand)]">TwTxGNN</strong>（twtxgnn.yao.care），
+        並<strong class="text-[color:var(--color-brand)]">從台灣擴展到 30 個國家</strong>，
+        把預測流程與 EHR 系統打通，讓臨床端能在病患用藥當下即時看到老藥新用建議。
       </p>
       <p class="mt-4 text-base md:text-lg">
         本平台已上架 SMART on FHIR App Gallery，由 SMART Health IT（哈佛醫學院孵化的開源組織）審核，
@@ -348,8 +349,14 @@ const stats = [
         ))}
       </div>
       <p class="mt-6 text-center text-sm text-[color:var(--color-ink-soft)]">
-        台灣站為 <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] underline underline-offset-2">twtxgnn.yao.care</a>；
+        台灣站為 <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] underline underline-offset-2">twtxgnn.yao.care</a>，
+        站名 <strong>TwTxGNN</strong>；其餘各國依 <code>{'{'}國碼{'}'}TxGNN</code> 命名（JpTxGNN、UsTxGNN、DeTxGNN…）。
         各國站採相同架構、獨立部署於 GitHub Pages。
+      </p>
+      <p class="mt-3 text-center text-sm text-[color:var(--color-ink-soft)]">
+        全部 {TXGNN_SITES.length} 個站台皆由 <strong>藥提醒科技有限公司（yao.care，統一編號 83620786）</strong>開發與維運，
+        原始碼開源於 <a href="https://github.com/yao-care/TwTxGNN" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] underline underline-offset-2">github.com/yao-care/TwTxGNN</a>。
+        模型本身出自哈佛醫學院 Zitnik Lab；各國站台的建置、資料串接與證據分級由本公司負責。
       </p>
     </div>
   </section>

@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import { SITE } from '../site.config';
 import { PRODUCT_BY_SLUG, CATEGORY_BY_SLUG, type Product } from '../products.config';
-import { PRODUCT_FAQS } from '../seo.config';
+import { PRODUCT_FAQS, ORG_ID, ORGANIZATION_SCHEMA } from '../seo.config';
 import { GLOSSARY } from '../glossary.config';
 import { GUIDES } from '../guides.config';
 import Nav from '../components/Nav.astro';
@@ -36,17 +36,28 @@ const ogImage = new URL(`/assets/images/og/${slug}.png`, SITE.url).toString();
 const appCategory =
   product.category === 'ai' ? 'BusinessApplication' : 'HealthApplication';
 
+// 產品的軟體實體 @id —— 公司 Organization 的 owns 會指回這裡，形成雙向關係。
+// 對外站台（如 twtxgnn.yao.care）的 schema 也用同一組 @id 回指，跨網域串成同一個實體。
+const softwareAppId = `${canonical}#software`;
+
 const softwareApp = {
   '@type': 'SoftwareApplication',
+  '@id': softwareAppId,
   name: product.title,
+  ...(product.alternateNames?.length ? { alternateName: product.alternateNames } : {}),
   description: product.description,
   url: canonical,
   applicationCategory: appCategory,
   operatingSystem: 'Web',
   inLanguage: 'zh-TW',
   image: ogImage,
-  sameAs: [product.externalUrl, product.repoUrl].filter(Boolean),
-  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  sameAs: [product.externalUrl, product.repoUrl, ...(product.extraSameAs ?? [])].filter(Boolean),
+  // 出處歸屬：一律引用同頁的完整 Organization 節點，而非另寫一份殘缺的內嵌組織
+  publisher: { '@id': ORG_ID },
+  author: { '@id': ORG_ID },
+  creator: { '@id': ORG_ID },
+  copyrightHolder: { '@id': ORG_ID },
+  provider: { '@id': ORG_ID },
 };
 
 const breadcrumb = {
@@ -77,7 +88,9 @@ const faqPage =
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [softwareApp, breadcrumb, ...(faqPage ? [faqPage] : [])],
+  // ORGANIZATION_SCHEMA 必須同頁輸出：ProductLayout 不經 BaseLayout，過去產品頁的
+  // @graph 只有 softwareApp/breadcrumb/faq，publisher 指向一個頁面上不存在的組織。
+  '@graph': [ORGANIZATION_SCHEMA, softwareApp, breadcrumb, ...(faqPage ? [faqPage] : [])],
 };
 ---
 <!DOCTYPE html>

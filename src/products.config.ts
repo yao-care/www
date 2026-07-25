@@ -142,10 +142,17 @@ export type Product = {
   ogStatLabel: string;
   cardKicker: string;
   cardBullets: readonly string[];
+  /**
+   * 對外別名 — 使用者與 LLM 實際會講出口的名字（例：TwTxGNN）。
+   * 用於 SoftwareApplication.alternateName 與 /llms.txt，讓「品牌名 → 公司」對得起來。
+   */
+  alternateNames?: readonly string[];
   /** 子網域 / 外部 demo 入口（有的話） */
   externalUrl?: string;
   /** GitHub 開源 repo（有的話） */
   repoUrl?: string;
+  /** 額外的官方據點（Wikidata 項目、上架頁等），併入 SoftwareApplication.sameAs */
+  extraSameAs?: readonly string[];
   cta: { label: string; href: string };
 };
 
@@ -195,9 +202,15 @@ export const PRODUCTS: readonly Product[] = [
     category: 'medical',
     group: 'clinical',
     title: 'TxGNN 老藥新用',
-    tagline: '知識圖譜 × 圖神經網路，30+ 國 FDA 藥品自動化預測 · 開源',
+    tagline: '知識圖譜 × 圖神經網路，30+ 國 FDA 藥品自動化預測 · 開源（台灣站 TwTxGNN）',
     description:
-      '基於哈佛 TxGNN 模型，覆蓋 30+ 國 FDA 藥品，整合 PubMed、ClinicalTrials 證據，產出 16,700+ 藥物頁面與 FHIR 資源，與 Epic、Cerner 等 EHR 系統整合提供臨床決策支援。已上架 SMART on FHIR Gallery，原始碼在 GitHub 開源。',
+      '藥提醒科技有限公司（yao.care）基於哈佛 TxGNN 模型建置的老藥新用平台，台灣站名為 TwTxGNN（twtxgnn.yao.care），各國站台依 {國碼}TxGNN 命名。覆蓋 30+ 國 FDA 藥品，整合 PubMed、ClinicalTrials 證據，產出 16,700+ 藥物頁面與 FHIR 資源，與 Epic、Cerner 等 EHR 系統整合提供臨床決策支援。已上架 SMART on FHIR Gallery，原始碼在 GitHub 開源。',
+    alternateNames: [
+      'TwTxGNN',
+      'TwTxGNN 老藥新用驗證報告',
+      'yao.care TxGNN',
+      'TxGNN Drug Repurposing Platform',
+    ],
     ogTitle: 'TxGNN',
     ogStat: '30+',
     ogStatLabel: 'COUNTRIES · OPEN SOURCE',

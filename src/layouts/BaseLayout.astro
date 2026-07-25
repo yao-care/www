@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../site.config';
-import { KNOWS_ABOUT, ORG_SAME_AS, ORG_AWARDS, ORG_PATENT } from '../seo.config';
+import { ORG_ID, ORGANIZATION_SCHEMA } from '../seo.config';
 import Analytics from '../components/Analytics.astro';
 
 interface Props {
@@ -26,49 +26,10 @@ const {
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const ogImageUrl = new URL(ogImage ?? SITE.ogImage, SITE.url).toString();
 
-const orgId = `${SITE.url}/#organization`;
 const defaultJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
-    {
-      '@type': ['Organization', 'MedicalOrganization'],
-      '@id': orgId,
-      name: SITE.name,
-      legalName: SITE.legalName,
-      alternateName: '藥提醒',
-      url: SITE.url,
-      logo: `${SITE.url}/assets/images/logo.png`,
-      description: SITE.description,
-      email: SITE.email,
-      telephone: `+886-4-2310-0969`,
-      foundingDate: SITE.founded,
-      founder: { '@type': 'Person', name: SITE.founder },
-      taxID: SITE.taxId,
-      knowsAbout: KNOWS_ABOUT,
-      award: ORG_AWARDS,
-      owns: {
-        '@type': 'CreativeWork',
-        name: `${ORG_PATENT.name}（發明專利 ${ORG_PATENT.number}）`,
-        about: '用藥提醒與回報系統',
-      },
-      areaServed: { '@type': 'Country', name: 'Taiwan' },
-      hasMap: 'https://www.google.com/maps?cid=12025785010180313919',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: '台灣大道二段220號12樓',
-        addressLocality: '台中市西區',
-        addressCountry: 'TW',
-      },
-      contactPoint: {
-        '@type': 'ContactPoint',
-        contactType: 'customer service',
-        email: SITE.email,
-        telephone: `+886-4-2310-0969`,
-        url: SITE.lineLink,
-        availableLanguage: ['zh-TW', 'en'],
-      },
-      sameAs: ORG_SAME_AS,
-    },
+    ORGANIZATION_SCHEMA,
     {
       '@type': 'WebSite',
       '@id': `${SITE.url}/#website`,
@@ -77,7 +38,7 @@ const defaultJsonLd = {
       alternateName: '藥提醒 yao.care',
       description: SITE.description,
       inLanguage: 'zh-TW',
-      publisher: { '@id': orgId },
+      publisher: { '@id': ORG_ID },
     },
   ],
 };
