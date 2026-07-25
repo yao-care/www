@@ -32,10 +32,15 @@
 | 站台 | schema Organization name | footer 現況 | 嚴重度 |
 |------|--------------------------|-------------|--------|
 | tw / jp / sg / th / nz / de / fr / it / es / ch / se / no / fi / br / ar / co / sa | `{Cc}TxGNN` | `Yao.Care`（品牌，無法人全名） | 中 |
-| **kr / ph / in / us / nl / dk / eu / za** | `{Cc}TxGNN` | **`{Cc}TxGNN Project`（完全無公司）** | **高** |
-| **hk / my / au / ca / uk** | `{Cc}TxGNN` | **抓不到 footer**（`footer_content` 未設或格式不同，請自查） | **高** |
+| **kr / ph / in / us / nl / dk / eu / za / my** | `{Cc}TxGNN` | **`{Cc}TxGNN Project`（完全無公司）**。my 是馬來文版的同一句：`Projek MyTxGNN` | **高** |
+| **hk / au / ca / uk** | `{Cc}TxGNN` | **`_config.yml` 根本沒有 `footer_content`**——Just the Docs 沒設就不顯示 footer，這 4 站連 copyright 都沒有，要新增整行 | **高** |
 
 粗體那 13 站請優先處理。
+
+repo 結構已抽樣查證（jp / us / de / kr / za / eu / ch）：全部一致——`docs/_includes/head_custom.html` 存在、預設分支都是 `main`，所以下面的檔案路徑對 30 站都適用。
+
+> ⚠ **repo 名稱大小寫不統一**，`gh repo edit` 時要用正確的名字：
+> `ARTxGNN` `AuTxGNN` `BrTxGNN` `CHTxGNN` `COTxGNN` `CaTxGNN` `DETxGNN` `DkTxGNN` `ESTxGNN` `EuTxGNN` `FITxGNN` `FRTxGNN` `HkTxGNN` `ITTxGNN` `InTxGNN` `JpTxGNN` `KrTxGNN` `MyTxGNN` `NOTxGNN` `NZTxGNN` `NlTxGNN` `PhTxGNN` `SATxGNN` `SETxGNN` `SgTxGNN` `ThTxGNN` `TwTxGNN` `UkTxGNN` `UsTxGNN` `ZaTxGNN`
 
 ## 三、目標關係
 
