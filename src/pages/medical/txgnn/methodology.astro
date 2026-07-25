@@ -40,6 +40,45 @@ const articleSchema = {
   about: '老藥新用 Drug Repurposing',
   isAccessibleForFree: true,
 };
+// Dataset（GEO）：本頁的 30 國逐國統計本身就是一份可引用的資料集——標成 Dataset 讓答案引擎
+// 能辨識「這裡有結構化資料可取用」，而非只是一篇文章。各國主管機關的原始資料集列為 isBasedOn，
+// 全部取自 txgnn-countries.json 真實欄位（不捏造授權或更新日）。
+const datasetSchema = {
+  '@type': 'Dataset',
+  name: '30 國核准藥品老藥新用預測統計',
+  description:
+    '涵蓋 30 個國家／地區主管機關核准藥品清單，經同一套知識圖譜＋圖神經網路雙引擎流程產出的老藥新用候選統計：逐國藥物數、候選數、very_high 信心筆數、PubMed／ClinicalTrials 證據數與證據包數。',
+  url: canonical,
+  inLanguage: 'zh-TW',
+  isAccessibleForFree: true,
+  creator: { '@id': `${SITE.url}/#organization` },
+  publisher: { '@id': `${SITE.url}/#organization` },
+  about: '老藥新用 Drug Repurposing',
+  temporalCoverage: statsDate,
+  variableMeasured: ['核准藥物數', '老藥新用候選數', 'very_high 信心筆數', 'PubMed 引用數', 'ClinicalTrials 試驗數', '證據包數'],
+  spatialCoverage: countries.map((c) => ({ '@type': 'Country', name: c.zh })),
+  distribution: countries.map((c) => ({
+    '@type': 'DataDownload',
+    name: `${c.zh} 老藥新用平台`,
+    contentUrl: c.url,
+    encodingFormat: 'text/html',
+  })),
+  isBasedOn: countries
+    .filter((c) => c.dataset?.url)
+    .map((c) => ({
+      '@type': 'Dataset',
+      name: `${c.zh}（${c.regulator?.abbrev ?? ''}）${c.dataset.name}`,
+      url: c.dataset.url,
+      ...(c.dataset.license ? { license: c.dataset.license } : {}),
+    })),
+  citation: [
+    {
+      '@type': 'CreativeWork',
+      name: 'An explainable foundation model for drug repurposing，《Nature Medicine》2024',
+      url: 'https://www.nature.com/articles/s41591-024-03333-8',
+    },
+  ],
+};
 const breadcrumb = {
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -50,7 +89,7 @@ const breadcrumb = {
   ],
 };
 ---
-<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/txgnn.png" ogType="article" extraSchema={[articleSchema, breadcrumb]}>
+<BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/txgnn.png" ogType="article" extraSchema={[articleSchema, datasetSchema, breadcrumb]}>
   <Nav />
   <main class="pt-20">
     <!-- breadcrumb -->
