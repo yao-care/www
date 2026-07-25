@@ -222,6 +222,12 @@ export const PRODUCTS: readonly Product[] = [
     ],
     externalUrl: 'https://twtxgnn.yao.care/',
     repoUrl: 'https://github.com/yao-care/TwTxGNN',
+    // Wikidata 的 TwTxGNN 項目（P178 developer → Q140265007 公司項目，公司側 P1830 回指）。
+    // 官網 → Wikidata 這條邊是實體鏈的最後一環，見 docs/wikidata-txgnn.md
+    extraSameAs: [
+      'https://www.wikidata.org/wiki/Q140692750',
+      'https://apps.smarthealthit.org/app/twtxgnn-smart-app',
+    ],
     cta: { label: '討論技術合作', href: LINE_PERSONAL },
   },
   {

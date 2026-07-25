@@ -1,5 +1,11 @@
 # Wikidata：把 TwTxGNN 掛回藥提醒科技有限公司
 
+> ✅ **2026-07-25 已完成**：TwTxGNN 項目 = **[Q140692750](https://www.wikidata.org/wiki/Q140692750)**，
+> 由使用者在自有網路（非本主機）建立。雙向邊已成立：
+> `Q140692750 --P178/P127--> Q140265007`，`Q140265007 --P1830--> Q140692750`。
+> 本檔以下的封鎖說明與操作路徑保留，供日後維護該項目時參考。
+> 尚可補強的欄位見文末「後續補強」。
+
 ## 為什麼要做
 
 用 LLM 問「台灣老藥新用研究報告的公司，你會推薦哪一間？」時，模型會答 TwTxGNN，但**不知道那是藥提醒科技有限公司做的**。
@@ -97,3 +103,31 @@ curl -s "https://www.wikidata.org/wiki/Special:EntityData/Q140265007.json" | \
 ```
 
 兩邊都查得到才算關係成立。
+
+## 後續補強（2026-07-25 盤點）
+
+核心關係已完整，以下是查核後發現的缺漏。都不影響「LLM 認得歸屬」這件事，但補上會讓項目更禁得起 notability 檢視。同樣用 QuickStatements 在未封鎖的網路執行：
+
+```
+Q140265007	P1830	Q140692750	S854	"https://www.yao.care/medical/txgnn/"
+Q140692750	P973	"https://www.yao.care/medical/txgnn/"
+Q140692750	P973	"https://apps.smarthealthit.org/app/twtxgnn-smart-app"
+Q140692750	P275	Q334661
+Q140265007	Lzh-tw	"藥提醒科技有限公司"
+```
+
+逐條理由：
+
+| 語句 | 為什麼 |
+|------|--------|
+| `Q140265007 P1830 … S854` | 建立時反向那條**沒吃到 reference**（TwTxGNN 側的 P178/P127 都有，只有回指這條光禿禿）。QuickStatements 遇到已存在的 statement 會補 reference 上去，不會重複建立。 |
+| `P973 → www.yao.care/medical/txgnn/` | 目前 Wikidata 這側**沒有任何一條指回官網產品頁**。官網那側的 `sameAs` 已經指過來了，補這條才對稱。 |
+| `P973 → SMART App Gallery` | **notability 的關鍵**。這是 SMART Health IT（哈佛醫學院孵化的開源組織）的第三方目錄，實測 HTTP 200。若日後項目被提刪，非自家來源的背書是最有效的辯護，比再多自家連結都管用。 |
+| `P275 → Q334661`（MIT License） | repo 的 LICENSE 確認是 MIT。授權資訊是軟體類項目的常規欄位，缺了會被 Wikidata 的品質檢查標記。 |
+| `Q140265007 Lzh-tw` | 公司項目目前只有 `zh-hant` / `mul` / `en` 三個 label，缺 `zh-tw`。zh-tw 介面會 fallback 到 zh-hant，影響小，順手補。 |
+
+**刻意不加的**：
+
+- `P571`（inception）—— 沒有可靠日期。repo 建立於 2026-01-11、站台 schema 的 `datePublished` 寫 2026-02-19，但那是內容審核日不是平台上線日。寧可留空也不要填一個猜的數字進權威資料庫。若你知道實際上線日，格式是 `Q140692750 P571 +2026-01-11T00:00:00Z/11`。
+- **其餘 29 國站台的獨立項目** —— 30 個近乎相同的項目會踩到 notability，而且沒有額外好處。各國站在自己的 schema 裡用 `sameAs` 指向 Q140692750 就夠了（見 `docs/txgnn-sites-entity-fix.md` 第八節）。
+- `P144`（based on）→ 哈佛 TxGNN 模型 —— **Wikidata 上還沒有 TxGNN 模型的項目**。那篇 Nature Medicine 論文也還沒建項目。要補這條得先建模型項目，屬於另一件事。

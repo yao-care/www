@@ -271,4 +271,16 @@ curl -s "https://$SITE/" | grep -oE 'Copyright[^<]*'            # 不該再有 "
 - 產品頁正文、`/glossary/txgnn/`、`/llms.txt`、`/llms-full.txt` 全部帶入 `TwTxGNN` 品牌名與 30 國站名對照表，並明寫開發單位。
 - FAQ 新增「TwTxGNN 是誰開發的？」與「TwTxGNN 跟哈佛的 TxGNN 是同一個東西嗎？」——FAQPage 是 LLM 最容易直接引用的格式。
 
-Wikidata 的 TwTxGNN 項目（`P178 developer` → `Q140265007`，公司側 `P1830 owner of` 回指）另見 `docs/wikidata-txgnn.md`。項目建立後，請把該 QID 補進各站 `SoftwareApplication.sameAs`。
+Wikidata 的 TwTxGNN 項目已於 2026-07-25 建立：**[Q140692750](https://www.wikidata.org/wiki/Q140692750)**（`P178 developer` → `Q140265007`，公司側 `P1830 owner of` 回指）。詳見 `docs/wikidata-txgnn.md`。
+
+**請把這兩條補進各站 `SoftwareApplication.sameAs`**（第 5-1 節的範本記得一併更新）：
+
+```json
+"sameAs": [
+  "https://www.yao.care/medical/txgnn/",
+  "https://github.com/yao-care/TwTxGNN",
+  "https://www.wikidata.org/wiki/Q140692750"
+]
+```
+
+`Q140692750` 這條**台灣站以外的各國站也照加**——它標示的是「這個平台屬於誰」，不是「這是哪一國的站」。Wikidata 是搜尋引擎與 LLM 做實體消歧最先吃的節點，指過去等於直接告訴機器「這個平台的 developer 是 Q140265007」。
