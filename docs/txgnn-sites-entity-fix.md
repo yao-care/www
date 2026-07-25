@@ -320,7 +320,16 @@ Wikidata 的 TwTxGNN 項目已於 2026-07-25 建立：**[Q140692750](https://www
   "author": { "@type": "Person", "name": "藥提醒科技有限公司 (yao.care)", "url": "https://www.yao.care/" } }
 ```
 
-**`@type` 是 `Person`。** jekyll-seo-tag 的 `author` 永遠輸出 Person，沒有參數可改成 Organization。結果是 30 站的**每一頁**（含約 8,000 個藥品頁）都在宣告「藥提醒科技有限公司是一個自然人」——比原本的 `TxGNN Team` 更糟，因為它現在用的是真正的法人全名，會直接污染實體圖。
+**`@type` 是 `Person`。** 結果是 30 站的**每一頁**（含約 8,000 個藥品頁）都在宣告「藥提醒科技有限公司是一個自然人」——比原本的 `TxGNN Team` 更糟，因為它現在用的是真正的法人全名，會直接污染實體圖。
+
+> ⚠ **本節初版寫「jekyll-seo-tag 沒有參數可改成 Organization」，那是錯的，已於同日更正。** 查 plugin 原始碼 [`json_ld_drop.rb`](https://github.com/jekyll/jekyll-seo-tag/blob/master/lib/jekyll-seo-tag/json_ld_drop.rb)：
+> ```ruby
+> VALID_AUTHOR_TYPES = %w(Organization Person).freeze
+> author_type = page_drop.author["type"]
+> return if author_type && !VALID_AUTHOR_TYPES.include?(author_type)
+> hash = { "@type" => author_type || "Person", "name" => page_drop.author["name"] }
+> ```
+> `author.type` 支援 `Organization`，只是**預設**是 `Person`；`site["author"]` 這個 hash 的 key 會原樣帶進來（見 `author_drop.rb` 的 `resolved_author`）。
 
 **修法：把 `docs/_config.yml` 的 `author:` 整段刪掉。**
 
@@ -331,7 +340,15 @@ Wikidata 的 TwTxGNN 項目已於 2026-07-25 建立：**[Q140692750](https://www
 -  url: https://www.yao.care/
 ```
 
-歸屬訊號由 `head_custom.html` 的 Organization 節點 + footer + about 正文承擔，已經足夠；seo-tag 那個 Person 節點只有反效果。**`footer_content` 保留不動。**
+**為什麼是刪掉，而不是加 `type: Organization`？** 兩種都能消掉 Person，但 seo-tag 產出的節點**沒有辦法帶 `@id`**（plugin 不支援）。加 `type: Organization` 只會得到：
+
+```json
+"author": { "@type": "Organization", "name": "藥提醒科技有限公司 (yao.care)", "url": "https://www.yao.care/" }
+```
+
+——一個型別正確但**無 `@id`、無法與公司節點合併**的孤立組織節點，等於在每一頁再生一個「第二家藥提醒」。這整份文件要解決的就是實體分裂，不該用一個新的分裂去換掉舊的。歸屬訊號由 `head_custom.html` 的 Organization 節點（有 `@id`）＋ footer ＋ about 正文承擔，已經足夠。
+
+**`footer_content` 保留不動。**
 
 ### 9-3. 洞二（30/30）：Organization 節點只出現在首頁，其他頁的 `@id` 是斷的
 
@@ -437,3 +454,164 @@ done
 ```
 
 四個路徑都要 `Person 節點: 0` ＋ `本頁定義了公司 Organization 節點: True`，再加上第七節原有三項，才算收工。
+
+---
+
+## 十、第二輪：一步一步照做（每個前提都已查證）
+
+> 這一節取代第九節的散落敘述，是**唯一要照做的版本**。三個步驟，動兩個檔案，30 站完全相同。
+>
+> **先講查證過的前提**，這樣你不用相信我、可以自己複驗：
+>
+> 1. **`head_custom.html` 在每一頁的 `<head>` 都會被載入。** 來源：just-the-docs 的 `_includes/head.html` 最後一行是 `{% include head_custom.html %}`；且 30 個 repo 都沒有自訂 `docs/_layouts/`（`gh api repos/yao-care/<repo>/contents/docs/_layouts` 回 404），全部吃 theme 的 head。**所以把節點寫在 Liquid 分支外面，就會出現在每一頁**——這是步驟二能成立的根據。
+> 2. **`author.type` 支援 `Organization`，但我們仍然選擇刪掉。** 理由見 9-2 的更正框：seo-tag 產出的節點帶不了 `@id`。
+
+### 步驟一：刪掉 `docs/_config.yml` 的 `author:`
+
+```diff
+-# 作者資訊 (E-E-A-T)
+-author:
+-  name: 藥提醒科技有限公司 (yao.care)
+-  url: https://www.yao.care/
+```
+
+整段刪除，不要留空的 `author:`（留了會讓 seo-tag 拿到空 hash）。**`footer_content` 與其他所有設定都不要動。**
+
+### 步驟二：在 `docs/_includes/head_custom.html` 的 Liquid 分支「外面」補公司節點
+
+檔案目前的結構是（行號以 TwTxGNN 為例，各站相近）：
+
+```
+第 1–21 行    CSP meta、其他 meta          ← 不要動
+第 22 行      {% if page.layout == 'default' and page.evidence_level %}
+   …          各分支                        ← 步驟三處理
+最後          {% endif %}
+```
+
+**把下面這段插在第 22 行的 `{% if %}` 之前**（也就是所有分支的外面）：
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "MedicalOrganization"],
+      "@id": "https://www.yao.care/#organization",
+      "name": "yao.care",
+      "legalName": "藥提醒科技有限公司",
+      "alternateName": "藥提醒",
+      "url": "https://www.yao.care",
+      "taxID": "83620786",
+      "email": "service@yao.care",
+      "logo": { "@type": "ImageObject", "url": "https://www.yao.care/assets/images/logo.png" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "台灣大道二段220號12樓",
+        "addressLocality": "台中市西區",
+        "addressCountry": "TW"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/wiki/Q140265007",
+        "https://github.com/yao-care",
+        "https://www.google.com/maps?cid=12025785010180313919",
+        "https://www.yao.care/medical/txgnn/"
+      ]
+    },
+    {
+      "@type": ["SoftwareApplication", "WebApplication"],
+      "@id": "{{ site.url }}/#software",
+      "name": "TwTxGNN",
+      "url": "{{ site.url }}/",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web",
+      "isAccessibleForFree": true,
+      "publisher": { "@id": "https://www.yao.care/#organization" },
+      "author": { "@id": "https://www.yao.care/#organization" },
+      "creator": { "@id": "https://www.yao.care/#organization" },
+      "copyrightHolder": { "@id": "https://www.yao.care/#organization" },
+      "sameAs": [
+        "https://www.yao.care/medical/txgnn/",
+        "https://github.com/yao-care/TwTxGNN"
+      ]
+    }
+  ]
+}
+</script>
+```
+
+**每一站要換的只有兩個地方**：`"name": "TwTxGNN"` 換成自己的品牌名、`https://github.com/yao-care/TwTxGNN` 換成自己的 repo 網址（大小寫見第二節的 repo 名清單）。`{{ site.url }}` 原樣保留，Jekyll 會從 `_config.yml` 帶入。
+
+### 步驟三：把首頁分支裡重複的那兩個節點刪掉
+
+步驟二之後，`{% elsif page.url == '/' %}` 分支裡原本的 `Organization` 與 `SoftwareApplication` 就重複了。**把那兩個節點從該分支的 `@graph` 陣列中刪除**（注意刪完要保持 JSON 合法：檢查逗號）。
+
+**同一分支的 `WebSite`、`Article` 節點保留不動**——它們是用 `{"@id": "https://www.yao.care/#organization"}` 參照，步驟二已經在同一頁定義好那個 `@id`，參照照樣成立。其他分支（`/about/`、`/methodology/`、`/drugs/`、`/news/`、藥品頁）**完全不用改**，步驟二已經一次補齊。
+
+### 只有 eu 站要多做一項
+
+`head_custom.html` 裡搜 `creditText`：
+
+```diff
+-      "creditText": "EuTxGNN Project"
++      "creditText": "藥提醒科技有限公司 (yao.care)"
+```
+
+其餘 29 站沒有這個殘留，搜不到是正常的。
+
+### 只有 tw 站要多做一項
+
+步驟二的 `SoftwareApplication.sameAs` 加第三條：
+
+```diff
+       "sameAs": [
+         "https://www.yao.care/medical/txgnn/",
+-        "https://github.com/yao-care/TwTxGNN"
++        "https://github.com/yao-care/TwTxGNN",
++        "https://www.wikidata.org/wiki/Q140692750"
+       ]
+```
+
+**其他 29 站不要加這條**（理由見 9-5：那個 QID 的 label 就是 `TwTxGNN`，別站掛上去等於宣告自己就是台灣站）。
+
+### 不要做的事
+
+- 不要動 `footer_content`、`about.md`、`README.md`、GitHub repo 設定——第一輪已經做對了，不要重做。
+- 不要動 `robots.txt` / `sitemap.xml` 的 `Sitemap:` 行。
+- 不要動藥品資料、預測數字、證據等級。
+- 不要在 `_config.yml` 用 `author: { type: Organization }` 當替代方案（理由見 9-2 更正框）。
+
+### 收工前必跑（GitHub Pages 部署完成後，約 1–3 分鐘）
+
+```bash
+SITE=twtxgnn.yao.care     # 換成自己的站
+for P in / /about/ /methodology/ /drugs/ ; do
+  echo "--- $P"
+  curl -s "https://$SITE$P" | python3 -c "
+import sys,re,json
+h=sys.stdin.read()
+nodes=[]
+def flat(x):
+    if isinstance(x,dict):
+        if '@graph' in x: flat(x['@graph'])
+        else: nodes.append(x)
+    elif isinstance(x,list):
+        for i in x: flat(i)
+bad=0
+for m in re.findall(r'<script type=\"application/ld\+json\">(.*?)</script>', h, re.S):
+    try: flat(json.loads(m))
+    except Exception: bad+=1
+org=[n for n in nodes if n.get('@id')=='https://www.yao.care/#organization' and n.get('legalName')=='藥提醒科技有限公司']
+print('  JSON 解析失敗:', bad, '(必須 0)')
+print('  公司節點定義於本頁:', len(org), '(必須 1，不能 0 也不能 2)')
+print('  Person 節點:', len(re.findall(r'\"@type\"\s*:\s*\"Person\"', h)), '(必須 0)')
+"
+done
+```
+
+**四個路徑、三項全綠才算完成。** 任何一格不對就是沒改乾淨，不要回報完成：
+
+- 公司節點 = **0** → 步驟二沒生效（多半是插錯位置，插進了某個 `{% if %}` 分支裡）。
+- 公司節點 = **2** → 步驟三沒做（首頁分支裡的舊節點還在）。
+- Person ≠ 0 → 步驟一沒做，或 `_config.yml` 還留著空的 `author:`。
+- JSON 解析失敗 ≠ 0 → 步驟三刪節點時逗號沒處理好，整段 schema 全廢，比不改還糟。
