@@ -289,3 +289,151 @@ Wikidata 的 TwTxGNN 項目已於 2026-07-25 建立：**[Q140692750](https://www
 ```
 
 `Q140692750` 這條**台灣站以外的各國站也照加**——它標示的是「這個平台屬於誰」，不是「這是哪一國的站」。Wikidata 是搜尋引擎與 LLM 做實體消歧最先吃的節點，指過去等於直接告訴機器「這個平台的 developer 是 Q140265007」。
+
+---
+
+## 九、第一輪驗收結果（2026-07-25，30 站實測）
+
+30 站全部逐站抓線上 HTML 驗過（首頁 / about / methodology / drugs / 藥品詳細頁 / robots）。**第五節交辦的事項全數完成**，但驗收過程查出**三個第一版指示沒交代到的洞**，其中一個是我們自己的指示造成的。
+
+### 9-1. 已完成（30/30 全過）
+
+| 項目 | 結果 |
+|------|------|
+| 首頁 Organization `@id` = `https://www.yao.care/#organization` | ✅ 30/30，且**站台自封的 `{Cc}TxGNN` Organization 節點已全數消失** |
+| `legalName: 藥提醒科技有限公司` | ✅ 30/30 |
+| `SoftwareApplication` 節點（publisher/author/creator/copyrightHolder → 公司 `@id`） | ✅ 30/30 |
+| `SoftwareApplication.sameAs` 含 `https://www.yao.care/medical/txgnn/` | ✅ 30/30 |
+| about 頁正文出現法人全名 | ✅ 30/30（6～13 次） |
+| footer 有法人全名 | ✅ 30/30（含原本沒有 `footer_content` 的 hk/au/ca/uk，及 my 的馬來文 `Hak Cipta © 2026 藥提醒科技有限公司 (yao.care)`） |
+| `meta name="reviewed-by"` | ✅ 30/30 = `藥提醒科技有限公司 (yao.care)` |
+| README 開頭掛公司 | ✅ 30/30 |
+| GitHub repo description / homepage / topics | ✅ 30/30 全補齊（含 `yao-care` topic） |
+| robots.txt `Sitemap:` 仍指自己網域（紅線） | ✅ 30/30，沒被誤動 |
+
+### 9-2. 洞一（我們的鍋，30/30）：`_config.yml` 的 `author:` 讓公司變成「一個人」
+
+第 5-2 節叫大家把 `author.name` 改成公司名。照做之後 `jekyll-seo-tag` 產出的是：
+
+```json
+{ "@type": "WebPage",
+  "author": { "@type": "Person", "name": "藥提醒科技有限公司 (yao.care)", "url": "https://www.yao.care/" } }
+```
+
+**`@type` 是 `Person`。** jekyll-seo-tag 的 `author` 永遠輸出 Person，沒有參數可改成 Organization。結果是 30 站的**每一頁**（含約 8,000 個藥品頁）都在宣告「藥提醒科技有限公司是一個自然人」——比原本的 `TxGNN Team` 更糟，因為它現在用的是真正的法人全名，會直接污染實體圖。
+
+**修法：把 `docs/_config.yml` 的 `author:` 整段刪掉。**
+
+```diff
+-# 作者資訊 (E-E-A-T)
+-author:
+-  name: 藥提醒科技有限公司 (yao.care)
+-  url: https://www.yao.care/
+```
+
+歸屬訊號由 `head_custom.html` 的 Organization 節點 + footer + about 正文承擔，已經足夠；seo-tag 那個 Person 節點只有反效果。**`footer_content` 保留不動。**
+
+### 9-3. 洞二（30/30）：Organization 節點只出現在首頁，其他頁的 `@id` 是斷的
+
+`head_custom.html` 的 Liquid 分支裡，Organization + SoftwareApplication 只寫在 `{% elsif page.url == '/' %}` 那一支。實測：
+
+- `/methodology/`、`/drugs/`：`@graph` 只有 HowTo / CollectionPage / ItemList / BreadcrumbList，**連一條指向公司的邊都沒有**，是孤兒節點。
+- 藥品詳細頁（`page.evidence_level`，每站 191～279 頁，全站最大宗）：`MedicalWebPage` 的 `author`/`publisher`/`reviewedBy` 寫的是 `{"@id": "https://www.yao.care/#organization"}`，方向對，**但該頁上沒有任何節點定義這個 `@id`**——參照懸空，抓取器只拿得到一個沒有名字的識別碼。
+
+**修法：把公司節點提到分支外，讓每一頁都輸出。** 在 `head_custom.html` 第 22 行的 `{% if page.layout == 'default' and page.evidence_level %}` **之前**，插入一段獨立的 script：
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "MedicalOrganization"],
+      "@id": "https://www.yao.care/#organization",
+      "name": "yao.care",
+      "legalName": "藥提醒科技有限公司",
+      "alternateName": "藥提醒",
+      "url": "https://www.yao.care",
+      "taxID": "83620786",
+      "email": "service@yao.care",
+      "logo": { "@type": "ImageObject", "url": "https://www.yao.care/assets/images/logo.png" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "台灣大道二段220號12樓",
+        "addressLocality": "台中市西區",
+        "addressCountry": "TW"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/wiki/Q140265007",
+        "https://github.com/yao-care",
+        "https://www.google.com/maps?cid=12025785010180313919",
+        "https://www.yao.care/medical/txgnn/"
+      ]
+    },
+    {
+      "@type": ["SoftwareApplication", "WebApplication"],
+      "@id": "{{ site.url }}/#software",
+      "name": "TwTxGNN",
+      "url": "{{ site.url }}/",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web",
+      "isAccessibleForFree": true,
+      "publisher": { "@id": "https://www.yao.care/#organization" },
+      "author": { "@id": "https://www.yao.care/#organization" },
+      "creator": { "@id": "https://www.yao.care/#organization" },
+      "copyrightHolder": { "@id": "https://www.yao.care/#organization" },
+      "sameAs": [
+        "https://www.yao.care/medical/txgnn/",
+        "https://github.com/yao-care/TwTxGNN"
+      ]
+    }
+  ]
+}
+</script>
+```
+
+`TwTxGNN` 與 repo 網址換成自己站的。**然後把 `{% elsif page.url == '/' %}` 分支裡原本那兩個節點刪掉**，避免同一頁出現兩份（首頁的 WebSite / Article 節點保留，它們用 `@id` 參照即可）。
+
+### 9-4. 洞三（僅 eu 站）：ImageObject 殘留假團隊名
+
+`eutxgnn.yao.care` 首頁 schema 的 `ImageObject.creditText` 還是 `"EuTxGNN Project"`：
+
+```diff
+-      "creditText": "EuTxGNN Project"
++      "creditText": "藥提醒科技有限公司 (yao.care)"
+```
+
+其餘 29 站已無任何 `TxGNN Team / Research Team / Project` 字樣。
+
+### 9-5. 更正第八節：Wikidata QID 只有 tw 站可以掛
+
+第八節寫「請把這兩條補進**各站** `SoftwareApplication.sameAs`」——**那是錯的，只有 tw 站適用**。
+
+[Q140692750](https://www.wikidata.org/wiki/Q140692750) 的 label 就是 `TwTxGNN`，指的是台灣站這一個軟體。其他 29 站把它放進自己的 `sameAs`，等於宣告「JpTxGNN 就是 TwTxGNN」，會製造新的實體混淆——正是這整份文件要解決的問題。
+
+- **tw 站**：`SoftwareApplication.sameAs` 加 `https://www.wikidata.org/wiki/Q140692750`（目前 30 站都還沒加）。
+- **其他 29 站**：**不要加**。公司的 QID `Q140265007` 已經在 Organization 節點的 `sameAs` 裡，實體鏈已經接通，不需要另外的軟體 QID。
+
+### 9-6. 第二輪驗收指令
+
+```bash
+SITE=twtxgnn.yao.care
+for P in / /about/ /methodology/ /drugs/ ; do
+  echo "--- $P"
+  curl -s "https://$SITE$P" | python3 -c "
+import sys,re,json
+h=sys.stdin.read()
+person=re.findall(r'\"@type\"\s*:\s*\"Person\"', h)
+orgdef=False
+for m in re.findall(r'<script type=\"application/ld\+json\">(.*?)</script>', h, re.S):
+    try: d=json.loads(m)
+    except: continue
+    for n in (d.get('@graph') or [d]):
+        if n.get('@id')=='https://www.yao.care/#organization' and n.get('legalName'): orgdef=True
+print('Person 節點:', len(person), '(必須 0)')
+print('本頁定義了公司 Organization 節點:', orgdef, '(必須 True)')
+"
+done
+```
+
+四個路徑都要 `Person 節點: 0` ＋ `本頁定義了公司 Organization 節點: True`，再加上第七節原有三項，才算收工。
