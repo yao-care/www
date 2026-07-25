@@ -178,7 +178,7 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 
 ### www 本站
 - Astro 產 `sitemap-index.xml` + `sitemap-0.xml`；另有 `src/pages/sitemap.xml.ts` 產 `/sitemap.xml` 別名（指向 sitemap-0.xml）—— 修正「提交 /sitemap.xml 卻回首頁 HTML、被 GSC 判為 HTML 網頁」的問題。`robots.txt` 指向 sitemap-index.xml。
-- GEO（被 LLM 引用）資產：`src/seo.config.ts`（Organization knowsAbout / 各產品 FAQ）、`/glossary`、`/guides`、`/llms.txt`，各頁 schema（SoftwareApplication / FAQPage / DefinedTerm / Article / BreadcrumbList）。
+- GEO（被 LLM 引用）資產：`src/seo.config.ts`（Organization knowsAbout / 各產品 FAQ）、`/glossary`、`/guides`、`/llms.txt`（目錄）、`/llms-full.txt`（全文，2026-07-25 新增），各頁 schema（SoftwareApplication / FAQPage / DefinedTerm / Article / BreadcrumbList）。
 
 ### GSC（網域資源 `sc-domain:yao.care`，涵蓋所有子網域）
 - **Sitemap 要逐站維護**：網域資源只整合「驗證/報表」，各子網域要有自己的 sitemap + robots（`Sitemap:` 行指向自己）。
@@ -298,7 +298,8 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   ├── guides/
 │   │   │   ├── index.astro            ← 情境指南總覽（ItemList）
 │   │   │   └── [slug].astro           ← 情境題頁（Article + FAQPage + Breadcrumb；連回產品/名詞）
-│   │   ├── llms.txt.ts               ← /llms.txt（llmstxt.org）build 時自動生成，給 LLM 的站點地圖
+│   │   ├── llms.txt.ts               ← /llms.txt（llmstxt.org）build 時自動生成，給 LLM 的站點地圖（目錄：連結＋一句描述）
+│   │   ├── llms-full.txt.ts          ← /llms-full.txt build 時自動生成，給 LLM 的**全文**（topics/guides/glossary 正文 + 服務總覽 + 最新 30 則 news 摘要，純文字、去 HTML；約 160KB）
 │   │   └── sitemap.xml.ts            ← /sitemap.xml 別名（指 sitemap-0.xml；修 GSC「HTML 網頁」誤判）
 │   └── components/
 │       ├── Nav.astro          ← 固定頂部導覽 + 漢堡選單
