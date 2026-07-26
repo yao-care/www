@@ -1,5 +1,9 @@
 # Wikidata 實體補強（Q140265007）
 
+> ⛔ **2026-07-25T20:44:19Z：Q140265007 已被 Wikidata 管理員刪除**（RfD 整批刪除，理由 WD:N）。
+> 本檔記錄的補強內容已隨項目消失，僅供查考。申訴方向與來源盤點見 [`wikidata-undeletion.md`](./wikidata-undeletion.md)。
+
+
 > 目的：充實公司 Wikidata 條目，讓 LLM / 搜尋引擎更能正確辨識並引用 yao.care。
 > 實體：**Q140265007**（藥提醒科技有限公司 / yao.care）
 > 站上 `sameAs` 已連到此實體（見 `src/seo.config.ts` `ORG_SAME_AS`）。

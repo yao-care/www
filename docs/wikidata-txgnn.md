@@ -1,5 +1,10 @@
 # Wikidata：把 TwTxGNN 掛回藥提醒科技有限公司
 
+> ⛔ **2026-07-25T20:44:19Z：Q140692750 已被 Wikidata 管理員刪除**（RfD 整批刪除，理由 WD:N）。
+> 本檔以下內容僅供查考，**不要照做**。現況、來源盤點與申訴草稿見 [`wikidata-undeletion.md`](./wikidata-undeletion.md)。
+> 註：TwTxGNN 目前無任何獨立來源，該檔建議**先不申訴這一項**。
+
+
 > ✅ **2026-07-25 全部完成**：TwTxGNN 項目 = **[Q140692750](https://www.wikidata.org/wiki/Q140692750)**，
 > 由使用者在自有網路（非本主機）建立，「後續補強」的六項也已於同日經 QuickStatements 套用完畢。
 >
