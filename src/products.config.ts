@@ -247,7 +247,7 @@ export const PRODUCTS: readonly Product[] = [
       '智慧分支題型，健康者快速通過',
       '紅黃綠分級 + 衛教轉介，含自傷訊號安全網',
     ],
-    externalUrl: 'https://smart-func-cds.yao.care',
+    externalUrl: 'https://smart-func-cds.yao.care/',
     repoUrl: 'https://github.com/yao-care/smart-func-cds',
     cta: { label: '免費自我評估', href: 'https://smart-func-cds.yao.care' },
   },
