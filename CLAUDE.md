@@ -76,7 +76,8 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 ## § News 議題追蹤模組（自動議題評論引擎）
 
 > 🔄 **2026-07-15 Phase 2 產線反轉（內容重構）**：引擎預設改為 **feed 模式**（`NEWS_MODE=feed`）——通過 filter 的新聞**不再寫成獨立文章頁**，改寫成主題頁「近期動態」條目（`src/content/topicFeed/<topic>/<id>.json`，一句 takeaway＋原文連結，日上限 12、target→topic 映射見 `src/topics.config.ts` 的 newsTargets）。主題頁 lastmod＝最新動態時間（astro.config 接好）。**回滾保險絲：`NEWS_MODE=legacy`** 即回舊行為。voice backfill（rewrite-news-voice）已停役（舊語料將分批 301 收斂，重刷即將退場的頁是浪費）。存量已回填每主題最近 12 篇（takeaway=newsBrief）。既有 `/news/` 頁面照常 serve，收斂見重構計畫 Phase 4。本節以下的 writer/critic 三段文流程描述僅適用 legacy 模式。
-> 📦 **Phase 4 批次一（2026-07-15）**：`sign/func/triz/siqc` 四桶共 123 篇已自 build 移除（git 歷史保留），舊網址由 NPM host #46 的 **Advanced Config** 301 到對應主題頁（該設定同時收納 soft-404 修正，**已存 DB、UI 重存不再遺失**——sed 產出檔的技術債已清）。觀察一週 GSC 無 soft-404 異常再放批次二（yaocare/pedi/huatuo）。
+> 📦 **Phase 4 批次一（2026-07-15）**：`sign/func/triz/siqc` 四桶共 123 篇已自 build 移除（git 歷史保留），舊網址由 NPM host #46 的 **Advanced Config** 301 到對應主題頁（該設定同時收納 soft-404 修正，**已存 DB、UI 重存不再遺失**——sed 產出檔的技術債已清）。觀察一週 GSC 抽查 0 soft-404，已放行批次二。
+> 📦 **Phase 4 批次二（2026-07-26）**：`yaocare/pedi/huatuo` 三桶共 127 篇（48/40/39）已自 build 移除（build 頁數 389→262），301 對應 `/topics/medication-safety/`、`/topics/child-development/`、`/topics/explainable-medical-ai/`（同存 host #46 advanced_config，批次一規則保留不動）。高曝光承接：用 GSC 近 28 天曝光查 pedi×2／huatuo×5（含 1 篇 Phase 2 已回填）補進對應 `topicFeed`；**yaocare 該 28 天窗口內無頁面曝光明顯高於其他者（最高僅 7，分布平滑），依批次一「弱桶不強補」precedent 判定 0 篇**。踩坑記錄：`child-development`／`explainable-medical-ai` 兩桶自 Phase 2（07-15）起持續有每日產線餵入，主題頁「近期動態」只顯示 `fetchedAt` 最新 10 筆——沿用批次一原始 `fetchedAt`（舊文章原始抓取時間）會被近 10 天的新產出全部擠出榜外、build 後看不到；改法＝backfill 檔的 `fetchedAt` 蓋成「本次回填時間」（`publishedAt` 仍保留原始新聞發布日，使用者看到的日期不受影響），使其重新進入前 10 榜，build 後已實測可見。觀察至 **2026-08-02**，GSC 無 soft-404 異常再放批次三（geri/intel/goalkeeper）。
 
 `/news/` 區塊每天自動抓 Google News、由 Claude 生成「議題分析 + 設計回應」對照文章，每篇都連回對應產品頁。**這是這個 repo 跑得最多的東西**，但 `src/` 與 `dist/` 都由 cron 自動更新，平時不用手動碰。
 
