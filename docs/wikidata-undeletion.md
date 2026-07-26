@@ -1,7 +1,7 @@
 # Wikidata 項目刪除：申訴卷宗
 
 > 2026-07-26。方向由用戶拍板：**備齊獨立來源後重建**（不是整批拿掉 `sameAs`）。
-> 本檔是申訴要用的事實與草稿。動手前先看第五節「誰要做什麼」——有一個卡點只有你能解。
+> 本檔是申訴要用的事實與草稿。動手前先看第五節（卡點）與第六節（送到哪裡、怎麼填）。
 
 ## 一、確切發生了什麼
 
@@ -104,58 +104,92 @@ g0v 標案瀏覽器的兩個 API 端點（`pcc.g0v.ronny.tw`、`pcc.mlwmlw.org`�
 
 封鎖範圍：IPv4 `$HOST_IPV4_BLOCK_A`、`$HOST_IPV4_BLOCK_B`，IPv6 `2400:8904::/31`，理由 Open proxy/Webhost（針對 Linode 位址段，2026-07-23 生效、2028 到期）。登入會成功，但所有寫入回 `permissiondenied`。**不要用 proxy 規避，那違反 Wikimedia 政策。**
 
-所以要你在**未被封鎖的網路**（家用網路、手機熱點都行）登入 `Lightman.Chang`，到 <https://www.wikidata.org/wiki/Wikidata:Requests_for_undeletion> 貼下面這段。
-
 長期解法是替帳號申請 IPBE（IP block exemption），之後這台主機才能程式化寫入。
 
-## 六、申訴文草稿（英文，直接貼）
+## 六、送到哪裡、怎麼填（實際查過頁面）
+
+⚠️ **不要去 `Wikidata:Requests for undeletion`。** 那個標題是**重新導向**，導到 `Wikidata:Guide to requests for undeletion`——那是一份說明文件，**頁面上沒有任何地方可以填**。
+
+真正的送件地點是**管理員佈告欄**，在頁面**最下方新增一節**。
+
+**操作步驟：**
+
+1. 先用未被封鎖的網路（手機熱點／家用網路）登入 `Lightman.Chang`。
+2. 開這個網址，會直接跳出「新增主題」的表單，有「主旨」和「內文」兩個欄位：
+
+   <https://www.wikidata.org/w/index.php?title=Wikidata:Administrators%27_noticeboard&action=edit&section=new>
+
+3. **主旨欄**填：
+
+   ```
+   Request for undeletion: Q140265007 (藥提醒科技有限公司 / yao.care)
+   ```
+
+   （這是佈告欄上現行的標題慣例，實際案例如 `Request for undeletion: Q140626276 (Agent Community)`、`RFU: Q140529930, ... (Elysium, Mercenary Games, Elysia AI)`）
+
+4. **內文欄**貼第七節那段，然後按「新增主題」送出。
+
+**幾個查過的規矩：**
+
+- **`{{Undelete}}` 這個模板不存在**（實查 `Template:Undelete` → missing）。不要用任何模板，佈告欄上的實際請求都是純文字加 `==` 標題。
+- **一次只能開一個未結案的申訴討論。**
+- **不要改用「重建項目」的方式**繞過，指南明文禁止。
+- 內文最後要用 `~~~~`（四個波浪號）簽名，送出後會自動換成你的帳號與時間。
+- 指南要求「簡短但清楚地陳述最好的證據」，並明白反對情緒訴求與「我以後會改進」這類承諾——所以草稿裡只有來源，沒有求情。
+
+## 七、申訴文內文（英文，整段貼進「內文」欄）
 
 ```
-== [[Q140265007]] ==
+I am requesting undeletion of Q140265007 (藥提醒科技有限公司 / yao.care), a
+company registered in Taichung, Taiwan.
 
-{{Undelete|Q140265007}}
+Disclosure of conflict of interest: I created the item and I am affiliated with
+the company. I am not asking for a promotional description — only for the item
+to be restored so it can carry its authority identifier and be used as a value
+in other statements.
 
-This item (藥提醒科技有限公司 / yao.care, a company registered in Taichung, Taiwan)
-was deleted on 2026-07-25 as part of a bulk nomination whose stated rationale was
-"WD:N" with no case-specific argument. I am the creator of the item and I accept
-that it was created without adequate sourcing. I would like to request undeletion
-on the basis of the following serious and publicly available references, which
-satisfy WD:N criterion 2:
+The item was deleted on 2026-07-25 in a bulk nomination whose entire stated
+rationale was "WD:N", with no case-specific argument. I accept that the item was
+created without adequate sourcing. I believe it meets Notability criterion 2, as
+a clearly identifiable entity described by serious and publicly available
+references:
 
-1. Granted invention patent — Taiwan Intellectual Property Office
-   Publication TW202202123A (2022-01-16), granted as TWI749621B (2021-12-11),
-   "Medication reminding and reporting system and implementation method".
-   The applicant of record is the company itself (藥提醒科技有限公司).
-   https://patents.google.com/patent/TW202202123A/zh
-   This patent has been cited by two unrelated third-party patents:
-   - US20220171983A1 (Lush Era Limited, 2022)
-   - US12002251B2 (Meiyo Medical Technology Inc, 2024)
+# '''Granted invention patent — Taiwan Intellectual Property Office'''.
+Publication TW202202123A (2022-01-16), granted as TWI749621B (2021-12-11),
+"Medication reminding and reporting system and implementation method". The
+applicant of record is the company itself.
+https://patents.google.com/patent/TW202202123A/zh
+This patent is cited by two unrelated third-party patents:
+US20220171983A1 (Lush Era Limited, 2022) and US12002251B2 (Meiyo Medical
+Technology Inc, 2024).
 
-2. Company registry — Ministry of Economic Affairs, Taiwan (open data API)
-   GUI number 83620786, status 核准設立 (approved/active), registered
-   2020-05-08 with the Taichung City Government.
-   https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do?banNo=83620786
+# '''Company registry — Ministry of Economic Affairs, Taiwan'''. GUI number
+83620786, status 核准設立 (registered and active), incorporated 2020-05-08,
+registering authority Taichung City Government. Retrievable from the ministry's
+public open-data API and from the official lookup service:
+https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do?banNo=83620786
 
-Both are government records, publicly retrievable, and independent of the
-subject's own publications. Wikidata already models this class of entity:
-P7729 (GUI number) is an established property with a formatter URL pointing at
-the same Taiwanese registry, currently used on 1,375 items.
+Both are government records, publicly retrievable, and independent of anything
+the company itself publishes. Wikidata already models this class of entity:
+P7729 (GUI number) is an established property whose formatter URL points at the
+same Taiwanese registry, currently used on 1,375 items.
 
-I am not requesting undeletion of the other items in that nomination.
-I understand the concern about self-created items on one's own organisation and
-will not re-create anything without sourcing. Thanks for reconsidering.
+I am not requesting undeletion of the other items in that nomination, and I will
+not re-create anything without sourcing.
+
+~~~~
 ```
 
-> 若之後查到政府標案決標公告，把網址補成第 3 條，說服力會再高一截。
+> 若查到政府標案決標公告，在兩條來源後面加成第 3 條，說服力會再高一截。
 
-## 七、如果申訴不成
+## 八、如果申訴不成
 
 Wikidata 對「只有登記資料 + 自家專利」的公司仍可能認定不足。若被拒：
 
 - 不要再建一次。改為**先累積獨立來源**（媒體報導、政府標案決標公告、學術論文引用、第三方產業資料庫收錄），有了再申訴。
 - 同時把 36 個站台與官網 `sameAs` 裡的 Wikidata 那一條拿掉——留著死連結沒有好處。這是一次性的批次改動，屆時我可以出一份跟前兩份同格式的交接文件。
 
-## 八、連帶要修的（等申訴結果再動）
+## 九、連帶要修的（等申訴結果再動）
 
 `sameAs` 目前指向已刪項目的位置：30 國 TxGNN 站台、6 個產品站、官網 `src/seo.config.ts` 的 `ORG_SAME_AS`。申訴成功則不用動；失敗則整批移除。
 
