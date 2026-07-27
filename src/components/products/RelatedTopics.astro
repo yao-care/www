@@ -1,0 +1,27 @@
+---
+// 產品頁 → 主題頁反向連結（topics.config.ts 的 products 欄位是主題→產品單向連結，
+// 這裡補上產品頁往回連的入口，讓兩邊互通）。
+import { TOPICS } from '../../topics.config';
+
+interface Props {
+  product: string;
+}
+
+const { product } = Astro.props;
+const topics = TOPICS.filter((t) => (t.products as readonly string[]).includes(product));
+---
+
+{topics.length > 0 && (
+  <div class="max-w-5xl mx-auto px-4 lg:px-6 pb-4">
+    {topics.map((t) => (
+      <p class="mb-2">
+        <a
+          href={`/topics/${t.slug}/`}
+          class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline underline-offset-2"
+        >
+          延伸閱讀：{t.title}
+        </a>
+      </p>
+    ))}
+  </div>
+)}

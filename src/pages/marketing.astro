@@ -5,6 +5,7 @@ import FooterLinks from '../components/FooterLinks.astro';
 import ContactMap from '../components/ContactMap.astro';
 import CareTag from '../components/CareTag.astro';
 import ProductNews from '../components/news/ProductNews.astro';
+import RelatedTopics from '../components/products/RelatedTopics.astro';
 import { LINE_TEAM, CATEGORY_BY_SLUG } from '../products.config';
 import { SITE } from '../site.config';
 
@@ -394,6 +395,8 @@ const pricingTiers = [
         </div>
       </div>
     </section>
+
+    <RelatedTopics product="marketing" />
 
   <!-- Differentiator -->
   <section class="py-12 md:py-16">
