@@ -256,13 +256,16 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── site.config.ts         ← 全站設定（公司名/title/description/keywords/NAV）
 │   ├── products.config.ts     ← 四大分類 + 12 個產品定義 + medical 子分組（MEDICAL_GROUPS/group/productsByGroup）（單一 source of truth）
 │   ├── seo.config.ts          ← GEO/SEO：KNOWS_ABOUT / ORG_SAME_AS / 各產品 FAQ（PRODUCT_FAQS）
-│   ├── glossary.config.ts     ← 名詞解釋（10 則）：定義 + 段落 + related 產品 + 來源（GEO 用）
-│   ├── guides.config.ts       ← 情境指南（7 則）：使用者搜尋原話為題 + answer-first + 工具帶入（GEO 用）
+│   ├── glossary.config.ts     ← 名詞解釋（18 則）：定義 + 段落 + related 產品 + 來源（GEO 用）；每則帶 updatedAt（餵 /rss.xml 時間軸，改內容要更新）
+│   ├── guides.config.ts       ← 情境指南（10 則）：使用者搜尋原話為題 + answer-first + 工具帶入（GEO 用）；每則帶 updatedAt（同上）
 │   ├── news.config.ts         ← 12 個 news target（queries / voicePoints / proofPoints / CTA）
 │   ├── topics.config.ts       ← 9 個主題頁內容（2026-07-15 新增：lens 判斷角度 / answerFirst / sections / faqs / sources / ctas；來源經逐條實開查證）
 │   ├── content/
 │   │   ├── config.ts          ← news collection schema（Zod）
 │   │   └── news/<target>/*.json ← 自動產生的議題評論文章（cron 寫入）
+│   ├── lib/                   ← 頁面/endpoint 共用的小工具（非 cron 後台流程，那些在根目錄 scripts/）
+│   │   ├── rss.ts             ← RSS 2.0 產生器（手寫，兩支 feed 共用；XML 跳脫在 esc()）
+│   │   └── topic-feed.ts      ← 主題動態的錨點 id（feedAnchorId）＋ RSS description HTML（feedItemHtml）
 │   ├── scripts/track.ts       ← GA4 互動事件（捲動 / 讀完 / 互動時間 / CTA），由 Analytics.astro 全站載入
 │   ├── styles/variables.css   ← 設計 token 單一來源（@theme：字級階梯/色票；守門規則見檔頭）
 │   ├── styles/global.css      ← Tailwind 入口（import variables.css）+ base 樣式 + 共用 class
@@ -296,7 +299,8 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   │   └── [target]/[slug].astro  ← 全文頁（NewsArticle JSON-LD）
 │   │   ├── topics/
 │   │   │   ├── index.astro            ← 主題總覽（ItemList）
-│   │   │   └── [slug].astro           ← 主題頁（Article + FAQPage + Breadcrumb；議題×產品彙整，吃 topics.config）
+│   │   │   ├── [slug].astro           ← 主題頁（Article + FAQPage + Breadcrumb；議題×產品彙整，吃 topics.config）
+│   │   │   └── rss.xml.ts             ← /topics/rss.xml 九主題動態合併訂閱源（最新 50 則）
 │   │   ├── glossary/
 │   │   │   ├── index.astro            ← 名詞解釋總覽（DefinedTermSet）
 │   │   │   └── [slug].astro           ← 名詞頁（DefinedTerm + Breadcrumb；交叉連回產品）
@@ -305,6 +309,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   │   │   └── [slug].astro           ← 情境題頁（Article + FAQPage + Breadcrumb；連回產品/名詞）
 │   │   ├── llms.txt.ts               ← /llms.txt（llmstxt.org）build 時自動生成，給 LLM 的站點地圖（目錄：連結＋一句描述）
 │   │   ├── llms-full.txt.ts          ← /llms-full.txt build 時自動生成，給 LLM 的**全文**（topics/guides/glossary 正文 + 服務總覽 + 最新 30 則 news 摘要，純文字、去 HTML；約 160KB）
+│   │   ├── rss.xml.ts                ← /rss.xml 全站訂閱源（主題動態 + guides + glossary，最新 50 則）
 │   │   └── sitemap.xml.ts            ← /sitemap.xml 別名（指 sitemap-0.xml；修 GSC「HTML 網頁」誤判）
 │   └── components/
 │       ├── Nav.astro          ← 固定頂部導覽 + 漢堡選單
@@ -387,6 +392,20 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 - **總覽頁排序（2026-07-28）**：`/topics/` 不用 config 順序，改**依各主題最新動態日新→舊**排序，並在卡片顯示「更新 YYYY-MM-DD · 動態 N 則」、hero 顯示主題數/累計則數/最後更新日。更新日＝該主題 `topicFeed` 最新一筆的 `fetchedAt`，與 `astro.config.mjs` 餵 sitemap `<lastmod>` **同源算法**（改一邊要改另一邊，否則頁面與 sitemap 對不上）。日期一律用 `toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' })`——主機跑 UTC，產線在台北 04:30 抓的動態若用主機本地日會顯示成前一天；`topics/index.astro` 與 `topics/[slug].astro` 各有一份 `fmtDate`，兩處要一起改
 - 鐵則：已查證數字與來源連結不可亂改；新增事實先查權威來源；文風禁 AI 味（比照 style-guide 精神）
 - 改完 `npm run deploy` 上線，並用 `node scripts/indexnow-urls.mjs <改動頁URL>` 通知收錄
+
+### RSS 訂閱源（2026-07-28）
+產線每天餵新動態進 `/topics/`，但**訪客沒有「追蹤」的方法**——只能自己回來看。補了兩支 feed（build 時由 endpoint 產出靜態 XML，無執行期成本）：
+
+| 網址 | 內容 | 條數 |
+|------|------|------|
+| `/topics/rss.xml` | 九主題「近期動態」合併，每則＝一筆 `topicFeed`（標題／來源／我們的一句 takeaway＋原始報導連結） | 最新 50 |
+| `/rss.xml` | 全站：上面的動態（限 30）＋ 情境指南 ＋ 名詞解釋的新增／更新 | 最新 50 |
+
+- **產生器 `src/lib/rss.ts`**（手寫 RSS 2.0，比照 `llms.txt.ts`／`sitemap.xml.ts` 的 endpoint 慣例，不裝 `@astrojs/rss`）。代價是 **XML 跳脫要自己顧**：任何進 XML 的字串一律走 `esc()`（新聞標題常含 `&` `<` `>`）。改這支後驗一次 well-formed（本機無 `xmllint`）：`python3 -c "import xml.dom.minidom as m;[m.parse(p) for p in ['dist/rss.xml','dist/topics/rss.xml']]"`。
+- **每則連回站內錨點**，不是直接把人送去外站：連結是 `/topics/<主題>/#feed-<id>`，錨點算法在 `src/lib/topic-feed.ts` 的 `feedAnchorId()`，**主題頁 `<li id>` 與兩支 feed 共用這個函式**（各寫一份就會對不上、訂閱者落在頁首）。⚠ 那則若還在「看更多」的摺疊區，瀏覽器捲不到隱藏元素 → `[slug].astro` 的 inline script 有 `openHash()`：進站/hashchange 時把該則之前的全部展開再捲過去。改摺疊邏輯時別弄丟它。
+- **`updatedAt` 是 `/rss.xml` 的時間軸來源**：`guides.config.ts` / `glossary.config.ts` 每則都有（初值 2026-07-28 以 git 歷史回填）。**改內容沒更新它，新版本就不會浮上 feed**；seo-ops 大腦層 playbook 已有「資料有 `updatedAt` 欄位就順手蓋新值」的通則。
+- **發現路徑**：全站 `<link rel="alternate">` 由 `BaseLayout` 一律掛 `/rss.xml`，頁面專屬的用 `feeds` prop 加（`/topics/` 與主題頁加了 `/topics/rss.xml`）；可見入口在 footer「RSS 訂閱」與 `/topics/`＋主題頁的「用 RSS 訂閱主題動態」。
+- feed 不進 sitemap（已確認 `sitemap-0.xml` 無 rss 條目），不需要也不該被當網頁索引。
 
 ### 調整 news 抓取範圍 / 角度
 - 加搜尋關鍵字、改痛點 / 設計 proof：編 `src/news.config.ts` 對應 target

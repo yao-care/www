@@ -13,6 +13,8 @@ interface Props {
   /** 額外 schema 節點：疊加進預設 @graph（保留 Organization+WebSite），與整包 jsonLd 互斥 */
   extraSchema?: Record<string, unknown>[];
   noindex?: boolean;
+  /** 額外的 RSS 訂閱源（全站 /rss.xml 一律自動掛，這裡只補頁面專屬的，如 /topics/rss.xml） */
+  feeds?: readonly { title: string; href: string }[];
 }
 const {
   title = SITE.title,
@@ -22,6 +24,7 @@ const {
   jsonLd,
   extraSchema,
   noindex = false,
+  feeds = [],
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const ogImageUrl = new URL(ogImage ?? SITE.ogImage, SITE.url).toString();
@@ -59,6 +62,10 @@ const finalJsonLd =
     <meta name="keywords" content={SITE.keywords} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — 全站更新`} href="/rss.xml" />
+    {feeds.map((f) => (
+      <link rel="alternate" type="application/rss+xml" title={f.title} href={f.href} />
+    ))}
     <meta property="og:title" content={title} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="yao.care" />

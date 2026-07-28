@@ -9,6 +9,7 @@ import { NEWS_TARGET_BY_SLUG } from '../../news.config';
 import { GUIDES } from '../../guides.config';
 import { GLOSSARY } from '../../glossary.config';
 import { SITE } from '../../site.config';
+import { feedAnchorId } from '../../lib/topic-feed';
 
 export function getStaticPaths() {
   return TOPICS.map((t) => ({ params: { slug: t.slug } }));
@@ -74,7 +75,13 @@ const jsonLd = {
   ],
 };
 ---
-<BaseLayout title={pageTitle} description={pageDescription} ogType="article" jsonLd={jsonLd}>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  ogType="article"
+  jsonLd={jsonLd}
+  feeds={[{ title: '主題動態 — yao.care', href: '/topics/rss.xml' }]}
+>
   <Nav />
   <main class="pt-20">
     <!-- breadcrumb -->
@@ -128,12 +135,20 @@ const jsonLd = {
               共 {feed.length} 則．持續更新．連結為原始報導
             </p>
           </div>
+          {/* 訂閱入口：九個主題共用同一支 feed（/topics/rss.xml），每則的連結會回到本頁該則錨點 */}
+          <a
+            href="/topics/rss.xml"
+            class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg>
+            用 RSS 訂閱主題動態
+          </a>
           {/* 摺疊用自有屬性 data-collapsed，不用 hidden 屬性：Tailwind v4 preflight 對 [hidden] 下的
               display:none 帶強制旗標，noscript 覆寫贏不了它，而設計規範禁用該旗標（check-design 規則 3）。 */}
           <style is:inline>[data-feed-item][data-collapsed] { display: none; }</style>
           <ul id="topic-feed" class="mt-5 space-y-5">
             {feed.map((e, i) => (
-              <li class="leading-relaxed" data-feed-item data-collapsed={i >= FEED_INITIAL ? '' : undefined}>
+              <li id={feedAnchorId(e.id)} class="leading-relaxed scroll-mt-24" data-feed-item data-collapsed={i >= FEED_INITIAL ? '' : undefined}>
                 <p class="text-sm">
                   <span class="text-[color:var(--color-ink-muted)] tabular-nums">{fmtDate(e.data.publishedAt)}</span>
                   <a href={e.data.url} target="_blank" rel="noopener" class="ml-2 font-medium text-[color:var(--color-ink)] hover:text-[color:var(--color-brand)] transition-colors">{e.data.title}</a>
@@ -175,14 +190,33 @@ const jsonLd = {
               var btn = box.querySelector('button');
               var left = box.querySelector('[data-feed-remaining]');
               var collapsed = function () { return list.querySelectorAll('[data-feed-item][data-collapsed]'); };
+              var sync = function () {
+                var n = collapsed().length;
+                box.hidden = n === 0;
+                if (n > 0) left.textContent = String(n);
+              };
               box.hidden = false; // 有 JS 才出現按鈕（無 JS 時條目已由 noscript 全展開）
               btn.addEventListener('click', function () {
                 var batch = collapsed();
                 for (var i = 0; i < step && i < batch.length; i++) batch[i].removeAttribute('data-collapsed');
-                var n = collapsed().length;
-                if (n === 0) { box.hidden = true; return; }
-                left.textContent = String(n);
+                sync();
               });
+              // RSS 的每則都連到該則的錨點（見 lib/topic-feed.ts）；若那則還在摺疊區，
+              // 瀏覽器捲不到隱藏元素，
+              // 訂閱者會落在頁首。這裡把該則（含它之前的）全部展開再捲過去。
+              var openHash = function () {
+                var id = decodeURIComponent(location.hash.replace('#', ''));
+                if (!id) return;
+                var el = document.getElementById(id);
+                if (!el || !list.contains(el)) return;
+                var items = Array.prototype.slice.call(list.querySelectorAll('[data-feed-item]'));
+                var idx = items.indexOf(el);
+                for (var i = 0; i <= idx; i++) items[i].removeAttribute('data-collapsed');
+                sync();
+                el.scrollIntoView();
+              };
+              openHash();
+              window.addEventListener('hashchange', openHash);
             })();
           </script>
         </div>

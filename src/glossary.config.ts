@@ -5,6 +5,11 @@ import type { ProductSlug } from './products.config';
 
 export type GlossaryTerm = {
   slug: string;
+  /**
+   * 最後更新日（YYYY-MM-DD）。初值＝該則加入 repo 的日期（2026-07-28 用 git 歷史回填）。
+   * 用途：/rss.xml 全站訂閱源的時間軸排序。**改動這則內容時請一併更新**（大腦層 playbook 已要求）。
+   */
+  updatedAt: string;
   /** 所屬主題（/topics/<slug>；2026-07-15 Phase 3 掛靠，可選） */
   topic?: string;
   term: string;
@@ -24,6 +29,7 @@ export type GlossaryTerm = {
 export const GLOSSARY: readonly GlossaryTerm[] = [
   {
     slug: 'smart-on-fhir',
+    updatedAt: '2026-06-14',
     topic: 'explainable-medical-ai',
     term: 'SMART on FHIR',
     en: 'Substitutable Medical Apps, Reusable Technology on FHIR',
@@ -47,6 +53,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'atc',
+    updatedAt: '2026-06-14',
     topic: 'medication-safety',
     term: 'ATC 藥品分類碼',
     en: 'Anatomical Therapeutic Chemical Classification',
@@ -67,6 +74,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cfs',
+    updatedAt: '2026-06-14',
     topic: 'elder-care-frailty',
     term: '臨床衰弱量表 CFS',
     en: 'Clinical Frailty Scale',
@@ -86,6 +94,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cga',
+    updatedAt: '2026-06-14',
     topic: 'elder-care-frailty',
     term: '高齡周全性評估 CGA',
     en: 'Comprehensive Geriatric Assessment',
@@ -105,6 +114,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'asq3',
+    updatedAt: '2026-06-14',
     topic: 'child-development',
     term: 'ASQ-3 兒童發展篩檢',
     en: 'Ages & Stages Questionnaires, Third Edition',
@@ -124,6 +134,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'intrinsic-capacity',
+    updatedAt: '2026-06-14',
     topic: 'preventive-function-health',
     term: 'WHO 內在能力（IC）',
     en: 'Intrinsic Capacity',
@@ -144,6 +155,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'drug-repurposing',
+    updatedAt: '2026-06-14',
     topic: 'explainable-medical-ai',
     term: '老藥新用（Drug Repurposing）',
     en: 'Drug Repurposing / Repositioning',
@@ -163,6 +175,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cdss',
+    updatedAt: '2026-06-14',
     topic: 'explainable-medical-ai',
     term: '臨床決策支援系統 CDSS',
     en: 'Clinical Decision Support System',
@@ -182,6 +195,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'genai-medical-guidance',
+    updatedAt: '2026-06-14',
     topic: 'medical-ai-governance',
     term: '醫療機構應用生成式 AI 指引',
     en: 'MOHW Generative AI Guidance for Healthcare',
@@ -201,6 +215,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'mcp',
+    updatedAt: '2026-06-14',
     topic: 'medical-ai-governance',
     term: 'MCP（Model Context Protocol）',
     en: 'Model Context Protocol',
@@ -221,6 +236,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'contactless-checkin',
+    updatedAt: '2026-06-18',
     topic: 'elder-care-frailty',
     term: '無接觸報到 / 人臉辨識報到',
     en: 'Contactless Check-in / Facial Recognition Attendance',
@@ -240,6 +256,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'triz-theory',
+    updatedAt: '2026-06-18',
     topic: 'innovation-methods',
     term: 'TRIZ 發明問題解決理論',
     en: 'Theory of Inventive Problem Solving',
@@ -259,6 +276,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'security-audit-automation',
+    updatedAt: '2026-06-18',
     term: '資安稽核 / 評鑑自動化',
     en: 'Security & Compliance Audit Automation',
     category: 'ai',
@@ -277,6 +295,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'osint-automation',
+    updatedAt: '2026-06-18',
     term: '產業情報自動化',
     en: 'OSINT / Industry Intelligence Automation',
     category: 'ai',
@@ -295,6 +314,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'ai-agent',
+    updatedAt: '2026-06-18',
     topic: 'intelligence-automation',
     term: 'AI Agent（AI 代理）',
     en: 'AI Agent',
@@ -314,6 +334,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'rag',
+    updatedAt: '2026-06-18',
     topic: 'intelligence-automation',
     term: 'RAG 檢索增強生成',
     en: 'Retrieval-Augmented Generation',
@@ -333,6 +354,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'llm',
+    updatedAt: '2026-06-19',
     topic: 'medical-ai-governance',
     term: '大型語言模型（LLM）',
     en: 'Large Language Model',
@@ -355,6 +377,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'txgnn',
+    updatedAt: '2026-06-19',
     term: 'TxGNN（藥物再利用圖神經網路模型）',
     en: 'TxGNN — graph foundation model for drug repurposing',
     category: 'medical',
