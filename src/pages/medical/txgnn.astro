@@ -3,6 +3,7 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
 import ProductNews from '../../components/news/ProductNews.astro';
+import RelatedTopics from '../../components/products/RelatedTopics.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 import { TXGNN_SITES, txgnnSiteUrl } from '../../seo.config';
 import countries from '../../data/txgnn-countries.json';
@@ -448,6 +449,8 @@ const stats = [
       </div>
     </div>
   </section>
+
+  <RelatedTopics product="txgnn" />
 
   <ProductCta
     product={product}
