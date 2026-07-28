@@ -12,6 +12,7 @@
 | 版本控制 | Git → https://github.com/yao-care/www（private） |
 | Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
 | Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
+| Build gate（2026-07-28 起） | `npm run build` 第三段跑 `scripts/check-nav.mjs`（單獨跑：`npm run check:nav`）：**主導覽 `src/nav.config.ts` 的 NAV 不得指向已凍結/已收斂路由**（目前禁 `/news/`）。存在理由：`nav.config.ts` 在 seo-ops reflect 白名單內，反思每天有權改主導覽，純靠 playbook 文字約束不可靠；反思/大腦 gate 都含 `npm run build`，違反即 gate fail 並自行 `git checkout -- src` 撤回（`bin/seo-reflect.sh:157-161`）。`scripts/` 與 `package.json` 都在反思 scope 外，故 gate 本身動不到。要退役規則：改 `FORBIDDEN_HREFS` 並同步 `$SEO_OPS_DIR/playbooks/yao.care.md` |
 | Build gate（2026-07-20 起） | `npm run build` 最前段先跑 `scripts/check-design.mjs`（**設計規範守門 v2**，見下「§ 修改外觀」五條）；違規即 build fail。`npm run deploy` 亦改為經由 `npm run build`（同日修，守門不可繞過）。存量 64 處硬編色以 `LEGACY_COLOR_BUDGET` per-檔凍結（禁再擴充），清理後同步下修預算 |
 | 技術棧 | Astro 5 + Tailwind v4 + D3 v7 + TypeScript |
 | NPM Proxy Host ID | 46（憑證 ID 58） |
@@ -79,7 +80,7 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 > 📦 **Phase 4 批次一（2026-07-15）**：`sign/func/triz/siqc` 四桶共 123 篇已自 build 移除（git 歷史保留），舊網址由 NPM host #46 的 **Advanced Config** 301 到對應主題頁（該設定同時收納 soft-404 修正，**已存 DB、UI 重存不再遺失**——sed 產出檔的技術債已清）。觀察一週 GSC 抽查 0 soft-404，已放行批次二。
 > 📦 **Phase 4 批次二（2026-07-26）**：`yaocare/pedi/huatuo` 三桶共 127 篇（48/40/39）已自 build 移除（build 頁數 389→262），301 對應 `/topics/medication-safety/`、`/topics/child-development/`、`/topics/explainable-medical-ai/`（同存 host #46 advanced_config，批次一規則保留不動）。高曝光承接：用 GSC 近 28 天曝光查 pedi×2／huatuo×5（含 1 篇 Phase 2 已回填）補進對應 `topicFeed`；**yaocare 該 28 天窗口內無頁面曝光明顯高於其他者（最高僅 7，分布平滑），依批次一「弱桶不強補」precedent 判定 0 篇**。踩坑記錄：`child-development`／`explainable-medical-ai` 兩桶自 Phase 2（07-15）起持續有每日產線餵入，主題頁「近期動態」只顯示 `fetchedAt` 最新 10 筆——沿用批次一原始 `fetchedAt`（舊文章原始抓取時間）會被近 10 天的新產出全部擠出榜外、build 後看不到；改法＝backfill 檔的 `fetchedAt` 蓋成「本次回填時間」（`publishedAt` 仍保留原始新聞發布日，使用者看到的日期不受影響），使其重新進入前 10 榜，build 後已實測可見。觀察至 **2026-08-02**，GSC 無 soft-404 異常再放批次三（geri/intel/goalkeeper）。
 
-> 🧭 **導覽與文案已對齊 feed 模式（2026-07-28）**：用戶回報「/news/ 好像沒在更新」——查證後確認引擎每天正常跑，只是自 Phase 2 起產出全進 `topicFeed`，`src/content/news/` 最後寫入是 2026-07-14 21:18；但**頁面文案仍宣稱「每天清晨由 AI 自動產出」＝不實陳述**，主導覽也還把訪客導去凍結區。已改：`src/nav.config.ts` 移除 `/news/` 項、原「議題追蹤」標籤改指 `/topics/`（合併掉原「主題」項，nav 仍 7 項）；`/news/` 頁 title/H1/breadcrumb/描述一律加「封存」並在 hero 導往 `/topics/`；`/topics/` hero 補「每天彙整近期動態」＋反向連封存頁（保留爬蟲路徑）；`FooterLinks`（議題追蹤→/topics/、議題追蹤封存→/news/）、`HighlightNews`、`ProductNews` 三處移除「每日/每天自動」字樣。⚠ `nav.config.ts` 在 seo-ops reflect 白名單內，日後反思可能再動它。
+> 🧭 **導覽與文案已對齊 feed 模式（2026-07-28）**：用戶回報「/news/ 好像沒在更新」——查證後確認引擎每天正常跑，只是自 Phase 2 起產出全進 `topicFeed`，`src/content/news/` 最後寫入是 2026-07-14 21:18；但**頁面文案仍宣稱「每天清晨由 AI 自動產出」＝不實陳述**，主導覽也還把訪客導去凍結區。已改：`src/nav.config.ts` 移除 `/news/` 項、原「議題追蹤」標籤改指 `/topics/`（合併掉原「主題」項，nav 仍 7 項）；`/news/` 頁 title/H1/breadcrumb/描述一律加「封存」並在 hero 導往 `/topics/`；`/topics/` hero 補「每天彙整近期動態」＋反向連封存頁（保留爬蟲路徑）；`FooterLinks`（議題追蹤→/topics/、議題追蹤封存→/news/）、`HighlightNews`、`ProductNews` 三處移除「每日/每天自動」字樣。⚠ `nav.config.ts` 在 seo-ops reflect 白名單內，反思本有權改回去 → **同日補上 `scripts/check-nav.mjs` build gate 機械擋**（見上表 2026-07-28 Build gate），並在 seo-ops 側同步三處：playbook 策略區塊【用戶拍板 2026-07-28｜勿再提】、`reflect:scope` 註記、`sites/yao.care.json` 的 `flagship` 把「議題追蹤」從 `/news/` 換成 `/topics/`（否則日報天天把凍結頁當旗艦頁報，等於持續餵反思「這頁該有導覽入口」的訊號）。緣由與教訓記在 `$SEO_OPS_DIR/MAINTENANCE.md` §八 教訓 15。
 
 `/news/` 區塊原本每天自動抓 Google News、由 Claude 生成「議題分析 + 設計回應」對照文章，每篇都連回對應產品頁；**Phase 2（2026-07-15）起改為 feed 模式，此區塊不再新增文章**（現為歷史封存，剩 geri/goalkeeper/intel/marketing/txgnn 五桶 202 篇，批次三將再收斂 geri/intel/goalkeeper）。每天的產出改進 `src/content/topicFeed/`。`src/` 與 `dist/` 都由 cron 自動更新，平時不用手動碰。
 
@@ -243,6 +244,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── gsc.ts                 ← Search Console API（搜尋需求 + 每議題搜尋字；限 www）
 │   ├── content-gaps.ts        ← GSC 內容缺口偵測 + 草稿生成（補題候選 → drafts/，人工審查）
 │   ├── content-gaps.sh        ← cron entry（每月 1/15，02:00 UTC）：跑 --draft，log /var/log/yaocare-content-gaps.log
+│   ├── check-nav.mjs          ← build gate：主導覽不得指向已凍結路由（禁 /news/；防反思改回去）
 │   └── gen-og.mjs             ← OG 圖產生器
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
 │   ├── assets/images/         ← 所有圖片
@@ -381,6 +383,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 
 ### 調整主題頁（/topics/）內容
 - 九頁內容單一來源：`src/topics.config.ts`（答案、章節、FAQ、來源、產品回應）；模板在 `src/pages/topics/`
+- **總覽頁排序（2026-07-28）**：`/topics/` 不用 config 順序，改**依各主題最新動態日新→舊**排序，並在卡片顯示「更新 YYYY-MM-DD · 動態 N 則」、hero 顯示主題數/累計則數/最後更新日。更新日＝該主題 `topicFeed` 最新一筆的 `fetchedAt`，與 `astro.config.mjs` 餵 sitemap `<lastmod>` **同源算法**（改一邊要改另一邊，否則頁面與 sitemap 對不上）。日期一律用 `toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' })`——主機跑 UTC，產線在台北 04:30 抓的動態若用主機本地日會顯示成前一天；`topics/index.astro` 與 `topics/[slug].astro` 各有一份 `fmtDate`，兩處要一起改
 - 鐵則：已查證數字與來源連結不可亂改；新增事實先查權威來源；文風禁 AI 味（比照 style-guide 精神）
 - 改完 `npm run deploy` 上線，並用 `node scripts/indexnow-urls.mjs <改動頁URL>` 通知收錄
 

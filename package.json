@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/check-design.mjs && node scripts/check-content.mjs && astro build && node scripts/check-internal-links.mjs",
+    "build": "node scripts/check-design.mjs && node scripts/check-content.mjs && node scripts/check-nav.mjs && astro build && node scripts/check-internal-links.mjs",
     "check:design": "node scripts/check-design.mjs",
+    "check:nav": "node scripts/check-nav.mjs",
     "check:content": "node scripts/check-content.mjs",
     "check:content:all": "node scripts/check-content.mjs --all",
     "publish": "rsync -a --delete dist/ $WWW_SITE_DIR/",

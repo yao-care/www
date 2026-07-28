@@ -27,8 +27,8 @@ const feed = feedAll
   .sort((a, b) => b.data.fetchedAt.getTime() - a.data.fetchedAt.getTime())
   .slice(0, 10);
 const feedLatest = feed[0]?.data.fetchedAt;
-const fmtDate = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+// 一律以台北時區成日（主機跑 UTC；topics/index.astro 有相同的 fmtDate，兩處要一起改）
+const fmtDate = (d: Date) => d.toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' });
 
 const pageTitle = `${topic.title} · yao.care`;
 const pageDescription = topic.answerFirst;
