@@ -13,9 +13,9 @@ const items = allNews.sort(
   (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
 );
 
-const pageTitle = '議題追蹤 — yao.care';
+const pageTitle = '議題追蹤封存 — yao.care';
 const pageDescription =
-  '自動追蹤智慧醫療、AI 系統、數位行銷三大領域的相關公開新聞，並對照 yao.care 各服務的設計觀點與回應。';
+  '智慧醫療、AI 系統、數位行銷三大領域的公開新聞議題評論封存（2026 年 7 月以前）；每日更新的議題動態見各主題頁。';
 
 const totalCount = items.length;
 
@@ -38,7 +38,7 @@ const categoryCounts = CATEGORIES.reduce<Record<string, number>>((acc, c) => {
     <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
       <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a>
       <span class="mx-1.5">›</span>
-      <span class="text-[color:var(--color-ink)]">議題追蹤</span>
+      <span class="text-[color:var(--color-ink)]">議題追蹤封存</span>
     </div>
 
     <!-- hero -->
@@ -47,12 +47,23 @@ const categoryCounts = CATEGORIES.reduce<Record<string, number>>((acc, c) => {
         <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
           Issue Tracking
         </p>
-        <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">議題追蹤</h1>
+        <h1 class="mt-3 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">議題追蹤（歷史封存）</h1>
         <p class="mt-4 text-lg md:text-xl text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
-          自動蒐集智慧醫療、AI 系統與數位行銷相關的公開新聞，
-          以本團隊的實際服務為對照寫成原創評論文。每天清晨由 AI 自動產出，
-          critic 迴圈驗證後上線，目前共 {totalCount} 篇。
+          蒐集智慧醫療、AI 系統與數位行銷相關的公開新聞，以本團隊的實際服務為對照寫成的評論文，
+          共 {totalCount} 篇，最後一批發表於 2026 年 7 月。
         </p>
+        <p class="mt-4 text-base md:text-lg text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+          這個區塊已不再新增文章。每天追蹤到的新議題現在收在各
+          <a href="/topics/" class="font-medium text-[color:var(--color-brand)] hover:underline">主題頁</a>
+          的「近期動態」，同一個主題的現況、數據與我們的回應整理在一起，比逐篇讀更快看到全貌。
+        </p>
+        <a
+          href="/topics/"
+          class="mt-6 inline-flex items-center gap-1.5 text-base font-medium text-[color:var(--color-brand)] hover:underline"
+        >
+          看最新議題動態
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
     </section>
 

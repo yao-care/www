@@ -79,7 +79,9 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 > 📦 **Phase 4 批次一（2026-07-15）**：`sign/func/triz/siqc` 四桶共 123 篇已自 build 移除（git 歷史保留），舊網址由 NPM host #46 的 **Advanced Config** 301 到對應主題頁（該設定同時收納 soft-404 修正，**已存 DB、UI 重存不再遺失**——sed 產出檔的技術債已清）。觀察一週 GSC 抽查 0 soft-404，已放行批次二。
 > 📦 **Phase 4 批次二（2026-07-26）**：`yaocare/pedi/huatuo` 三桶共 127 篇（48/40/39）已自 build 移除（build 頁數 389→262），301 對應 `/topics/medication-safety/`、`/topics/child-development/`、`/topics/explainable-medical-ai/`（同存 host #46 advanced_config，批次一規則保留不動）。高曝光承接：用 GSC 近 28 天曝光查 pedi×2／huatuo×5（含 1 篇 Phase 2 已回填）補進對應 `topicFeed`；**yaocare 該 28 天窗口內無頁面曝光明顯高於其他者（最高僅 7，分布平滑），依批次一「弱桶不強補」precedent 判定 0 篇**。踩坑記錄：`child-development`／`explainable-medical-ai` 兩桶自 Phase 2（07-15）起持續有每日產線餵入，主題頁「近期動態」只顯示 `fetchedAt` 最新 10 筆——沿用批次一原始 `fetchedAt`（舊文章原始抓取時間）會被近 10 天的新產出全部擠出榜外、build 後看不到；改法＝backfill 檔的 `fetchedAt` 蓋成「本次回填時間」（`publishedAt` 仍保留原始新聞發布日，使用者看到的日期不受影響），使其重新進入前 10 榜，build 後已實測可見。觀察至 **2026-08-02**，GSC 無 soft-404 異常再放批次三（geri/intel/goalkeeper）。
 
-`/news/` 區塊每天自動抓 Google News、由 Claude 生成「議題分析 + 設計回應」對照文章，每篇都連回對應產品頁。**這是這個 repo 跑得最多的東西**，但 `src/` 與 `dist/` 都由 cron 自動更新，平時不用手動碰。
+> 🧭 **導覽與文案已對齊 feed 模式（2026-07-28）**：用戶回報「/news/ 好像沒在更新」——查證後確認引擎每天正常跑，只是自 Phase 2 起產出全進 `topicFeed`，`src/content/news/` 最後寫入是 2026-07-14 21:18；但**頁面文案仍宣稱「每天清晨由 AI 自動產出」＝不實陳述**，主導覽也還把訪客導去凍結區。已改：`src/nav.config.ts` 移除 `/news/` 項、原「議題追蹤」標籤改指 `/topics/`（合併掉原「主題」項，nav 仍 7 項）；`/news/` 頁 title/H1/breadcrumb/描述一律加「封存」並在 hero 導往 `/topics/`；`/topics/` hero 補「每天彙整近期動態」＋反向連封存頁（保留爬蟲路徑）；`FooterLinks`（議題追蹤→/topics/、議題追蹤封存→/news/）、`HighlightNews`、`ProductNews` 三處移除「每日/每天自動」字樣。⚠ `nav.config.ts` 在 seo-ops reflect 白名單內，日後反思可能再動它。
+
+`/news/` 區塊原本每天自動抓 Google News、由 Claude 生成「議題分析 + 設計回應」對照文章，每篇都連回對應產品頁；**Phase 2（2026-07-15）起改為 feed 模式，此區塊不再新增文章**（現為歷史封存，剩 geri/goalkeeper/intel/marketing/txgnn 五桶 202 篇，批次三將再收斂 geri/intel/goalkeeper）。每天的產出改進 `src/content/topicFeed/`。`src/` 與 `dist/` 都由 cron 自動更新，平時不用手動碰。
 
 ### 設定（單一 source of truth）
 `src/news.config.ts` — 12 個 target（11 個有對外站的產品 + `marketing`；gcm 後端不開 news target），每個 target 定義：
