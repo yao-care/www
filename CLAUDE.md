@@ -383,6 +383,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 
 ### 調整主題頁（/topics/）內容
 - 九頁內容單一來源：`src/topics.config.ts`（答案、章節、FAQ、來源、產品回應）；模板在 `src/pages/topics/`
+- **內頁「近期動態」顯示（2026-07-28）**：不再 `slice(0, 10)`——**全部**條目都渲染進 HTML，前端預設顯示前 `FEED_INITIAL`(10) 筆，「看更多」每次展開 `FEED_STEP`(10) 筆直到全部顯示、按鈕自動消失（兩個常數在 `topics/[slug].astro` 檔內）。三個踩過的坑：(a) **摺疊不能用 `hidden` 屬性**——Tailwind v4 preflight 對 `[hidden]` 下的 `display:none` 帶強制旗標，無 JS 的覆寫贏不了它，而 check-design 規則 3 禁該旗標，故改用自有屬性 `data-collapsed` + 元件內 `<style is:inline>`；(b) `<style>`／`<script>` **必須 `is:inline`**，否則 Astro 會把 style 抽成打包 CSS、脫離 `<noscript>`，變成任何情況都全展開；(c) check-design 掃的是**整份原始碼含註解**，註解裡寫出該旗標字樣也會被擋（實際踩到，已改寫措辭）。無 JS／不執行 JS 的爬蟲由 `<noscript>` 全部攤開；無頭瀏覽器實測：38 則的主題 10→20→30→38（3 次點擊、按鈕消失）、12 則的主題 10→12（1 次），無 JS 兩者皆 38/38、12/12
 - **總覽頁排序（2026-07-28）**：`/topics/` 不用 config 順序，改**依各主題最新動態日新→舊**排序，並在卡片顯示「更新 YYYY-MM-DD · 動態 N 則」、hero 顯示主題數/累計則數/最後更新日。更新日＝該主題 `topicFeed` 最新一筆的 `fetchedAt`，與 `astro.config.mjs` 餵 sitemap `<lastmod>` **同源算法**（改一邊要改另一邊，否則頁面與 sitemap 對不上）。日期一律用 `toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' })`——主機跑 UTC，產線在台北 04:30 抓的動態若用主機本地日會顯示成前一天；`topics/index.astro` 與 `topics/[slug].astro` 各有一份 `fmtDate`，兩處要一起改
 - 鐵則：已查證數字與來源連結不可亂改；新增事實先查權威來源；文風禁 AI 味（比照 style-guide 精神）
 - 改完 `npm run deploy` 上線，並用 `node scripts/indexnow-urls.mjs <改動頁URL>` 通知收錄

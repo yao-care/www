@@ -21,11 +21,14 @@ const products = topic.products.map((p) => NEWS_TARGET_BY_SLUG[p]).filter(Boolea
 const relGuides = GUIDES.filter((g) => g.topic === topic.slug);
 const relTerms = GLOSSARY.filter((t) => t.topic === topic.slug);
 
-// 近期動態：產線每日餵進來的新聞條目（初始批次由既有語料回填），最新 10 筆
+// 近期動態：產線每日餵進來的新聞條目（初始批次由既有語料回填）。
+// 2026-07-28：不再 slice——**全部**條目都渲染進 HTML（爬蟲與無 JS 訪客看得到全部），
+// 前端預設只顯示前 FEED_INITIAL 筆，其餘由「看更多」每次展開 FEED_STEP 筆直到全部顯示。
+// /topics/ 總覽卡片顯示的「動態 N 則」＝這裡的 feed.length，兩邊一致（勿再改回 slice，否則又對不上）。
+const FEED_INITIAL = 10;
+const FEED_STEP = 10;
 const feedAll = await getCollection('topicFeed', (e) => e.data.topic === topic.slug);
-const feed = feedAll
-  .sort((a, b) => b.data.fetchedAt.getTime() - a.data.fetchedAt.getTime())
-  .slice(0, 10);
+const feed = feedAll.sort((a, b) => b.data.fetchedAt.getTime() - a.data.fetchedAt.getTime());
 const feedLatest = feed[0]?.data.fetchedAt;
 // 一律以台北時區成日（主機跑 UTC；topics/index.astro 有相同的 fmtDate，兩處要一起改）
 const fmtDate = (d: Date) => d.toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' });
@@ -121,11 +124,16 @@ const jsonLd = {
         <div class="pt-8 border-t border-neutral-200">
           <div class="flex flex-wrap items-baseline justify-between gap-2">
             <h2 class="text-xl md:text-2xl font-bold">近期動態</h2>
-            <p class="text-xs text-[color:var(--color-ink-muted)]">持續更新．連結為原始報導</p>
+            <p class="text-xs text-[color:var(--color-ink-muted)]">
+              共 {feed.length} 則．持續更新．連結為原始報導
+            </p>
           </div>
-          <ul class="mt-5 space-y-5">
-            {feed.map((e) => (
-              <li class="leading-relaxed">
+          {/* 摺疊用自有屬性 data-collapsed，不用 hidden 屬性：Tailwind v4 preflight 對 [hidden] 下的
+              display:none 帶強制旗標，noscript 覆寫贏不了它，而設計規範禁用該旗標（check-design 規則 3）。 */}
+          <style is:inline>[data-feed-item][data-collapsed] { display: none; }</style>
+          <ul id="topic-feed" class="mt-5 space-y-5">
+            {feed.map((e, i) => (
+              <li class="leading-relaxed" data-feed-item data-collapsed={i >= FEED_INITIAL ? '' : undefined}>
                 <p class="text-sm">
                   <span class="text-[color:var(--color-ink-muted)] tabular-nums">{fmtDate(e.data.publishedAt)}</span>
                   <a href={e.data.url} target="_blank" rel="noopener" class="ml-2 font-medium text-[color:var(--color-ink)] hover:text-[color:var(--color-brand)] transition-colors">{e.data.title}</a>
@@ -135,6 +143,48 @@ const jsonLd = {
               </li>
             ))}
           </ul>
+          {feed.length > FEED_INITIAL && (
+            <div
+              class="mt-6"
+              id="topic-feed-more"
+              data-feed-target="topic-feed"
+              data-feed-step={String(FEED_STEP)}
+              hidden
+            >
+              <button
+                type="button"
+                class="inline-flex items-center gap-1.5 rounded-full border border-neutral-300 px-4 py-2 text-sm font-medium text-[color:var(--color-ink)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors"
+              >
+                看更多（還有 <span data-feed-remaining>{feed.length - FEED_INITIAL}</span> 則）
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </div>
+          )}
+          {/* 無 JS 時（含不執行 JS 的爬蟲）把摺疊的條目全部攤開，避免「看更多」按不動就少一半內容。
+              這條在文件順序上晚於上面的摺疊規則故勝出；style/script 都必須 is:inline——否則 Astro 會把
+              <style> 抽成打包 CSS、脫離 <noscript>，變成任何情況都全展開，摺疊直接失效。 */}
+          <noscript>
+            <style is:inline>[data-feed-item][data-collapsed] { display: list-item; }</style>
+          </noscript>
+          <script is:inline>
+            (function () {
+              var box = document.getElementById('topic-feed-more');
+              var list = box && document.getElementById(box.dataset.feedTarget);
+              if (!box || !list) return;
+              var step = parseInt(box.dataset.feedStep, 10) || 10;
+              var btn = box.querySelector('button');
+              var left = box.querySelector('[data-feed-remaining]');
+              var collapsed = function () { return list.querySelectorAll('[data-feed-item][data-collapsed]'); };
+              box.hidden = false; // 有 JS 才出現按鈕（無 JS 時條目已由 noscript 全展開）
+              btn.addEventListener('click', function () {
+                var batch = collapsed();
+                for (var i = 0; i < step && i < batch.length; i++) batch[i].removeAttribute('data-collapsed');
+                var n = collapsed().length;
+                if (n === 0) { box.hidden = true; return; }
+                left.textContent = String(n);
+              });
+            })();
+          </script>
         </div>
       </section>
     )}
