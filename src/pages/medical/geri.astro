@@ -3,6 +3,7 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
 import ProductNews from '../../components/news/ProductNews.astro';
+import RelatedTopics from '../../components/products/RelatedTopics.astro';
 import GcmClosedLoop from '../../components/products/GcmClosedLoop.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
@@ -120,6 +121,8 @@ const domains = ['認知', '情緒', '營養', '行動步態', '用藥', '社會
   </section>
 
   <GcmClosedLoop />
+
+  <RelatedTopics product="geri" />
 
   <ProductCta
     product={product}
