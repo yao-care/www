@@ -4,6 +4,7 @@ import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
 import ProductNews from '../../components/news/ProductNews.astro';
 import GcmClosedLoop from '../../components/products/GcmClosedLoop.astro';
+import RelatedTopics from '../../components/products/RelatedTopics.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.func;
@@ -126,6 +127,8 @@ const toneClass: Record<string, string> = {
   </section>
 
   <GcmClosedLoop />
+
+  <RelatedTopics product="func" />
 
   <ProductCta
     product={product}
