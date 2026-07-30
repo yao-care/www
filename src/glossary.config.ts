@@ -94,13 +94,13 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cga',
-    updatedAt: '2026-06-14',
+    updatedAt: '2026-07-31',
     topic: 'elder-care-frailty',
     term: '高齡周全性評估 CGA',
     en: 'Comprehensive Geriatric Assessment',
     category: 'care',
     oneLiner:
-      '一種多面向、跨專業的評估流程，全面盤點長者的醫療、心理、功能與社會狀況，據以擬定照護計畫。',
+      'CGA（Comprehensive Geriatric Assessment，高齡周全性評估）是一種多面向、跨專業的評估流程，全面盤點長者的醫療、心理、功能與社會狀況，據以擬定照護計畫。',
     paragraphs: [
       '在高齡醫學（Geriatric Medicine）領域，CGA 是最具代表性的跨專業評估方法。它不只看疾病診斷，而是同時評估認知、情緒、營養、行動、用藥、社會支持等多個面向，目的是及早發現衰弱與功能退化，並據此擬定個別化的整合照護介入計畫。',
       '與單次門診不同，CGA 是一套結構化、可重複的評估，廣泛應用於長照機構、醫院老年科與社區健康促進。數位化後判讀更趨一致，並可透過 SMART on FHIR 與醫療系統互通，使評估結果進入臨床決策流程。',
