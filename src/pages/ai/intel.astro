@@ -3,6 +3,7 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
 import ProductNews from '../../components/news/ProductNews.astro';
+import RelatedTopics from '../../components/products/RelatedTopics.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.intel;
@@ -252,6 +253,8 @@ const features = [
       </div>
     </div>
   </section>
+
+  <RelatedTopics product="intel" />
 
   <ProductCta
     product={product}
