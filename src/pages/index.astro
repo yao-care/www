@@ -204,6 +204,43 @@ const geri = PRODUCT_BY_SLUG.geri; // 高齡友善 section 交叉預覽
       </div>
     </section>
 
+    <!-- 知識庫入口：名詞解釋 + 情境指南（目前僅頁尾可見，補一個首頁顯眼入口） -->
+    <section class="py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="mb-10">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+            Knowledge Base
+          </p>
+          <h2 class="mt-2 text-3xl md:text-4xl font-bold">知識庫</h2>
+          <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] max-w-2xl leading-relaxed">
+            把常見的醫療 AI 名詞與情境問題講清楚，隨時可查。
+          </p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5 md:gap-6">
+          <a href="/glossary/" class="group rounded-xl border border-neutral-200 bg-white hover:border-[color:var(--color-brand)] hover:shadow-md p-6 md:p-8 transition-all">
+            <h3 class="text-xl font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors">名詞解釋</h3>
+            <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+              把醫療資訊與 AI 領域的關鍵名詞講清楚 —— 從 SMART on FHIR、ATC 藥品碼到 CFS、ASQ-3、內在能力與生成式 AI 指引。
+            </p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)]">
+              瀏覽名詞解釋
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+          <a href="/guides/" class="group rounded-xl border border-neutral-200 bg-white hover:border-[color:var(--color-brand)] hover:shadow-md p-6 md:p-8 transition-all">
+            <h3 class="text-xl font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] transition-colors">情境指南</h3>
+            <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+              從你會搜尋的那個問題出發 —— 先給直接、實用的解答，再告訴你 yao.care 哪個服務幫得上忙。
+            </p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)]">
+              瀏覽情境指南
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <HighlightNews />
     <ContactCTA />
     <ContactMap />
