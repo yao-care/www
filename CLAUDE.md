@@ -76,7 +76,7 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 
 ## § News 議題追蹤模組（自動議題評論引擎）
 
-> 🔄 **2026-07-15 Phase 2 產線反轉（內容重構）**：引擎預設改為 **feed 模式**（`NEWS_MODE=feed`）——通過 filter 的新聞**不再寫成獨立文章頁**，改寫成主題頁「近期動態」條目（`src/content/topicFeed/<topic>/<id>.json`，一句 takeaway＋原文連結，日上限 12、target→topic 映射見 `src/topics.config.ts` 的 newsTargets）。主題頁 lastmod＝最新動態時間（astro.config 接好）。**回滾保險絲：`NEWS_MODE=legacy`** 即回舊行為。voice backfill（rewrite-news-voice）已停役（舊語料將分批 301 收斂，重刷即將退場的頁是浪費）。存量已回填每主題最近 12 篇（takeaway=newsBrief）。既有 `/news/` 頁面照常 serve，收斂見重構計畫 Phase 4。本節以下的 writer/critic 三段文流程描述僅適用 legacy 模式。
+> 🔄 **2026-07-15 Phase 2 產線反轉（內容重構）**：引擎預設改為 **feed 模式**（`NEWS_MODE=feed`）——通過 filter 的新聞**不再寫成獨立文章頁**，改寫成主題頁「近期動態」條目（`src/content/topicFeed/<topic>/<id>.json`，一句 takeaway＋原文連結，日上限 3（2026-08-03 由 12 調降，見下方策略註記）、target→topic 映射見 `src/topics.config.ts` 的 newsTargets）。主題頁 lastmod＝最新動態時間（astro.config 接好）。**回滾保險絲：`NEWS_MODE=legacy`** 即回舊行為。voice backfill（rewrite-news-voice）已停役（舊語料將分批 301 收斂，重刷即將退場的頁是浪費）。存量已回填每主題最近 12 篇（takeaway=newsBrief）。既有 `/news/` 頁面照常 serve，收斂見重構計畫 Phase 4。本節以下的 writer/critic 三段文流程描述僅適用 legacy 模式。
 > 📦 **Phase 4 批次一（2026-07-15）**：`sign/func/triz/siqc` 四桶共 123 篇已自 build 移除（git 歷史保留），舊網址由 NPM host #46 的 **Advanced Config** 301 到對應主題頁（該設定同時收納 soft-404 修正，**已存 DB、UI 重存不再遺失**——sed 產出檔的技術債已清）。觀察一週 GSC 抽查 0 soft-404，已放行批次二。
 > 📦 **Phase 4 批次二（2026-07-26）**：`yaocare/pedi/huatuo` 三桶共 127 篇（48/40/39）已自 build 移除（build 頁數 389→262），301 對應 `/topics/medication-safety/`、`/topics/child-development/`、`/topics/explainable-medical-ai/`（同存 host #46 advanced_config，批次一規則保留不動）。高曝光承接：用 GSC 近 28 天曝光查 pedi×2／huatuo×5（含 1 篇 Phase 2 已回填）補進對應 `topicFeed`；**yaocare 該 28 天窗口內無頁面曝光明顯高於其他者（最高僅 7，分布平滑），依批次一「弱桶不強補」precedent 判定 0 篇**。踩坑記錄：`child-development`／`explainable-medical-ai` 兩桶自 Phase 2（07-15）起持續有每日產線餵入，主題頁「近期動態」只顯示 `fetchedAt` 最新 10 筆——沿用批次一原始 `fetchedAt`（舊文章原始抓取時間）會被近 10 天的新產出全部擠出榜外、build 後看不到；改法＝backfill 檔的 `fetchedAt` 蓋成「本次回填時間」（`publishedAt` 仍保留原始新聞發布日，使用者看到的日期不受影響），使其重新進入前 10 榜，build 後已實測可見。觀察至 **2026-08-02**，GSC 無 soft-404 異常再放批次三（geri/intel/goalkeeper）。
 
@@ -91,14 +91,15 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 - `proofPoints`: 白名單 — `designResponse` 段落只能引用這些事實，每條附 `#N` 索引（regex guard 會檢查）
 - `ctaText / ctaHref`: 文章底部 CTA
 
-> **策略（2026-06）：精準少量 + 永久累積。** 文章是常青議題分析，**不再砍文**（已移除 `pruneOld` / `KEEP_PER_TARGET`），長期累積以建主題深度與 SEO 權重。每天**少寫、寫準、不重複**（門檻 `RELEVANCE_THRESHOLD=0.72`、每日 `MAX_WRITE_TOTAL=5`（2026-07-15 由 10 調降，重構過渡）、每 target `PER_TARGET_DAILY_CAP=3`，皆 `fetch-news.ts` 檔內常數）。
+> **策略（2026-06）：精準少量 + 永久累積。** 文章是常青議題分析，**不再砍文**（已移除 `pruneOld` / `KEEP_PER_TARGET`），長期累積以建主題深度與 SEO 權重。每天**少寫、寫準、不重複**（門檻 `RELEVANCE_THRESHOLD=0.80`（2026-08-03 由 0.72 調升）、feed 日上限 `MAX_FEED_TOTAL=3`（同日由 12 調降）、每日 `MAX_WRITE_TOTAL=5`（legacy 模式用）、每 target `PER_TARGET_DAILY_CAP=2`（同日由 3 調降），皆 `fetch-news.ts` 檔內常數）。
+> **2026-08-03 調量拍板（用戶核可）**：GSC 近月數據顯示站流量進入高原期（週點擊 7 月中 59 見頂後回落 28–35），且 news/topics 動態的邊際點擊趨零（top 25 佔比約一成）——撐流量的是常青頁。故 feed 產量由每天 2–8 則收斂為 **≤3 則精選**，省下的優化額度移往常青頁（glossary/guides/topics）。dreamer868 同日評估為**不降量**（其判決故事頁是成長主力）。
 
 ### 內容存放
 `src/content/news/<target>/<id>.json` — 走 Astro content collection，schema 定義在 `src/content/config.ts`（含 `newsBrief / issueAnalysis / designResponse / relevance / highlight / criticPasses` 等欄位與長度限制）。檔名 `<id>` 是 URL hash。
 
 ### Pipeline（`scripts/fetch-news.ts`）
 1. 對每個 target 的每個 query 抓 Google News RSS → 合併、URL 去重
-2. **Filter pass**（Haiku, `claude -p`）：留下 `relevance ≥ RELEVANCE_THRESHOLD`(0.72) 的相關新聞；**GSC 真實搜尋字（topQueries）注入 filter prompt**，讓選題貼近讀者需求而非只看內容相關
+2. **Filter pass**（Haiku, `claude -p`）：留下 `relevance ≥ RELEVANCE_THRESHOLD`(0.80) 的相關新聞；**GSC 真實搜尋字（topQueries）注入 filter prompt**，讓選題貼近讀者需求而非只看內容相關
 3. **題目層級去重**：與該 target **既有語料**標題做 bigram Jaccard 比對（門檻 `DUP_TITLE_THRESHOLD=0.6`），近似重複者跳過（log `DUP`）—— 不砍文後避免薄內容累積
 4. **需求感知全域選題**（`selectDemandAware`）：所有 target 候選彙成單池，按 `relevance + 需求加成(命中搜尋字) + (GA/GSC權重−1)×係數 + 引用價值先驗(CITATION_PRIORITY)` 全域排序取前 `MAX_WRITE_TOTAL`，並限每 target ≤ `min(PER_TARGET_DAILY_CAP, 該 target 日上限 TARGET_DAILY_CAP)`。零需求且無高相關候選的 target 當天自然寫 0 篇
    - **引用價值先驗（GEO，2026-06-17）**：`CITATION_PRIORITY` 給「民眾真的會問 LLM 且有對外站」的消費者醫療題目加分（yaocare/geri/func/pedi +0.25、sign +0.2、huatuo/txgnn +0.1），純 B2B/無對外站的內部產品降權（siqc/intel/triz/goalkeeper −0.3）並用 `TARGET_DAILY_CAP` 收緊日上限至 1（marketing 2）。目的：把每日有限額度導向會被 LLM 引用的健康主題，避免再像過去那樣 siqc(59)/intel(28)/triz(22) 灌爆語料。**靜態先驗 + 動態學習**：GA/GSC 權重仍疊加其上，日後若資料證明某 B2B 題目有讀者可部分抵銷。
@@ -409,7 +410,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 
 ### 調整 news 抓取範圍 / 角度
 - 加搜尋關鍵字、改痛點 / 設計 proof：編 `src/news.config.ts` 對應 target
-- 調精準度 / 產量：`fetch-news.ts` 檔內常數 `RELEVANCE_THRESHOLD`(0.72) / `MAX_WRITE_TOTAL`(5) / `PER_TARGET_DAILY_CAP`(3) / `DUP_TITLE_THRESHOLD`(0.6)
+- 調精準度 / 產量：`fetch-news.ts` 檔內常數 `RELEVANCE_THRESHOLD`(0.80) / `MAX_FEED_TOTAL`(3，feed 模式日上限) / `MAX_WRITE_TOTAL`(5，legacy) / `PER_TARGET_DAILY_CAP`(2) / `DUP_TITLE_THRESHOLD`(0.6)
 - 調各 target 的「引用價值傾斜」：`CITATION_PRIORITY`（選題加減分）與 `TARGET_DAILY_CAP`（單 target 日上限覆寫），同在 `fetch-news.ts`
 - 改 writer / critic 的 prompt：`scripts/news-prompts.mjs`
 - 改長度 / proofPoint 引用規則：`scripts/news-guards.mjs` + `src/content/config.ts` 的 Zod schema 要一致

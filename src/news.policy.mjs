@@ -5,7 +5,7 @@
 // 對策：低於門檻的文章發 <meta name="robots" content="noindex, follow">，並從 sitemap 排除，
 // 把索引權重集中到強內容。noindex 不影響使用者瀏覽，也不擋站內連結權重流動（follow）。
 //
-// 調整：改下面這個門檻即可（改完 npm run deploy）。相關寫稿門檻見 fetch-news.ts 的 RELEVANCE_THRESHOLD(0.72)。
+// 調整：改下面這個門檻即可（改完 npm run deploy）。相關寫稿門檻見 fetch-news.ts 的 RELEVANCE_THRESHOLD(0.80，2026-08-03 起)。
 export const NEWS_INDEX_MIN_RELEVANCE = 0.78;
 
 /**

@@ -90,7 +90,7 @@ const NEWS_MODE = (process.env.NEWS_MODE || 'feed') as 'feed' | 'legacy';
 const FILTER_MODEL = 'claude-haiku-4-5';
 const WRITER_MODEL = 'claude-sonnet-5';
 /** 相關度門檻（提高 → 只寫真的切題的；「精準少量」策略） */
-const RELEVANCE_THRESHOLD = 0.72;
+const RELEVANCE_THRESHOLD = 0.8; // 2026-08-03 0.72→0.80：GSC 顯示 feed 動態邊際點擊趨零，額度收斂到精選（近14天寫入 p25=0.82）
 const MAX_WRITER_ATTEMPTS = 3;
 const PER_QUERY_DELAY_MS = 400;
 /** 每個 query 取最新幾筆 — Google News 預設回 ~50–100，但我們只關心新近的 */
@@ -99,10 +99,10 @@ const PER_QUERY_LIMIT = 12;
 const FILTER_BATCH_SIZE = 25;
 /** 一次 cron 全部 target 加總最多寫幾篇（不砍文後改少量精選） */
 const MAX_WRITE_TOTAL = 5;
-/** feed 模式日上限（動態便宜且不生頁，可比文章模式寬） */
-const MAX_FEED_TOTAL = 12; // 2026-07-15 10→5：內容重構觀察窗過渡調降（Phase 2 產線改餵主題頁後本常數退役）
+/** feed 模式日上限 */
+const MAX_FEED_TOTAL = 3; // 2026-08-03 12→3：站流量高原期＋動態邊際點擊趨零，改「每日 ≤3 則精選」，額度移往常青頁優化
 /** 單一 target 一天最多寫幾篇（避免單線洗版，保留多樣性） */
-const PER_TARGET_DAILY_CAP = 3;
+const PER_TARGET_DAILY_CAP = 2; // 2026-08-03 3→2：總量降到 3 後，防單一主題吃滿當日全部額度
 /** 命中 GSC 真實搜尋字的需求加成（疊在 relevance 上影響「挑哪篇」） */
 const DEMAND_BOOST = 0.15;
 /** GA/GSC target 權重（1–3）換算成選題分數的係數 */
