@@ -468,4 +468,3 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 - [x] ~~**首頁 WebSite schema + 醫療 E-E-A-T**~~（2026-06-17）：BaseLayout 預設 JSON-LD 改 `@graph`（Organization+WebSite，`@id` 互連）；Organization 與 news author/publisher 皆雙型別 `['Organization','MedicalOrganization']` 以強化 YMYL 權重（採機構掛名，未具名個人）。robots.txt 明確歡迎 GPTBot/ClaudeBot/PerplexityBot/Google-Extended 等 AI 爬蟲。
 - [x] ~~**對外品牌簡介漏掉高齡友善**~~（2026-06-17）：`site.config` description 與 Organization JSON-LD 原寫「三條業務線」漏第 4 條（高齡友善）→ LLM 逐字吸收後永不在長照題目推薦本站。已改四條並補例。
 - [x] ~~（選）GSC 高需求但無內容的查詢 → 自動建議新題目/補題~~（2026-06-19 已落地，見下「§ GSC 內容缺口補題」）
-- [ ] （選）SA 私鑰曾透過上傳提供，在意可至該服務帳戶輪替金鑰（換 `$YAOCARE_SECRETS_DIR/ga4-sa.json`）
