@@ -17,6 +17,9 @@ const { slug } = Astro.params;
 const term = GLOSSARY_BY_SLUG[slug!];
 const related = (term.related ?? []).map((s) => PRODUCT_BY_SLUG[s]);
 const topicOf = term.topic ? TOPIC_BY_SLUG[term.topic] : undefined;
+const relatedTerms = term.topic
+  ? GLOSSARY.filter((t) => t.topic === term.topic && t.slug !== term.slug)
+  : [];
 
 const pageTitle = `${term.term} 是什麼？ · yao.care`;
 const pageDescription = term.oneLiner;
@@ -113,6 +116,26 @@ const jsonLd = {
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {related.map((p) => <ProductCard product={p} variant="preview" />)}
           </div>
+        </div>
+      </section>
+    )}
+
+    <!-- related terms (same topic) -->
+    {relatedTerms.length > 0 && (
+      <section class="py-10 md:py-12">
+        <div class="max-w-3xl mx-auto px-4 lg:px-6">
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Related terms</p>
+          <h2 class="mt-2 text-xl md:text-2xl font-bold">同主題相關名詞</h2>
+          <ul class="mt-5 space-y-3">
+            {relatedTerms.map((t) => (
+              <li>
+                <a href={`/glossary/${t.slug}/`} class="group flex items-baseline gap-2 text-base md:text-lg">
+                  <span class="font-medium text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] group-hover:underline underline-offset-2">{t.term}</span>
+                  <span class="text-sm text-[color:var(--color-ink-soft)]">{t.oneLiner}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     )}
