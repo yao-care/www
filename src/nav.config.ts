@@ -8,5 +8,7 @@ export const NAV = [
   { href: '/care/', label: '高齡友善' },
   { href: '/marketing/', label: '數位行銷' },
   { href: '/topics/', label: '議題追蹤' },
+  // 2026-08-11 用戶拍板：名詞解釋進主導覽（原本只有頁尾／分類頁／首頁入口，站內連結權重比同業弱）。
+  { href: '/glossary/', label: '名詞解釋' },
   { href: '/#contact', label: '聯絡' },
 ] as const;
