@@ -163,7 +163,7 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - **`src/scripts/track.ts`**（打包 module，全站內聯）：`scroll_depth`(25/50/75/100)、`read_complete`(含 `engaged_seconds`)、`page_engagement`(離開時補送)、`cta_click`(LINE/mail/demo/github/外連)。
 - 內容分類靠 **URL 路徑推導**（零per-page改動）：`/news/<target>/<slug>`→議題追蹤、`/guides`、`/glossary`、`/{medical|ai|care}/<product>`。
 - 來源「AI 助理」涵蓋 chatgpt/perplexity/gemini/copilot/claude 等 host 或 utm_source。
-- **GA4 後台自訂定義**：自訂維度（content_type/category/item、scroll_percent、referrer_host、ai_source、link_domain、cta_type、link_content；user-scope traffic_category）、自訂指標 engaged_seconds、關鍵事件 read_complete/cta_click/generate_lead —— **已用 `scripts/ga-setup.ts`（Admin API）程式化建好、可冪等重跑**。唯「AI Assistants 自訂管道群組」仍須 GA4 UI 手動建（選用）。
+- **GA4 後台自訂定義**：自訂維度（content_type/category/item、scroll_percent、referrer_host、ai_source、link_domain、cta_type、link_content、app_route；user-scope traffic_category）、自訂指標 engaged_seconds、關鍵事件 read_complete/cta_click/generate_lead —— **已用 `scripts/ga-setup.ts`（Admin API）程式化建好、可冪等重跑**。唯「AI Assistants 自訂管道群組」仍須 GA4 UI 手動建（選用）。
 - 加新事件/改分類：只動 `Analytics.astro`（分類）與 `src/scripts/track.ts`（事件）；要新增自訂維度則改 `scripts/ga-setup.ts` 陣列重跑。
 
 ### B 回饋迴路（依讀者喜好自動選題）

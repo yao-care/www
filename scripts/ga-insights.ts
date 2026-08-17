@@ -231,7 +231,7 @@ async function main() {
   table(await report('events', {
     dimensions: [{ name: 'eventName' }],
     metrics: [{ name: 'eventCount' }],
-    dimensionFilter: { filter: { fieldName: 'eventName', inListFilter: { values: ['page_view', 'scroll_depth', 'read_complete', 'page_engagement', 'cta_click'] } } },
+    dimensionFilter: { filter: { fieldName: 'eventName', inListFilter: { values: ['page_view', 'scroll_depth', 'read_complete', 'page_engagement', 'cta_click', 'auth_start', 'generate_lead'] } } },
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
   }));
 
@@ -259,6 +259,15 @@ async function main() {
     dimensions: [{ name: 'customEvent:link_content' }],
     metrics: [{ name: 'eventCount' }],
     dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { value: 'cta_click' } } },
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+  }, true));
+
+  // 8) ODS 應用路由 × 事件：導流後實際使用哪些功能
+  console.log('\n▼ ODS 應用路由 × 事件（自訂 app_route）');
+  table(await report('ods_app_by_route', {
+    dimensions: [{ name: 'customEvent:app_route' }, { name: 'eventName' }],
+    metrics: [{ name: 'eventCount' }],
+    dimensionFilter: { filter: { fieldName: 'eventName', inListFilter: { values: ['page_view', 'auth_start', 'cta_click', 'generate_lead'] } } },
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
   }, true));
 
