@@ -8,6 +8,13 @@ export const SITE = {
     'yao.care,智慧醫療,AI 系統,高齡友善,數位行銷,藥提醒,AI 華佗,中醫 AI,TxGNN,老藥新用,SMART on FHIR,ATC 編碼,LINE 用藥提醒,Smart Func,成人功能評估,WHO 內在能力,Smart Geri,高齡周全性評估,CGA,Smart Pedi,兒童發展評估,ASQ-3,長者友善,無接觸報到,人臉辨識報到,長照,超高齡社會,預防醫學,GCM 收案,情報自動化,GitHub Actions,ISO 27001,ESG,醫院評鑑,SIQC,TRIZ,RAG,AI Agent,知識工程,整合行銷,KOL,GCM',
   ogImage: '/assets/images/og/home.png',
   gaId: 'G-W7ZNBYKJHJ',
+  linkerDomains: [
+    'yao.care',
+    'www.yao.care',
+    'twtxgnn.yao.care',
+    'www.ods.yao.care',
+    'app.ods.yao.care',
+  ],
   email: 'service@yao.care',
   // 公司登記資料（與服務建議書／公司登記一致）
   legalName: '藥提醒科技有限公司',

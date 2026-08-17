@@ -23,7 +23,8 @@ const DIMS = [
 const METRICS = [
   { parameterName: 'engaged_seconds', displayName: '互動秒數', scope: 'EVENT' as const, measurementUnit: 'SECONDS' as const },
 ];
-const KEY_EVENTS = ['read_complete', 'cta_click'];
+// generate_lead 供各產品／行銷站在表單成功送達後共用；表單內容不得當事件參數送出。
+const KEY_EVENTS = ['read_complete', 'cta_click', 'generate_lead'];
 
 async function setupDimensions() {
   console.log('▼ 自訂維度');
