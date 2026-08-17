@@ -103,9 +103,18 @@ document.addEventListener(
     if (href.startsWith('mailto:')) type = 'mail';
     else if (/lin\.ee|line\.me/.test(href)) type = 'line';
     else if (host === 'github.com') type = 'github';
+    else if (host === 'ods.yao.care') type = 'ods';
+    else if (host === 'app.ods.yao.care') type = 'ods_self_register';
     else if (host && host !== self) type = /yao\.care$/.test(host) ? 'demo' : 'external';
     if (!type) return; // 站內導覽不送
-    send('cta_click', { link_url: href.slice(0, 200), link_domain: host, cta_type: type });
+    let linkContent = '';
+    try { linkContent = new URL(href, location.href).searchParams.get('utm_content') || ''; } catch (_) {}
+    send('cta_click', {
+      link_url: href.slice(0, 200),
+      link_domain: host,
+      cta_type: type,
+      ...(linkContent ? { link_content: linkContent.slice(0, 80) } : {}),
+    });
   },
   { passive: true, capture: true },
 );

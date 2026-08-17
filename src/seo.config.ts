@@ -164,6 +164,7 @@ export const OWNED_APP_SLUGS: readonly ProductSlug[] = [
   'pedi',
   'sign',
   'goalkeeper',
+  'ods',
 ];
 
 /**
@@ -293,6 +294,12 @@ export const PRODUCT_FAQS: Partial<Record<ProductSlug, readonly Faq[]>> = {
     { q: '會檢查哪些項目？', a: '五道：揭露免責、來源標註、越權／越級診斷、個資外洩、幻覺查核；每道綁台灣法源（如衛福部《醫療機構應用生成式人工智慧指引》、醫師法、個資法等）。' },
     { q: '我送的原文與個資安全嗎？', a: '隱私優先：服務先在內部去識別化，全程在遮罩後文本上判定；原文與個資原值永不寫入稽核，稽核只存遮罩文雜湊（HMAC）與各關卡狀態摘要。' },
     { q: '怎麼串接？AI agent 也能用嗎？', a: '提供 REST API（POST /medical/validate）與 MCP Server（同網址、同金鑰），一般系統與 AI agent 都能串接；開通、配額與規範版本鎖定請來信 service@yao.care。' },
+  ],
+  ods: [
+    { q: 'ODS 公文 AI 是什麼？', a: 'ODS 公文 AI 是由藥提醒科技有限公司（yao.care）開發與維運的公文範例與格式檢核服務，提供常見公文全文範例及 24 條逐條檢核結果。' },
+    { q: 'ODS 可以先看什麼？', a: '可先在 www.ods.yao.care 查看補助核銷、陳情轉請、開會通知、公告與簽稿等公文範例，也能查文別、用語與法規。' },
+    { q: '誰可以使用 ODS 公文 AI？', a: '機關可申請試用，由服務方配置專屬網址；社區發展協會、學校家長會、農會與其他小型單位可直接在 app.ods.yao.care 自助註冊。' },
+    { q: 'ODS 的格式檢核會檢查什麼？', a: '共 24 條檢核，涵蓋主旨、段落、個資代稱、用字格式與收發等項目；不通過時會指出具體是哪一條。' },
   ],
   'fhir-server': [
     { q: 'SMART on FHIR 收案伺服器是什麼？', a: '它是通用的收案與個案管理後端，以 SMART on FHIR 接收自評結果並做個案追蹤，把「自評 → 收案 → 追蹤」串成閉環。目前以 GCM 預防醫學發展協會為導入案例。' },

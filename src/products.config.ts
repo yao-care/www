@@ -101,6 +101,7 @@ export type ProductSlug =
   | 'siqc'
   | 'triz'
   | 'goalkeeper'
+  | 'ods'
   | 'sign';
 
 /** 智慧醫療分類下的子分組（其他分類不分組） */
@@ -385,6 +386,29 @@ export const PRODUCTS: readonly Product[] = [
     ],
     externalUrl: 'https://goalkeeper.yao.care/',
     cta: { label: '申請串接 / API 金鑰', href: 'mailto:service@yao.care' },
+  },
+  {
+    slug: 'ods',
+    category: 'ai',
+    title: 'ODS 公文 AI',
+    tagline: '從公文範例到 24 條格式檢核，讓機關與小型單位更快開案',
+    description:
+      'ODS 公文 AI 提供補助核銷、陳情轉請、開會通知、公告與簽稿等公文範例，並附 24 條格式檢核逐條結果。公開網站先讓承辦找得到可參考的寫法；機關可申請試用，小型單位可直接自助註冊使用服務。',
+    ogTitle: 'ODS 公文 AI',
+    ogStat: '24',
+    ogStatLabel: '格式檢核 · 公文範例',
+    cardKicker: '公文 AI · 導入服務',
+    cardBullets: [
+      '補助核銷、陳情轉請、開會通知等公文範例',
+      '24 條格式檢核，逐條指出不通過項目',
+      '機關申請試用；小型單位可自助註冊',
+    ],
+    alternateNames: ['ODS', '公文 AI', 'ODS 公文 AI'],
+    externalUrl: 'https://www.ods.yao.care/',
+    cta: {
+      label: '前往 ODS 公文 AI',
+      href: 'https://www.ods.yao.care/?utm_source=yao.care&utm_medium=owned&utm_campaign=ods_funnel&utm_content=product_cta',
+    },
   },
   // ─── 高齡友善 ────────────────────────────────────────
   {

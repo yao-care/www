@@ -14,9 +14,10 @@ interface Props {
   slug: Product['slug'];
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { slug, title, description } = Astro.props;
+const { slug, title, description, ogImage: ogImagePath } = Astro.props;
 const product = PRODUCT_BY_SLUG[slug];
 const category = CATEGORY_BY_SLUG[product.category];
 const faqs = PRODUCT_FAQS[slug] ?? [];
@@ -35,7 +36,7 @@ const pageTitle = title ?? `${product.title} · yao.care`;
 const pageDescription = description ?? product.description;
 
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
-const ogImage = new URL(`/assets/images/og/${slug}.png`, SITE.url).toString();
+const ogImage = new URL(ogImagePath ?? `/assets/images/og/${slug}.png`, SITE.url).toString();
 
 // LLM / 搜尋引擎結構化資料：軟體應用 + 麵包屑 + FAQ
 const appCategory =

@@ -17,6 +17,7 @@ const medicalCategory = CATEGORY_BY_SLUG.medical;
 const aiCategory = CATEGORY_BY_SLUG.ai;
 const careCategory = CATEGORY_BY_SLUG.care;
 const geri = PRODUCT_BY_SLUG.geri; // 高齡友善 section 交叉預覽
+const ods = PRODUCT_BY_SLUG.ods;
 ---
 <BaseLayout>
   <Nav />
@@ -131,6 +132,20 @@ const geri = PRODUCT_BY_SLUG.geri; // 高齡友善 section 交叉預覽
         </div>
         <div class="grid md:grid-cols-3 gap-5 md:gap-6">
           {aiProducts.map((p) => <ProductCard product={p} variant="preview" />)}
+        </div>
+        <div class="mt-8 rounded-2xl border border-orange-200 bg-orange-50/60 px-5 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <p class="text-sm md:text-base text-[color:var(--color-ink)] leading-relaxed">
+            正在找公文範例或格式檢核？先到 <strong>{ods.title}</strong> 看案例，再依身分進入申請或自助註冊流程。
+          </p>
+          <a
+            href={ods.cta.href}
+            target="_blank"
+            rel="noopener"
+            class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-[color:var(--color-brand)] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+          >
+            立即前往 ODS
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
     </section>
