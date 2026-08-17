@@ -18,6 +18,7 @@ const DIMS = [
   { parameterName: 'content_item', displayName: '內容項目', scope: 'EVENT' as const },
   { parameterName: 'ai_source', displayName: 'AI 來源', scope: 'EVENT' as const },
   { parameterName: 'cta_type', displayName: 'CTA 類型', scope: 'EVENT' as const },
+  { parameterName: 'link_content', displayName: 'CTA 位置', scope: 'EVENT' as const },
   { parameterName: 'traffic_category', displayName: '流量分類', scope: 'USER' as const },
 ];
 const METRICS = [

@@ -253,6 +253,15 @@ async function main() {
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
   }, true));
 
+  // 7) ODS／外連 CTA 點擊 × 位置（自訂 link_content）
+  console.log('\n▼ CTA 點擊 × 位置（自訂 link_content）');
+  table(await report('cta_by_content', {
+    dimensions: [{ name: 'customEvent:link_content' }],
+    metrics: [{ name: 'eventCount' }],
+    dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { value: 'cta_click' } } },
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+  }, true));
+
   // 寫出機器可讀檔（日後餵 fetch-news 用）
   const out = {
     property: PROPERTY_ID,
