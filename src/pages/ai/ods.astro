@@ -15,6 +15,13 @@ const odsCasesUrl = `${odsBase}cases/`;
 const odsApplyUrl = `${odsBase}apply/`;
 const odsChecksUrl = `${odsBase}checks/`;
 const odsSelfRegisterUrl = 'https://app.ods.yao.care/';
+// 這頁原本只講到機關與小型單位，把 ODS 的第三種使用者（一般民眾／個人與企業）
+// 和它的參考內容整段漏掉了 —— ODS 上實際還有民眾對機關的書件、存證信函、
+// 各文別的 Word 空白範本，以及公文怎麼寫與公文用語表。產品說明講滿才是完整的。
+const odsCitizensUrl = `${odsBase}citizens/`;
+const odsTemplatesUrl = `${odsBase}templates/`;
+const odsWritingUrl = `${odsBase}writing/`;
+const odsUsageUrl = `${odsBase}usage/`;
 ---
 
 <ProductLayout
@@ -58,12 +65,17 @@ const odsSelfRegisterUrl = 'https://app.ods.yao.care/';
       <p class="mt-4 text-base md:text-lg">
         看完案例後，依使用身分進入服務：機關填寫申請，由我們配置專屬網址與既有稿件流程；社區發展協會、學校家長會、農會與其他小型單位，則可直接自助註冊。
       </p>
+      <p class="mt-4 text-base md:text-lg">
+        需要寫東西給機關的不只有承辦。一般民眾與個人／企業同樣可以在 ODS 撰寫
+        <a href={odsCitizensUrl} data-cta="product_citizens" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline">申請書、陳情書、申訴書與存證信函</a>，
+        並在同一個工作區完成檢核與匯出。
+      </p>
     </div>
   </section>
 
   <section class="py-14 md:py-20 bg-neutral-50">
     <div class="max-w-5xl mx-auto px-4 lg:px-6">
-      <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+      <div class="grid md:grid-cols-2 gap-5 md:gap-6">
         <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
           <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">01 · 找範例</div>
           <h2 class="text-xl font-bold">從案子找起</h2>
@@ -82,6 +94,34 @@ const odsSelfRegisterUrl = 'https://app.ods.yao.care/';
           <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">機關走申請試用；小型單位直接自助註冊，兩條路徑都從 ODS 服務站開始。</p>
           <a href={odsSelfRegisterUrl} data-cta="product_self_register" target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">小型單位自助註冊 →</a>
         </div>
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+          <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">04 · 民眾這一側</div>
+          <h2 class="text-xl font-bold">民眾書件與存證信函</h2>
+          <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">向機關申請、陳情、申訴，或要正式通知個人與企業，同樣需要寫得清楚、留得下紀錄。</p>
+          <a href={odsCitizensUrl} data-cta="product_citizens" target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">看民眾書件範例 →</a>
+        </div>
+      </div>
+
+      <div class="mt-10 rounded-2xl border border-neutral-200 bg-white p-6 md:p-8">
+        <h2 class="text-xl font-bold">動手前先查的幾份東西</h2>
+        <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+          ODS 公開站上這幾份是拿來查的，不必註冊也讀得到：擬稿規則與用語逐條取自行政院文書處理手冊，
+          Word 範本的版面數值取自政府文書格式參考規範的原始檔。
+        </p>
+        <ul class="mt-4 grid sm:grid-cols-3 gap-3 text-sm">
+          <li>
+            <a href={odsWritingUrl} data-cta="product_writing" target="_blank" rel="noopener" class="font-medium text-[color:var(--color-brand)] hover:underline">公文怎麼寫 →</a>
+            <span class="block text-[color:var(--color-ink-soft)]">函與簽的三段、擬稿規定與數字用法。</span>
+          </li>
+          <li>
+            <a href={odsUsageUrl} data-cta="product_usage" target="_blank" rel="noopener" class="font-medium text-[color:var(--color-brand)] hover:underline">公文用語表 →</a>
+            <span class="block text-[color:var(--color-ink-soft)]">稱謂語、期望語與法律統一用字。</span>
+          </li>
+          <li>
+            <a href={odsTemplatesUrl} data-cta="product_templates" target="_blank" rel="noopener" class="font-medium text-[color:var(--color-brand)] hover:underline">Word 範本下載 →</a>
+            <span class="block text-[color:var(--color-ink-soft)]">各文別空白範本與填好內容的範例檔。</span>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
