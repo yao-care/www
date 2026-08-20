@@ -25,6 +25,7 @@ const isLineCta = /lin\.ee|line\.me/.test(product.cta.href);
     </p>
     <a
       href={product.cta.href}
+      data-cta={product.cta.content}
       target="_blank"
       rel="noopener"
       class:list={['mt-8', isLineCta ? 'btn-line' : 'btn-brand']}

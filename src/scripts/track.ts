@@ -107,8 +107,12 @@ document.addEventListener(
     else if (host === 'app.ods.yao.care') type = 'ods_self_register';
     else if (host && host !== self) type = /yao\.care$/.test(host) ? 'demo' : 'external';
     if (!type) return; // 站內導覽不送
-    let linkContent = '';
-    try { linkContent = new URL(href, location.href).searchParams.get('utm_content') || ''; } catch (_) {}
+    // 入口位置改由 data-cta 帶（連 ODS 的連結不再掛 UTM，見 src/pages/ai/ods.astro）；
+    // utm_content 留作 fallback，站外帶參數進來的連結一樣量得到。
+    let linkContent = a.getAttribute('data-cta') || '';
+    if (!linkContent) {
+      try { linkContent = new URL(href, location.href).searchParams.get('utm_content') || ''; } catch (_) {}
+    }
     send('cta_click', {
       link_url: href.slice(0, 200),
       link_domain: host,

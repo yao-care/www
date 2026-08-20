@@ -154,7 +154,8 @@ export type Product = {
   repoUrl?: string;
   /** 額外的官方據點（Wikidata 項目、上架頁等），併入 SoftwareApplication.sameAs */
   extraSameAs?: readonly string[];
-  cta: { label: string; href: string };
+  /** content：入口位置代號，會以 data-cta 送進 GA4 的 cta_click（取代舊的 utm_content）。 */
+  cta: { label: string; href: string; content?: string };
 };
 
 export const PRODUCTS: readonly Product[] = [
@@ -407,7 +408,9 @@ export const PRODUCTS: readonly Product[] = [
     externalUrl: 'https://www.ods.yao.care/',
     cta: {
       label: '前往 ODS 公文 AI',
-      href: 'https://www.ods.yao.care/?utm_source=yao.care&utm_medium=owned&utm_campaign=ods_funnel&utm_content=product_cta',
+      // 乾淨網址：跨站 linker 已保留來源，UTM 只會覆寫歸因（理由見 src/pages/ai/ods.astro）。
+      href: 'https://www.ods.yao.care/',
+      content: 'product_cta',
     },
   },
   // ─── 高齡友善 ────────────────────────────────────────

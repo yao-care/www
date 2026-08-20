@@ -5,10 +5,16 @@ import ProductCta from '../../components/products/ProductCta.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
 const product = PRODUCT_BY_SLUG.ods;
+// 連 ODS 一律用乾淨網址。yao.care 與 ods.yao.care／app.ods.yao.care 共用同一個 GA4 資源
+// 並已設 cross-domain linker（SITE.linkerDomains），跨站本來就保留原始來源；
+// 再掛 utm_source=yao.care&utm_medium=owned 反而會覆寫 session_source／medium，
+// 把 google／organic 洗成 owned，讓 ODS 那邊的自然搜尋成績看起來是 0。
+// 入口位置改用 data-cta 帶，由 src/scripts/track.ts 送成 cta_click 的 link_content。
 const odsBase = product.externalUrl!;
-const odsCasesUrl = `${odsBase}cases/?utm_source=yao.care&utm_medium=owned&utm_campaign=ods_funnel&utm_content=product_cases`;
-const odsApplyUrl = `${odsBase}apply/?utm_source=yao.care&utm_medium=owned&utm_campaign=ods_funnel&utm_content=product_agency_apply`;
-const odsSelfRegisterUrl = 'https://app.ods.yao.care/?utm_source=yao.care&utm_medium=owned&utm_campaign=ods_funnel&utm_content=product_self_register';
+const odsCasesUrl = `${odsBase}cases/`;
+const odsApplyUrl = `${odsBase}apply/`;
+const odsChecksUrl = `${odsBase}checks/`;
+const odsSelfRegisterUrl = 'https://app.ods.yao.care/';
 ---
 
 <ProductLayout
@@ -22,6 +28,7 @@ const odsSelfRegisterUrl = 'https://app.ods.yao.care/?utm_source=yao.care&utm_me
       <div class="mt-7 flex flex-wrap gap-3">
         <a
           href={odsCasesUrl}
+          data-cta="product_cases"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center gap-2 rounded-lg bg-[color:var(--color-brand)] px-5 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
@@ -31,6 +38,7 @@ const odsSelfRegisterUrl = 'https://app.ods.yao.care/?utm_source=yao.care&utm_me
         </a>
         <a
           href={odsApplyUrl}
+          data-cta="product_agency_apply"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center gap-2 rounded-lg border border-neutral-300 bg-white px-5 py-3 text-sm font-semibold text-[color:var(--color-ink)] hover:border-[color:var(--color-brand)] hover:text-[color:var(--color-brand)] transition-colors"
@@ -60,19 +68,19 @@ const odsSelfRegisterUrl = 'https://app.ods.yao.care/?utm_source=yao.care&utm_me
           <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">01 · 找範例</div>
           <h2 class="text-xl font-bold">從案子找起</h2>
           <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">補助核銷、陳情轉請、開會通知、公告與簽稿，都能先看完整公文範例。</p>
-          <a href={odsCasesUrl} target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">看公文範例 →</a>
+          <a href={odsCasesUrl} data-cta="product_cases" target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">看公文範例 →</a>
         </div>
         <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
           <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">02 · 對格式</div>
           <h2 class="text-xl font-bold">逐條檢核</h2>
           <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">主旨、段落、個資代稱、用字格式與收發等 24 條規則，逐條顯示檢核結果。</p>
-          <a href={`${odsBase}checks/?utm_source=yao.care&utm_medium=owned&utm_campaign=ods_funnel&utm_content=product_checks`} target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">看 24 條檢核 →</a>
+          <a href={odsChecksUrl} data-cta="product_checks" target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">看 24 條檢核 →</a>
         </div>
         <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
           <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">03 · 進服務</div>
           <h2 class="text-xl font-bold">依身分開通</h2>
           <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">機關走申請試用；小型單位直接自助註冊，兩條路徑都從 ODS 服務站開始。</p>
-          <a href={odsSelfRegisterUrl} target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">小型單位自助註冊 →</a>
+          <a href={odsSelfRegisterUrl} data-cta="product_self_register" target="_blank" rel="noopener" class="mt-4 inline-flex text-sm font-medium text-[color:var(--color-brand)] hover:underline">小型單位自助註冊 →</a>
         </div>
       </div>
     </div>
