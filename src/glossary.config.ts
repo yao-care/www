@@ -74,16 +74,16 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cfs',
-    updatedAt: '2026-06-14',
+    updatedAt: '2026-08-23',
     topic: 'elder-care-frailty',
     term: '臨床衰弱量表 CFS',
     en: 'Clinical Frailty Scale',
     category: 'care',
     oneLiner:
-      '一套 1 到 9 分的量表，依長者的活動力與健康狀況評估「衰弱」程度，是高齡評估常用的分層基準。',
+      'CFS 量表（臨床衰弱量表）以 1 到 9 分呈現長者的活動力與健康狀況，是高齡評估最常用的分層工具之一。',
     paragraphs: [
-      'CFS 由加拿大老年醫學團隊（Rockwood 等）發展，1 分為「非常健壯」、9 分為「末期」，臨床上常以 5 分以上代表進入衰弱。它以整體功能與依賴程度判斷，而非單一疾病。',
-      '在高齡周全性評估中，CFS 常作為第一層分級基準：先快速分級，再依分數決定要不要進入更深入的多面向評估。',
+      '臨床衰弱量表（Clinical Frailty Scale，中文也直接稱 CFS 量表）由加拿大 Dalhousie 大學的 Rockwood 團隊於 2005 年發表在《新英格蘭醫學期刊》，是「加拿大健康與老化研究」的一部分。量表上 1 分是「非常健壯」，9 分是「末期」，臨床上常以 5 分以上視為進入衰弱。判斷依據是長者整體的功能與依賴程度，並非單一疾病診斷。',
+      '在高齡周全性評估中，CFS 量表常作為第一層分級基準：先快速分級，再依分數決定要不要進入更深入的多面向評估。',
     ],
     keyPoints: [
       '1（非常健壯）– 9（末期）共九級',
@@ -91,6 +91,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '常作為高齡評估的分層起點',
     ],
     related: ['geri'],
+    sources: [{ label: 'NCBI StatPearls - Clinical Frailty Scale', url: 'https://www.ncbi.nlm.nih.gov/books/NBK559009/' }],
   },
   {
     slug: 'cga',
