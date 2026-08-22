@@ -5,6 +5,26 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { isNewsIndexable } from './src/news.policy.mjs';
 import { createPageGitDate } from './scripts/lib/page-git-date.mjs';
+
+// 詞彙表與指南頁的 <lastmod>：條目自己就帶 updatedAt（人工維護的逐條更新日），
+// 比 git 日期更貼近「這一條的內容什麼時候變的」。
+// 🔴 用文字掃描而不是 import：本檔一律以 fs 讀資料（見下方 news/topicFeed 的作法），
+//    而且 glossary.config.ts / guides.config.ts 是 TS，從 .mjs import 會多一層編譯相依。
+//    結構固定為每個條目先 `slug:` 後 `updatedAt:`，所以掃到 slug 後取下一個 updatedAt
+//    （遇到下一個 slug 就放棄，避免跨條目誤配）。
+const entryLastmod = (file, prefix) => {
+  const out = new Map();
+  if (!fs.existsSync(file)) return out;
+  const re = /slug:\s*'([^']+)'|updatedAt:\s*'([^']+)'/g;
+  let pending = null;
+  for (const m of fs.readFileSync(file, 'utf8').matchAll(re)) {
+    if (m[1] !== undefined) pending = m[1];
+    else if (pending) { out.set(`${prefix}/${pending}`, m[2]); pending = null; }
+  }
+  return out;
+};
+const glossaryLastmod = entryLastmod('src/glossary.config.ts', '/glossary');
+const guideLastmod = entryLastmod('src/guides.config.ts', '/guides');
 // 靜態頁沒有 news/topic 時間，改取該頁 .astro 的 git commit 日期（2026-08-22）。
 const pageGitDate = createPageGitDate(import.meta.url);
 
@@ -59,7 +79,8 @@ export default defineConfig({
       // （2026-08-22：此前靜態頁一律留白，217 個網址有 51 個沒有 lastmod。）
       serialize(item) {
         const p = new URL(item.url).pathname.replace(/\/$/, '');
-        const lm = newsLastmod.get(p) || topicLastmod.get(p) || pageGitDate(p);
+        const lm = newsLastmod.get(p) || topicLastmod.get(p)
+          || glossaryLastmod.get(p) || guideLastmod.get(p) || pageGitDate(p);
         if (lm) item.lastmod = lm;
         return item;
       },
