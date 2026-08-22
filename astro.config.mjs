@@ -4,6 +4,9 @@ import path from 'node:path';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { isNewsIndexable } from './src/news.policy.mjs';
+import { createPageGitDate } from './scripts/lib/page-git-date.mjs';
+// 靜態頁沒有 news/topic 時間，改取該頁 .astro 的 git commit 日期（2026-08-22）。
+const pageGitDate = createPageGitDate(import.meta.url);
 
 // 低相關新聞文章設了 noindex（見 news.policy.mjs）→ 同步從 sitemap 排除，
 // 避免「sitemap 收錄 vs noindex」互相矛盾的訊號。讀同一份政策，門檻不會 drift。
@@ -50,10 +53,14 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !noindexNewsPaths.has(new URL(page).pathname.replace(/\/$/, '')),
+      // news 用自己的 updatedAt、主題頁用最新動態時間；靜態頁兩者都沒有，
+      // 改取該頁 .astro 原始檔的 git commit 日期。全部對不到才留白——
+      // **絕不用 build 時間**，那會讓每次部署都宣稱全站更新。
+      // （2026-08-22：此前靜態頁一律留白，217 個網址有 51 個沒有 lastmod。）
       serialize(item) {
         const p = new URL(item.url).pathname.replace(/\/$/, '');
-        const lm = newsLastmod.get(p) || topicLastmod.get(p);
-        if (lm) item.lastmod = lm; // news 用自己的 updatedAt、主題頁用最新動態時間當 lastmod，非 build 時間
+        const lm = newsLastmod.get(p) || topicLastmod.get(p) || pageGitDate(p);
+        if (lm) item.lastmod = lm;
         return item;
       },
     }),
