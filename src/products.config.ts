@@ -206,7 +206,7 @@ export const PRODUCTS: readonly Product[] = [
     title: 'TxGNN 老藥新用',
     tagline: '知識圖譜 × 圖神經網路，30+ 國 FDA 藥品自動化預測 · 開源（台灣站 TwTxGNN）',
     description:
-      '藥提醒科技有限公司（yao.care）基於哈佛 TxGNN 模型建置的老藥新用平台，台灣站名為 TwTxGNN（twtxgnn.yao.care），各國站台依 {國碼}TxGNN 命名。覆蓋 30+ 國 FDA 藥品，整合 PubMed、ClinicalTrials 證據，產出 16,700+ 藥物頁面與 FHIR 資源，與 Epic、Cerner 等 EHR 系統整合提供臨床決策支援。已上架 SMART on FHIR Gallery，原始碼在 GitHub 開源。',
+      '老藥新用（Drug Repurposing）平台，藥提醒科技有限公司（yao.care）以哈佛大學 TxGNN 模型建置，台灣站 TwTxGNN（twtxgnn.yao.care）可公開查詢。涵蓋 30+ 國 FDA 藥品資料，整合 PubMed 文獻與 ClinicalTrials 臨床試驗證據，產出 16,700+ 藥物頁面與 FHIR 資源，並與 Epic、Cerner 等 EHR 系統整合。已上架 SMART on FHIR Gallery，原始碼於 GitHub 開源。',
     alternateNames: [
       'TwTxGNN',
       'TwTxGNN 老藥新用驗證報告',
