@@ -507,7 +507,19 @@ function writeNewsFile(
 
 /** 既有語料：來源 URL（精確去重）+ 標題清單（題目層級近似去重） */
 function existingCorpus(target: NewsTarget): { urls: Set<string>; titles: string[] } {
-  const dir = join(NEWS_DIR, target.slug);
+  // ⚠ 去重必須讀「這次實際會寫進去的那個目錄」。
+  // 2026-07-15 Phase 2 把產線改成 feed 模式（寫 topicFeed/<topic>/）之後，這裡仍只讀
+  // legacy 的 news/<target>/，等於對 feed 產出完全沒有去重；Phase 4 又把 yaocare/pedi/
+  // huatuo/func/sign/triz/siqc 七桶的 news/ 刪掉，那幾個 target 的既有標題直接歸零。
+  // 後果（2026-09-05 盤點）：topicFeed 累積出 21 組近似重複、29 則多餘，且明顯集中在
+  // 被刪桶對應的主題（child-development 7 組、explainable-medical-ai 4 組…）。
+  // 修法：feed 模式改讀該 target 對應主題的 topicFeed 目錄。門檻 DUP_TITLE_THRESHOLD
+  // 不動——實測 0.6 對存量重複可擋下 20 對，壞的是語料來源不是門檻。
+  // 依主題（非依 target）比對也更正確：多個 target 餵同一個主題頁，讀者看到的是同一頁。
+  const dir =
+    NEWS_MODE === 'feed'
+      ? join(FEED_DIR, TARGET_TOPIC.get(target.slug)?.slug ?? '__none__')
+      : join(NEWS_DIR, target.slug);
   const urls = new Set<string>();
   const titles: string[] = [];
   if (!existsSync(dir)) return { urls, titles };
@@ -706,7 +718,7 @@ function takeawayPrompt(topicTitle: string, item: RawItem): string {
     `與主題的關聯**不必每則都寫**——只有真的補得出資訊時才帶一句，寫不出就停在事實上，寧可短。`,
     `禁止：醫療結論或療效判斷；「不是X而是Y」「不僅」「值得注意的是」「隨著…」開頭等腔調；驚嘆號；粗體或用引號框住全句。`,
     `收尾特別禁止這幾種套路（整頁看下來每則同一個尾巴最像機器寫的）：`,
-    `「…與 X 相呼應／呼應了 X」「…與 X 相通／相近／契合／一致」「…正是 X 的核心／關鍵」「…的方向／邏輯／思路。」「這類做法／現象…」。`,
+    `「…與 X 相呼應／呼應了 X」「…與 X 相通／相近／契合／一致」「…正是 X 的核心／關鍵」「…的方向／邏輯／思路。」。`,
     `只輸出 JSON：{"takeaway":"..."}`,
     ``,
     `新聞標題：${item.title}`,
