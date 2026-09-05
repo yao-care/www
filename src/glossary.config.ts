@@ -66,7 +66,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     ],
     keyPoints: [
       'WHO WHOCC 維護的國際標準',
-      '五個分類層級（器官系統 → 化學物質）',
+      '五個分類層級（器官系統 → 化學物質）',  // ai-voice-ok: ATC 五層分類的實際層級順序
       '跨系統處方資料對齊的共同語言',
     ],
     related: ['yaocare'],
@@ -123,7 +123,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     oneLiner:
       '由家長填寫的兒童發展篩檢工具，適用 1 個月到 66 個月，涵蓋溝通、粗動作、精細動作、問題解決、個人社會五個領域。',
     paragraphs: [
-      'ASQ-3 以各年齡帶的常模為基準，用家長易懂的問題判斷孩子發展是否符合同齡；達切點（常以 −2 標準差）即建議進一步專業評估。',
+      'ASQ-3 拿各年齡帶的常模當比較基準，用家長易懂的問題判斷孩子發展是否符合同齡；達切點（常以 −2 標準差）即建議進一步專業評估。',
       '它是國際廣泛使用的發展篩檢量表，適合作為早期療育轉介前的初篩工具。',
     ],
     keyPoints: [
@@ -288,7 +288,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '自動化的做法，是將安全掃描（SAST、弱點掃描、SBOM、CVE 監控）與 ISMS 文件渲染、缺漏自動修復、稽核包封裝整合為單一管線，通常以 GitHub Actions 等 CI/CD 驅動，使合規狀態隨時可稽核，而非於稽核前才臨時準備。',
     ],
     keyPoints: [
-      '安全掃描 + 文件維護 + 證據彙整一條龍',
+      '安全掃描、文件維護、證據彙整一次做完',
       '對齊 ISO 27001 / SOC 2 / OWASP / 醫院評鑑等框架',
       '把一次性稽核準備變成可重複的流程',
     ],
@@ -303,11 +303,11 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     oneLiner:
       '以自動化管線從公開來源持續爬取、清洗、標註並視覺化資訊，把分散的情報整理成可追蹤、可重複產出的洞察。',
     paragraphs: [
-      '資訊密集的工作（投資研究、競品分析、政策追蹤、供應鏈情報）痛點在於資料散落各處、且人力跟不上更新速度。情報自動化把「搜集 → 清洗 → 標註 → 視覺化」全流程自動化，讓團隊把時間花在判讀而非搬運資料。',
+      '資訊密集的工作（投資研究、競品分析、政策追蹤、供應鏈情報）痛點在於資料散落各處、且人力跟不上更新速度。情報自動化把「搜集 → 清洗 → 標註 → 視覺化」這一整趟自動化，讓團隊把時間花在判讀而非搬運資料。',  // ai-voice-ok: 情報自動化的實際處理步驟
       '這類系統多以排程式 CI/CD（如 GitHub Actions）為核心，維運成本接近於零；框架亦具可移植性：更換資料源與關鍵字，即可重組至不同產業情境。',
     ],
     keyPoints: [
-      '爬取 → 清洗 → 標註 → 視覺化全流程自動化',
+      '爬取 → 清洗 → 標註 → 視覺化，整趟自動化',  // ai-voice-ok: 情報自動化的實際處理步驟
       '可移植到供應鏈／政策／競品／研究等情境',
       '常以 GitHub Actions 排程、近零成本維運',
     ],
@@ -323,11 +323,11 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     oneLiner:
       '能自主把目標拆成步驟、呼叫工具並依每一步結果決定下一步以完成任務的 AI 系統，而非單次一問一答。',
     paragraphs: [
-      'AI Agent 指以大型語言模型為核心、能「規劃 → 行動 → 觀察結果再調整」的系統：它把一個目標拆成多個步驟，過程中呼叫外部工具（搜尋、資料庫、API），依每一步回饋決定下一步，而不是只回一段文字。',
+      'AI Agent 指用大型語言模型當核心、能「規劃 → 行動 → 觀察結果再調整」的系統：它把一個目標拆成多個步驟，過程中呼叫外部工具（搜尋、資料庫、API），依每一步回饋決定下一步，而不是只回一段文字。',  // ai-voice-ok: Agent 迴圈的實際步驟
       '它與一般聊天機器人的差別，在於自主性與工具使用。其工具能力通常來自函式呼叫（function calling）與標準化的工具協定（如 MCP，Model Context Protocol），使 agent 能安全、可重複地接上各種系統與資料來源。',
     ],
     keyPoints: [
-      '規劃 → 呼叫工具 → 依結果調整的迴圈',
+      '規劃 → 呼叫工具 → 依結果調整的迴圈',  // ai-voice-ok: Agent 迴圈的實際步驟
       '透過 function calling / MCP 接外部工具與資料',
       '適合多步驟、需整合多來源的任務',
     ],
@@ -349,7 +349,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     keyPoints: [
       '先檢索知識庫、再生成答案',
       '降低幻覺、答案可溯源、知識可即時更新',
-      '流程：chunk → embed → 向量檢索 → 生成',
+      '流程：chunk → embed → 向量檢索 → 生成',  // ai-voice-ok: RAG 管線的實際步驟
     ],
     related: ['triz', 'huatuo', 'intel'],
   },
@@ -369,7 +369,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     keyPoints: [
       '建立在 Transformer 上，核心是「預測下一個詞」',
       '通用語言能力：問答、摘要、翻譯、寫程式、推理',
-      '有幻覺風險 → 醫療場景需 RAG／明文規則／可追溯佐證',
+      '有幻覺風險，醫療場景需 RAG／明文規則／可追溯佐證',
     ],
     related: ['huatuo', 'goalkeeper', 'intel'],
     sources: [
@@ -387,7 +387,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     paragraphs: [
       'TxGNN 由哈佛醫學院 Zitnik Lab（Marinka Zitnik 團隊）研發，核心做法是在大型生物醫學知識圖譜上訓練圖神經網路（GNN），讓模型學習藥物、疾病、基因、蛋白質之間的關聯。它最大的特點是「zero-shot（零樣本）」能力：即使是缺乏現有療法、資料稀少的疾病，也能把已研究疾病的知識遷移過去，輸出藥物候選的預測分數與可解釋的推理路徑。相關研究於 2024 年發表在《Nature Medicine》。',
       '相較於從頭開發新藥，老藥新用以「已核准藥物的安全性資料已知」為核心優勢，通常可省去部分早期安全性試驗、縮短研發時程，對罕見疾病尤其有意義。TxGNN 的原始碼已於 GitHub（mims-harvard/TxGNN）開源，學術與臨床資訊團隊可依需求擴充。',
-      '要分清「模型規模」與「導入平台規模」：TxGNN 論文涵蓋約 8,000 種藥物 × 17,080 種疾病；而藥提醒科技有限公司（yao.care）以此模型為基礎建置的老藥新用平台——台灣站名為 TwTxGNN（twtxgnn.yao.care），其餘各國依 {國碼}TxGNN 命名——目前部署涵蓋 30 國、約 1,507 種藥物 × 166 種疾病，每筆預測附 PubMed 與 ClinicalTrials 證據，並可經 SMART on FHIR 在電子病歷系統內呈現，作為醫師的決策參考。',
+      '要分清「模型規模」與「導入平台規模」：TxGNN 論文涵蓋約 8,000 種藥物 × 17,080 種疾病；而藥提醒科技有限公司（yao.care）以此模型為基礎建置的老藥新用平台，台灣站名為 TwTxGNN（twtxgnn.yao.care），其餘各國依 {國碼}TxGNN 命名。該平台目前部署涵蓋 30 國、約 1,507 種藥物 × 166 種疾病，每筆預測附 PubMed 與 ClinicalTrials 證據，並可經 SMART on FHIR 在電子病歷系統內呈現，作為醫師的決策參考。',
     ],
     keyPoints: [
       '哈佛 Zitnik Lab 開發的圖神經網路（GNN）基礎模型，2024 年發表於 Nature Medicine',
@@ -396,7 +396,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     ],
     related: ['txgnn'],
     sources: [
-      { label: 'Nature Medicine（2024）— 論文原文', url: 'https://www.nature.com/articles/s41591-024-03333-8' },
+      { label: 'Nature Medicine（2024）論文原文', url: 'https://www.nature.com/articles/s41591-024-03333-8' },
       { label: 'PubMed Central — 全文（PMC11326339）', url: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11326339/' },
       { label: 'GitHub — mims-harvard/TxGNN（原始碼）', url: 'https://github.com/mims-harvard/TxGNN' },
     ],

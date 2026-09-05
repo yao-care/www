@@ -48,7 +48,7 @@ export const GET: APIRoute = async () => {
   const p = (s = '') => out.push(s);
 
   // ── 檔頭：收錄範圍與使用說明 ───────────────────────────────
-  p('# yao.care（藥提醒）— 全文內容 llms-full.txt');
+  p('# yao.care（藥提醒）全文內容 llms-full.txt');
   p();
   p(`> ${SITE.description}`);
   p();

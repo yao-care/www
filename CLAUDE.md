@@ -14,6 +14,7 @@
 | Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
 | Build gate（2026-07-28 起） | `npm run build` 第三段跑 `scripts/check-nav.mjs`（單獨跑：`npm run check:nav`）：**主導覽 `src/nav.config.ts` 的 NAV 不得指向已凍結/已收斂路由**（目前禁 `/news/`）。存在理由：`nav.config.ts` 在 seo-ops reflect 白名單內，反思每天有權改主導覽，純靠 playbook 文字約束不可靠；反思/大腦 gate 都含 `npm run build`，違反即 gate fail 並自行 `git checkout -- src` 撤回（`bin/seo-reflect.sh:157-161`）。`scripts/` 與 `package.json` 都在反思 scope 外，故 gate 本身動不到。要退役規則：改 `FORBIDDEN_HREFS` 並同步 `$SEO_OPS_DIR/playbooks/yao.care.md` |
 | Build gate（2026-07-20 起） | `npm run build` 最前段先跑 `scripts/check-design.mjs`（**設計規範守門 v2**，見下「§ 修改外觀」五條）；違規即 build fail。`npm run deploy` 亦改為經由 `npm run build`（同日修，守門不可繞過）。存量 64 處硬編色以 `LEGACY_COLOR_BUDGET` per-檔凍結（禁再擴充），清理後同步下修預算 |
+| Build gate（2026-09-05 起） | `npm run build` 第三段跑 `scripts/check-ai-voice.mjs`（單獨跑：`npm run check:ai-voice`，盤點全部命中：`npm run check:ai-voice:all`）：**去 AI 味守門（文案層）**，掃 `.astro` / `*.config.ts` 裡人看得到的中文文案。抓的是**結構性 AI 腔**（破折號當萬用接續、`×` 連接概念、`→` 串流程、「從 A 到 B」涵蓋句型、「閉環／一條龍／生態系」收尾、「以 X 為核心」、「可 A、可 B、可 C」三連、「被 A、被 B」排比），與 `style-guide.mjs` 的**逐字口頭禪**黑名單互補。詳見下「§ 去 AI 味守門（文案層）」 |
 | 技術棧 | Astro 5 + Tailwind v4 + D3 v7 + TypeScript |
 | NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
@@ -145,7 +146,8 @@ tail -50 /var/log/yaocare-news.log
 
 把語料「去掉 AI 腔、改寫成人話」，同時當「持續內容更新」來做，讓 Google 收到新鮮度訊號。
 
-- **文風單一 source of truth**：`scripts/style-guide.mjs` —— `BANNED_PHRASES`(口頭禪 regex)、`STYLE_RULES`(注入 prompt 的正向文風指南)、`checkVoice`(guard 規則 V)、`VOICE_REV`(文風版號)。writer / critic / rewrite / guard / backfill 全共用，不 drift。
+- **文風單一 source of truth**：`scripts/style-guide.mjs` —— `BANNED_PHRASES`(口頭禪 regex)、`STYLE_RULES`(注入 prompt 的正向文風指南)、`checkVoice`(guard 規則 V)、`TAKEAWAY_MOULDS`/`checkTakeaway`(feed takeaway 收尾模具)、`VOICE_REV`(文風版號)。writer / critic / rewrite / guard / backfill 全共用，不 drift。
+- **feed takeaway 收尾模具（2026-09-05）**：`takeawayPrompt` 原本明文要求「再半句點出與主題的關聯」，模型的預設交法就是同一種收尾——存量 252 則裡 **35 則（13.9%）**落在「…與 X 相呼應／相通／相近」「…正是 X 的核心」「…的方向。」「這類做法…」這幾個模子裡。已改兩處：(a) prompt 改為關聯**不必每則都寫**（寫不出就停在事實上，寧可短）並逐條列出禁止的收尾套路；(b) `fetch-news.ts` 的 takeaway 驗證迴圈接上 `checkTakeaway`，命中即重寫，嘗試次數 2→3（守門收緊後多給一次機會，避免整則被丟）。⚠ 這些詞（呼應／相通／方向）在一般行文是正常中文，故**只用於 takeaway**，沒放進全站 `BANNED_PHRASES`。存量 35 則未回頭重刷（沿用「邊改邊清、不批次預清」拍板）。
 - **新文章**：`news-prompts.mjs` 的 writer 已去掉公式範例並注入 `STYLE_RULES`；critic 加 R10–R12(公式開頭/拔高總結/口頭禪)；`news-guards.mjs` 接 `checkVoice`。新文寫入即蓋 `voiceRev=VOICE_REV`、`updatedAt`，不會被 backfill 重跑。
 - **既有語料 backfill**：`scripts/rewrite-news-voice.ts` —— 只改 `voiceRev < VOICE_REV` 的舊文、**最舊先刷**、**每天 15–18 篇**(`VOICE_PER_RUN`/`VOICE_DAILY_CAP`)、Sonnet 5 重寫後過全部 guards、保留事實/proofPoint/字數/繁中。**原地更新、同 URL、不刪文**；改完蓋 `updatedAt`。由 `fetch-news.sh` 在抓新聞後呼叫，與新文同批 commit/build/deploy/IndexNow。手動：`--dry`/`--limit N`/`--target`/`--all`/`--debug`。
 - **更新訊號(給 Google)**：`updatedAt` →（a）`[slug].astro` 的 NewsArticle JSON-LD `dateModified`；（b）`astro.config.mjs` sitemap **per-article `<lastmod>`**(非 build 時間)。Google 不收 IndexNow，靠這兩個 + 自然重爬;IndexNow 順帶涵蓋 Bing/Yandex 等。
@@ -246,6 +248,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │   ├── content-gaps.ts        ← GSC 內容缺口偵測 + 草稿生成（補題候選 → drafts/，人工審查）
 │   ├── content-gaps.sh        ← cron entry（每月 1/15，02:00 UTC）：跑 --draft，log /var/log/yaocare-content-gaps.log
 │   ├── check-nav.mjs          ← build gate：主導覽不得指向已凍結路由（禁 /news/；防反思改回去）
+│   ├── check-ai-voice.mjs     ← build gate：去 AI 味（文案層）——掃 .astro/*.config.ts 的結構性 AI 腔
 │   └── gen-og.mjs             ← OG 圖產生器
 ├── public/                    ← Astro 直接複製到 dist/ 的靜態檔
 │   ├── assets/images/         ← 所有圖片
@@ -366,6 +369,28 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 > - **`scripts/style-guide.mjs` 的 `checkVoice` = 產線 runtime gate**：在 `fetch-news.ts` 的 writer/critic 迴圈對 **draft 物件**跑（擋「產文當下」的 JSON news），**保留不動**。這是不同層的護欄，與本 build gate 互補、不重疊。
 > - **引擎單一來源**：`scripts/check-content.mjs` 直接取自統一模板 `$HOST_SKILLS_DIR/new-astro-site/templates/check-content.mjs`（核心跨站規則勿改），yao 顧問腔特化規則 port 進檔內 `SITE_ERROR_TELLS`／`SITE_WARN_LAYERS`（`設計思路是`/`整體邏輯`/`核心邏輯`/`更根本的問題在於`/`面對這類議題`/`不容忽視`＝ERROR；`本質上是`/`設計上選擇`/`面對…情境，`/`這是…的核心`＝WARN），核心已有的（值得…的是、隨著…的發展、化繁為簡…）未重複。
 > - **JSON news 涵蓋列遞延**：統一腳本預設只掃 md/mdx；要讓本 gate 也掃 news JSON 的文字欄位（`newsBrief/issueAnalysis/designResponse`）需擴充腳本讀 JSON——因 runtime `checkVoice` 已在產文當下擋住 JSON news，**此擴充遞延**、非當務之急。
+
+### 去 AI 味守門（文案層，build gate 掃 .astro / *.config.ts，2026-09-05）
+`npm run build` 在 `check-content.mjs` 之後跑 `scripts/check-ai-voice.mjs`。
+
+> **為什麼要多一支**：`style-guide.mjs` 的 `BANNED_PHRASES` 抓的是**逐字口頭禪**（「面對這類議題」「本質上是」…），而且只在 fetch-news 產線對 draft 物件跑。實測靜態文案命中那份黑名單是 **0**——本站的 AI 味不在詞彙，在**標點與句型的模具**：改版前 13 個產品的 tagline 是同一個模子壓出來的。這支專收那一類。
+
+**三層分工（勿互相取代）**
+| 層 | 檔 | 擋什麼 | 何時 |
+|----|----|--------|------|
+| 產線 runtime | `scripts/style-guide.mjs` 的 `checkVoice` / `checkTakeaway` | news JSON draft、feed takeaway | 產文當下 |
+| build gate | `scripts/check-content.mjs` | `src/**/*.md(x)` 檔案（yao 目前 0 個，防守未來手寫頁） | build |
+| build gate | `scripts/check-ai-voice.mjs` | `.astro` / `*.config.ts` 的靜態文案 | build |
+
+**核心設計：AI 味是密度與重複，不是單次出現。** 破折號夾註、「CFS 分 1 到 9 級，從非常健壯到末期」、bullet 裡的 `A → B` 都是正當中文；同一段出現六次才是模具。故規則分兩類：
+- **有正當用法**（`DASH` / `ARROW` / `FROM_TO`）→ 每千中文字容許 1 次（至少 1）
+- **幾乎只有行銷腔會用**（`CROSS` / `BUZZ` / `CORE` / `TRIPLE` / `PASSIVE3`）→ 零容忍
+
+**校準基準**：`src/topics.config.ts`（22k 字，2026-07-15 刻意去 AI 味寫成）密度 **0.3‰**，是全站寫得最像人話的內容；改版前首頁 35.6‰、`/medical/` 33.2‰、`/care/` 36.2‰、`products.config.ts` 16.1‰。改文案時照 0.3‰ 那個標準寫。
+
+**豁免機制**：真的是流程圖標註或技術管線步驟（`載入 FDA → 過濾有效藥品`、`crawl → chunk → embed`、ATC 五層分類、CTA 按鈕的導引箭頭），在該行或**前一行**加註解 `ai-voice-ok: <理由>` 即跳過。刻意不做「每檔容許 N 處」的數字預算——豁免要看得到、審得到，不隨改動漂移。另有兩處內建例外：`— yao.care` 結尾與 `pageTitle`/`title:` 行的破折號是標題分隔號；「以病人為中心」是 patient-centered care 的正規醫學譯法，不收。
+
+⚠ `src/*.config.ts` 全部在守門範圍內，包含 seo-ops 反思／大腦會改的 `seo.config.ts`、`glossary.config.ts`、`guides.config.ts`——反思與大腦 gate 都含 `npm run build`，寫出 AI 腔會 gate fail 並自動撤回。
 
 ### 新增頁面
 - 建 `src/pages/<route>.astro`，import `BaseLayout` 包起來

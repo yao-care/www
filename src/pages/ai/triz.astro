@@ -24,7 +24,7 @@ const knowledgeModules = [
   {
     kicker: 'Parameters',
     title: '39 工程參數',
-    body: '描述系統的可量化屬性 — 重量、強度、穩定性、能耗、可靠性…等，是發現矛盾的基本詞彙。',
+    body: '描述系統的可量化屬性：重量、強度、穩定性、能耗、可靠性…等，是發現矛盾的基本詞彙。',
   },
   {
     kicker: 'Matrix',
@@ -39,12 +39,12 @@ const knowledgeModules = [
   {
     kicker: 'Effects',
     title: 'Oxford Effects',
-    body: '科學效應資料庫 — 把物理 / 化學 / 生物效應對應到工程功能，跨領域借力。',
+    body: '科學效應資料庫：把物理 / 化學 / 生物效應對應到工程功能，跨領域借力。',
   },
   {
     kicker: 'Cases',
     title: 'AutoTRIZ Cases',
-    body: '自動化案例庫，AI 可從歷史案例中學習解題模式並遷移到新問題。',
+    body: '自動化案例庫，AI 讀過往案例學解題模式，再套到新問題上。',
   },
 ];
 
@@ -57,9 +57,9 @@ const flow = [
 
 const stack = [
   { layer: 'Web', body: 'React + Vite + Tailwind (port 10150)' },
-  { layer: 'API', body: 'Express (port 10160) — auth / chat / search 三條路由' },
+  { layer: 'API', body: 'Express (port 10160)：auth / chat / search 三條路由' },
   { layer: 'Data', body: 'SQLite (better-sqlite3) + 6 組向量資料' },
-  { layer: 'Pipeline', body: 'crawl → chunk → embed → vectors/*.json' },
+  { layer: 'Pipeline', body: 'crawl → chunk → embed → vectors/*.json' },  // ai-voice-ok: RAG 管線的實際指令順序
   { layer: 'AI', body: '多角色 SYSTEM_PROMPT + onStep callback 即時回報' },
   { layer: 'Sources', body: '6 個資料來源爬蟲 + 7 個共用 libs' },
 ];
@@ -93,6 +93,7 @@ const stack = [
       <p class="mt-4 text-base md:text-lg">
         我們把整套 TRIZ 知識體系（40 原則、39 參數、263 矩陣、4 分離原理、Oxford Effects、AutoTRIZ Cases）
         建成 RAG 向量庫，再以多角色 AI Agent 協作完成
+        <!-- ai-voice-ok: 四階段是產品定義的流程名稱 -->
         <strong>「描述問題 → 識別矛盾 → 推薦原則 → 生成解法」</strong>四階段，
         把專家門檻降到一段對話。
       </p>
@@ -169,7 +170,7 @@ const stack = [
   <ProductCta
     product={product}
     headline="想把 TRIZ 用到自家產品開發？"
-    description="無論是製造業、IT 產品設計、商業模式創新 — 我們可以為您客製專屬的 TRIZ 知識庫與 AI 工作流。"
+    description="無論是製造業、IT 產品設計還是商業模式創新，我們都能為您客製專屬的 TRIZ 知識庫與 AI 工作流。"
   />
 
   <ProductNews slot="news" target="triz" />

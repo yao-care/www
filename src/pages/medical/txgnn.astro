@@ -43,9 +43,9 @@ const phases = [
     title: '預測執行階段',
     summary: '雙引擎並行：知識圖譜（快速）+ 深度學習（精準）',
     items: [
-      { kind: 'KG 引擎', title: '知識圖譜方法（5 步驟，快速）', body: '載入 FDA → 過濾有效藥品 → 成分映射到 DrugBank → 適應症映射到疾病 → 找老藥新用候選' },
+      { kind: 'KG 引擎', title: '知識圖譜方法（5 步驟，快速）', body: '載入 FDA → 過濾有效藥品 → 成分映射到 DrugBank → 適應症映射到疾病 → 找老藥新用候選' },  // ai-voice-ok: KG 引擎的實際 5 個步驟
       { kind: 'KG 結果', title: 'repurposing_candidates.csv', body: `~${STATS.kgCandidates} 候選 / ${STATS.drugs} 藥物 / 166 疾病` },
-      { kind: 'DL 引擎', title: '深度學習方法（5 步驟，精準）', body: 'Conda + PyTorch/DGL → 載入 model.pt → 建構圖 → 推論 → 過濾 score ≥ 0.5' },
+      { kind: 'DL 引擎', title: '深度學習方法（5 步驟，精準）', body: 'Conda + PyTorch/DGL → 載入 model.pt → 建構圖 → 推論 → 過濾 score ≥ 0.5' },  // ai-voice-ok: DL 引擎的實際 5 個步驟
       { kind: 'DL 結果', title: 'txgnn_dl_predictions.csv', body: `~3.1M 候選 / ${STATS.drugs} 藥物 / 166 疾病` },
     ],
   },
@@ -97,7 +97,7 @@ const phases = [
     items: [
       { kind: 'EHR', title: 'OAuth 啟動 (launch.html)', body: 'PKCE 認證流程，相容 Epic、Cerner 等主流 EHR' },
       { kind: '讀取', title: '讀取病人用藥', body: 'MedicationRequest / MedicationStatement' },
-      { kind: '映射', title: '藥物映射 (smart-fhir-mapper.js)', body: 'RxNorm → DrugBank' },
+      { kind: '映射', title: '藥物映射 (smart-fhir-mapper.js)', body: 'RxNorm → DrugBank' },  // ai-voice-ok: RxNorm→DrugBank 是藥品碼映射寫法
       { kind: '輸出', title: '老藥新用建議', body: '依病患現有用藥，顯示潛在新適應症與證據' },
     ],
   },
@@ -195,7 +195,7 @@ const stats = [
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
       <p class="text-base md:text-lg">
-        老藥新用（Drug Repurposing）是把已上市的藥物用於原本未核准的新適應症 ——
+        老藥新用（Drug Repurposing）是把已上市的藥物用於原本未核准的新適應症。
         因為已通過安全性驗證，研發成本與時間遠低於開發新藥。
         <strong>藥提醒科技有限公司（yao.care）</strong>以哈佛大學 TxGNN 模型為基礎建置了這個平台，
         台灣站名為 <strong class="text-[color:var(--color-brand)]">TwTxGNN</strong>（twtxgnn.yao.care），
@@ -210,7 +210,7 @@ const stats = [
         對<strong class="text-[color:var(--color-brand)]">罕見疾病或現有療法有限</strong>的病患，
         老藥新用提供「已通過安全性的現成藥物」這條相對快的探索路徑。平台同時服務三種人：
         <strong>研究者</strong>篩選候選假說、<strong>臨床醫師</strong>在 EHR 內查既有用藥的潛在新適應症、
-        <strong>病友與家屬</strong>了解疾病有哪些正被研究的藥物選項 ——
+        <strong>病友與家屬</strong>了解疾病有哪些正被研究的藥物選項。
         每筆預測都附 PubMed 文獻與 ClinicalTrials 臨床試驗證據包，是研究參考而非臆測，實際用藥仍須由醫師評估。
       </p>
     </div>
@@ -230,7 +230,7 @@ const stats = [
         <div class="rounded-2xl bg-white border-l-4 border-[#3b82f6] p-6 md:p-8 shadow-sm">
           <div class="flex items-center gap-2 mb-4">
             <span class="inline-flex w-8 h-8 rounded-md items-center justify-center bg-blue-50 text-[#3b82f6] font-bold">KG</span>
-            <h3 class="text-lg md:text-xl font-bold">知識圖譜方法 — 快速</h3>
+            <h3 class="text-lg md:text-xl font-bold">知識圖譜方法（快速）</h3>
           </div>
           <ol class="space-y-3 text-sm">
             <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">1</span><span>載入 FDA 藥品資料</span></li>
@@ -250,7 +250,7 @@ const stats = [
         <div class="rounded-2xl bg-white border-l-4 border-[#a855f7] p-6 md:p-8 shadow-sm">
           <div class="flex items-center gap-2 mb-4">
             <span class="inline-flex w-8 h-8 rounded-md items-center justify-center bg-purple-50 text-[#a855f7] font-bold">DL</span>
-            <h3 class="text-lg md:text-xl font-bold">深度學習方法 — 精準</h3>
+            <h3 class="text-lg md:text-xl font-bold">深度學習方法（精準）</h3>
           </div>
           <ol class="space-y-3 text-sm">
             <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">1</span><span>啟動 Conda 環境（PyTorch + DGL）</span></li>
@@ -389,7 +389,7 @@ const stats = [
       <div class="text-center mb-10">
         <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Pipeline</p>
         <h2 class="section-title mt-2">完整 8 階段流程</h2>
-        <p class="section-subtitle">從原始 FDA 資料到 EHR 系統整合，全流程自動化</p>
+        <p class="section-subtitle">原始 FDA 資料進來，一路自動跑到 EHR 系統整合</p>
       </div>
 
       <div class="space-y-3">
@@ -455,7 +455,7 @@ const stats = [
   <ProductCta
     product={product}
     headline="想討論技術合作？"
-    description="老藥新用、TxGNN 模型在地化、EHR / FHIR 整合 — 任何技術討論都歡迎透過 LINE 私訊。"
+    description="老藥新用、TxGNN 模型在地化、EHR / FHIR 整合，任何技術討論都歡迎透過 LINE 私訊。"
   />
 
   <ProductNews slot="news" target="txgnn" />

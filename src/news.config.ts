@@ -67,7 +67,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
-      '可驗證的中醫問診 AI 系統 — 規則 128 條 + LLM 混合辨證，每一步都能追溯到規則、證據與標準碼；輸出 FHIR R4 + ICD-11 TM。',
+      '可驗證的中醫問診 AI 系統：規則 128 條 + LLM 混合辨證，每一步都能追溯到規則、證據與標準碼；輸出 FHIR R4 + ICD-11 TM。',
     queries: [
       '中醫 AI',
       '智慧中醫',
@@ -171,7 +171,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
-      '高齡周全性評估（CGA）系統，以臨床衰弱量表（CFS 1–9）為基準延伸多面向評估，提供公眾自篩與專業臨床雙模式，紅黃綠分級轉介，可選 SMART on FHIR 上傳。',
+      '高齡周全性評估（CGA）系統，先用臨床衰弱量表（CFS 1–9）分級，再延伸多面向評估，提供公眾自篩與專業臨床雙模式，紅黃綠分級轉介，可選 SMART on FHIR 上傳。',
     queries: [
       '高齡周全性評估',
       '衰弱 frailty',
@@ -239,7 +239,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'ai',
     categoryLabel: 'AI 系統',
     serviceContext:
-      '以 GitHub Actions 為核心的資訊搜集自動化能力 — 從爬取、清洗、標註到視覺化全流程自動化，可移植到任何資訊密集領域。',
+      '用 GitHub Actions 做的資訊搜集自動化：爬取、清洗、標註、視覺化整趟自己跑，可移植到任何資訊密集領域。',
     queries: [
       '產業情報',
       '供應鏈追蹤',
@@ -273,7 +273,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'ai',
     categoryLabel: 'AI 系統',
     serviceContext:
-      'AI 驅動的合規稽核、ESG 評鑑、醫院評鑑文件交付平台 — 12 個 GitHub Actions workflow 串成自動化管線，從掃描到 ISMS 文件自動修復、再到離線稽核包交付。',
+      'AI 驅動的合規稽核、ESG 評鑑、醫院評鑑文件交付平台：12 個 GitHub Actions workflow 串成自動化管線，掃描、ISMS 文件自動修復、離線稽核包交付一路接下來。',
     queries: [
       'ISO 27001',
       'ESG 評鑑',
@@ -308,7 +308,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'ai',
     categoryLabel: 'AI 系統',
     serviceContext:
-      'TRIZ（發明問題解決理論）AI 知識庫系統 — 涵蓋 40 發明原則、39 工程參數、263 矛盾矩陣等，多角色 AI 自動完成「描述問題 → 識別矛盾 → 推薦原則 → 生成解法」。',
+      'TRIZ（發明問題解決理論）AI 知識庫系統：涵蓋 40 發明原則、39 工程參數、263 矛盾矩陣等，多角色 AI 自動完成「描述問題 → 識別矛盾 → 推薦原則 → 生成解法」。',  // ai-voice-ok: 四階段是產品定義的流程名稱
     queries: [
       'TRIZ',
       '創新方法',
@@ -327,7 +327,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     proofPoints: [
       '建構 40 發明原則、39 工程參數、263 矛盾矩陣的完整向量庫',
       '涵蓋 4 分離原理、Oxford Effects、AutoTRIZ Cases',
-      '採 crawl → chunk → embed 的三階段 RAG 管線',
+      '採 crawl → chunk → embed 的三階段 RAG 管線',  // ai-voice-ok: RAG 管線的實際指令順序
       '多角色 SYSTEM_PROMPT 協作 + onStep callback 即時回報',
       '前端 React + Vite，後端 Express + SQLite',
       '可客製為製造業、IT 產品、商業模式創新等情境',
@@ -376,7 +376,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'care',
     categoryLabel: '高齡友善',
     serviceContext:
-      '為長照據點、日照中心打造的純前端人臉辨識報到系統，零雲端、零安裝，自動語音問候與風險分級警示，並自動產出每日簽到名冊。',
+      '給長照據點、日照中心用的純前端人臉辨識報到系統，零雲端、零安裝，自動語音問候與風險分級警示，並自動產出每日簽到名冊。',
     queries: [
       '長照科技',
       '日照中心 報到',
@@ -410,7 +410,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'marketing',
     categoryLabel: '數位行銷',
     serviceContext:
-      '與 GCM 預防醫學發展協會 900+ 醫療專業合作的整合行銷服務 — 醫友、節氣、合規三個閉環；從策略、內容、KOL、廣告到法規一條龍。',
+      '與 GCM 預防醫學發展協會 900+ 醫療專業合作的整合行銷服務：醫友、節氣、合規三環相扣，策略、內容、KOL、廣告、法規五段都接。',
     queries: [
       '醫療廣告法規',
       '醫療 KOL',

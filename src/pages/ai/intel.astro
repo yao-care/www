@@ -11,7 +11,7 @@ const product = PRODUCT_BY_SLUG.intel;
 const headlineStats = [
   { value: '23', unit: '條', label: '產業供應鏈' },
   { value: '500+', unit: '家', label: '上中下游公司' },
-  { value: '每日', unit: '', label: '自動跑完全流程' },
+  { value: '每日', unit: '', label: '自動跑完一輪' },
   { value: '$0', unit: '', label: '基礎設施成本' },
 ];
 
@@ -65,7 +65,7 @@ const capabilities = [
 ];
 
 const features = [
-  { icon: '⚡', title: '全自動', body: '設定好就不用管，每天 16:00（台灣時間）自動跑完全流程' },
+  { icon: '⚡', title: '全自動', body: '設定好就不用管，每天 16:00（台灣時間）自己跑完一輪' },
   { icon: '⏱️', title: '零成本', body: '全部跑在 GitHub Actions 免費方案上，無基礎設施維運' },
   { icon: '🔁', title: '可擴展', body: '新增一條供應鏈只要定義公司和主題，程式碼自動複製' },
   { icon: '📊', title: '看圖說故事', body: '股價走勢上疊加庫存/AR 變化，一眼看出基本面與股價的連動' },
@@ -95,7 +95,7 @@ const features = [
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
       <p class="text-base md:text-lg">
-        資訊密集的產業 — 投資、產業研究、競爭情報、政策監控、合規追蹤 ——
+        投資、產業研究、競爭情報、政策監控、合規追蹤，這些資訊密集的工作，
         最大的痛點是「資料散落各處 + 人力處理跟不上更新速度」。
         我們的做法是
         <strong class="text-[color:var(--color-brand)]">把整條情報生產線拆成可自動化的節點</strong>，
@@ -179,6 +179,7 @@ const features = [
             <span class="absolute -left-3 w-5 h-5 rounded-full bg-[color:var(--color-brand)] text-white text-xs font-bold flex items-center justify-center">2</span>
             <div class="text-sm font-mono text-[color:var(--color-brand)]">~16:30</div>
             <h3 class="font-medium text-[color:var(--color-ink)] mt-1">事件標註與情緒分析</h3>
+            <!-- ai-voice-ok: 情緒分析的實際處理步驟 -->
             <p class="text-xs text-[color:var(--color-ink-soft)] mt-1">關鍵字匹配 → 情緒打分（正/中/負）→ 重要性評分</p>
           </li>
           <li class="ml-6">
@@ -259,7 +260,7 @@ const features = [
   <ProductCta
     product={product}
     headline="想用一套自動化系統解決你的資訊問題？"
-    description="不論是投資情報、政策監控、競品追蹤，還是任何需要每天自動產出報告的場景 —— 用 LINE 私訊您的需求，最快 1 個工作天回覆。"
+    description="不論是投資情報、政策監控、競品追蹤，還是任何需要每天自動產出報告的場景，用 LINE 私訊您的需求，最快 1 個工作天回覆。"
   />
 
   <ProductNews slot="news" target="intel" />

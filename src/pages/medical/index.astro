@@ -16,7 +16,7 @@ const assessment = productsByGroup('assessment');
 
 const pageTitle = '智慧醫療 · yao.care';
 const pageDescription =
-  '從基層用藥提醒到醫療 AI 與全齡預防醫學評估 — 藥提醒、AI 華佗、TxGNN，以及 Smart Func / Geri / Pedi 三件式自評，一條龍對接 ATC 編碼與 SMART on FHIR 互通協定。';
+  '藥提醒、AI 華佗、TxGNN，加上 Smart Func / Geri / Pedi 三套全齡自評工具，都對接 ATC 編碼與 SMART on FHIR 互通協定。';
 
 // CollectionPage + ItemList：把本分類的產品目錄結構化，供 LLM/搜尋引擎理解
 const hubProducts = [...clinical, ...assessment];
@@ -100,7 +100,7 @@ const medicalCapabilities = [
       </section>
     )}
 
-    <!-- group: 預防醫學評估生態系 -->
+    <!-- group: 全齡預防醫學評估 -->
     {assessment.length > 0 && (
       <section class="py-12 md:py-16 bg-neutral-50">
         <div class="max-w-7xl mx-auto px-4 lg:px-6">
@@ -127,7 +127,7 @@ const medicalCapabilities = [
     <CapabilityCloud
       kicker="Healthcare AI Capabilities"
       title="我們在智慧醫療能做的事"
-      description="從基層用藥到 EHR 整合、從證據導向 AI 到可解釋推理，每一層都對齊國際醫療資訊標準。"
+      description="用藥提醒、EHR 整合、證據導向與可解釋推理，每一層都對齊國際醫療資訊標準。"
       capabilities={medicalCapabilities}
     />
 
@@ -138,9 +138,8 @@ const medicalCapabilities = [
           以病人為中心，依循國際標準，與既有醫療系統互通
         </h2>
         <p class="mt-4 text-[color:var(--color-ink-soft)] leading-relaxed">
-          ATC 藥品編碼、SMART on FHIR 互通協定、TWCM 中醫實作指南 ——
+          ATC 藥品編碼、SMART on FHIR 互通協定、TWCM 中醫實作指南，這三套標準我們都照著做。
           我們不做封閉的 silo，做的是能跟健保資訊系統、Epic / Cerner 等 EHR 對接的開放平台。
-          從基層用藥到診斷推理，每一層都對齊國際醫療資訊標準。
         </p>
       </div>
     </section>

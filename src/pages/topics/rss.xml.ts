@@ -31,7 +31,7 @@ export const GET: APIRoute = async () => {
   return renderRss({
     title: `主題動態 · ${SITE.name}`,
     description:
-      '用藥安全、高齡照護、兒童發展、預防醫學、醫療 AI、合規治理、產業情報、創新方法、行銷法規 — 九個主題每天追蹤到的公開新聞與我們的一句判讀。',
+      '用藥安全、高齡照護、兒童發展、預防醫學、醫療 AI、合規治理、產業情報、創新方法、行銷法規。九個主題每天追蹤到的公開新聞，各配我們的一句判讀。',
     siteUrl: new URL('/topics/', SITE.url).toString(),
     feedUrl: new URL('/topics/rss.xml', SITE.url).toString(),
     items,

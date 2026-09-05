@@ -112,7 +112,7 @@ export const GUIDES: readonly Guide[] = [
     sections: [
       {
         heading: '多重用藥常見風險',
-        bullets: ['同成分、不同商品名 → 重複用藥', '記不住複雜服藥時間 → 漏吃或亂吃', '藥品長得像 → 拿錯', '藥物交互作用增加副作用風險'],
+        bullets: ['同成分、不同商品名 → 重複用藥', '記不住複雜服藥時間 → 漏吃或亂吃', '藥品長得像 → 拿錯', '藥物交互作用增加副作用風險'],  // ai-voice-ok: 風險對照表，箭頭是「導致」
       },
       {
         heading: '怎麼降低風險',
@@ -315,7 +315,7 @@ export const GUIDES: readonly Guide[] = [
       },
       {
         heading: '怎麼選',
-        bullets: ['看「對象年齡」決定用哪個', '關心發展 → Pedi；功能 / 亞健康 → Func；衰弱 / 長照 → Geri', '不確定可先做，結果紅燈再就醫'],
+        bullets: ['看「對象年齡」決定用哪個', '關心發展 → Pedi；功能 / 亞健康 → Func；衰弱 / 長照 → Geri', '不確定可先做，結果紅燈再就醫'],  // ai-voice-ok: 分流對照表，箭頭是「對應到」
       },
     ],
     faqs: [

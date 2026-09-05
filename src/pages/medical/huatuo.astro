@@ -21,8 +21,8 @@ const layers = [
     label: '四診收集',
     title: '望 / 聞 / 問 / 切',
     bullets: [
-      { kind: '望', body: '舌診拍照 — GPT-4o Vision 辨識舌質、舌苔、舌形、舌色' },
-      { kind: '聞', body: '語聲錄音 — GPT-4o Audio 分析音強、音調、咳喘、噯氣' },
+      { kind: '望', body: '舌診拍照，交給 GPT-4o Vision 辨識舌質、舌苔、舌形、舌色' },
+      { kind: '聞', body: '語聲錄音，交給 GPT-4o Audio 分析音強、音調、咳喘、噯氣' },
       { kind: '問', body: '對話引導收集症狀，老中醫人設「老夫」「小友」' },
       { kind: '切', body: 'rPPG 指尖攝影測脈，含六部脈位（左右寸關尺）' },
     ],
@@ -35,7 +35,7 @@ const layers = [
       { kind: '八綱', body: '16 條表裡 / 寒熱 / 虛實 / 陰陽 規則' },
       { kind: '臟腑', body: '112 條臟腑歸經規則' },
       { kind: 'LLM', body: 'LLM 分析作為輔助、共同融合輸出' },
-      { kind: '矩陣', body: '48 筆症狀→證型加權映射' },
+      { kind: '矩陣', body: '48 筆症狀→證型加權映射' },  // ai-voice-ok: 症狀→證型是加權映射的寫法
     ],
   },
   {
@@ -55,14 +55,14 @@ const codingFiles = [
   { file: 'symptoms.json', code: 'Sx-{W/H/A/P}-xxx', count: '215', desc: '症狀編碼（按望聞問切分類）' },
   { file: 'syndromes.json', code: 'Sd-{體系}-xxx', count: '128', desc: '證型編碼（含 ICD-11 TM 對應）' },
   { file: 'treatments.json', code: 'Tx-{ZZ/FJ}-xxx', count: '336', desc: '治則 + 方劑編碼' },
-  { file: 'symptom-syndrome-matrix.json', code: '—', count: '48', desc: '症狀→證型加權映射' },
+  { file: 'symptom-syndrome-matrix.json', code: '—', count: '48', desc: '症狀→證型加權映射' },  // ai-voice-ok: 症狀→證型是加權映射的寫法
 ];
 
 const vectors = [
   { db: 'syndromes', use: 'L2 辨證', src: '醫案 3,500 筆、知識圖譜、SymMap 1,717 症狀' },
   { db: 'formulas', use: 'L3 處方', src: '方劑 6,000 筆、台灣基準方劑 200 方' },
   { db: 'herbs', use: 'L3 處方', src: '中藥飲片 23,517、TCMBank 9,192 藥材' },
-  { db: 'terminology', use: '全流程', src: 'TCM-MKG 術語 17,850+' },
+  { db: 'terminology', use: '各層共用', src: 'TCM-MKG 術語 17,850+' },
   { db: 'dialogues', use: 'L1 問診', src: 'ShenNong QA 對話 112K 筆' },
   { db: 'acupoints', use: '擴充用', src: '穴位經絡知識' },
 ];
@@ -161,6 +161,7 @@ const fhirProfiles = [
       <div class="text-center mb-12">
         <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Three-Layer Architecture</p>
         <h2 class="section-title mt-2">三層分析架構</h2>
+        <!-- ai-voice-ok: L1/L2/L3 是架構層級，非行文 -->
         <p class="section-subtitle">L1 四診收集 → L2 混合引擎辨證 → L3 RAG 處方推薦</p>
       </div>
       <div class="grid md:grid-cols-3 gap-4 md:gap-6">
@@ -193,7 +194,7 @@ const fhirProfiles = [
       <div class="text-center mb-10">
         <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Coding System</p>
         <h2 class="section-title mt-2">自建中醫編碼體系</h2>
-        <p class="section-subtitle">四檔聯動，從症狀到方劑全程結構化</p>
+        <p class="section-subtitle">四檔聯動，症狀、辨證、方劑一路都有結構化紀錄</p>
       </div>
       <div class="rounded-2xl bg-white border border-neutral-200 overflow-hidden shadow-sm">
         <table class="w-full text-sm">

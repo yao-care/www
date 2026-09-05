@@ -16,14 +16,14 @@ const geri = PRODUCT_BY_SLUG.geri; // 跨列：正規頁在 /medical/geri
 
 const pageTitle = '高齡友善 · yao.care';
 const pageDescription =
-  '面對超高齡社會 — 長者友善無接觸報到 × Smart Geri 高齡周全性評估，從據點報到到衰弱篩檢，串起 SMART on FHIR 預防醫學閉環，呼應 GCM 預防醫學發展協會的公益使命。';
+  '台灣 2025 年進入超高齡社會。長者友善無接觸報到讓長輩走過鏡頭就完成簽到，Smart Geri 用周全性評估篩出衰弱徵兆，兩邊的結果都能以 SMART on FHIR 送進收案後端，呼應 GCM 預防醫學發展協會的公益使命。';
 
 const careCapabilities = [
   { label: '高齡友善服務設計', en: 'Age-Friendly Service Design' },
   { label: '長照場域數位工具', en: 'Long-Term Care Tech' },
   { label: '隱私優先 / 零雲端', en: 'Privacy-First / On-Device' },
   { label: '周全性評估 CGA', en: 'Comprehensive Geriatric Assessment' },
-  { label: 'SMART on FHIR 收案閉環', en: 'FHIR Enrollment Loop' },
+  { label: 'SMART on FHIR 收案串接', en: 'FHIR Enrollment' },
 ];
 
 const hubProducts = [...products, geri]; // 含跨列的 Smart Geri（正規頁 /medical/geri）
@@ -94,7 +94,7 @@ const collectionSchema = {
           </div>
         </div>
         <p class="mt-6 text-sm text-[color:var(--color-ink-soft)]">
-          Smart Geri 同時是「預防醫學評估生態系」的一員，完整介紹與其他全齡評估工具請見
+          Smart Geri 同時屬於「全齡預防醫學評估」，完整介紹與其他全齡評估工具請見
           <a href="/medical/" class="text-[color:var(--color-brand)] hover:underline underline-offset-2">智慧醫療</a>。
         </p>
       </div>
@@ -107,7 +107,7 @@ const collectionSchema = {
     <CapabilityCloud
       kicker="Age-Friendly Capabilities"
       title="我們在高齡友善能做的事"
-      description="從據點報到到周全性評估，以隱私優先、零雲端的方式，讓長照場域也用得起智慧工具。"
+      description="報到與周全性評估這兩件事，資料都留在裝置、不上雲端，長照場域用得起。"
       capabilities={careCapabilities}
     />
 
@@ -118,9 +118,9 @@ const collectionSchema = {
           讓晚年發光，有人陪伴
         </h2>
         <p class="mt-4 text-[color:var(--color-ink-soft)] leading-relaxed">
-          超高齡社會不是只有失能與照顧負擔的故事。我們相信科技該讓長者被好好看見 ——
-          走過鏡頭就被親切問候、衰弱訊號被及早接住、評估資料能串起後續陪伴。
-          以高齡友善為核心，呼應 GCM 預防醫學發展協會的公益使命。
+          超高齡社會不是只有失能與照顧負擔的故事。走過鏡頭，機器會依時段問一聲早安；
+          量表分數掉下來，工作人員當天就看得到；這次的評估結果，下次回來還接得上。
+          這些事做起來不難，只是過去少有人替長照據點做。呼應 GCM 預防醫學發展協會的公益使命。
         </p>
       </div>
     </section>

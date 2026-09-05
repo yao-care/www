@@ -89,9 +89,9 @@ const curl = `curl -X POST "https://goalkeeper.yao.care/medical/validate" \\
   <section class="pb-2">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
       <p class="text-base md:text-lg text-[color:var(--color-ink-soft)] leading-relaxed">
-        典型使用者是<strong class="text-[color:var(--color-ink)]">在醫療內容產製流程中導入 AI 的團隊</strong> ——
-        醫療 AI 內容／衛教平台開發者、數位健康服務商，以及醫療機構的資訊與法遵團隊 ——
-        把 goalkeeper 接在「AI 產出」與「對外發布」之間，做一道依台灣法規的自動把關。AI agent 也能透過 MCP 介接。
+        典型使用者是<strong class="text-[color:var(--color-ink)]">在醫療內容產製流程中導入 AI 的團隊</strong>：
+        醫療 AI 內容／衛教平台開發者、數位健康服務商，以及醫療機構的資訊與法遵團隊。
+        他們把 goalkeeper 接在「AI 產出」與「對外發布」之間，做一道依台灣法規的自動把關。AI agent 也能透過 MCP 介接。
       </p>
     </div>
   </section>
@@ -156,7 +156,7 @@ const curl = `curl -X POST "https://goalkeeper.yao.care/medical/validate" \\
       <div class="mt-6 grid sm:grid-cols-3 gap-4">
         <div class="rounded-xl bg-white border border-neutral-200 p-5">
           <code class="text-xs font-mono text-[color:var(--color-brand)]">POST /medical/validate</code>
-          <p class="mt-2 text-sm text-[color:var(--color-ink-soft)]">查核內容 → 回各關卡狀態。</p>
+          <p class="mt-2 text-sm text-[color:var(--color-ink-soft)]">送進要查核的內容，回報各關卡的狀態。</p>
         </div>
         <div class="rounded-xl bg-white border border-neutral-200 p-5">
           <code class="text-xs font-mono text-[color:var(--color-brand)]">GET /medical/describe</code>
@@ -194,7 +194,7 @@ const curl = `curl -X POST "https://goalkeeper.yao.care/medical/validate" \\
   <ProductCta
     product={product}
     headline="要把合規守門接進你的醫療 AI 流程？"
-    description="開通、配額、規範版本鎖定、啟用哪幾道檢查 — 來信 service@yao.care 或 LINE 與團隊聊聊。"
+    description="開通、配額、規範版本鎖定、要啟用哪幾道檢查，來信 service@yao.care 或 LINE 與團隊聊聊。"
   />
 
   <ProductNews slot="news" target="goalkeeper" />

@@ -32,9 +32,9 @@ export const CATEGORIES: readonly Category[] = [
     label: '智慧醫療',
     kicker: 'Smart Healthcare',
     href: '/medical/',
-    tagline: '以病人為中心，AI 從用藥提醒到診斷推理',
+    tagline: '用藥提醒、診斷推理、全齡評估，都對得上國際標準碼',
     description:
-      '結合 LINE/Telegram 通訊軟體、ATC 藥品編碼、SMART on FHIR 互通協定，從基層用藥到醫療 AI 一條龍。',
+      '用 LINE、Telegram 送提醒，靠 ATC 藥品編碼與 SMART on FHIR 跟醫院系統對接，藥師不必重打一次處方。',
     caretag: {
       yao: '藥',
       word: '提醒',
@@ -46,13 +46,13 @@ export const CATEGORIES: readonly Category[] = [
     label: 'AI 系統',
     kicker: 'AI Systems',
     href: '/ai/',
-    tagline: '把專業知識變成自動化、可重複跑的 AI 系統',
+    tagline: '老手才做得來的判斷，寫成每天自己會跑的系統',
     description:
-      '情報追蹤、合規自動化、創新方法庫 — 用 RAG + 多角色 Agent 把專業領域的決策結構化。',
+      '情報追蹤、合規稽核、創新方法庫三條線，都用 RAG 加多角色 Agent 把判斷流程寫下來。',
     caretag: {
       yao: '鑰',
       word: '洞察',
-      motto: '把專業知識解鎖成可重複的洞察',
+      motto: '專業判斷鎖在老手腦裡，解開才用得上',
     },
   },
   {
@@ -60,9 +60,9 @@ export const CATEGORIES: readonly Category[] = [
     label: '高齡友善',
     kicker: 'Age-Friendly Care',
     href: '/care/',
-    tagline: '面對超高齡社會，讓長者被看見、被陪伴 — 無接觸報到 × 高齡周全性評估',
+    tagline: '長者走過鏡頭就完成報到，衰弱的徵兆也能提早篩出來',
     description:
-      '台灣 2025 邁入超高齡社會。我們以「高齡友善」為核心，結合長者友善無接觸報到與高齡周全性評估，從據點報到到衰弱篩檢，串起 SMART on FHIR 預防醫學閉環，呼應 GCM 預防醫學發展協會的公益使命。',
+      '台灣 2025 年邁入超高齡社會。長照據點用無接觸報到省掉簽名手續，Smart Geri 幫忙篩出衰弱的長輩，兩邊的資料都能以 SMART on FHIR 送進收案後端。這條線呼應 GCM 預防醫學發展協會的公益使命。',
     caretag: {
       yao: '耀',
       word: '陪伴',
@@ -74,9 +74,9 @@ export const CATEGORIES: readonly Category[] = [
     label: '數位行銷',
     kicker: 'Digital Marketing',
     href: '/marketing/',
-    tagline: '醫友 × 節氣 × 合規 — 不靠硬廣的整合行銷閉環',
+    tagline: '不靠硬廣：醫療專業出面、節氣內容鋪陳、法規先過一輪',
     description:
-      '與 GCM 預防醫學發展協會 900+ 醫療專業合作，從策略診斷、內容製作、KOL 操盤、廣告投放到法規合規一條龍。',
+      '與 GCM 預防醫學發展協會的 900+ 醫療專業合作，策略診斷、內容製作、KOL 操盤、廣告投放、法規合規五段都接。',
     caretag: {
       yao: '邀',
       word: '共鳴',
@@ -119,14 +119,14 @@ export const MEDICAL_GROUPS: readonly ProductGroup[] = [
     slug: 'clinical',
     label: '用藥與診療',
     kicker: 'Clinical & Medication',
-    description: '從基層用藥提醒到可驗證的診斷推理，對齊 ATC、SMART on FHIR、TWCM 等國際標準。',
+    description: '用藥提醒與診斷推理這兩件事，都對齊 ATC、SMART on FHIR、TWCM 等國際標準。',
   },
   {
     slug: 'assessment',
-    label: '預防醫學評估生態系',
+    label: '全齡預防醫學評估',
     kicker: 'Preventive Assessment · SMART on FHIR',
     description:
-      '成人 → 高齡 → 兒童全齡自評，紅黃綠分級與衛教轉介，最終匯流 GCM 收案後端形成預防醫學閉環。',
+      '成人、高齡、兒童三套自評工具，結果一律紅黃綠分級並附衛教轉介，可送進 GCM 收案後端。',
   },
 ] as const;
 
@@ -165,7 +165,7 @@ export const PRODUCTS: readonly Product[] = [
     category: 'medical',
     group: 'clinical',
     title: '藥提醒',
-    tagline: '以病人為中心、依 ATC 編碼，從 LINE/Telegram 提醒用藥',
+    tagline: '依 ATC 編碼，用 LINE、Telegram 提醒病人吃藥',
     description:
       '依循藥品使用標準碼與 ATC 編碼，透過 LINE、Telegram 等通訊軟體提供用藥提醒，協助藥師追蹤服藥成效。整合健保與醫院資訊系統，無須 keyin 處方；以藥品外觀圖片提醒減少吃錯藥風險。',
     ogTitle: 'yao.care',
@@ -184,7 +184,7 @@ export const PRODUCTS: readonly Product[] = [
     category: 'medical',
     group: 'clinical',
     title: 'AI 華佗',
-    tagline: '可驗證的中醫問診 AI — 規則 + 證據 + FHIR 三道驗證',
+    tagline: '可驗證的中醫問診 AI：每一步辨證都追得到規則與證據',
     description:
       '可驗證醫療推理系統：每一步辨證都能追溯到規則、證據與標準碼。三層架構：L1 四診收集（GPT-4o Vision 舌診、Audio 聞診、rPPG 指尖測脈）、L2 規則 128 條 × 0.6 + LLM × 0.4 混合辨證、L3 RAG 經方推薦。/clinician 工作站供中醫師作為 CDSS 使用，輸出 FHIR R4 Bundle、對應 ICD-11 TM。',
     ogTitle: 'AI 華佗',
@@ -194,7 +194,7 @@ export const PRODUCTS: readonly Product[] = [
     cardBullets: [
       '規則 128 + LLM 混合辨證，可審查',
       'GPT-4o Vision/Audio + rPPG 指尖測脈',
-      'TWCM FSH 5 Profile → FHIR R4 + ICD-11 TM',
+      'TWCM FSH 5 Profile 輸出 FHIR R4，對應 ICD-11 TM',
     ],
     externalUrl: 'https://huatuo.ai.yao.care/',
     cta: { label: '到 huatuo.ai.yao.care 體驗', href: 'https://huatuo.ai.yao.care/' },
@@ -204,7 +204,7 @@ export const PRODUCTS: readonly Product[] = [
     category: 'medical',
     group: 'clinical',
     title: 'TxGNN 老藥新用',
-    tagline: '知識圖譜 × 圖神經網路，30+ 國 FDA 藥品自動化預測 · 開源（台灣站 TwTxGNN）',
+    tagline: '用知識圖譜與圖神經網路預測老藥的新用途，涵蓋 30+ 國 FDA 藥品，開源（台灣站 TwTxGNN）',
     description:
       '老藥新用（Drug Repurposing）平台，藥提醒科技有限公司（yao.care）以哈佛大學 TxGNN 模型建置，台灣站 TwTxGNN（twtxgnn.yao.care）可公開查詢。涵蓋 30+ 國 FDA 藥品資料，整合 PubMed 文獻與 ClinicalTrials 臨床試驗證據，產出 16,700+ 藥物頁面與 FHIR 資源，並與 Epic、Cerner 等 EHR 系統整合。已上架 SMART on FHIR Gallery，原始碼於 GitHub 開源。',
     alternateNames: [
@@ -239,7 +239,7 @@ export const PRODUCTS: readonly Product[] = [
     title: 'Smart Func 成人功能健康評估',
     tagline: '依 WHO 內在能力(IC)框架，10–15 分鐘自評成人五大功能，紅黃綠分級 + 衛教轉介',
     description:
-      '以世界衛生組織「內在能力（Intrinsic Capacity）」為框架的成人功能健康自評工具，涵蓋活力、行動、認知、心理、感官五大功能。智慧分支題型讓健康者快速通過、有警訊者才深入；結果頁以紅黃綠分級給出自我觀察或就醫建議，並附個人化衛教與轉介；偵測到憂鬱／自傷訊號時顯示求助專線。100% 在瀏覽器端運算，可選擇以 SMART on FHIR 上傳合作院所或 GCM 收案。',
+      '依世界衛生組織「內在能力（Intrinsic Capacity）」框架設計的成人功能健康自評工具，涵蓋活力、行動、認知、心理、感官五大功能。智慧分支題型讓健康者快速通過、有警訊者才深入；結果頁以紅黃綠分級給出自我觀察或就醫建議，並附個人化衛教與轉介；偵測到憂鬱／自傷訊號時顯示求助專線。100% 在瀏覽器端運算，可選擇以 SMART on FHIR 上傳合作院所或 GCM 收案。',
     ogTitle: 'Smart Func',
     ogStat: '5',
     ogStatLabel: 'IC DOMAINS · FHIR',
@@ -260,7 +260,7 @@ export const PRODUCTS: readonly Product[] = [
     title: 'Smart Geri 高齡周全性評估',
     tagline: 'CFS 衰弱量表 + 多面向 CGA，公眾自篩與專業臨床雙模式，SMART on FHIR',
     description:
-      'Smart Geri 的 Geri 取自老年醫學（Geriatric Medicine）；這是針對高齡長者的周全性評估（CGA）系統，以臨床衰弱量表（CFS 1–9）為基準，延伸評估認知、情緒、營養、行動步態、用藥、社會支持等多個面向。提供「公眾／家屬自篩」與「專業臨床」雙模式，智慧分支由短篩到深評；含五次坐站等相機計時功能測驗，結果以紅黃綠分級給出轉介建議，並自動配對衛教內容。離線可用 PWA，資料留在裝置，可選擇上傳醫院 FHIR 或 GCM 收案。',
+      'Smart Geri 的 Geri 取自老年醫學（Geriatric Medicine）；這是針對高齡長者的周全性評估（CGA）系統，先用臨床衰弱量表（CFS 1–9）分級，再評估認知、情緒、營養、行動步態、用藥、社會支持等多個面向。提供「公眾／家屬自篩」與「專業臨床」雙模式，智慧分支由短篩到深評；含五次坐站等相機計時功能測驗，結果以紅黃綠分級給出轉介建議，並自動配對衛教內容。離線可用 PWA，資料留在裝置，可選擇上傳醫院 FHIR 或 GCM 收案。',
     ogTitle: 'Smart Geri',
     ogStat: 'CGA',
     ogStatLabel: 'CFS 1–9 · FRAILTY',
@@ -287,7 +287,7 @@ export const PRODUCTS: readonly Product[] = [
     ogStatLabel: 'DOMAINS · ASQ-3',
     cardKicker: '兒童發展篩檢 · ASQ-3 常模',
     cardBullets: [
-      '7 年齡帶 × 六大發展領域（對齊國健署手冊）',
+      '7 個年齡帶，各查六大發展領域（對齊國健署手冊）',
       '互動測驗：圖卡 / 語音 / 繪圖 / 動作影片',
       '−2SD 紅旗，雷達圖對比同齡常模',
     ],
@@ -300,9 +300,9 @@ export const PRODUCTS: readonly Product[] = [
     category: 'medical',
     group: 'assessment',
     title: 'SMART on FHIR 收案伺服器',
-    tagline: '通用收案與個案管理後端 — Smart Func / Geri / Pedi 三系統皆可收案，以 GCM 預防醫學發展協會為導入案例',
+    tagline: '通用收案與個案管理後端：Smart Func、Geri、Pedi 三套自評都能送進來，GCM 預防醫學發展協會是導入案例',
     description:
-      '通用的 SMART on FHIR 收案與個案管理後端：Smart Func（成人）、Smart Geri（高齡）、Smart Pedi（兒童）三套自評工具都能把結果以 FHIR R4 QuestionnaireResponse 送來收案。民眾僅填暱稱、由系統產生收案碼（免帳號密碼），重複評估自動歸戶；後台提供個案狀態追蹤、團隊指派、危險訊號自動升級。隱私優先 —— 先去識別化，原文與個資原值不寫入稽核；全程可稽核、每日加密備份異地備援；以 OAuth 2.0 + PKCE 交付、符合 Inferno FHIR 測試。GCM 預防醫學發展協會為目前的導入案例。',
+      '通用的 SMART on FHIR 收案與個案管理後端：Smart Func（成人）、Smart Geri（高齡）、Smart Pedi（兒童）三套自評工具都能把結果以 FHIR R4 QuestionnaireResponse 送來收案。民眾僅填暱稱、由系統產生收案碼（免帳號密碼），重複評估自動歸戶；後台提供個案狀態追蹤、團隊指派、危險訊號自動升級。隱私優先：先去識別化，原文與個資原值不寫入稽核。全程可稽核，每日加密備份並異地備援；以 OAuth 2.0 + PKCE 交付、符合 Inferno FHIR 測試。GCM 預防醫學發展協會為目前的導入案例。',
     ogTitle: 'SMART on FHIR 收案伺服器',
     ogStat: 'FHIR',
     ogStatLabel: 'R4 · OAUTH2 PKCE',
@@ -319,13 +319,13 @@ export const PRODUCTS: readonly Product[] = [
     slug: 'intel',
     category: 'ai',
     title: '情報自動化系統',
-    tagline: '從新聞抓取到投資分析，全流程 GitHub Actions 自動化',
+    tagline: '新聞抓取、財務告警、投資回測，都由 GitHub Actions 每天自己跑',
     description:
-      '以 GitHub Actions 為核心的資訊搜集自動化能力。參考實例：23 條產業供應鏈情報追蹤系統，每日自動監控 500 + 上中下游公司，產出新聞事件、財務異常告警與投資回測分析。可擴展到任何資訊密集領域。',
+      '用 GitHub Actions 做資訊搜集自動化。參考實例：23 條產業供應鏈情報追蹤系統，每日自動監控 500 + 上中下游公司，產出新聞事件、財務異常告警與投資回測分析。可擴展到任何資訊密集領域。',
     ogTitle: 'Intel',
     ogStat: '23',
     ogStatLabel: 'SUPPLY CHAINS',
-    cardKicker: '資訊搜集 × 自動化',
+    cardKicker: '資訊搜集自動化',
     cardBullets: [
       '23 條供應鏈 / 500+ 公司',
       '每日自動產出情報報告',
@@ -339,11 +339,11 @@ export const PRODUCTS: readonly Product[] = [
     title: 'SIQC 稽核 / 評鑑 AI 系統',
     tagline: 'AI 驅動的合規稽核、ESG 評鑑、醫院評鑑文件交付平台',
     description:
-      '以 GitHub 為核心的稽核 / 評鑑自動化系統，12 個 Actions workflow 串成一條管線：從 SAST、SBOM、CVE 到 64+ 份 ISMS 文件自動修復，再到離線稽核助理交付。框架可延伸至 ISO 27001/9001/14001、ESG（GRI/TCFD/SASB）、醫院評鑑（醫策會/JCI）等多種稽核情境。',
+      '用 GitHub 做稽核與評鑑自動化，12 個 Actions workflow 串成一條管線：SAST、SBOM、CVE 掃描，64+ 份 ISMS 文件自動修復，最後交付離線稽核助理。框架可延伸至 ISO 27001/9001/14001、ESG（GRI/TCFD/SASB）、醫院評鑑（醫策會/JCI）等多種稽核情境。',
     ogTitle: 'SIQC',
     ogStat: 'AUDIT',
     ogStatLabel: 'ISO · ESG · 醫院評鑑',
-    cardKicker: '稽核 × 評鑑 × 自動化',
+    cardKicker: '稽核與評鑑自動化',
     cardBullets: [
       '13 條掃描管線 / 64+ 份 ISMS 文件',
       'ISO / ESG / 醫院評鑑通用框架',
@@ -357,14 +357,14 @@ export const PRODUCTS: readonly Product[] = [
     title: 'TRIZ 創新方法 AI 知識庫',
     tagline: '40 發明原則 × 263 矛盾矩陣，多角色 AI 協作解題',
     description:
-      'TRIZ（發明問題解決理論）AI 知識庫系統。涵蓋 40 發明原則（含 169 副原則）、39 工程參數、263 條矛盾矩陣、4 分離原理、Oxford Effects、AutoTRIZ Cases。多角色 AI 自動分析：描述問題 → 識別矛盾 → 推薦原則 → 生成解法。',
+      'TRIZ（發明問題解決理論）AI 知識庫系統。涵蓋 40 發明原則（含 169 副原則）、39 工程參數、263 條矛盾矩陣、4 分離原理、Oxford Effects、AutoTRIZ Cases。多角色 AI 自動分析：先描述問題，找出矛盾，對到適用的原則，再生成解法。',
     ogTitle: 'triz-ai',
     ogStat: '263',
     ogStatLabel: 'CONTRADICTION MATRIX',
-    cardKicker: 'TRIZ × 多角色 Agent',
+    cardKicker: 'TRIZ 方法庫 · 多角色 Agent',
     cardBullets: [
       '40 原則 + 39 參數 + 263 矩陣',
-      'crawl → chunk → embed RAG 管線',
+      'crawl / chunk / embed 的 RAG 管線',
       '多角色 SYSTEM_PROMPT 協作',
     ],
     cta: { label: '想用在我們公司', href: LINE_PERSONAL },
@@ -373,7 +373,7 @@ export const PRODUCTS: readonly Product[] = [
     slug: 'goalkeeper',
     category: 'ai',
     title: 'goalkeeper 醫療 AI 合規守門',
-    tagline: '醫療 AI 內容的合規守門 API — 回報五道檢查的法規符合狀態，放行與否由你決定',
+    tagline: '醫療 AI 內容的合規守門 API：回報五道檢查的法規符合狀態，放行與否由你決定',
     description:
       '醫療 AI 內容的合規「查核器」：送進 AI 產出的醫療內容，依台灣醫療法規回報五道檢查（揭露免責、來源標註、越權診斷、個資外洩、幻覺查核）各自的狀態與依據法條，但不替你做整體放行決定。依據衛福部《醫療機構應用生成式人工智慧指引》(115.05.29) 等多部法律，每道檢查綁多條法源、規範版本可鎖定可重現。提供 REST API 與 MCP Server（AI agent 串接），隱私優先：呼叫端送原文後服務先在內部去識別化，原文與個資原值永不寫入稽核。',
     ogTitle: 'goalkeeper',
@@ -392,7 +392,7 @@ export const PRODUCTS: readonly Product[] = [
     slug: 'ods',
     category: 'ai',
     title: 'ODS 公文 AI',
-    tagline: '從公文範例到 24 條格式檢核，讓機關與小型單位更快開案',
+    tagline: '公文範例加上 24 條格式檢核，讓機關與小型單位更快開案',
     description:
       'ODS 公文 AI 提供補助核銷、陳情轉請、開會通知、公告與簽稿等公文範例，並附 24 條格式檢核逐條結果。公開網站先讓承辦找得到可參考的寫法；機關可申請試用，小型單位可直接自助註冊使用服務。',
     ogTitle: 'ODS 公文 AI',
@@ -420,7 +420,7 @@ export const PRODUCTS: readonly Product[] = [
     title: '長者友善無接觸報到',
     tagline: '純前端人臉辨識報到，零雲端、零安裝，自動語音問候 + 風險分級警示',
     description:
-      '為長照據點、日照中心、社區關懷站打造的無接觸報到系統。長者走過鏡頭即自動辨識身分並依時段語音問候，免按鈕、免簽名、免安裝 App。所有臉部與紀錄資料 100% 留在裝置瀏覽器、零雲端傳輸；內建失蹤、失智、黑白名單、VIP 等風險分級警示，並自動產出每日簽到名冊，可直接複製貼上政府社政平台。離線可用 PWA。',
+      '給長照據點、日照中心、社區關懷站用的無接觸報到系統。長者走過鏡頭即自動辨識身分並依時段語音問候，免按鈕、免簽名、免安裝 App。所有臉部與紀錄資料 100% 留在裝置瀏覽器、零雲端傳輸；內建失蹤、失智、黑白名單、VIP 等風險分級警示，並自動產出每日簽到名冊，可直接複製貼上政府社政平台。離線可用 PWA。',
     ogTitle: '長者友善無接觸報到',
     ogStat: 'FACE',
     ogStatLabel: 'ZERO-CLOUD PWA',

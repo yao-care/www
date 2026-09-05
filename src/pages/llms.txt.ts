@@ -22,7 +22,7 @@ export const GET: APIRoute = () => {
   lines.push('# yao.care（藥提醒）');
   lines.push('');
   lines.push(
-    '> yao.care 用 AI 與自動化把硬問題變成可重複的系統，橫跨智慧醫療、AI 系統、高齡友善、數位行銷四條業務線。',
+    '> yao.care 用 AI 與自動化接手專業領域裡的硬問題，橫跨智慧醫療、AI 系統、高齡友善、數位行銷四條業務線。',
   );
   lines.push('');
   lines.push(

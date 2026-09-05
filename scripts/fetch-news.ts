@@ -53,7 +53,7 @@ import {
   findNearDuplicate,
   titleSimilarity,
 } from './news-guards.mjs';
-import { VOICE_REV, findTics } from './style-guide.mjs';
+import { VOICE_REV, findTics, checkTakeaway } from './style-guide.mjs';
 import { TOPICS } from '../src/topics.config';
 import { fixTerms } from './zh-tw.mjs';
 
@@ -702,8 +702,11 @@ function selectDemandAware(
 function takeawayPrompt(topicTitle: string, item: RawItem): string {
   return [
     `你替 yao.care 官網主題頁「${topicTitle}」維護「近期動態」清單。針對下面這則新聞，用台灣繁體中文寫一句 60–120 字的重點。`,
-    `寫法：先講發生了什麼（保留具體主詞、機構、數字），再半句點出與「${topicTitle}」的關聯。平實敘述，像懂行的人隨手記重點。`,
+    `寫法：講清楚發生了什麼，保留具體主詞、機構、數字。平實敘述，像懂行的人隨手記重點。`,
+    `與主題的關聯**不必每則都寫**——只有真的補得出資訊時才帶一句，寫不出就停在事實上，寧可短。`,
     `禁止：醫療結論或療效判斷；「不是X而是Y」「不僅」「值得注意的是」「隨著…」開頭等腔調；驚嘆號；粗體或用引號框住全句。`,
+    `收尾特別禁止這幾種套路（整頁看下來每則同一個尾巴最像機器寫的）：`,
+    `「…與 X 相呼應／呼應了 X」「…與 X 相通／相近／契合／一致」「…正是 X 的核心／關鍵」「…的方向／邏輯／思路。」「這類做法／現象…」。`,
     `只輸出 JSON：{"takeaway":"..."}`,
     ``,
     `新聞標題：${item.title}`,
@@ -735,7 +738,8 @@ async function writeFeedItem(picked: KeptItem, stats: Stats) {
 
   let takeaway = '';
   let lastErr = 'unknown';
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  // 3 次（原 2 次）：收尾模具守門收緊後，多給一次重寫機會，避免整則被丟掉。
+  for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       const raw = callClaude(WRITER_MODEL, takeawayPrompt(topic.title, item));
       const t = fixTerms(String(raw.takeaway ?? '').trim());
@@ -743,6 +747,7 @@ async function writeFeedItem(picked: KeptItem, stats: Stats) {
       if (t.length < 20 || t.length > 220) lastErr = `長度 ${t.length}`;
       else if (tics.length > 0) lastErr = `AI 腔：${tics.join('、')}`;
       else if (/不是[^，。]{1,14}，?而是/.test(t)) lastErr = '「不是…而是」句式';
+      else if (checkTakeaway(t)) lastErr = `收尾模具：${checkTakeaway(t)}`;
       else if (SIMPLIFIED_CHARS.test(t)) lastErr = '疑似簡體字';
       else {
         takeaway = t;
@@ -754,7 +759,7 @@ async function writeFeedItem(picked: KeptItem, stats: Stats) {
     }
   }
   if (!takeaway) {
-    log(`    ✗ DROP: takeaway 2 attempts failed（${lastErr}）`);
+    log(`    ✗ DROP: takeaway 3 attempts failed（${lastErr}）`);
     stats.dropped++;
     stats.dropReasons.push(`${target.slug}:takeaway:${lastErr}`);
     return;
