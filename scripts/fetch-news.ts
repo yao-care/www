@@ -516,21 +516,38 @@ function existingCorpus(target: NewsTarget): { urls: Set<string>; titles: string
   // 修法：feed 模式改讀該 target 對應主題的 topicFeed 目錄。門檻 DUP_TITLE_THRESHOLD
   // 不動——實測 0.6 對存量重複可擋下 20 對，壞的是語料來源不是門檻。
   // 依主題（非依 target）比對也更正確：多個 target 餵同一個主題頁，讀者看到的是同一頁。
-  const dir =
-    NEWS_MODE === 'feed'
-      ? join(FEED_DIR, TARGET_TOPIC.get(target.slug)?.slug ?? '__none__')
-      : join(NEWS_DIR, target.slug);
+  //
+  // ⚠ 2026-09-09 補修：上面那版把 feed 模式改成「只讀 topicFeed」，但 legacy 的
+  // news/<target>/ 仍有 202 篇**還在線上 serve** 的文章（txgnn/marketing/intel/geri/
+  // goalkeeper 五桶尚未 301）。只讀 feed 的結果是同一則新聞被寫進主題動態、跟既有的
+  // /news/ 文章頁變成跨區塊重複——09-06 那次 cron 實際發生 2 則（txgnn 的
+  // 3888ff4e1e、80ad505121）。故兩份語料的用途要拆開：
+  //   urls   → **聯集**。同一個 URL 全站只該出現一次，精確比對不可能誤殺。
+  //   titles → **只取 feed**。標題近似比對若把幾個月前的封存文章算進來，會把當下
+  //            合理的新報導誤判成重複（例：7 月寫過肌少症，9 月的新研究就進不來）。
+  const feedDir = join(FEED_DIR, TARGET_TOPIC.get(target.slug)?.slug ?? '__none__');
+  const legacyDir = join(NEWS_DIR, target.slug);
   const urls = new Set<string>();
   const titles: string[] = [];
-  if (!existsSync(dir)) return { urls, titles };
-  for (const f of readdirSync(dir).filter((x) => x.endsWith('.json'))) {
-    try {
-      const obj = JSON.parse(readFileSync(join(dir, f), 'utf8'));
-      if (obj.url) urls.add(obj.url);
-      if (obj.title) titles.push(String(obj.title));
-    } catch {
-      /* ignore */
+
+  const scanDir = (dir: string, collectTitles: boolean) => {
+    if (!existsSync(dir)) return;
+    for (const f of readdirSync(dir).filter((x) => x.endsWith('.json'))) {
+      try {
+        const obj = JSON.parse(readFileSync(join(dir, f), 'utf8'));
+        if (obj.url) urls.add(obj.url);
+        if (collectTitles && obj.title) titles.push(String(obj.title));
+      } catch {
+        /* ignore */
+      }
     }
+  };
+
+  if (NEWS_MODE === 'feed') {
+    scanDir(feedDir, true); // 標題比對的對象＝正在成長的那份語料
+    scanDir(legacyDir, false); // 只借它的 URL，擋掉與尚未 301 的舊文章撞題
+  } else {
+    scanDir(legacyDir, true);
   }
   return { urls, titles };
 }
