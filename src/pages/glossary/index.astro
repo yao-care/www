@@ -22,7 +22,7 @@ const jsonLd = {
   '@type': 'DefinedTermSet',
   name: 'yao.care 醫療 AI 名詞解釋',
   description: pageDescription,
-  url: new URL('/glossary', SITE.url).toString(),
+  url: new URL('/glossary/', SITE.url).toString(),
   hasDefinedTerm: GLOSSARY.map((t) => ({
     '@type': 'DefinedTerm',
     name: t.term,

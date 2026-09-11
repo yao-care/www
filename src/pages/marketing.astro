@@ -23,7 +23,7 @@ const marketingFaqs = [
   { q: '適合哪些品牌？', a: '食品、保健、醫療、酒類等需要專業背書與法規把關的品牌；可依 24 節氣行銷曆規劃全年內容。' },
 ];
 
-const marketingUrl = new URL('/marketing', SITE.url).toString();
+const marketingUrl = new URL('/marketing/', SITE.url).toString();
 const serviceSchema = {
   '@type': 'Service',
   '@id': `${marketingUrl}#service`,
