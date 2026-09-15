@@ -41,7 +41,7 @@ const collectionSchema = {
     itemListElement: hubProducts.map((p, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: new URL(`/${p.category}/${p.slug}`, SITE.url).toString(),
+      url: new URL(`/${p.category}/${p.slug}/`, SITE.url).toString(),
       name: p.title,
     })),
   },
