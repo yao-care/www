@@ -249,8 +249,15 @@ const jsonLd = {
           <h2 class="mt-2 text-2xl md:text-3xl font-bold">常見問題</h2>
         </div>
         <div class="space-y-3">
+          {/*
+            open：預設展開（全站 5 個檔案同批改，2026-09-27）。FAQ rich result 已於
+            2026-05-07 完全退場，問答要被 featured snippet／PAA／AI Overviews 取用，
+            官方唯一的要求是「內容對人類立即可見，不可藏在展開區或分頁介面」
+            （https://developers.google.com/search/docs/appearance/snippet ）。
+            group-open:rotate-180 的箭頭仍在，使用者可自行收合。
+          */}
           {topic.faqs.map((f) => (
-            <details class="group rounded-xl bg-white border border-neutral-200 shadow-sm overflow-hidden">
+            <details class="group rounded-xl bg-white border border-neutral-200 shadow-sm overflow-hidden" open>
               <summary class="cursor-pointer p-5 md:p-6 flex items-start gap-4 list-none">
                 <span class="flex-1 font-bold text-[color:var(--color-ink)]">{f.q}</span>
                 <svg class="shrink-0 w-5 h-5 mt-0.5 text-[color:var(--color-ink-soft)] transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
