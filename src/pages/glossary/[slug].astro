@@ -19,9 +19,13 @@ const term = GLOSSARY_BY_SLUG[slug!];
 const related = (term.related ?? []).map((s) => PRODUCT_BY_SLUG[s]);
 const relGuides = GUIDES.filter((g) => (g.relatedTerms ?? []).includes(term.slug));
 const topicOf = term.topic ? TOPIC_BY_SLUG[term.topic] : undefined;
-const relatedTerms = term.topic
+const sameTopicTerms = term.topic
   ? GLOSSARY.filter((t) => t.topic === term.topic && t.slug !== term.slug)
   : [];
+const seeAlsoTerms = (term.seeAlso ?? [])
+  .map((s) => GLOSSARY_BY_SLUG[s])
+  .filter((t) => t && t.slug !== term.slug && !sameTopicTerms.includes(t));
+const relatedTerms = [...sameTopicTerms, ...seeAlsoTerms];
 
 const pageTitle = `${term.term} 是什麼？ · yao.care`;
 const pageDescription = term.oneLiner;
@@ -143,7 +147,7 @@ const jsonLd = {
       <section class="py-10 md:py-12">
         <div class="max-w-3xl mx-auto px-4 lg:px-6">
           <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Related terms</p>
-          <h2 class="mt-2 text-xl md:text-2xl font-bold">同主題相關名詞</h2>
+          <h2 class="mt-2 text-xl md:text-2xl font-bold">相關名詞</h2>
           <ul class="mt-5 space-y-3">
             {relatedTerms.map((t) => (
               <li>

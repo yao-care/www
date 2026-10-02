@@ -83,7 +83,7 @@ export const TOPICS: readonly Topic[] = [
         heading: "提醒這件事，交給不會累的",
         paragraphs: [
           "醫囑和日常生活之間，隔著一段最容易斷掉的距離：每天、準時、不厭其煩。人難做到，工具做得到。前面數過的每個斷點，都有對應的設計。忘記吃是最大宗，藥提醒從 LINE 和 Telegram 推播提醒，長輩不必學新 App，接住的就是「偶爾忘養成常常忘」那一段。多重用藥怕拿錯，提醒訊息附藥品外觀圖片，一次吃好幾種藥的人對著圖確認。至於慢箋的空窗，領藥日前會先推播；藥師端可以批次查看追蹤對象的服藥達成率，哪位病人開始漏藥、哪位慢箋快到期沒回來領，看得到就管得到。",
-          "藥師這頭不必多打一次字：處方資料透過 ATC 編碼對接健保處方。系統也支援 SMART on FHIR 標準，能與醫院資訊系統互通。",
+          "藥師這頭不必多打一次字：處方資料透過 ATC 編碼對接健保處方。系統也支援 <a href=\"/glossary/smart-on-fhir/\">SMART on FHIR</a> 標準，能與醫院資訊系統互通。",
           "藥要天天吃，人得天天記；記不住，就讓機器替你記。工具不替醫囑做主，該回診還是要回診。",
         ],
       },
@@ -199,7 +199,7 @@ export const TOPICS: readonly Topic[] = [
         heading: "紅黃綠之後，腳步怎麼走",
         paragraphs: [
           "評估的價值在後續動作。綠燈代表目前狀態穩定，維持運動習慣和社會參與就好。黃燈代表出現退化訊號，先從肌力訓練和蛋白質攝取著手，並縮短下次評估的間隔。紅燈代表需要專業介入，帶著評估結果就醫，醫師看到的就有憑有據：哪個面向、退了多少。",
-          "科別怎麼挑，有個簡單的對照。整體功能退化找老年醫學科或家醫科；記憶問題找神經內科或精神科的記憶門診；跌倒與肌力問題找復健科。評估紀錄若能以標準格式（如 FHIR）與醫療院所互通，就不必每換一科重講一次病史。",
+          "科別怎麼挑，有個簡單的對照。整體功能退化找老年醫學科或家醫科；記憶問題找神經內科或精神科的記憶門診；跌倒與肌力問題找復健科。評估紀錄若能以標準格式（如 <a href=\"/glossary/smart-on-fhir/\">FHIR</a>）與醫療院所互通，就不必每換一科重講一次病史。",
           "說到底就四個字：能動，常量。下一次評估的日期，現在就寫進日曆。",
         ],
       },
@@ -895,9 +895,9 @@ export const TOPICS: readonly Topic[] = [
       {
         heading: "AI 把查表的功夫接走了",
         paragraphs: [
-          "大型語言模型改變的是「翻譯」這一步。2024 年發表的 AutoTRIZ 研究（arXiv:2403.13002）讓 LLM 依 TRIZ 的推理步驟自動運作：使用者用白話描述問題，系統自動識別矛盾、對映參數、推薦原則、產出解法報告，並以教科書案例與電池熱管理系統的實際設計做了驗證。論文對這個取徑的定位是：「By leveraging LLMs' vast pre-trained knowledge and advanced reasoning capabilities, AutoTRIZ offers a novel, generative, and interpretable approach to engineering innovation.」（藉助 LLM 的預訓練知識與推理能力，AutoTRIZ 為工程創新提供一種新的、生成式且可解釋的做法。<a href=\"https://arxiv.org/abs/2403.13002\" target=\"_blank\" rel=\"noopener\">arXiv</a>）",
+          "大型語言模型（<a href=\"/glossary/llm/\">LLM</a>）改變的是「翻譯」這一步。2024 年發表的 AutoTRIZ 研究（arXiv:2403.13002）讓 LLM 依 TRIZ 的推理步驟自動運作：使用者用白話描述問題，系統自動識別矛盾、對映參數、推薦原則、產出解法報告，並以教科書案例與電池熱管理系統的實際設計做了驗證。論文對這個取徑的定位是：「By leveraging LLMs' vast pre-trained knowledge and advanced reasoning capabilities, AutoTRIZ offers a novel, generative, and interpretable approach to engineering innovation.」（藉助 LLM 的預訓練知識與推理能力，AutoTRIZ 為工程創新提供一種新的、生成式且可解釋的做法。<a href=\"https://arxiv.org/abs/2403.13002\" target=\"_blank\" rel=\"noopener\">arXiv</a>）",
           "可解釋，這三個字是重點。直接叫聊天機器人「幫我想十個點子」，拿到的是無法追溯的輸出；讓模型沿著 TRIZ 步驟走，每個建議都掛在某條原則、某個矛盾上，工程師可以逐步檢查推理對不對。好的證明每一步都攤開給人檢驗，就是要讓人挑得了錯。方法論在這裡的角色，是給 AI 上軌道，讓生成過程留下可以審的軌跡。",
-          "工程實作上，標準做法是 RAG：把原則、參數、矛盾矩陣、分離原理、效應庫、案例集全部向量化建庫，模型回答前先檢索，再依檢索到的條目推理。我們自己的系統就是這樣建的：40 發明原則、39 工程參數、263 矛盾矩陣建成完整向量庫，涵蓋 4 分離原理、Oxford Effects 與 AutoTRIZ 案例，用 crawl、chunk、embed 三階段管線維護，多角色 AI 從描述問題一路走到生成解法。過去要專家陪跑的翻譯與查表，現在是幾分鐘的自動流程；專家的時間留給驗證解法。",
+          "工程實作上，標準做法是 <a href=\"/glossary/rag/\">RAG</a>：把原則、參數、矛盾矩陣、分離原理、效應庫、案例集全部向量化建庫，模型回答前先檢索，再依檢索到的條目推理。我們自己的系統就是這樣建的：40 發明原則、39 工程參數、263 矛盾矩陣建成完整向量庫，涵蓋 4 分離原理、Oxford Effects 與 AutoTRIZ 案例，用 crawl、chunk、embed 三階段管線維護，多角色 AI 從描述問題一路走到生成解法。過去要專家陪跑的翻譯與查表，現在是幾分鐘的自動流程；專家的時間留給驗證解法。",
         ],
       },
       {

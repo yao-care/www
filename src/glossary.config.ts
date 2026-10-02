@@ -20,6 +20,8 @@ export type GlossaryTerm = {
   oneLiner: string;
   paragraphs: readonly string[];
   keyPoints?: readonly string[];
+  /** 跨主題的相關名詞（glossary slug）；同主題者頁面會自動列出，這裡補不同主題但常一起被查的名詞 */
+  seeAlso?: readonly string[];
   /** 相關產品（頁面交叉連結） */
   related?: readonly ProductSlug[];
   /** 權威外部來源（提升可信度，也是被引用時的佐證） */
@@ -235,6 +237,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       'client–server 標準化工具 / 資料存取',
       '一次整合、多種 AI 應用重複使用',
     ],
+    seeAlso: ['ai-agent'],
     related: ['goalkeeper'],
     sources: [{ label: 'Model Context Protocol 官方', url: 'https://modelcontextprotocol.io/' }],
   },
@@ -334,6 +337,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '透過 function calling / MCP 接外部工具與資料',
       '適合多步驟、需整合多來源的任務',
     ],
+    seeAlso: ['llm', 'mcp'],
     related: ['intel', 'siqc', 'triz', 'goalkeeper'],
   },
   {
@@ -354,6 +358,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '降低幻覺、答案可溯源、知識可即時更新',
       '流程：chunk → embed → 向量檢索 → 生成',  // ai-voice-ok: RAG 管線的實際步驟
     ],
+    seeAlso: ['llm'],
     related: ['triz', 'huatuo', 'intel'],
   },
   {
@@ -374,6 +379,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '通用語言能力：問答、摘要、翻譯、寫程式、推理',
       '有幻覺風險，醫療場景需 RAG／明文規則／可追溯佐證',
     ],
+    seeAlso: ['ai-agent', 'rag'],
     related: ['huatuo', 'goalkeeper', 'intel'],
     sources: [
       { label: 'Wikipedia：Large language model', url: 'https://en.wikipedia.org/wiki/Large_language_model' },

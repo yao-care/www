@@ -251,7 +251,7 @@ export const GUIDES: readonly Guide[] = [
       { q: '送去檢查的內容會外洩嗎？', a: '服務先在內部去識別化，原文與個資原值永不寫入稽核，只存遮罩文雜湊與狀態摘要。' },
     ],
     related: ['goalkeeper'],
-    relatedTerms: ['genai-medical-guidance', 'mcp'],
+    relatedTerms: ['genai-medical-guidance', 'llm', 'mcp'],
   },
   {
     slug: 'daycare-checkin-roster',
@@ -367,7 +367,7 @@ export const GUIDES: readonly Guide[] = [
       { q: '它會幫我開藥嗎？', a: '不會。系統提供辨證分析與經方「參考」並提示禁忌配伍，但實際處方與用藥須由合格中醫師決定。' },
     ],
     related: ['huatuo'],
-    relatedTerms: ['cdss'],
+    relatedTerms: ['cdss', 'llm'],
   },
   {
     slug: 'drug-repurposing-for-rare-disease',
