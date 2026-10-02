@@ -5,6 +5,7 @@ import FooterLinks from '../../components/FooterLinks.astro';
 import ContactMap from '../../components/ContactMap.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
 import { GLOSSARY, GLOSSARY_BY_SLUG } from '../../glossary.config';
+import { GUIDES } from '../../guides.config';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 import { TOPIC_BY_SLUG } from '../../topics.config';
 import { SITE } from '../../site.config';
@@ -16,6 +17,7 @@ export function getStaticPaths() {
 const { slug } = Astro.params;
 const term = GLOSSARY_BY_SLUG[slug!];
 const related = (term.related ?? []).map((s) => PRODUCT_BY_SLUG[s]);
+const relGuides = GUIDES.filter((g) => (g.relatedTerms ?? []).includes(term.slug));
 const topicOf = term.topic ? TOPIC_BY_SLUG[term.topic] : undefined;
 const relatedTerms = term.topic
   ? GLOSSARY.filter((t) => t.topic === term.topic && t.slug !== term.slug)
@@ -116,6 +118,22 @@ const jsonLd = {
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {related.map((p) => <ProductCard product={p} variant="preview" />)}
           </div>
+        </div>
+      </section>
+    )}
+
+    <!-- guides that explain this term in depth -->
+    {relGuides.length > 0 && (
+      <section class="py-10 md:py-12">
+        <div class="max-w-3xl mx-auto px-4 lg:px-6">
+          <h2 class="text-xl md:text-2xl font-bold">深入閱讀</h2>
+          <ul class="mt-5 space-y-3">
+            {relGuides.map((g) => (
+              <li>
+                <a href={`/guides/${g.slug}/`} class="text-base md:text-lg font-medium text-[color:var(--color-ink)] hover:text-[color:var(--color-brand)] hover:underline underline-offset-2">{g.question}</a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     )}

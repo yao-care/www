@@ -468,6 +468,260 @@ export const GUIDES: readonly Guide[] = [
     related: ['fhir-server', 'func', 'geri', 'pedi'],
     relatedTerms: ['smart-on-fhir'],
   },
+  {
+    slug: 'clinical-frailty-scale-levels',
+    updatedAt: '2026-10-02',
+    topic: 'elder-care-frailty',
+    question: '臨床衰弱量表 CFS 的 1 到 9 級分別是什麼？分數怎麼評？',
+    searchPhrases: ['clinical frailty scale 中文', 'CFS 量表', 'CFS 分級', 'frail scale 中文', '衰弱症篩檢', 'CFS 幾分算衰弱'],
+    audience: 'caregiver',
+    answer:
+      'CFS（臨床衰弱量表）把長者的整體狀態分成 9 級：1 到 3 級是健壯到維持得不錯，4 級是極輕度衰弱，5、6、7 級依序是輕度、中度、重度衰弱，8 級是極重度衰弱，9 級是末期。分數由有經驗的臨床人員綜合病史與日常功能後評定，不是讓長者自己填的問卷。級數越高，日常越多事需要別人協助。',
+    sections: [
+      {
+        heading: '九級各代表什麼',
+        paragraphs: [
+          '下列是依 Dalhousie 大學老年醫學研究團隊公布的 2020 年第 2 版量表改寫的重點，用語為本站自行整理，不是原文逐字翻譯。',
+        ],
+        bullets: [
+          '1 級 非常健壯：精力充沛、有規律運動，在同年齡中屬最健康的一群',
+          '2 級 健壯：沒有明顯的疾病症狀，但體能不如 1 級',
+          '3 級 維持得不錯：慢性病控制穩定，除了日常走動，不太有運動習慣',
+          '4 級 極輕度衰弱：日常生活不必靠人幫忙，但症狀開始限制活動，常覺得自己「變慢了」、白天容易累',
+          '5 級 輕度衰弱：較複雜的日常事務開始需要協助，例如理財、搭車、較重的家事、整理藥物',
+          '6 級 中度衰弱：所有外出活動和家務都需要協助，在室內爬樓梯有困難，洗澡要人幫忙，穿衣可能需要有人在旁提醒',
+          '7 級 重度衰弱：吃飯、盥洗、穿衣、如廁等個人照顧完全依賴他人，不論原因是身體還是認知，但狀況穩定，短期內不是高風險死亡',
+          '8 級 極重度衰弱：完全依賴他人且接近生命末期，連小病也常無法恢復',
+          '9 級 末期：預期餘命不到 6 個月，即使看起來沒有明顯衰弱也歸在這一級',
+        ],
+      },
+      {
+        heading: '分數怎麼評出來的',
+        paragraphs: [
+          'CFS 不是問卷。它把一次臨床接觸得到的資訊（病史、日常功能、家屬描述）濃縮成一個級數，所以要靠臨床判斷。開發團隊提醒，經驗不足的人評出來的分數可能和專家不同。',
+          '團隊另外做了一棵分類樹給新手輔助評分。在一項 115 位急診長者的研究裡，分類樹的結果和資深老年科醫師的評分完全一致的有 63%，另外 30% 相差一級以內。這代表同一位長者換不同人評，差一級並不罕見，追蹤時盡量由同一類人員評。',
+          '量表經歷過兩次修訂：2005 年原版是 7 級，2007 年把重度衰弱、極重度衰弱、末期拆開，擴成現在的 9 級；2020 年第 2 版微調用語，例如第 2 級由「Well」改為「Fit」，第 4 級由「Vulnerable」改為「極輕度衰弱」。',
+        ],
+      },
+      {
+        heading: '分數代表的風險與後續',
+        paragraphs: [
+          '原始研究追蹤 2,305 位加拿大長者：量表每上升一級，約 70 個月內死亡風險增加 21.2%，入住機構風險增加 23.9%。這是群體統計，不能拿來預測單一個人。',
+        ],
+        bullets: [
+          '4 級以下：重點在維持運動、蛋白質攝取與定期追蹤',
+          '5 級起標籤就是「衰弱」：建議做完整的高齡周全性評估（CGA），找出可介入的原因，例如用藥、營養、跌倒風險',
+          '7 級以上：照護重點轉向生活照顧與照護目標的討論，和醫療團隊與家人一起訂',
+          '分數的變化比單次分數重要：級數往上升了，值得提早找醫療人員看',
+        ],
+      },
+    ],
+    toolIntro:
+      'Smart Geri 的高齡評估把 CFS 納入分層，家屬可先用自篩模式了解風險方向，專業人員可用臨床模式做結構化評估。分數仍需醫療人員確認。',
+    faqs: [
+      { q: 'CFS 幾分算衰弱？', a: '第 2 版量表從 5 級起的標籤是輕度衰弱，4 級是極輕度衰弱。實際判讀仍要看整體功能與臨床判斷，不能只看數字。' },
+      { q: '家屬可以自己幫長輩評 CFS 嗎？', a: '可以用上面的對照先了解大概落在哪一級，但正式分數需由熟悉量表的醫療人員評定，因為這是判斷式量表，不同人評出的結果可能差一級。' },
+      { q: 'CFS 和 CGA 有什麼不同？', a: 'CFS 是把整體狀態分成 9 級的快速分層，CGA 是多面向、跨專業的完整評估。實務上常先用 CFS 分層，再決定要不要做 CGA。' },
+      { q: '需要授權才能使用量表嗎？', a: '要。量表著作權屬開發團隊，臨床或研究使用前需向 Dalhousie 大學老年醫學研究團隊提出 Permission for Use 申請。本頁只做說明，不提供量表圖卡。' },
+    ],
+    related: ['geri'],
+    relatedTerms: ['cfs', 'cga', 'intrinsic-capacity'],
+    sources: [
+      { label: 'Dalhousie Geriatric Medicine Research - Clinical Frailty Scale', url: 'https://www.dal.ca/sites/gmr/our-tools/clinical-frailty-scale.html' },
+      { label: 'Rockwood K, et al. A global clinical measure of fitness and frailty in elderly people. CMAJ 2005', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC1188185/' },
+    ],
+  },
+  {
+    slug: 'cga-assessment-scales',
+    updatedAt: '2026-10-02',
+    topic: 'elder-care-frailty',
+    question: '高齡周全性評估（CGA）會評估什麼？常用的量表有哪些？',
+    searchPhrases: ['CGA 評估', 'CGA 評估量表', 'CGA 是什麼', '老人周全性評估', 'comprehensive geriatric assessment 中文', 'CGA 醫學'],
+    audience: 'caregiver',
+    answer:
+      'CGA（高齡周全性評估）由跨專業團隊進行，一般會盤點病史與用藥、日常生活功能、行動與平衡、認知、情緒、營養和社會支持，最後整合成一份照護計畫。常見的量表有 Katz ADL 與 Lawton IADL（生活功能）、MMSE（認知）、GDS（憂鬱）、MNA（營養）、TUG（行動）。各院所選用的量表不完全一樣，量表只是工具，重點是評完之後有人依結果調整照護。',
+    sections: [
+      {
+        heading: '評估面向與常用量表',
+        bullets: [
+          '日常生活功能：Katz 日常生活活動指數（ADL，吃飯、洗澡、穿衣、如廁、移動、控制排泄），發表於 1963 年',
+          '進階生活功能：Lawton 工具性日常活動量表（IADL，用電話、購物、備餐、理財、服藥），發表於 1969 年',
+          '認知：簡易智能測驗 MMSE，發表於 1975 年',
+          '情緒：老年憂鬱量表 GDS，發表於 1982 年',
+          '營養：迷你營養評估 MNA，1999 年發表的版本',
+          '行動與平衡：計時起身行走測試 TUG，發表於 1991 年',
+          '醫療與用藥：整理病史、慢性病控制程度與全部用藥，找出重複或不必要的藥',
+          '社會支持：誰在照顧、居住環境、經濟與照顧者負荷',
+        ],
+      },
+      {
+        heading: 'CGA 的重點在處置，不在打分數',
+        paragraphs: [
+          'Dalhousie 大學的老年醫學團隊把 CGA 的用途說得很直接：重點是處置，評估只是前提。評估出來的問題要對應到具體動作，例如調整藥物、轉介復健、補營養、安排居家環境改善。',
+          '急性住院時，團隊通常以長者生病前約兩週的功能與健康狀態當作照護計畫的基準，所以家屬能說出「生病前原本能做什麼」，對評估很有幫助。',
+        ],
+      },
+      {
+        heading: '研究怎麼說',
+        paragraphs: [
+          '2011 年發表的統合分析納入 22 項試驗、共 10,315 位因急症住院的長者。接受 CGA 的人在 6 個月時活著且住在自己家裡的機率較高（勝算比 1.25，需治療人數 17），追蹤到中位數 12 個月時也較高（勝算比 1.16，需治療人數 33）。',
+          '這些結果針對住院的急症長者。2018 年的傘式回顧整理 13 篇系統性回顧後指出，住院 CGA 的主要受益者是接受急性照護的老年人，衰弱程度是否影響效果還沒有被充分研究。',
+        ],
+      },
+      {
+        heading: '家屬可以先準備什麼',
+        bullets: [
+          '全部藥袋（含成藥與保健食品），不要只帶最近一張處方',
+          '最近一年的跌倒、住院與體重變化',
+          '平常誰幫忙洗澡、煮飯、管藥、理財',
+          '近期記性、情緒、睡眠的變化，越具體越好，例如「上週連續兩天忘了關瓦斯」',
+        ],
+      },
+    ],
+    toolIntro:
+      'Smart Geri 提供高齡周全性評估：家屬可用自篩模式先掌握風險方向，專業人員用臨床模式做結構化評估，結果以紅黃綠分級並提供轉介建議。',
+    faqs: [
+      { q: 'CGA 要做多久？', a: '依機構與長者狀況而定。完整評估通常需要多位專業人員分別看診或訪談，不是單次門診就能完成。建議向就診的院所確認流程與時間。' },
+      { q: '哪些人適合做 CGA？', a: '住院的衰弱長者受益的證據最完整。社區長者若出現體力變差、跌倒、多重用藥或照顧負擔變大，也可以詢問老年醫學科或長照單位是否提供。' },
+      { q: 'CGA 和 CFS 是同一件事嗎？', a: '不是。CFS 是 9 級的衰弱分層，CGA 是多面向評估流程。常見做法是先用 CFS 快速分層，再決定要不要做完整的 CGA。' },
+      { q: '量表分數可以自己判讀嗎？', a: '可以參考，但各量表的切點與解讀需要專業人員結合整體狀況判斷，單一量表分數不能直接下結論。' },
+    ],
+    related: ['geri'],
+    relatedTerms: ['cga', 'cfs', 'intrinsic-capacity'],
+    sources: [
+      { label: 'Dalhousie Geriatric Medicine Research - Comprehensive Geriatric Assessment', url: 'https://www.dal.ca/sites/gmr/our-tools/comprehensive-geriatric-assessment.html' },
+      { label: 'Ellis G, et al. Comprehensive geriatric assessment for older adults admitted to hospital: meta-analysis of randomised controlled trials. BMJ 2011', url: 'https://pubmed.ncbi.nlm.nih.gov/22034146/' },
+      { label: 'Parker SG, et al. What is Comprehensive Geriatric Assessment (CGA)? An umbrella review. Age Ageing 2018', url: 'https://pubmed.ncbi.nlm.nih.gov/29206906/' },
+      { label: 'Katz S, et al. Studies of illness in the aged: the index of ADL. JAMA 1963', url: 'https://pubmed.ncbi.nlm.nih.gov/14044222/' },
+      { label: 'Lawton MP, Brody EM. Assessment of older people: self-maintaining and instrumental activities of daily living. Gerontologist 1969', url: 'https://pubmed.ncbi.nlm.nih.gov/5349366/' },
+      { label: 'Folstein MF, et al. "Mini-mental state". J Psychiatr Res 1975', url: 'https://pubmed.ncbi.nlm.nih.gov/1202204/' },
+      { label: 'Yesavage JA, et al. Development and validation of a geriatric depression screening scale. J Psychiatr Res 1982', url: 'https://pubmed.ncbi.nlm.nih.gov/7183759/' },
+      { label: 'Vellas B, et al. The Mini Nutritional Assessment (MNA) and its use in grading the nutritional state of elderly patients. Nutrition 1999', url: 'https://pubmed.ncbi.nlm.nih.gov/9990575/' },
+      { label: 'Podsiadlo D, Richardson S. The timed "Up & Go". J Am Geriatr Soc 1991', url: 'https://pubmed.ncbi.nlm.nih.gov/1991946/' },
+    ],
+  },
+  {
+    slug: 'atc-code-how-to-read',
+    updatedAt: '2026-10-02',
+    topic: 'medication-safety',
+    question: 'ATC 藥品分類碼怎麼看？要怎麼查某個藥的 ATC code？',
+    searchPhrases: ['ATC code', 'ATC 碼', 'ATC 藥品分類', '藥品 ATC 代碼怎麼查', 'ATC code 查詢', '藥物分類碼'],
+    audience: 'b2b',
+    answer:
+      'ATC 碼共 7 碼，由左到右逐段縮小範圍：第 1 碼英文字母是解剖學主群（作用的器官系統），第 2、3 碼數字是治療次群，第 4 碼字母是藥理次群，第 5 碼字母是化學次群，最後 2 碼數字是個別成分。例如降血糖藥 metformin 是 A10BA02。要查某個成分的碼，可到 WHO 的 ATC/DDD Index，台灣的藥品許可證對應碼則可用食藥署在政府資料開放平臺公開的資料集。',
+    sections: [
+      {
+        heading: '用 metformin 拆一次碼',
+        paragraphs: ['WHO 在官方說明中就是用 metformin 示範五個層級：'],
+        bullets: [
+          'A：消化道與代謝（第 1 層，解剖學主群）',
+          'A10：糖尿病用藥（第 2 層，治療次群）',
+          'A10B：降血糖藥，不含胰島素（第 3 層，藥理次群）',
+          'A10BA：雙胍類（第 4 層，化學次群）',
+          'A10BA02：metformin（第 5 層，化學成分）',
+        ],
+      },
+      {
+        heading: '看碼時要知道的三件事',
+        bullets: [
+          'ATC 分到「成分」為止：所有單方 metformin 製劑都是 A10BA02，不論商品名。比對有沒有重複用藥時，看成分碼比看商品名可靠',
+          '同一成分可以有多個碼：finasteride 低劑量的生髮錠歸 D11AX，高劑量的攝護腺肥大用藥歸 G04C；prednisolone 因為劑型與用途不同，有 7 個以上的碼',
+          'ATC 不是嚴格的適應症分類：它依主要用途或藥理類別歸類，同一類裡的藥可能適應症不同，用途相近的藥也可能在不同類',
+        ],
+      },
+      {
+        heading: '去哪裡查',
+        bullets: [
+          'WHO ATC/DDD Index（whocc.no）：輸入成分名或碼，可以查到該成分在國際標準裡的分類',
+          '食藥署藥品藥理治療分類 ATC 碼資料集（政府資料開放平臺）：以藥品許可證字號對應 ATC 碼與中英文分類名稱，每週與藥證系統同步，適合要做批次比對的系統',
+        ],
+        paragraphs: [
+          'WHO 的 ATC 系統只收有人提出申請的成分，涵蓋並不完整；傳統、順勢或草藥製劑一般不收。查不到碼不代表資料有誤。',
+        ],
+      },
+      {
+        heading: '用在用藥安全的地方',
+        paragraphs: [
+          '長輩的藥袋常來自不同醫院，商品名不同但成分相同。把處方對應到 ATC 碼後，系統能在成分層級比對重複用藥，也能依第 3、4 層的藥理類別找出同類藥疊加的情形，再由藥師確認是否需要處理。',
+        ],
+      },
+    ],
+    toolIntro:
+      '藥提醒以 ATC 碼對應處方藥品，方便在成分層級找出重複用藥。是否調整用藥一律由醫師或藥師決定。',
+    faqs: [
+      { q: 'ATC 碼和健保藥品代碼是同一種嗎？', a: '不是。健保藥品代碼是給付與申報用的，每個品項一個碼；ATC 碼是 WHO 的成分分類碼，不同商品但相同成分會共用同一組碼。' },
+      { q: 'ATC 碼會改變嗎？', a: '會。WHO 定期公布 ATC 碼的新增與異動清單，系統若存放 ATC 碼，需要定期同步。' },
+      { q: '每種藥都查得到 ATC 碼嗎？', a: '不一定。WHO 只收有人提出申請且符合條件的成分，傳統、順勢與草藥製劑一般不收，查不到碼不代表資料有誤。' },
+    ],
+    related: ['yaocare'],
+    relatedTerms: ['atc'],
+    sources: [
+      { label: 'WHOCC - ATC Structure and principles', url: 'https://www.whocc.no/atc/structure_and_principles/' },
+      { label: 'WHOCC - ATC/DDD Index', url: 'https://www.whocc.no/atc_ddd_index/' },
+      { label: '政府資料開放平臺 - 藥品藥理治療分類 ATC 碼資料集', url: 'https://data.gov.tw/dataset/9119' },
+    ],
+  },
+  {
+    slug: 'asq3-scoring-guide',
+    updatedAt: '2026-10-02',
+    topic: 'child-development',
+    question: 'ASQ-3 兒童發展篩檢怎麼填？分數怎麼算、落在哪一區怎麼辦？',
+    searchPhrases: ['ASQ-3', 'ASQ 發展篩檢', 'ASQ-3 怎麼算分', 'ASQ-3 切點', '2歲語言發展評估', '兒童發展篩檢量表'],
+    audience: 'parent',
+    answer:
+      'ASQ-3 依孩子的月齡選對應的問卷（涵蓋 1 到 66 個月，共 21 個年齡版），由家長就溝通、粗動作、精細動作、問題解決、個人社會五個領域各回答 6 題，選「會」、「有時會」或「還不會」，分別計 10、5、0 分，每個領域滿分 60 分。領域總分低於該月齡的切點（平均以下 2 個標準差）建議轉介專業評估；落在平均以下 1 到 2 個標準差是監測區，要多練習並定期再篩。篩檢不是診斷。',
+    sections: [
+      {
+        heading: '怎麼選問卷、怎麼填',
+        bullets: [
+          '依實際月齡選版本：例如 2 歲左右用 24 個月版，適用 23 個月 0 天到 25 個月 15 天',
+          '家長親自讓孩子試做每一題，再回答「會、有時會、還不會」，不要只憑印象',
+          '填寫約 10 到 15 分鐘，紙本問卷手算約 2 到 3 分鐘',
+        ],
+        paragraphs: ['問卷題目受著作權保護，由 Brookes 出版社發行，本頁不貼題目。'],
+      },
+      {
+        heading: '分數怎麼算',
+        bullets: [
+          '每題「會」10 分、「有時會」5 分、「還不會」0 分',
+          '同一領域 6 題加總，得到該領域 0 到 60 分',
+          '有題目沒回答時，使用手冊有調整分數的方法，不要直接當 0 分',
+          '五個領域各自對照該月齡的切點，不要把五個領域加總',
+        ],
+      },
+      {
+        heading: '落在哪一區、下一步做什麼',
+        bullets: [
+          '高於切點：發展符合預期，繼續日常互動，之後依月齡再篩',
+          '監測區（平均以下 1 到 2 個標準差）：不是異常，但建議提供針對該領域的練習機會，並隔一段時間重新篩檢',
+          '低於切點（平均以下 2 個標準差）：建議安排專業的發展評估，可先詢問兒科醫師或當地的早期療育服務單位',
+        ],
+        paragraphs: [
+          'ASQ-3 是篩檢工具，用意是找出需要進一步看的孩子。切點是研究團隊比較不同切點在各年齡版辨識出的孩子比例後訂的，用於篩檢，不是診斷門檻。結果若與家長的觀察不一致，以專業人員的評估為準。',
+        ],
+      },
+      {
+        heading: '2 歲還不太開口的話',
+        paragraphs: [
+          '語言表達在 ASQ-3 屬於「溝通」領域。孩子在這個領域低於切點，或同時有多個領域偏低，建議儘早讓專業人員評估聽力與整體發展。其他徵兆與觀察重點可看本站的幼兒發展指南。',
+        ],
+      },
+    ],
+    toolIntro:
+      'Smart Pedi 提供免費的兒童發展篩檢：依年齡帶給出問卷、對齊 ASQ-3 常模，用雷達圖對比同齡並紅黃綠分級，給出觀察或轉介建議。',
+    faqs: [
+      { q: 'ASQ-3 低於切點就是發展遲緩嗎？', a: '不是。低於切點代表建議進一步評估，確診需要由專業人員做完整的發展評估。' },
+      { q: '監測區要不要看醫生？', a: '監測區的孩子不一定要就醫，建議針對該領域多練習並定期再篩。若家長仍然擔心，隨時可以請兒科醫師看。' },
+      { q: 'ASQ-3 適用幾歲的孩子？', a: '涵蓋 1 到 66 個月，依月齡分成 21 個年齡版，每個版本有各自的題目與切點。' },
+      { q: '自己上網找題目填可以嗎？', a: '建議使用正式授權的問卷或有授權的篩檢工具。非正式版本的題目與切點可能不一致，分數不能對照。' },
+    ],
+    related: ['pedi'],
+    relatedTerms: ['asq3'],
+    sources: [
+      { label: 'Squires J, Bricker D. ASQ-3 Technical Report. Paul H. Brookes Publishing', url: 'https://agesandstages.com/wp-content/uploads/2017/05/ASQ-3-Technical-Appendix_web_2025.pdf' },
+      { label: 'Ages & Stages Questionnaires - How ASQ Works', url: 'https://agesandstages.com/about-asq/how-asq-works/' },
+    ],
+  },
 ];
 
 export const GUIDE_BY_SLUG: Record<string, Guide> = Object.fromEntries(
