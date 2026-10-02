@@ -32,6 +32,8 @@ export type Guide = {
   related?: readonly ProductSlug[];
   /** 相關名詞（glossary slug） */
   relatedTerms?: readonly string[];
+  /** 答案下方的一句連回名詞頁（名詞頁管定義，指南頁管細節） */
+  definitionLink?: { slug: string; lead: string; label: string };
   /**
    * 延伸資源（非 yao.care 自家產品的外部連結）。
    * 只在真的相關、免費／開源／公益的資源才放，且全站只挑最相關的一兩則，避免浮濫互連。
@@ -476,7 +478,7 @@ export const GUIDES: readonly Guide[] = [
     searchPhrases: ['clinical frailty scale 中文', 'CFS 量表', 'CFS 分級', 'frail scale 中文', '衰弱症篩檢', 'CFS 幾分算衰弱'],
     audience: 'caregiver',
     answer:
-      'CFS（臨床衰弱量表）把長者的整體狀態分成 9 級：1 到 3 級是健壯到維持得不錯，4 級是極輕度衰弱，5、6、7 級依序是輕度、中度、重度衰弱，8 級是極重度衰弱，9 級是末期。分數由有經驗的臨床人員綜合病史與日常功能後評定，不是讓長者自己填的問卷。級數越高，日常越多事需要別人協助。',
+      'CFS（Clinical Frailty Scale，臨床衰弱量表）把長者的整體狀態分成 9 級：1 到 3 級是健壯到維持得不錯，4 級是極輕度衰弱，5、6、7 級依序是輕度、中度、重度衰弱，8 級是極重度衰弱，9 級是末期。分數由有經驗的臨床人員綜合病史與日常功能後評定，不是讓長者自己填的問卷。級數越高，日常越多事需要別人協助。',
     sections: [
       {
         heading: '九級各代表什麼',
@@ -525,6 +527,7 @@ export const GUIDES: readonly Guide[] = [
       { q: '需要授權才能使用量表嗎？', a: '要。量表著作權屬開發團隊，臨床或研究使用前需向 Dalhousie 大學老年醫學研究團隊提出 Permission for Use 申請。本頁只做說明，不提供量表圖卡。' },
     ],
     related: ['geri'],
+    definitionLink: { slug: 'cfs', lead: '還不清楚這個量表是什麼、誰來評？', label: 'CFS 是什麼' },
     relatedTerms: ['cfs', 'cga', 'intrinsic-capacity'],
     sources: [
       { label: 'Dalhousie Geriatric Medicine Research - Clinical Frailty Scale', url: 'https://www.dal.ca/sites/gmr/our-tools/clinical-frailty-scale.html' },

@@ -26,6 +26,8 @@ export type GlossaryTerm = {
   related?: readonly ProductSlug[];
   /** 權威外部來源（提升可信度，也是被引用時的佐證） */
   sources?: readonly { label: string; url: string }[];
+  /** 名詞頁只講定義時，在定義下方接一句＋按鈕式連結，指向講細節的指南頁（不在名詞頁複製指南內容） */
+  guideLink?: { guide: string; lead: string; label: string };
 };
 
 export const GLOSSARY: readonly GlossaryTerm[] = [
@@ -93,6 +95,11 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '常作為高齡評估的分層起點',
     ],
     related: ['geri'],
+    guideLink: {
+      guide: 'clinical-frailty-scale-levels',
+      lead: '想看每一級的具體樣子？',
+      label: '1 到 9 級各代表什麼',
+    },
     sources: [
       { label: 'NCBI StatPearls - Clinical Frailty Scale', url: 'https://www.ncbi.nlm.nih.gov/books/NBK559009/' },
       { label: 'Rockwood K, et al. CMAJ 2005', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC1188185/' },
@@ -181,15 +188,16 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cdss',
-    updatedAt: '2026-06-14',
+    updatedAt: '2026-10-02',
     topic: 'explainable-medical-ai',
     term: '臨床決策支援系統 CDSS',
     en: 'Clinical Decision Support System',
     category: 'medical',
     oneLiner:
-      'CDSS（Clinical Decision Support System，臨床決策支援系統）是協助醫事人員做臨床判斷的軟體，分析資料後提供提醒、建議或證據，但最終決定仍由臨床人員負責。',
+      'CDSS 是協助醫事人員做臨床判斷的軟體，會依病人資料跳出提醒、給建議，最後仍由醫師決定。',
     paragraphs: [
       'CDSS（Clinical Decision Support System）是輔助醫事人員臨床判斷的軟體，應用範圍涵蓋用藥安全提醒、鑑別診斷建議與治療計畫。設計良好的 CDSS 強調可解釋與可追溯：臨床人員能逐條檢視每項建議的依據，而非僅接受系統輸出。',
+      '在院內實際會看到的，最基本是三種用藥提示：藥物交互作用（開了兩種合用有風險的藥）、藥物過敏（病歷記錄病人對某成分過敏，卻開了含該成分的藥）、劑量範圍（開出的劑量超出常見範圍，例如鴉片類止痛藥與胰島素）。美國衛生資訊科技辦公室（ONC）指出這類交互作用、過敏與劑量檢查做法簡單，卻能攔下重要的人為疏失。提示太多、對象不準，醫師會看到麻木而忽略，所以好的 CDSS 要挑重點提醒，這個現象叫警示疲勞。',
       '它通常透過 SMART on FHIR 與電子病歷（EHR）整合，使建議在診療當下即時呈現。在台灣，CDSS 的輸出亦須符合衛福部生成式 AI 指引對揭露與可追溯的要求。',
     ],
     keyPoints: [
@@ -198,6 +206,10 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '常與 EHR / FHIR 整合，並需符合 AI 合規要求',
     ],
     related: ['huatuo', 'txgnn', 'goalkeeper'],
+    sources: [
+      { label: 'ONC HealthIT.gov - Clinical Decision Support Systems 研究報告', url: 'https://healthit.gov/resources/access-medicine-clinical-decision-support-systems-studies' },
+      { label: 'AHRQ PSNet - Clinical Decision Support Systems', url: 'https://psnet.ahrq.gov/primer/clinical-decision-support-systems' },
+    ],
   },
   {
     slug: 'genai-medical-guidance',

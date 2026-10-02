@@ -84,6 +84,13 @@ const jsonLd = {
         {guide.answer}
       </p>
 
+      {guide.definitionLink && (
+        <p class="mt-4 text-base text-[color:var(--color-ink-soft)]">
+          {guide.definitionLink.lead}
+          <a href={`/glossary/${guide.definitionLink.slug}/`} class="text-[color:var(--color-brand)] font-medium hover:underline underline-offset-2">{guide.definitionLink.label}</a>
+        </p>
+      )}
+
       {guide.searchPhrases.length > 0 && (
         <p class="mt-4 text-xs text-[color:var(--color-ink-muted)]">
           常見問法：{guide.searchPhrases.join('、')}
