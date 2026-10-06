@@ -204,9 +204,9 @@ export const PRODUCTS: readonly Product[] = [
     category: 'medical',
     group: 'clinical',
     title: 'TxGNN 老藥新用',
-    tagline: '用知識圖譜與圖神經網路預測老藥的新用途，涵蓋 30+ 國 FDA 藥品，開源（台灣站 TwTxGNN）',
+    tagline: '老藥是否還有其他用途，TxGNN 用 AI 跑過 30+ 國核准藥品清單去預測候選，原始碼開源（台灣站 TwTxGNN）',
     description:
-      '老藥新用（Drug Repurposing）平台，藥提醒科技有限公司（yao.care）以哈佛大學 TxGNN 模型建置，台灣站 TwTxGNN（twtxgnn.yao.care）可公開查詢。涵蓋 30+ 國 FDA 藥品資料，整合 PubMed 文獻與 ClinicalTrials 臨床試驗證據，產出 16,700+ 藥物頁面與 FHIR 資源，並與 Epic、Cerner 等 EHR 系統整合。已上架 SMART on FHIR Gallery，原始碼於 GitHub 開源。',
+      '老藥新用（drug repurposing）用 AI 從已上市藥物裡找其他疾病的治療線索，不必重新做新藥研發。TxGNN 以哈佛大學團隊的模型建置，藥提醒科技有限公司（yao.care）做成公開平台，台灣站 TwTxGNN（twtxgnn.yao.care）可直接查詢。涵蓋 30+ 國 FDA 藥品資料，整合 PubMed 文獻與 ClinicalTrials 臨床試驗證據，產出 16,700+ 藥物頁面與 FHIR 資源，並與 Epic、Cerner 等 EHR 系統整合，已上架 SMART on FHIR Gallery，原始碼於 GitHub 開源。',
     alternateNames: [
       'TwTxGNN',
       'TwTxGNN 老藥新用驗證報告',
