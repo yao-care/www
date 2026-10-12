@@ -97,9 +97,9 @@ const WORKS = [
     slug: 'mspcp',
     kicker: 'Metabolic Syndrome Case Management',
     stat: 'XML',
-    statLabel: 'NHI CLAIMS · CASE MGMT',
+    statLabel: 'NHI CLAIMS · LINE · CASE MGMT',
     title: 'MSPCP',
-    tagline: 'Enrollment · follow-up · annual review · claim export',
+    tagline: 'Follow-up worklist · NHI XML export · LINE reminders',
   },
   {
     slug: 'sign',

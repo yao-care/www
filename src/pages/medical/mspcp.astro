@@ -4,22 +4,25 @@ import ProductHero from '../../components/products/ProductHero.astro';
 import ProductCta from '../../components/products/ProductCta.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 
-// 事實來源：$MSPCP_REPO_DIR（CLAUDE.md、docs/報價單項次.md、deploy/DEPLOYED.md、git log）。
+// 事實來源：$MSPCP_REPO_DIR 的程式碼與 git log（2026-10-08 為止）。
+// docs/報價單項次.md 是 2026-07-28 的報價狀態，之後已開發的項目以程式碼為準，勿再據以標「未開發」。
+// 未開發、不得寫上頁面：獎勵費試算、HIS 介接、風險分層、AI 風險預測、跨院分析、計費。
+// 不寫院所名稱與院所數（未取得公開授權）。
 // 沒有對外公開的產品介紹站：mspcp.yao.care 是需登入的個管師後台（noindex），故不放外部連結。
 const product = PRODUCT_BY_SLUG.mspcp;
 
 const stats = [
   { value: '5', unit: '項指標', label: '收案條件自動判定' },
-  { value: '17', unit: '條規則', label: '健保署跨欄位檢核' },
   { value: '70', unit: '天', label: '申報間隔存檔時檢查' },
-  { value: 'XML', unit: 'Big5', label: '健保署格式批次上傳檔' },
+  { value: '3', unit: '種範圍', label: '健保署 XML 申報匯出' },
+  { value: 'LINE', unit: '病人端', label: '回診提醒與數值回填' },
 ];
 
 const steps = [
   {
     k: '建檔',
     t: '建立個案',
-    b: '輸入身分證號、姓名、出生日期與性別。身分證號會驗檢查碼，同一人重複建檔會被擋下。',
+    b: '輸入身分證號或居留證統一證號、姓名、出生日期與性別。號碼會驗檢查碼，同一人重複建檔會被擋下。',
   },
   {
     k: '收案',
@@ -29,52 +32,100 @@ const steps = [
   {
     k: '追蹤',
     t: '追蹤管理',
-    b: '電話、訪視或回診都能登打。每年最多三次，兩次申報要間隔 70 天以上，跨年度自動重新計算。',
+    b: '電話追蹤、訪視、回診都能登打。每個管理年度最多三次，年度以收案日起算，前後兩次服務至少隔 70 天。',
   },
   {
     k: '年評',
     t: '年度評估',
-    b: '完成三次追蹤後才開放，畫面上直接顯示最早可以做年度評估的日期。',
+    b: '第三次追蹤後滿 70 天才開放，畫面直接顯示最早可做的日期。這一年的追蹤都沒有抽血數值，也會先擋下來提醒。做完就接著進下一年的追蹤。',
   },
   {
     k: '結案',
     t: '結案',
-    b: '填結案日期，從六項法定原因中選一項。結案後這位個案不再接受新的登打。',
+    b: '填結案日期，從六項計畫規定的原因中選一項。結案後這位個案不再接受新的登打。',
   },
 ];
 
-const daily = [
+const caseManager = [
+  {
+    t: '個案清單',
+    b: '頁籤照個案狀態分：已收案、追蹤中、已年度評估、已結案；另有「待補資料」和「待匯出」兩個頁籤，專抓還沒做完的事。姓名、身分證號、病歷號、電話打在同一個搜尋框就找得到，也能依執行月份和醫師篩選。身分證號預設遮住末四碼，按眼睛圖示才顯示全碼。',
+  },
+  {
+    t: '登打與檢核',
+    b: '系統看個案走到哪個階段，直接帶出下一個該做的作業。每一欄的格式、位數和合理範圍先查過，再跑健保署的跨欄位規則，例如伴隨疾病勾了「無」，其餘伴隨疾病就不能填。暫時用不到的欄位照樣顯示，只是停用並寫明原因。日期用民國年輸入，表單會自動暫存，中途被叫走回來還在。',
+  },
+  {
+    t: '歷程與更正',
+    b: '打開個案先看登錄歷程，每次登打一欄、每個欄位一列，哪個數字變了一眼就看得出來。每筆都記著誰在什麼時候登打、申報過沒有。登錄紀錄不能改也不能刪，要修正就另存一筆更正，原始紀錄一直留著；已經申報出去才更正的，系統會另外提醒。',
+  },
   {
     t: '待辦提醒',
-    b: '全院個案的追蹤到期狀況一張表看完，分成逾期、即將到期、未到期、已達年度上限。收案滿一年還沒做年度評估的，也會列進來。',
+    b: '全院個案攤在同一頁：可以做下一次追蹤或年度評估的、已登錄還沒申報的。收案滿一年還沒做年度評估的，時間到了自動列進來。每天清晨系統會把所有院所的提醒盤點一次。',
   },
   {
-    t: '存檔前就檢查',
-    b: '每一欄的格式、位數和合理範圍先查過，必填欄位缺了不能送出，錯在哪一欄、什麼問題會逐項列出。間隔和次數的限制是存檔時強制執行，畫面提示之外還有這一道。',
+    t: '申報匯出',
+    b: '產出 HU 開頭、Big5 編碼的健保署 XML 批次上傳檔。三顆按鈕分開：只送還沒申報過的、只補指定月份、完整歷程重送。上傳年月和資料截止年月分兩欄填，截止月之後的登錄不會混進這一批。每次匯出都留紀錄，查得到某一次追蹤有沒有送出去。',
   },
   {
-    t: '紙本紀錄表拍照帶入',
-    b: '院方原本用紙本「代謝症候群疾病管理紀錄表」的，可以拍照上傳，由 AI 讀出已填的欄位帶進表單。每個代填欄位都標出來，讀不準的分開列，一律要個管師核對後才存檔。這項功能可依院方需求開關。',
+    t: '紙本拍照與批次匯入',
+    b: '原本寫在紙本紀錄表上的，拍照上傳（可以一次好幾張），由 AI 讀出已填的欄位帶進表單。代填的欄位都標出來，個管師核對過才存檔。整批匯入舊資料時，寫不進去的那幾筆會留成「待確認草稿」，附上原因，例如缺收案評估、日期對不上，等個管師處理，不會默默消失。',
+  },
+];
+
+const management = [
+  {
+    t: '全院成效',
+    b: '各階段人數分布、逾期未追蹤人數、已結案人數，還有每位醫師名下的未追蹤比例。成效頁只放數字，要追的名單在待辦提醒那頁。',
   },
   {
-    t: '申報檔匯出',
-    b: '選民國年月和流水號，下載 HU 開頭的健保署 XML 批次上傳檔。每次匯出都留紀錄，同一年月流水號重複匯出會被擋，也查得到某一次追蹤有沒有送出去過。',
+    t: '同儕位置',
+    b: '院方掛上同儕基準參考檔後，本院各項指標放在同一條刻度上，跟基準點並排看。',
+  },
+  {
+    t: '計畫目標',
+    b: '收案人數、持續照護率、指標改善率三項，對照計畫書各年度的目標值。達標標綠，年度已到還沒達標標紅。比例類會把分子、分母寫出來。院方有提供目標檔才會出現這一段。',
+  },
+  {
+    t: '指標改善怎麼算',
+    b: '收案時超過門檻的代謝指標，最近一次登錄的數值比收案時好，就算這位個案有改善。腰圍和高密度脂蛋白依個案性別套不同門檻。',
   },
 ];
 
 const line = [
-  '病人用院方的 LINE 官方帳號自行綁定，個管師之後再補齊資料也可以',
-  '回診與追蹤到期時，由 LINE 端送出提醒',
-  '病人在 LINE 回填量測數值，個管師在個案頁按一下帶入登打表單，確認後才送出',
-  '推播文案和衛教內容由院方在後台自己維護、審核',
+  {
+    t: '綁定',
+    b: '兩條路都通。個管師確認身分後發一組綁定碼，24 小時內有效、只能用一次。或者病人先在 LINE 用身分證後五碼加生日自己綁，個管師之後再補齊資料。自己綁這條要不要開，每家院所各自決定。',
+  },
+  {
+    t: '提醒推播',
+    b: '回診、逾期未回診、抽血、年度評估、數值回報，五種提醒。訊息裡沒有姓名、檢驗數值、病名和判定結果，手機螢幕被旁人看到也不會露出病情。只推綁定之後才到期的提醒。',
+  },
+  {
+    t: '回填數值',
+    b: '病人在 LINE 填健康追蹤，回報自己量的數值。個管師在個案頁按「帶入追蹤登打」，數值進表單，核對完才送出。還沒帶入的筆數會掛在個案頁最上面。',
+  },
+  {
+    t: '衛教與訊息',
+    b: '推播文案和衛教內容由院方在後台自己寫、自己審，送出那一刻才套用最新版本。',
+  },
+];
+
+const pushOps = [
+  '推播管理依提醒類別分頁籤，每一則實際送出的原文和時間都看得到',
+  '沒送到的可以手動補推',
+  '送出結果分成已送出、失敗、對應不到三種；對應不到代表綁定要重做',
+  '另外記下推播後病人有沒有回話或按按鈕。LINE 不提供已讀資訊，所以系統不顯示「已讀」',
 ];
 
 const protect = [
-  '每家院所各自一個網址、一個資料庫，院所之間的資料不互通',
-  '姓名、身分證號、出生日期在資料庫加密存放，病歷資料與身分分表',
-  '登錄紀錄是申報依據，不能修改或刪除，只能另存「更正」，原始紀錄留著',
+  '同一套系統服務多家院所，依網址分流到各院自己的資料庫，院所之間資料不互通',
+  '姓名、身分證號、出生日期等識別欄位以 AES-256-GCM 加密，密文綁定所在的那一列和那一欄，搬到別處就解不開',
+  'LINE 端只拿得到假名代號，沒有姓名、身分證號、生日和病歷號；病人回填的數值也要個管師核對過才會變成申報資料',
+  'LINE 介接用獨立權杖，跟後台登入互不通用；院所沒設定就整組關閉',
   '查閱、建檔、登打、匯出都留存取軌跡，軌跡裡不放病人姓名和身分證號',
-  '個管師、醫師、管理員三種角色；連續登入失敗會暫時鎖定帳號',
+  '個管師、醫師、管理員三種角色；短時間內登入失敗太多次會暫停受理',
+  '檢查碼不符的號碼可以先建檔試打，但會標成測試資料，不會進申報檔',
 ];
 ---
 <ProductLayout slug="mspcp">
@@ -98,7 +149,7 @@ const protect = [
           來信洽詢導入
         </a>
       </div>
-      <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]">院方個管師登入使用的後台系統，沒有開放給一般民眾操作的頁面。</p>
+      <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]">個管師用的是需要登入的院內後台；病人那一端走院方自己的 LINE 官方帳號。</p>
     </Fragment>
   </ProductHero>
 
@@ -106,15 +157,16 @@ const protect = [
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed space-y-4">
       <p class="text-base md:text-lg">
-        代謝症候群防治計畫的個案，要照健保署規定的欄位登錄，追蹤次數和間隔也有限制，最後還得產出格式正確的申報檔。
-        這些事過去多半靠個管師自己記、自己對。
+        代謝症候群防治計畫的個案，要照健保署規定的欄位登錄，追蹤次數和間隔都有限制，月底還得交出格式正確的申報檔。
+        哪位病人該回診了、哪幾筆還沒申報，過去多半靠個管師自己記、自己對。
       </p>
       <p class="text-base md:text-lg">
-        <strong class="text-[color:var(--color-brand)]">MSPCP</strong> 把規則寫進系統。
-        個管師照著畫面登打，該擋的在存檔時就擋下來，月底選好年月，申報檔直接下載。
+        <strong class="text-[color:var(--color-brand)]">MSPCP</strong> 把計畫規則寫進系統。
+        個管師照著畫面登打，該擋的在存檔時就擋下，要追誰、要報什麼，待辦頁一次列出來。
+        病人用院方的 LINE 官方帳號收回診提醒、回報自己量的數值，不必另外裝 App。
       </p>
       <p class="text-sm md:text-base text-[color:var(--color-ink-soft)]">
-        系統負責登錄、檢核與申報作業，不做診斷，也不提供治療建議；收案判定依計畫訂的條件計算，臨床判斷仍由醫師與個管師決定。
+        系統負責登錄、檢核、提醒與申報作業，不做診斷，也不提供治療建議；收案判定依計畫訂的條件計算，臨床判斷仍由醫師與個管師決定。
       </p>
     </div>
   </section>
@@ -125,7 +177,7 @@ const protect = [
       <div class="text-center mb-10">
         <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Workflow</p>
         <h2 class="section-title mt-2">一位個案在系統裡走的五個階段</h2>
-        <p class="section-subtitle">系統依個案目前的階段，帶出下一個該做的作業；未收案不能追蹤，追蹤未滿三次不能做年度評估</p>
+        <p class="section-subtitle">未收案不能追蹤，追蹤未滿三次不能做年度評估，順序和次數都由系統把關</p>
       </div>
       <ol class="grid md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-5">
         {steps.map((s, i) => (
@@ -139,16 +191,16 @@ const protect = [
     </div>
   </section>
 
-  <!-- 個管師日常 -->
+  <!-- 個管師 -->
   <section class="py-14 md:py-20">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
       <div class="text-center mb-10">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Daily Work</p>
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Case Manager</p>
         <h2 class="section-title mt-2">個管師每天會用到的</h2>
-        <p class="section-subtitle">選項顯示中文說明，日期用民國年輸入</p>
+        <p class="section-subtitle">選項顯示中文說明，不用背申報代碼</p>
       </div>
-      <div class="grid md:grid-cols-2 gap-4 md:gap-5">
-        {daily.map((d) => (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {caseManager.map((d) => (
           <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
             <h3 class="font-bold text-[color:var(--color-ink)]">{d.t}</h3>
             <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{d.b}</p>
@@ -158,13 +210,59 @@ const protect = [
     </div>
   </section>
 
-  <!-- LINE 病人端 + 資料保護 -->
+  <!-- 管理端 -->
   <section class="py-14 md:py-20 bg-neutral-50">
-    <div class="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-2 gap-6 md:gap-8">
-      <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
-        <h3 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)]">病人端走 LINE</h3>
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Management</p>
+        <h2 class="section-title mt-2">主管看的追蹤成效</h2>
+        <p class="section-subtitle">計畫進行得如何，打開「追蹤成效」頁就有答案，不必另外拉報表</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 md:gap-5">
+        {management.map((d) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <h3 class="font-bold text-[color:var(--color-ink)]">{d.t}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{d.b}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 營養師 -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6">
+      <div class="rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] p-6 md:p-8 shadow-sm">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Dietitian</p>
+        <h2 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)] mt-2">營養師待處理</h2>
+        <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink)] leading-relaxed">
+          病人在 LINE 填健康追蹤時，如果寫了飲食或生活上的留言，那一筆會進到待辦提醒的「營養師待處理」清單。
+          清單列出姓名、送出時間和留言原文，營養師處理完按「已處理」，那一筆就移出清單。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINE 病人端 -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Patient on LINE</p>
+        <h2 class="section-title mt-2">病人在 LINE 上看到的</h2>
+        <p class="section-subtitle">用院方自己的 LINE 官方帳號，病人不必另外裝 App</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 md:gap-5">
+        {line.map((d) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <h3 class="font-bold text-[color:var(--color-ink)]">{d.t}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{d.b}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-6 rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
+        <h3 class="font-bold text-[color:var(--color-ink)]">院方這一頭怎麼管推播</h3>
         <ul class="mt-4 space-y-2.5">
-          {line.map((c) => (
+          {pushOps.map((c) => (
             <li class="flex items-start gap-2.5 text-sm text-[color:var(--color-ink)]">
               <svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               <span>{c}</span>
@@ -172,8 +270,15 @@ const protect = [
           ))}
         </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- 資訊與資安 -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6">
       <div class="rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] p-6 md:p-8 shadow-sm">
-        <h3 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)]">多院所使用與資料保護</h3>
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">IT &amp; Security</p>
+        <h2 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)] mt-2">資訊室會想問的</h2>
         <ul class="mt-4 space-y-2.5">
           {protect.map((p) => (
             <li class="flex items-start gap-2.5 text-sm text-[color:var(--color-ink)]">
