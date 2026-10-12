@@ -13,13 +13,14 @@ import { SITE } from '../../site.config';
 const category = CATEGORY_BY_SLUG.medical;
 const clinical = productsByGroup('clinical');
 const assessment = productsByGroup('assessment');
+const casemgmt = productsByGroup('casemgmt');
 
 const pageTitle = '智慧醫療 · yao.care';
 const pageDescription =
   '藥提醒、AI 華佗、TxGNN，加上 Smart Func / Geri / Pedi 三套全齡自評工具，都對接 ATC 編碼與 SMART on FHIR 互通協定。';
 
 // CollectionPage + ItemList：把本分類的產品目錄結構化，供 LLM/搜尋引擎理解
-const hubProducts = [...clinical, ...assessment];
+const hubProducts = [...clinical, ...assessment, ...casemgmt];
 const collectionSchema = {
   '@type': 'CollectionPage',
   '@id': `${new URL(category.href, SITE.url).toString()}#collection`,
@@ -115,6 +116,26 @@ const medicalCapabilities = [
           </div>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {assessment.map((p) => <ProductCard product={p} variant="hub" />)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- group: 慢性病個案管理 -->
+    {casemgmt.length > 0 && (
+      <section class="py-12 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+          <div class="mb-8">
+            <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">
+              {MEDICAL_GROUPS[2].kicker}
+            </p>
+            <h2 class="mt-2 text-2xl md:text-3xl font-bold">{MEDICAL_GROUPS[2].label}</h2>
+            <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)] max-w-3xl leading-relaxed">
+              {MEDICAL_GROUPS[2].description}
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {casemgmt.map((p) => <ProductCard product={p} variant="hub" />)}
           </div>
         </div>
       </section>

@@ -1,0 +1,194 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/products/ProductHero.astro';
+import ProductCta from '../../components/products/ProductCta.astro';
+import { PRODUCT_BY_SLUG } from '../../products.config';
+
+// 事實來源：$MSPCP_REPO_DIR（CLAUDE.md、docs/報價單項次.md、deploy/DEPLOYED.md、git log）。
+// 沒有對外公開的產品介紹站：mspcp.yao.care 是需登入的個管師後台（noindex），故不放外部連結。
+const product = PRODUCT_BY_SLUG.mspcp;
+
+const stats = [
+  { value: '5', unit: '項指標', label: '收案條件自動判定' },
+  { value: '17', unit: '條規則', label: '健保署跨欄位檢核' },
+  { value: '70', unit: '天', label: '申報間隔存檔時檢查' },
+  { value: 'XML', unit: 'Big5', label: '健保署格式批次上傳檔' },
+];
+
+const steps = [
+  {
+    k: '建檔',
+    t: '建立個案',
+    b: '輸入身分證號、姓名、出生日期與性別。身分證號會驗檢查碼，同一人重複建檔會被擋下。',
+  },
+  {
+    k: '收案',
+    t: '收案評估',
+    b: '腰圍、血壓、飯前血糖、三酸甘油酯、高密度脂蛋白五項，依男女標準自動判定；已服降壓、降糖、降脂藥的那一項視同異常。糖化血色素 5.7 到 6.4 的糖尿病前期另有一條收案路徑。',
+  },
+  {
+    k: '追蹤',
+    t: '追蹤管理',
+    b: '電話、訪視或回診都能登打。每年最多三次，兩次申報要間隔 70 天以上，跨年度自動重新計算。',
+  },
+  {
+    k: '年評',
+    t: '年度評估',
+    b: '完成三次追蹤後才開放，畫面上直接顯示最早可以做年度評估的日期。',
+  },
+  {
+    k: '結案',
+    t: '結案',
+    b: '填結案日期，從六項法定原因中選一項。結案後這位個案不再接受新的登打。',
+  },
+];
+
+const daily = [
+  {
+    t: '待辦提醒',
+    b: '全院個案的追蹤到期狀況一張表看完，分成逾期、即將到期、未到期、已達年度上限。收案滿一年還沒做年度評估的，也會列進來。',
+  },
+  {
+    t: '存檔前就檢查',
+    b: '每一欄的格式、位數和合理範圍先查過，必填欄位缺了不能送出，錯在哪一欄、什麼問題會逐項列出。間隔和次數的限制是存檔時強制執行，畫面提示之外還有這一道。',
+  },
+  {
+    t: '紙本紀錄表拍照帶入',
+    b: '院方原本用紙本「代謝症候群疾病管理紀錄表」的，可以拍照上傳，由 AI 讀出已填的欄位帶進表單。每個代填欄位都標出來，讀不準的分開列，一律要個管師核對後才存檔。這項功能可依院方需求開關。',
+  },
+  {
+    t: '申報檔匯出',
+    b: '選民國年月和流水號，下載 HU 開頭的健保署 XML 批次上傳檔。每次匯出都留紀錄，同一年月流水號重複匯出會被擋，也查得到某一次追蹤有沒有送出去過。',
+  },
+];
+
+const line = [
+  '病人用院方的 LINE 官方帳號自行綁定，個管師之後再補齊資料也可以',
+  '回診與追蹤到期時，由 LINE 端送出提醒',
+  '病人在 LINE 回填量測數值，個管師在個案頁按一下帶入登打表單，確認後才送出',
+  '推播文案和衛教內容由院方在後台自己維護、審核',
+];
+
+const protect = [
+  '每家院所各自一個網址、一個資料庫，院所之間的資料不互通',
+  '姓名、身分證號、出生日期在資料庫加密存放，病歷資料與身分分表',
+  '登錄紀錄是申報依據，不能修改或刪除，只能另存「更正」，原始紀錄留著',
+  '查閱、建檔、登打、匯出都留存取軌跡，軌跡裡不放病人姓名和身分證號',
+  '個管師、醫師、管理員三種角色；連續登入失敗會暫時鎖定帳號',
+];
+---
+<ProductLayout slug="mspcp">
+  <ProductHero product={product}>
+    <Fragment slot="hero-extras">
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {stats.map((s) => (
+          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
+              {s.value}
+              <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>
+            </div>
+            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="mailto:service@yao.care" class="btn-brand">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          來信洽詢導入
+        </a>
+      </div>
+      <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]">院方個管師登入使用的後台系統，沒有開放給一般民眾操作的頁面。</p>
+    </Fragment>
+  </ProductHero>
+
+  <!-- intro -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed space-y-4">
+      <p class="text-base md:text-lg">
+        代謝症候群防治計畫的個案，要照健保署規定的欄位登錄，追蹤次數和間隔也有限制，最後還得產出格式正確的申報檔。
+        這些事過去多半靠個管師自己記、自己對。
+      </p>
+      <p class="text-base md:text-lg">
+        <strong class="text-[color:var(--color-brand)]">MSPCP</strong> 把規則寫進系統。
+        個管師照著畫面登打，該擋的在存檔時就擋下來，月底選好年月，申報檔直接下載。
+      </p>
+      <p class="text-sm md:text-base text-[color:var(--color-ink-soft)]">
+        系統負責登錄、檢核與申報作業，不做診斷，也不提供治療建議；收案判定依計畫訂的條件計算，臨床判斷仍由醫師與個管師決定。
+      </p>
+    </div>
+  </section>
+
+  <!-- 個案流程 -->
+  <section class="py-12 md:py-16 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Workflow</p>
+        <h2 class="section-title mt-2">一位個案在系統裡走的五個階段</h2>
+        <p class="section-subtitle">系統依個案目前的階段，帶出下一個該做的作業；未收案不能追蹤，追蹤未滿三次不能做年度評估</p>
+      </div>
+      <ol class="grid md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-5">
+        {steps.map((s, i) => (
+          <li class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <div class="text-xs font-bold tracking-wider text-[color:var(--color-brand)] mb-1">{i + 1}．{s.k}</div>
+            <h3 class="font-bold text-[color:var(--color-ink)]">{s.t}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{s.b}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 個管師日常 -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Daily Work</p>
+        <h2 class="section-title mt-2">個管師每天會用到的</h2>
+        <p class="section-subtitle">選項顯示中文說明，日期用民國年輸入</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 md:gap-5">
+        {daily.map((d) => (
+          <div class="rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+            <h3 class="font-bold text-[color:var(--color-ink)]">{d.t}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{d.b}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LINE 病人端 + 資料保護 -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-2 gap-6 md:gap-8">
+      <div class="rounded-2xl bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
+        <h3 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)]">病人端走 LINE</h3>
+        <ul class="mt-4 space-y-2.5">
+          {line.map((c) => (
+            <li class="flex items-start gap-2.5 text-sm text-[color:var(--color-ink)]">
+              <svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>{c}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] p-6 md:p-8 shadow-sm">
+        <h3 class="text-lg md:text-xl font-bold text-[color:var(--color-ink)]">多院所使用與資料保護</h3>
+        <ul class="mt-4 space-y-2.5">
+          {protect.map((p) => (
+            <li class="flex items-start gap-2.5 text-sm text-[color:var(--color-ink)]">
+              <svg class="w-4 h-4 mt-0.5 shrink-0 text-[color:var(--color-brand)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>{p}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <ProductCta
+    product={product}
+    headline="院內也在做代謝症候群個案管理？"
+    description="想看實際操作畫面或討論導入，來信 service@yao.care，我們可以用示範站帶您走一遍。"
+  />
+</ProductLayout>

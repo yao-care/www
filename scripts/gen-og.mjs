@@ -94,6 +94,14 @@ const WORKS = [
     tagline: 'Func/Geri/Pedi enrollment + case mgmt · GCM case study',
   },
   {
+    slug: 'mspcp',
+    kicker: 'Metabolic Syndrome Case Management',
+    stat: 'XML',
+    statLabel: 'NHI CLAIMS · CASE MGMT',
+    title: 'MSPCP',
+    tagline: 'Enrollment · follow-up · annual review · claim export',
+  },
+  {
     slug: 'sign',
     kicker: 'Age-Friendly Contactless Check-in',
     stat: 'FACE',

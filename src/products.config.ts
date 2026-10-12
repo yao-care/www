@@ -97,6 +97,7 @@ export type ProductSlug =
   | 'geri'
   | 'pedi'
   | 'fhir-server'
+  | 'mspcp'
   | 'intel'
   | 'siqc'
   | 'triz'
@@ -105,7 +106,7 @@ export type ProductSlug =
   | 'sign';
 
 /** 智慧醫療分類下的子分組（其他分類不分組） */
-export type MedicalGroupSlug = 'clinical' | 'assessment';
+export type MedicalGroupSlug = 'clinical' | 'assessment' | 'casemgmt';
 
 export type ProductGroup = {
   slug: MedicalGroupSlug;
@@ -127,6 +128,12 @@ export const MEDICAL_GROUPS: readonly ProductGroup[] = [
     kicker: 'Preventive Assessment · SMART on FHIR',
     description:
       '成人、高齡、兒童三套自評工具，結果一律紅黃綠分級並附衛教轉介，可送進 GCM 收案後端。',
+  },
+  {
+    slug: 'casemgmt',
+    label: '慢性病個案管理',
+    kicker: 'Case Management · NHI Claims',
+    description: '給醫院個管師用的後台。收案登打、追蹤排程和健保申報檔，都在同一份個案紀錄上處理。',
   },
 ] as const;
 
@@ -313,6 +320,26 @@ export const PRODUCTS: readonly Product[] = [
       '個案管理 + 危險訊號升級；GCM 協會為導入案例',
     ],
     cta: { label: '談收案串接 / 合作', href: 'mailto:service@yao.care' },
+  },
+  {
+    slug: 'mspcp',
+    category: 'medical',
+    group: 'casemgmt',
+    title: 'MSPCP 代謝症候群個案管理',
+    tagline: '代謝症候群防治計畫的個案登錄與健保申報系統，個管師登打完，申報檔直接產出',
+    description:
+      'MSPCP 是代謝症候群防治計畫的個案登錄與健保申報系統，給醫院個管師在後台使用。收案時依腰圍、血壓、飯前血糖、三酸甘油酯、高密度脂蛋白五項指標判定是否符合條件；之後的追蹤管理、年度評估與結案，都登打在同一份個案紀錄上。存檔前逐欄檢查格式與健保署跨欄位規則，申報間隔不足或追蹤次數已達上限會直接擋下，並告知最早可做的日期。每月選定年月與流水號，就能下載健保署格式的 XML 批次上傳檔。病人可用院方 LINE 官方帳號綁定，收到回診提醒、回填量測數值，由個管師確認後帶入登打。每家院所各自一個網址與資料庫，資料不互通。',
+    alternateNames: ['MSPCP', '代謝症候群個案管理系統', '代謝症候群防治計畫個案登錄系統'],
+    ogTitle: 'MSPCP',
+    ogStat: 'XML',
+    ogStatLabel: 'NHI CLAIMS · CASE MGMT',
+    cardKicker: '代謝症候群防治計畫 · 健保申報',
+    cardBullets: [
+      '五項指標自動判定收案條件',
+      '追蹤間隔與年度次數上限，存檔時就檢查',
+      '產出健保署格式 XML 批次上傳檔',
+    ],
+    cta: { label: '來信洽詢導入', href: 'mailto:service@yao.care' },
   },
   // ─── AI 系統 ────────────────────────────────────────
   {
