@@ -155,16 +155,31 @@ const protect = [
 
   <!-- intro -->
   <section class="py-12 md:py-16">
-    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed space-y-4">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed space-y-5">
+      <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">服務介紹</p>
+      <h2 class="section-title">讓代謝症候群防治計畫，從收案到申報都有人顧好</h2>
       <p class="text-base md:text-lg">
-        代謝症候群防治計畫的個案，要照健保署規定的欄位登錄，追蹤次數和間隔都有限制，月底還得交出格式正確的申報檔。
-        哪位病人該回診了、哪幾筆還沒申報，過去多半靠個管師自己記、自己對。
+        腰圍、血壓、空腹血糖、三酸甘油酯、高密度脂蛋白膽固醇這五項，只要有三項不合格，就是代謝症候群。它本身不痛不癢，卻是糖尿病、心臟病和中風的前一站。
+        健保署推動的代謝症候群防治計畫，讓醫院把這群病人收進來，定期追蹤、衛教、年度評估，把風險往回拉。
       </p>
       <p class="text-base md:text-lg">
-        <strong class="text-[color:var(--color-brand)]">MSPCP</strong> 把計畫規則寫進系統。
-        個管師照著畫面登打，該擋的在存檔時就擋下，要追誰、要報什麼，待辦頁一次列出來。
-        病人用院方的 LINE 官方帳號收回診提醒、回報自己量的數值，不必另外裝 App。
+        對院內來說，這是一大串行政工作：欄位要照健保署規定登錄，追蹤次數和間隔有限制，每個月要交出格式正確的申報檔；
+        哪位病人該回診、哪幾筆還沒報、全院成效夠不夠，過去多半靠個管師自己記、自己對 Excel。
+        病人離開診間之後，能不能持續量血壓、改飲食，院方也很難知道。
       </p>
+      <p class="text-base md:text-lg">
+        <strong class="text-[color:var(--color-brand)]">MSPCP 代謝症候群個案管理系統</strong>是藥提醒科技為參與這項計畫的醫院建置的個案管理服務。
+        計畫規則直接寫進系統：個管師照畫面登打，不合規定的在存檔時就擋下；該追蹤誰、該申報什麼，待辦頁一次列好；
+        主管打開追蹤成效，就看得到全院進度和計畫目標的達成情形。
+        病人那一端走院方自己的 LINE 官方帳號，收回診提醒、回報自己量的數值、讀院方準備的衛教內容，不用另外裝 App。
+      </p>
+      <div class="rounded-xl bg-neutral-50 border border-neutral-200 p-5 md:p-6">
+        <p class="font-bold text-[color:var(--color-ink)]">導入方式</p>
+        <p class="mt-2 text-base">
+          每家醫院有自己的網址與獨立資料庫，個資欄位加密保存；我們負責部署、串接院方的 LINE 官方帳號，以及上線後的維運。
+          系統持續依各院個管師的實際回饋調整，畫面與規則跟著計畫一起更新。
+        </p>
+      </div>
       <p class="text-sm md:text-base text-[color:var(--color-ink-soft)]">
         系統負責登錄、檢核、提醒與申報作業，不做診斷，也不提供治療建議；收案判定依計畫訂的條件計算，臨床判斷仍由醫師與個管師決定。
       </p>
