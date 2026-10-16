@@ -164,10 +164,11 @@ const LEVELS = [
 ];
 const levelText = Object.fromEntries(LEVELS.map((l) => [l.k, l.t]));
 
+// 截圖：Playwright 實拍台灣站公開頁面（2026-10-16），無個資、無後台
 const steps = [
-  { t: '選國家', b: '台灣直接進台灣站，其他國家在下方地圖挑。' },
-  { t: '查一個藥', b: '用學名或英文名搜尋，每個藥一頁。' },
-  { t: '看預測和證據', b: '新適應症、模型分數、證據等級和研究來源都在同一頁。' },
+  { t: '選國家', b: '台灣直接進台灣站，其他國家在下方地圖挑。', img: { src: '/assets/images/txgnn/step1-home.webp', w: 768, h: 720, alt: '台灣站首頁，有藥物查詢搜尋框與證據等級篩選' } },
+  { t: '查一個藥', b: '輸入學名或英文名，例如 busulfan。', img: { src: '/assets/images/txgnn/step2-search.webp', w: 584, h: 493, alt: '在台灣站搜尋 busulfan 後出現的結果清單' } },
+  { t: '看預測和證據', b: '藥物頁列出預測新適應症、模型分數和證據等級。', img: { src: '/assets/images/txgnn/step3-drug.webp', w: 784, h: 345, alt: 'Busulfan 藥物頁的快速總覽表：預測新適應症骨髓發育不良症候群，分數 99.62%，證據等級 L2' } },
 ];
 
 // 系統怎麼運作：HTML/CSS 圖解，icon 為 inline SVG path（24×24 viewBox）
@@ -193,7 +194,7 @@ const tipAttrs = (code: string) => {
   };
 };
 ---
-<ProductLayout slug="txgnn" faqOpen={false} wide>
+<ProductLayout slug="txgnn" faqOpen={false} wide furtherLimit={4} furtherCompact>
   <ProductHero product={product}>
     <Fragment slot="hero-extras">
       <div class="mt-6 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 items-center">
@@ -226,7 +227,7 @@ const tipAttrs = (code: string) => {
       <header class="sec-head">
         <p class="kicker">Examples</p>
         <h2 class="section-title mt-2">三個模型自己找出來的例子</h2>
-        <p class="sec-lead">知識圖譜裡原本沒有這些組合，是模型預測的。證據有強有弱，照實標。</p>
+        <p class="sec-lead">知識圖譜裡原本沒有這些組合，證據有強有弱，照實標。</p>
       </header>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {examples.map((ex) => (
@@ -272,7 +273,7 @@ const tipAttrs = (code: string) => {
       <header class="sec-head">
         <p class="kicker">Evidence Levels</p>
         <h2 class="section-title mt-2">分數高，不等於有效</h2>
-        <p class="sec-lead">模型分數只說明「模型覺得像」，有沒有用要看研究。每個預測旁邊都標了證據等級。</p>
+        <p class="sec-lead">模型分數只代表「模型覺得像」，有沒有用要看研究。</p>
       </header>
       <ol class="space-y-2.5 max-w-4xl" aria-label="證據等級，L1 最強到 L5 最弱">
         {LEVELS.map((l, i) => (
@@ -309,11 +310,15 @@ const tipAttrs = (code: string) => {
       </header>
       <ol class="grid md:grid-cols-3 gap-5">
         {steps.map((s, i) => (
-          <li class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
-            <span class="step-num">{i + 1}</span>
-            <h3 class="mt-3 font-bold text-lg text-[color:var(--color-ink)]">{s.t}</h3>
-            <p class="mt-1 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{s.b}</p>
-            <!-- TODO(截圖)：各步驟截圖待補，放在這裡（自託管於 public/assets/images/txgnn/） -->
+          <li class="flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-sm overflow-hidden">
+            <div class="p-6 pb-4">
+              <span class="step-num">{i + 1}</span>
+              <h3 class="mt-3 font-bold text-lg text-[color:var(--color-ink)]">{s.t}</h3>
+              <p class="mt-1 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{s.b}</p>
+            </div>
+            <div class="mt-auto mx-4 mb-4 rounded-lg border border-neutral-200 overflow-hidden bg-[color:var(--color-bg-base)]">
+              <img src={s.img.src} width={s.img.w} height={s.img.h} alt={s.img.alt} loading="lazy" class="w-full h-auto" />
+            </div>
           </li>
         ))}
       </ol>
@@ -350,7 +355,7 @@ const tipAttrs = (code: string) => {
       <header class="sec-head">
         <p class="kicker">Coverage</p>
         <h2 class="section-title mt-2">{countries.length} 個國家與地區</h2>
-        <p class="sec-lead">滑過地圖上的點看詳細資料，點下去在新分頁打開該國站。資料來源與限制見<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。</p>
+        <p class="sec-lead">點地圖或清單進各國站。資料來源見<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。</p>
       </header>
 
       <div class="map-wrap relative hidden sm:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] gap-4">
@@ -484,7 +489,7 @@ const tipAttrs = (code: string) => {
         </div>
       </div>
     </section>
-    <ProductNews target="txgnn" />
+    <ProductNews target="txgnn" limit={3} compact />
   </Fragment>
 </ProductLayout>
 

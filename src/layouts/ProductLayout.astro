@@ -19,16 +19,23 @@ interface Props {
   faqOpen?: boolean;
   /** true：FAQ 與延伸閱讀改用與正文相同的 max-w-7xl 左緣（正文段落全用 7xl 的頁面才開） */
   wide?: boolean;
+  /** 延伸閱讀最多顯示幾張（預設全部） */
+  furtherLimit?: number;
+  /** true：延伸閱讀只留類別與標題，不顯示摘要與導言 */
+  furtherCompact?: boolean;
 }
 
-const { slug, title, description, ogImage: ogImagePath, faqOpen = true, wide = false } = Astro.props;
+const { slug, title, description, ogImage: ogImagePath, faqOpen = true, wide = false, furtherLimit, furtherCompact = false } = Astro.props;
 const product = PRODUCT_BY_SLUG[slug];
 const category = CATEGORY_BY_SLUG[product.category];
 const faqs = PRODUCT_FAQS[slug] ?? [];
 
 // 延伸閱讀：反查 related 指向本產品的名詞解釋 / 情境指南（雙向交叉連結）
-const relatedTerms = GLOSSARY.filter((t) => t.related?.includes(slug));
-const relatedGuides = GUIDES.filter((g) => g.related?.includes(slug));
+const allTerms = GLOSSARY.filter((t) => t.related?.includes(slug));
+const allGuides = GUIDES.filter((g) => g.related?.includes(slug));
+// furtherLimit：情境指南優先，剩下名額給名詞解釋
+const relatedGuides = furtherLimit != null ? allGuides.slice(0, furtherLimit) : allGuides;
+const relatedTerms = furtherLimit != null ? allTerms.slice(0, Math.max(0, furtherLimit - relatedGuides.length)) : allTerms;
 const hasFurtherReading = relatedTerms.length > 0 || relatedGuides.length > 0;
 
 // 開發與維運單位（實體歸屬）：LLM 讀正文的權重高於結構化資料，schema 有寫、正文也要寫。
@@ -179,11 +186,13 @@ const jsonLd = {
                 Further Reading
               </p>
               <h2 class="mt-2 text-2xl md:text-3xl font-bold">延伸閱讀</h2>
-              <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">
-                與 {product.title} 相關的名詞解釋與情境指南
-              </p>
+              {!furtherCompact && (
+                <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">
+                  與 {product.title} 相關的名詞解釋與情境指南
+                </p>
+              )}
             </div>
-            <div class="grid md:grid-cols-2 gap-4 md:gap-5">
+            <div class:list={['grid gap-4 md:gap-5', furtherCompact ? 'sm:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2']}>
               {relatedGuides.map((g) => (
                 <a
                   href={`/guides/${g.slug}/`}
@@ -191,7 +200,7 @@ const jsonLd = {
                 >
                   <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">情境指南</div>
                   <h3 class="font-bold text-base md:text-lg mb-2 group-hover:text-[color:var(--color-brand)]">{g.question}</h3>
-                  <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed line-clamp-3">{g.answer}</p>
+                  {!furtherCompact && <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed line-clamp-3">{g.answer}</p>}
                 </a>
               ))}
               {relatedTerms.map((t) => (
@@ -201,7 +210,7 @@ const jsonLd = {
                 >
                   <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-2">名詞解釋</div>
                   <h3 class="font-bold text-base md:text-lg mb-2 group-hover:text-[color:var(--color-brand)]">{t.term}</h3>
-                  <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed line-clamp-3">{t.oneLiner}</p>
+                  {!furtherCompact && <p class="text-sm text-[color:var(--color-ink-soft)] leading-relaxed line-clamp-3">{t.oneLiner}</p>}
                 </a>
               ))}
             </div>
