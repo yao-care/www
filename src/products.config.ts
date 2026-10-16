@@ -226,7 +226,7 @@ export const PRODUCTS: readonly Product[] = [
     cardKicker: '醫療 AI · 開源 · 國際上架',
     cardBullets: [
       '30 個國家與地區、17 種語言',
-      '17,658 份藥物報告，附證據等級',
+      '17,676 份藥物報告，附證據等級',
       'SMART on FHIR 免費整合，GitHub 開源',
     ],
     externalUrl: 'https://twtxgnn.yao.care/',

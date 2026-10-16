@@ -26,7 +26,7 @@
     "pubmed": 24327,
     "clinicaltrials": 13318,
     "evidence_bundles": 5703,
-    "drug_pages": 957,
+    "drug_pages": 958,
     "phase": {
       "P5": "OK",
       "P7": "OK",
@@ -507,7 +507,7 @@
     "pubmed": 15344,
     "clinicaltrials": 7369,
     "evidence_bundles": 826,
-    "drug_pages": 603,
+    "drug_pages": 604,
     "phase": {
       "P5": "OK",
       "P7": "OK",
@@ -581,7 +581,7 @@
     "pubmed": 8578,
     "clinicaltrials": 6929,
     "evidence_bundles": 685,
-    "drug_pages": 444,
+    "drug_pages": 445,
     "phase": {
       "P5": "OK",
       "P7": "OK",
@@ -766,7 +766,7 @@
     "pubmed": 12239,
     "clinicaltrials": 8798,
     "evidence_bundles": 503,
-    "drug_pages": 860,
+    "drug_pages": 861,
     "phase": {
       "P5": "OK",
       "P7": "OK",
@@ -877,7 +877,7 @@
     "pubmed": 12640,
     "clinicaltrials": 7164,
     "evidence_bundles": 610,
-    "drug_pages": 402,
+    "drug_pages": 404,
     "phase": {
       "P5": "OK",
       "P7": "OK",
@@ -914,7 +914,7 @@
     "pubmed": 7824,
     "clinicaltrials": 3715,
     "evidence_bundles": 1824,
-    "drug_pages": 392,
+    "drug_pages": 402,
     "phase": {
       "P5": "OK",
       "P7": "OK",
@@ -988,7 +988,7 @@
     "pubmed": 2744,
     "clinicaltrials": 1519,
     "evidence_bundles": 414,
-    "drug_pages": 160,
+    "drug_pages": 161,
     "phase": {
       "P5": "OK",
       "P7": "OK",
@@ -1025,7 +1025,7 @@
     "pubmed": 2679,
     "clinicaltrials": 1149,
     "evidence_bundles": 152,
-    "drug_pages": 450,
+    "drug_pages": 451,
     "phase": {
       "P5": "OK",
       "P7": "OK",
