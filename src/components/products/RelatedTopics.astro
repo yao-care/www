@@ -5,14 +5,16 @@ import { TOPICS } from '../../topics.config';
 
 interface Props {
   product: string;
+  /** true：用 max-w-7xl，對齊正文左緣 */
+  wide?: boolean;
 }
 
-const { product } = Astro.props;
+const { product, wide = false } = Astro.props;
 const topics = TOPICS.filter((t) => (t.products as readonly string[]).includes(product));
 ---
 
 {topics.length > 0 && (
-  <div class="max-w-5xl mx-auto px-4 lg:px-6 pb-4">
+  <div class:list={[wide ? 'max-w-7xl' : 'max-w-5xl', 'mx-auto px-4 lg:px-6 pb-4']}>
     {topics.map((t) => (
       <p class="mb-2">
         <a

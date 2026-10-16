@@ -13,6 +13,7 @@ const product = PRODUCT_BY_SLUG.txgnn;
 
 // ─── 對外數字（TxGNN 團隊 2026-10-16 確認的口徑） ───────────────────────────
 // 國家數、語言數、藥物頁數一律由 txgnn-countries.json 算出，不寫死。
+// 藥物報告頁數＝各站可收錄的藥物報告頁（TxGNN 團隊 2026-10-16 清理後提供），由 json 加總。
 // 頁面不提四級信心度（very_high／high／medium／low 是內部排序用），只講模型分數與證據等級。
 // FHIR 資源數目前沒有資料檔可讀，先照團隊確認的數字寫。TODO：有資料檔後改成計算值。
 const FHIR_RESOURCES = '32.6 萬';
@@ -37,6 +38,8 @@ const regName = (c: Country) => {
   if (name && abbr && name !== abbr) return `${name}（${abbr}）`;
   return name ?? abbr ?? '';
 };
+// 卡片只放縮寫；沒有縮寫的用英文或當地名稱
+const regShort = (c: Country) => c.regulator.abbrev ?? c.regulator.name_en ?? c.regulator.name_local ?? '';
 
 const siteName = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.name]));
 const siteFlag = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.flag]));
@@ -49,6 +52,7 @@ const info = (code: string) => {
     flag: siteFlag[code] ?? '',
     url: txgnnSiteUrl(code),
     regulator: c ? regName(c) : '',
+    regShort: c ? regShort(c) : '',
     pages: c?.drug_pages != null ? nf(c.drug_pages) : '',
     date: c?.drug_pages_date ?? '',
     langs: c ? langLabel(c.langs) : '',
@@ -64,8 +68,15 @@ const REGIONS: { label: string; codes: string[] }[] = [
   { label: '中東與非洲', codes: ['sa', 'za'] },
 ];
 
+// ─── 插圖（codex image_gen 產生，2026-10-16；圖內無文字） ───────────────────
+const IMG = {
+  hero: { src: '/assets/images/txgnn/hero.webp', w: 1600, h: 900, alt: '一顆膠囊延伸出多條路徑，通往肺、心臟、大腦、皮膚與血管的插圖' },
+  countries: { src: '/assets/images/txgnn/countries.webp', w: 1200, h: 675, alt: '一顆藥丸被幾份樣式不同、蓋著印章的核准文件圍繞的插圖' },
+  smart: { src: '/assets/images/txgnn/smart.webp', w: 1200, h: 675, alt: '醫師在診間看電腦上病歷畫面的插圖' },
+};
+
 // ─── 例子卡片（資料陣列驅動，換例子只改這裡） ──────────────────────────────
-// 用戶尚未拍板最終三例（2026-10-16）。目前三例皆為「系統自己預測、知識圖譜裡沒有這組關係」，
+// 用戶 2026-10-16 選定 dapsone、clopidogrel、acetylcysteine 三例，皆為「系統自己預測、知識圖譜裡沒有這組關係」，
 // 分數與頁面連結由 TxGNN 團隊提供、網址已實測 200；臨床證據逐條附權威來源。
 // systemPrediction 兩種形態：
 //   { score, level, url, site } → 顯示分數、證據等級與藥物頁連結
@@ -78,8 +89,10 @@ type Example = {
   drug: string;
   original: string;
   newUse: string;
+  summary: string;
   evidence: string;
   level: string;
+  img: { src: string; w: number; h: number; alt: string };
   systemPrediction: SystemPrediction;
   sources: Source[];
 };
@@ -87,10 +100,12 @@ const examples: Example[] = [
   {
     drug: 'Dapsone',
     original: '痲瘋病、皰疹樣皮膚炎',
-    newUse: '肺囊蟲肺炎（PCP）',
+    newUse: '肺囊蟲肺炎',
+    summary: '模型自己找回了臨床上真的在用的用途。',
     evidence:
-      '這一例是模型自己找回了臨床上真的在用的用途。不能用磺胺類藥物的愛滋感染者，醫師會改用 dapsone 預防肺囊蟲肺炎，美國做過第三期試驗拿它和 atovaquone 比。2024 年的統合分析把含 dapsone 的處方列為預防選項之一，第一線仍是 TMP-SMX。',
+      '不能用磺胺類藥物的愛滋感染者，醫師會改用 dapsone 預防肺囊蟲肺炎，美國做過第三期試驗拿它和 atovaquone 比。2024 年的統合分析把含 dapsone 的處方列為預防選項之一，第一線仍是 TMP-SMX。',
     level: 'L1',
+    img: { src: '/assets/images/txgnn/ex-dapsone.webp', w: 960, h: 720, alt: '皮膚切面與肺臟之間有一顆藥丸與箭頭的插圖' },
     systemPrediction: { score: '99.73%', level: 'L1', url: 'https://ustxgnn.yao.care/drugs/dapsone/', site: '美國站' },
     sources: [
       { label: 'MedlinePlus：Dapsone', url: 'https://medlineplus.gov/druginfo/meds/a682128.html' },
@@ -101,11 +116,13 @@ const examples: Example[] = [
   },
   {
     drug: 'Clopidogrel',
-    original: '抗血小板藥，預防心肌梗塞、中風再發',
+    original: '預防心肌梗塞、中風再發',
     newUse: '偏頭痛',
+    summary: '對心臟有卵圓孔未閉的偏頭痛患者有試驗支持，一般偏頭痛還看不出效果。',
     evidence:
-      '證據集中在一小群人：心臟有卵圓孔未閉，或做過心房中膈缺損關閉術的偏頭痛患者。2015 年 JAMA 的隨機試驗裡，關閉術後加用 clopidogrel 的人，三個月內偏頭痛發作比較少；2026 年 BMJ 的試驗中，它對合併卵圓孔未閉的偏頭痛效果不輸常用的預防藥 metoprolol。一般偏頭痛患者的小型隨機試驗則看不出差別。',
+      '2015 年 JAMA 的隨機試驗裡，心房中膈缺損關閉術後加用 clopidogrel 的人，三個月內偏頭痛發作比較少；2026 年 BMJ 的試驗中，它對合併卵圓孔未閉的偏頭痛效果不輸常用的預防藥 metoprolol。一般偏頭痛患者的小型隨機試驗則看不出差別。',
     level: 'L2',
+    img: { src: '/assets/images/txgnn/ex-clopidogrel.webp', w: 960, h: 720, alt: '心臟血管與頭部側面之間有一顆藥丸與箭頭的插圖' },
     systemPrediction: { score: '99.44%', level: 'L2', url: 'https://ustxgnn.yao.care/drugs/clopidogrel/', site: '美國站' },
     sources: [
       { label: 'MedlinePlus：Clopidogrel', url: 'https://medlineplus.gov/druginfo/meds/a601040.html' },
@@ -114,59 +131,53 @@ const examples: Example[] = [
       { label: 'Cephalalgia 2014 先導試驗（PMID 24836213）', url: 'https://pubmed.ncbi.nlm.nih.gov/24836213/' },
     ],
   },
-  // 第三例：用戶尚未選定（2026-10-16）。選定後照上面格式補一筆，systemPrediction 與 sources 都要有實查過的網址。
-  //   propofol（麻醉 → 偏頭痛 99.69% L2）用戶已決定不用。
+  {
+    drug: 'Acetylcysteine（NAC）',
+    original: '化痰、乙醯胺酚中毒解毒',
+    newUse: '血栓性疾病',
+    summary: '目前只有兩個試驗，一個數字看起來有差但沒附統計，一個還沒公布結果。',
+    evidence:
+      '蘇州大學附一院的第三期試驗讓造血幹細胞移植病人吃 NAC 或安慰劑，看能不能預防移植相關的血栓性微血管病變。登記平台上公布的數字是 NAC 組 66 人有 5 人發病，安慰劑組 77 人有 15 人，但沒有附統計檢定，主持單位也註明好幾項指標沒照原計畫執行。法國馬賽的 RENACTIF 第二期試驗找了 40 位洗腎病人，看 NAC 能不能降低血中的組織因子，2023 年完成，到現在還沒公布結果。',
+    level: 'L2',
+    img: { src: '/assets/images/txgnn/ex-nac.webp', w: 960, h: 720, alt: '氣管、肝臟與一段有血栓的血管之間有一顆藥丸與箭頭的插圖' },
+    systemPrediction: { score: '99.96%', level: 'L2', url: 'https://ustxgnn.yao.care/drugs/acetylcysteine/', site: '美國站' },
+    sources: [
+      { label: 'DailyMed：Acetylcysteine 溶液仿單（化痰、解毒）', url: 'https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5558a5f5-e821-473b-7d8a-5d33d09f0586' },
+      { label: 'ClinicalTrials.gov NCT03252925（第三期，已公布結果）', url: 'https://clinicaltrials.gov/study/NCT03252925' },
+      { label: 'ClinicalTrials.gov NCT03636932 RENACTIF（第二期，未公布結果）', url: 'https://clinicaltrials.gov/study/NCT03636932' },
+    ],
+  },
+  // propofol（麻醉 → 偏頭痛 99.69% L2）用戶已決定不用。
   // 備選（團隊提供分數與網址，臨床證據尚未查證，換上前要逐條補權威來源）：
   //   ketamine（麻醉）→ 頭痛疾患 99.33% L2  https://intxgnn.yao.care/drugs/ketamine/
   //   cyclandelate → 偏頭痛 99.69% L2       https://twtxgnn.yao.care/drugs/cyclandelate/
   //   busulfan → 骨髓發育不良症候群 99.62% L2 https://twtxgnn.yao.care/drugs/busulfan/
 ];
 
-// 證據等級定義：以台灣站 TwTxGNN docs/methodology.md 為準
+// 證據等級定義：以台灣站 TwTxGNN docs/methodology.md 為準。bar＝階梯寬度（純視覺）
 const LEVELS = [
-  { k: 'L1', t: '多個第三期隨機對照試驗，或系統性回顧', b: '找到兩個以上第三期試驗或系統性回顧' },
-  { k: 'L2', t: '單一隨機對照試驗，或多個第二期試驗', b: '有一個隨機對照試驗，或兩個以上第二期試驗' },
-  { k: 'L3', t: '觀察性研究、大型病例系列', b: '沒有隨機分組，只觀察用藥的人後來怎麼樣' },
-  { k: 'L4', t: '前臨床研究、機轉研究、個案報告', b: '只有動物、細胞實驗或少數個案' },
-  { k: 'L5', t: '只有模型預測', b: '還找不到任何臨床證據' },
+  { k: 'L1', t: '多個第三期試驗或系統性回顧', bar: 100 },
+  { k: 'L2', t: '一個隨機對照試驗，或多個第二期試驗', bar: 82 },
+  { k: 'L3', t: '觀察性研究、大型病例系列', bar: 64 },
+  { k: 'L4', t: '動物、細胞實驗或個案報告', bar: 46 },
+  { k: 'L5', t: '只有模型預測', bar: 28 },
 ];
 const levelText = Object.fromEntries(LEVELS.map((l) => [l.k, l.t]));
 
 const steps = [
-  { t: '選國家', b: '要查台灣核准的藥，直接到台灣站。其他國家在下面的地圖或清單裡挑，每個國家有自己的站。' },
-  { t: '查一個藥', b: '用藥名搜尋，學名或英文名都可以。每個藥有一頁，最上面寫著它在這個國家原本核准治什麼。' },
-  { t: '看預測和證據', b: '頁面列出模型預測的新適應症、模型分數和證據等級，下面是找到的臨床試驗與文獻，還有交互作用和禁忌提醒。' },
+  { t: '選國家', b: '台灣直接進台灣站，其他國家在下方地圖挑。' },
+  { t: '查一個藥', b: '用學名或英文名搜尋，每個藥一頁。' },
+  { t: '看預測和證據', b: '新適應症、模型分數、證據等級和研究來源都在同一頁。' },
 ];
 
+// 系統怎麼運作：HTML/CSS 圖解，icon 為 inline SVG path（24×24 viewBox）
 const pipeline = [
-  {
-    t: '準備資料',
-    b: 'TxGNN 用的知識圖譜叫 PrimeKG，可以想成一張很大的醫學關係網，有 129,375 個節點（藥物、疾病、基因等）、約 800 萬條關係。另一份是各國主管機關公開的藥證資料，決定這個國家有哪些藥。',
-  },
-  {
-    t: '模型打分數',
-    b: 'TxGNN 的深度學習模型替每一組「藥物、疾病」打一個 0 到 1 的分數，越接近 1，模型越覺得這個藥可能對這個病有用。',
-  },
-  {
-    t: '對照已知用途',
-    b: '把知識圖譜裡這個藥已經記錄的適應症、仿單外用途和禁忌症列出來，和模型的預測一筆一筆比對。疾病名稱相同的剔除，剩下的才叫「預測新適應症」。',
-  },
-  {
-    t: '挑出來查證據',
-    b: '每個藥取分數 0.99 以上的前 10 名，到 PubMed（美國國家醫學圖書館的文獻資料庫）和 ClinicalTrials.gov（全球臨床試驗登記平台）找相關研究，再判定 L1 到 L5 的證據等級。',
-  },
-  {
-    t: '產出網站與資料',
-    b: '產出每個藥的頁面、搜尋索引，以及 FHIR 格式的資料（FHIR 是醫療系統之間交換資料的國際標準；這裡用的是 MedicationKnowledge 和 ClinicalUseDefinition 兩種）。頁面同時整合藥物和藥物、食物、草藥的交互作用，以及藥物和疾病的禁忌資料。',
-  },
-  {
-    t: '自動更新',
-    b: '系統定期抓健康新聞、檢查有沒有新發表的文獻和試驗，有變動就自動重新部署網站。',
-  },
+  { t: '準備資料', b: 'TxGNN 知識圖譜（129,375 個節點、約 800 萬條關係）加上各國藥證。', icon: 'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3' },
+  { t: '模型打分數', b: '每一組藥物與疾病得到 0 到 1 的分數。', icon: 'M4 20V10m6 10V4m6 16v-7m4 7H2' },
+  { t: '剔除已知用途', b: '和知識圖譜裡已記錄的適應症、禁忌症比對，相同的拿掉。', icon: 'M3 5h18l-7 8v6l-4 2v-8z' },
+  { t: '查證據', b: '分數 0.99 以上的前 10 名，到 PubMed 與 ClinicalTrials.gov 找研究，判定等級。', icon: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm9 16-4.3-4.3' },
+  { t: '產出網站', b: '藥物報告頁、FHIR 資料與交互作用提醒，定期自動更新。', icon: 'M4 4h16v16H4zM4 9h16M9 9v11' },
 ];
-
-const sameItems = ['AI 模型：同一個 TxGNN', '全球文獻：PubMed、ClinicalTrials.gov', '證據等級：同一套 L1 到 L5 判定方法'];
-const diffItems = ['主管機關', '核准的藥和適應症', '網站語言'];
 
 const smartAppUrl = 'https://apps.smarthealthit.org/app/twtxgnn-smart-app';
 const W = worldmap.world;
@@ -182,157 +193,126 @@ const tipAttrs = (code: string) => {
   };
 };
 ---
-<ProductLayout slug="txgnn">
+<ProductLayout slug="txgnn" faqOpen={false} wide>
   <ProductHero product={product}>
     <Fragment slot="hero-extras">
-      <p class="mt-6 text-lg md:text-xl font-medium text-[color:var(--color-ink)] max-w-3xl leading-relaxed">
-        已經上市的藥，可能還能治別的病。TxGNN 用 AI 找出這些可能，每一筆都附上目前找得到的研究證據。
-      </p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="btn-brand">
-          查台灣的藥
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-        <a href="#countries" class="btn-outline-brand">選其他國家</a>
+      <div class="mt-6 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 items-center">
+        <div>
+          <p class="text-lg md:text-xl font-medium text-[color:var(--color-ink)] leading-relaxed">
+            已經上市的藥，可能還能治別的病。TxGNN 用 AI 找出這些可能，並附上研究證據。
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="btn-brand">
+              查台灣的藥
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+            <a href="#countries" class="btn-outline-brand">選其他國家</a>
+          </div>
+          <dl class="mt-8 grid grid-cols-3 gap-3">
+            <div class="stat"><dt class="sr-only">國家與地區</dt><dd><span class="stat-num">{countries.length}</span><span class="stat-unit">國家與地區</span></dd></div>
+            <div class="stat"><dt class="sr-only">語言</dt><dd><span class="stat-num">{langCount}</span><span class="stat-unit">種語言</span></dd></div>
+            <div class="stat"><dt class="sr-only">藥物報告</dt><dd><span class="stat-num">{nf(totalDrugPages)}</span><span class="stat-unit">份藥物報告</span></dd></div>
+          </dl>
+          <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]">藥物報告為 {countries.length} 站可收錄頁合計，{drugPagesDate} 統計。</p>
+        </div>
+        <img src={IMG.hero.src} width={IMG.hero.w} height={IMG.hero.h} alt={IMG.hero.alt} fetchpriority="high" class="w-full h-auto rounded-2xl" />
       </div>
-      <dl class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 max-w-3xl">
-        <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
-          <dt class="sr-only">國家與地區</dt>
-          <dd class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{countries.length}<span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">個國家與地區</span></dd>
-        </div>
-        <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
-          <dt class="sr-only">語言</dt>
-          <dd class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{langCount}<span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">種語言</span></dd>
-        </div>
-        <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
-          <dt class="sr-only">藥物頁</dt>
-          <dd class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{nf(totalDrugPages)}<span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">個藥物頁</span></dd>
-        </div>
-      </dl>
-      <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]">藥物頁數為 {countries.length} 個站合計，{drugPagesDate} 統計。語言含英文。</p>
     </Fragment>
   </ProductHero>
 
-  <!-- 2. 三個例子 -->
+  <!-- 例子 -->
   <section class="py-14 md:py-20">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="max-w-3xl mb-10">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Examples</p>
-        <h2 class="section-title mt-2">模型自己找出來的例子</h2>
-        <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] leading-relaxed">
-          下面幾個藥，知識圖譜裡原本都沒有記錄這組用途，是模型自己預測出來的。我們把目前查得到的臨床證據放在旁邊，證據有強有弱，照實寫。
-        </p>
-      </div>
-      <div class="grid md:grid-cols-2 gap-5 max-w-5xl">
+      <header class="sec-head">
+        <p class="kicker">Examples</p>
+        <h2 class="section-title mt-2">三個模型自己找出來的例子</h2>
+        <p class="sec-lead">知識圖譜裡原本沒有這些組合，是模型預測的。證據有強有弱，照實標。</p>
+      </header>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {examples.map((ex) => (
-          <article class="flex flex-col rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
-            <h3 class="text-xl font-bold text-[color:var(--color-ink)]">{ex.drug}</h3>
-            <dl class="mt-4 space-y-3 text-sm">
-              <div>
-                <dt class="font-bold text-[color:var(--color-ink-soft)]">原本治什麼</dt>
-                <dd class="mt-0.5 text-[color:var(--color-ink)]">{ex.original}</dd>
+          <article class="flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-sm overflow-hidden">
+            <img src={ex.img.src} width={ex.img.w} height={ex.img.h} alt={ex.img.alt} loading="lazy" class="w-full h-auto bg-[color:var(--color-bg-base)]" />
+            <div class="flex flex-col flex-1 p-6">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="text-xl font-bold text-[color:var(--color-ink)]">{ex.drug}</h3>
+                <span class="level-badge" title={levelText[ex.level]}>{ex.level}</span>
               </div>
-              <div>
-                <dt class="font-bold text-[color:var(--color-ink-soft)]">模型預測的新用途</dt>
-                <dd class="mt-0.5 text-[color:var(--color-ink)] font-medium">{ex.newUse}</dd>
-              </div>
-              <div>
-                <dt class="font-bold text-[color:var(--color-ink-soft)]">目前證據</dt>
-                <dd class="mt-0.5 text-[color:var(--color-ink)] leading-relaxed">{ex.evidence}</dd>
-              </div>
-              <div>
-                <dt class="font-bold text-[color:var(--color-ink-soft)]">證據等級</dt>
-                <dd class="mt-1 flex items-start gap-2">
-                  <span class="level-badge">{ex.level}</span>
-                  <span class="text-[color:var(--color-ink-soft)]">{levelText[ex.level]}</span>
-                </dd>
-              </div>
-              <div>
-                <dt class="font-bold text-[color:var(--color-ink-soft)]">系統預測</dt>
-                <dd class="mt-0.5 text-[color:var(--color-ink)]">
+              <p class="mt-3 text-base text-[color:var(--color-ink)]">
+                原本治<strong>{ex.original}</strong><span class="mx-1.5 text-[color:var(--color-brand)]" aria-label="，">›</span>預測可治<strong class="text-[color:var(--color-brand)]">{ex.newUse}</strong>
+              </p>
+              <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{ex.summary}</p>
+              <details class="mt-4 text-sm">
+                <summary class="cursor-pointer font-medium text-[color:var(--color-brand)]">看證據</summary>
+                <p class="mt-2 text-[color:var(--color-ink)] leading-relaxed">{ex.evidence}</p>
+                <p class="mt-2 text-[color:var(--color-ink-soft)]">證據等級 {ex.level}：{levelText[ex.level]}。</p>
+                <p class="mt-2 text-[color:var(--color-ink)]">
                   {ex.systemPrediction.none ? (
                     <span>系統沒有這組預測。{ex.systemPrediction.note}</span>
                   ) : (
-                    <span>
-                      模型分數 <strong class="tabular-nums">{ex.systemPrediction.score}</strong>，
-                      <a href={ex.systemPrediction.url} target="_blank" rel="noopener" class="underline underline-offset-2 text-[color:var(--color-brand)]">看{ex.systemPrediction.site}的藥物頁</a>
-                    </span>
+                    <span>模型分數 <strong class="tabular-nums">{ex.systemPrediction.score}</strong>，<a href={ex.systemPrediction.url} target="_blank" rel="noopener" class="underline underline-offset-2 text-[color:var(--color-brand)]">看{ex.systemPrediction.site}的藥物頁</a></span>
                   )}
-                </dd>
-              </div>
-            </dl>
-            <details class="mt-4 text-sm">
-              <summary class="cursor-pointer font-medium text-[color:var(--color-brand)]">來源（{ex.sources.length}）</summary>
-              <ul class="mt-2 space-y-1.5 list-disc pl-5 text-[color:var(--color-ink-soft)]">
-                {ex.sources.map((s) => (
-                  <li><a href={s.url} target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-[color:var(--color-brand)]">{s.label}</a></li>
-                ))}
-              </ul>
-            </details>
-            <p class="mt-auto pt-5 text-xs font-medium text-[color:var(--color-critical)]">
-              研究參考，不是醫療建議。預測不等於療效，仍需臨床驗證；用藥請與醫師討論。
-            </p>
+                </p>
+                <ul class="mt-2 space-y-1.5 list-disc pl-5 text-[color:var(--color-ink-soft)]">
+                  {ex.sources.map((s) => (
+                    <li><a href={s.url} target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-[color:var(--color-brand)]">{s.label}</a></li>
+                  ))}
+                </ul>
+              </details>
+              <p class="mt-auto pt-5 text-xs font-medium text-[color:var(--color-critical)]">研究參考，不是醫療建議。預測不等於療效，仍需臨床驗證。</p>
+            </div>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- 證據等級與反例 -->
+  <!-- 證據等級 -->
   <section class="py-14 md:py-20 bg-neutral-50">
-    <div class="max-w-5xl mx-auto px-4 lg:px-6">
-      <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Evidence Levels</p>
-      <h2 class="section-title mt-2">為什麼要看證據等級</h2>
-      <p class="mt-4 text-base md:text-lg leading-relaxed">
-        模型分數只說明「模型覺得像」。這個藥對病人到底有沒有用，要看有沒有人做過研究、研究做得夠不夠嚴謹，所以每個預測旁邊都標了證據等級。
-      </p>
-      <ol class="mt-6 grid md:grid-cols-5 gap-3">
-        {LEVELS.map((l) => (
-          <li class="rounded-xl bg-white border border-neutral-200 p-4">
-            <span class="level-badge">{l.k}</span>
-            <p class="mt-2 text-sm font-bold text-[color:var(--color-ink)]">{l.t}</p>
-            <p class="mt-1 text-xs text-[color:var(--color-ink-soft)] leading-relaxed">{l.b}</p>
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <header class="sec-head">
+        <p class="kicker">Evidence Levels</p>
+        <h2 class="section-title mt-2">分數高，不等於有效</h2>
+        <p class="sec-lead">模型分數只說明「模型覺得像」，有沒有用要看研究。每個預測旁邊都標了證據等級。</p>
+      </header>
+      <ol class="space-y-2.5 max-w-4xl" aria-label="證據等級，L1 最強到 L5 最弱">
+        {LEVELS.map((l, i) => (
+          <li class="flex items-center gap-3">
+            <span class="level-badge shrink-0">{l.k}</span>
+            <span class="ladder-track flex-1">
+              <span class:list={['ladder-bar', `ladder-${i + 1}`]} style={`--w:${l.bar}%`}><span class="ladder-text">{l.t}</span></span>
+            </span>
           </li>
         ))}
       </ol>
-
-      <div class="mt-10 rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] p-6 md:p-8 shadow-sm">
-        <h3 class="text-lg md:text-xl font-bold">一個反例：羥氯奎與新冠肺炎</h3>
+      <details class="mt-8 max-w-4xl rounded-2xl bg-white border border-neutral-200 p-5 md:p-6 shadow-sm">
+        <summary class="cursor-pointer font-bold text-[color:var(--color-ink)]">反例：羥氯奎與新冠肺炎</summary>
         <p class="mt-3 text-base leading-relaxed">
-          羥氯奎（hydroxychloroquine）原本用來治瘧疾、紅斑性狼瘡和類風濕性關節炎。2020 年疫情初期，它被大量推薦拿來治新冠肺炎。
-          當時被廣為引用的一篇法國研究，是沒有隨機分組的小型試驗，後來被期刊撤稿。
-        </p>
-        <p class="mt-3 text-base leading-relaxed">
-          美國 FDA 在 2020 年 3 月 28 日發出緊急使用授權，6 月 15 日就撤銷，理由是不太可能有效，心臟方面的副作用風險也大過好處。
-          之後兩個大型隨機試驗給了答案：英國 RECOVERY 試驗的住院病人，用了羥氯奎 28 天內死亡率沒有下降；
-          WHO 的 SOLIDARITY 試驗在 30 個國家、405 家醫院進行，結論也是幾乎沒有效果。
-        </p>
-        <p class="mt-3 text-base leading-relaxed">
-          早期證據放在上面的表裡，排不到 L1 或 L2。這就是我們把證據等級寫在每個預測旁邊的原因：先看證據有多強，再決定要不要往下追。
+          2020 年疫情初期，治瘧疾和紅斑性狼瘡的羥氯奎被大量推薦拿來治新冠。當時的支持證據多半是沒有隨機分組的小型研究，其中被廣為引用的一篇後來撤稿。
+          美國 FDA 3 月發出緊急使用授權，6 月就撤銷；之後英國 RECOVERY 和 WHO SOLIDARITY 兩個大型隨機試驗都顯示它沒有降低死亡率。
         </p>
         <ul class="mt-4 space-y-1.5 text-sm list-disc pl-5 text-[color:var(--color-ink-soft)]">
-          <li><a href="https://www.fda.gov/news-events/press-announcements/coronavirus-covid-19-update-fda-revokes-emergency-use-authorization-chloroquine-and" target="_blank" rel="noopener" class="underline underline-offset-2">FDA：撤銷 chloroquine 與 hydroxychloroquine 緊急使用授權（2020-06-15）</a></li>
-          <li><a href="https://pubmed.ncbi.nlm.nih.gov/32205204/" target="_blank" rel="noopener" class="underline underline-offset-2">Int J Antimicrob Agents 2020 開放標籤非隨機試驗，已撤稿（PMID 32205204）</a></li>
+          <li><a href="https://www.fda.gov/news-events/press-announcements/coronavirus-covid-19-update-fda-revokes-emergency-use-authorization-chloroquine-and" target="_blank" rel="noopener" class="underline underline-offset-2">FDA：撤銷緊急使用授權（2020-06-15）</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/32205204/" target="_blank" rel="noopener" class="underline underline-offset-2">2020 年非隨機試驗，已撤稿（PMID 32205204）</a></li>
           <li><a href="https://pubmed.ncbi.nlm.nih.gov/33031652/" target="_blank" rel="noopener" class="underline underline-offset-2">RECOVERY 試驗，NEJM 2020（PMID 33031652）</a></li>
-          <li><a href="https://pubmed.ncbi.nlm.nih.gov/33264556/" target="_blank" rel="noopener" class="underline underline-offset-2">WHO SOLIDARITY 試驗期中結果，NEJM 2021（PMID 33264556）</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/33264556/" target="_blank" rel="noopener" class="underline underline-offset-2">WHO SOLIDARITY 試驗，NEJM 2021（PMID 33264556）</a></li>
         </ul>
-      </div>
+      </details>
     </div>
   </section>
 
-  <!-- 3. 怎麼用 -->
+  <!-- 怎麼用 -->
   <section class="py-14 md:py-20">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="text-center mb-10">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">How to Use</p>
-        <h2 class="section-title mt-2">三個步驟查一個藥</h2>
-      </div>
+      <header class="sec-head">
+        <p class="kicker">How to Use</p>
+        <h2 class="section-title mt-2">三步查一個藥</h2>
+      </header>
       <ol class="grid md:grid-cols-3 gap-5">
         {steps.map((s, i) => (
           <li class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
-            <span class="inline-flex w-9 h-9 rounded-lg bg-[color:var(--color-brand)] text-white items-center justify-center font-bold tabular-nums">{i + 1}</span>
+            <span class="step-num">{i + 1}</span>
             <h3 class="mt-3 font-bold text-lg text-[color:var(--color-ink)]">{s.t}</h3>
-            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{s.b}</p>
+            <p class="mt-1 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{s.b}</p>
             <!-- TODO(截圖)：各步驟截圖待補，放在這裡（自託管於 public/assets/images/txgnn/） -->
           </li>
         ))}
@@ -340,43 +320,38 @@ const tipAttrs = (code: string) => {
     </div>
   </section>
 
-  <!-- 4. 為什麼分 30 國 -->
+  <!-- 為什麼分 30 國 -->
   <section class="py-14 md:py-20 bg-neutral-50">
-    <div class="max-w-5xl mx-auto px-4 lg:px-6">
-      <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Why {countries.length} Sites</p>
-      <h2 class="section-title mt-2">為什麼要分 {countries.length} 個國家與地區</h2>
-      <p class="mt-4 text-base md:text-lg leading-relaxed">
-        每個國家核准的藥不一樣，同一個藥核准的適應症也不一樣。一個藥在這國算新用途，在另一國可能早就寫進仿單了。
-        所以我們替每個國家各做一個站，用當地主管機關的藥證資料，判斷什麼才算「新」，網站也用當地語言寫。
-      </p>
-      <div class="mt-8 grid md:grid-cols-2 gap-5">
-        <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
-          <h3 class="font-bold text-lg">各國都一樣的</h3>
-          <ul class="mt-3 space-y-2 text-base">
-            {sameItems.map((t) => <li class="flex gap-2"><span class="text-[color:var(--color-pass)] font-bold" aria-hidden="true">＝</span><span>{t}</span></li>)}
-          </ul>
-        </div>
-        <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
-          <h3 class="font-bold text-lg">各國不一樣的</h3>
-          <ul class="mt-3 space-y-2 text-base">
-            {diffItems.map((t) => <li class="flex gap-2"><span class="text-[color:var(--color-brand)] font-bold" aria-hidden="true">≠</span><span>{t}</span></li>)}
-          </ul>
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 grid lg:grid-cols-2 gap-8 items-center">
+      <div>
+        <header class="sec-head mb-6">
+          <p class="kicker">Why {countries.length} Sites</p>
+          <h2 class="section-title mt-2">為什麼一國一站</h2>
+          <p class="sec-lead">每個國家核准的藥和適應症都不同，同一個藥在這國算新用途，在別國可能早就核准了。所以各站用當地藥證判斷什麼才算「新」。</p>
+        </header>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div class="rounded-xl bg-white border border-neutral-200 p-4">
+            <p class="font-bold">各國一樣</p>
+            <p class="mt-1 text-[color:var(--color-ink-soft)]">AI 模型、PubMed 與 ClinicalTrials.gov、L1 到 L5 判定</p>
+          </div>
+          <div class="rounded-xl bg-white border border-neutral-200 p-4">
+            <p class="font-bold">各國不同</p>
+            <p class="mt-1 text-[color:var(--color-ink-soft)]">主管機關、核准的藥和適應症、語言</p>
+          </div>
         </div>
       </div>
+      <img src={IMG.countries.src} width={IMG.countries.w} height={IMG.countries.h} alt={IMG.countries.alt} loading="lazy" class="w-full h-auto rounded-2xl" />
     </div>
   </section>
 
-  <!-- 5. 覆蓋地圖＋國家清單 -->
+  <!-- 覆蓋地圖＋國家清單 -->
   <section id="countries" class="py-14 md:py-20 scroll-mt-24">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="max-w-3xl mb-8">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Coverage</p>
+      <header class="sec-head">
+        <p class="kicker">Coverage</p>
         <h2 class="section-title mt-2">{countries.length} 個國家與地區</h2>
-        <p class="mt-3 text-base text-[color:var(--color-ink-soft)] leading-relaxed">
-          滑過地圖上的點可以看主管機關、藥物頁數和語言，點下去會在新分頁打開該國的站。歐洲國家比較密，放大在右邊那張圖；歐盟站標在布魯塞爾。
-          各國資料來源與限制寫在<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。
-        </p>
-      </div>
+        <p class="sec-lead">滑過地圖上的點看詳細資料，點下去在新分頁打開該國站。資料來源與限制見<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。</p>
+      </header>
 
       <div class="map-wrap relative hidden sm:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] gap-4">
         <figure class="rounded-2xl bg-white border border-neutral-200 p-3 md:p-4 shadow-sm">
@@ -393,7 +368,7 @@ const tipAttrs = (code: string) => {
               </a>
             ))}
           </svg>
-          <figcaption class="mt-2 text-xs text-[color:var(--color-ink-muted)]">香港、新加坡在這個比例尺沒有輪廓，只標點。地圖底圖：Natural Earth。</figcaption>
+          <figcaption class="mt-2 text-xs text-[color:var(--color-ink-muted)]">香港、新加坡只標點。底圖：Natural Earth。</figcaption>
         </figure>
         <figure class="rounded-2xl bg-white border border-neutral-200 p-3 md:p-4 shadow-sm">
           <svg viewBox={`0 0 ${E.w} ${E.h}`} class="w-full h-auto" role="group" aria-label="歐洲站台放大圖">
@@ -402,13 +377,13 @@ const tipAttrs = (code: string) => {
               <path d={d as string} class="map-country" data-cc={code} />
             ))}
             {Object.entries(E.markers).map(([code, [x, y]]) => (
-              <a href={txgnnSiteUrl(code)} target="_blank" rel="noopener" class:list={['map-pin', code === 'eu' && 'map-pin-eu']} aria-label={`${info(code).name}站（新分頁）`} {...tipAttrs(code)}>
+              <a href={txgnnSiteUrl(code)} target="_blank" rel="noopener" class="map-pin" aria-label={`${info(code).name}站（新分頁）`} {...tipAttrs(code)}>
                 <circle cx={x} cy={y} r="12" class="map-hit" />
                 <circle cx={x} cy={y} r={code === 'eu' ? 8 : 6} class="map-dot" />
               </a>
             ))}
           </svg>
-          <figcaption class="mt-2 text-xs text-[color:var(--color-ink-muted)]">歐洲放大圖。大圓點是歐盟站（EMA）。</figcaption>
+          <figcaption class="mt-2 text-xs text-[color:var(--color-ink-muted)]">歐洲放大。大圓點是歐盟站（布魯塞爾）。</figcaption>
         </figure>
         <div id="map-tip" class="map-tip" role="tooltip" hidden></div>
       </div>
@@ -416,20 +391,17 @@ const tipAttrs = (code: string) => {
       <div class="mt-10 space-y-8">
         {REGIONS.map((r) => (
           <div>
-            <h3 class="text-lg font-bold text-[color:var(--color-ink)]">{r.label}<span class="ml-2 text-sm font-normal text-[color:var(--color-ink-soft)]">{r.codes.length} 個站</span></h3>
-            <ul class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <h3 class="text-lg font-bold text-[color:var(--color-ink)]">{r.label}</h3>
+            <ul class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {r.codes.map((code) => {
                 const i = info(code);
                 return (
                   <li>
-                    <a href={i.url} target="_blank" rel="noopener" class="group flex h-full gap-3 rounded-xl bg-white border border-neutral-200 px-4 py-3 shadow-sm hover:border-[color:var(--color-brand)] transition-colors">
-                      <span class="text-2xl leading-none mt-0.5" aria-hidden="true">{i.flag}</span>
+                    <a href={i.url} target="_blank" rel="noopener" title={`${i.regulator}．${i.langs}`} class="group flex h-full items-center gap-3 rounded-xl bg-white border border-neutral-200 px-4 py-3 shadow-sm hover:border-[color:var(--color-brand)] transition-colors">
+                      <span class="text-2xl leading-none" aria-hidden="true">{i.flag}</span>
                       <span class="min-w-0 flex-1">
                         <span class="block font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)]">{i.name}</span>
-                        {i.regulator && <span class="block text-xs text-[color:var(--color-ink-soft)]">{i.regulator}</span>}
-                        <span class="block text-xs text-[color:var(--color-ink-soft)]">
-                          {i.pages && <>藥物頁 <span class="tabular-nums">{i.pages}</span></>}{i.langs && <>．{i.langs}</>}
-                        </span>
+                        <span class="block text-xs text-[color:var(--color-ink-soft)] truncate">{i.regShort}{i.pages && <>．<span class="tabular-nums">{i.pages}</span> 份</>}</span>
                       </span>
                     </a>
                   </li>
@@ -439,98 +411,75 @@ const tipAttrs = (code: string) => {
           </div>
         ))}
       </div>
-      <p class="mt-6 text-sm text-[color:var(--color-ink-soft)]">藥物頁數 {drugPagesDate} 統計。各國站網址為「國碼＋txgnn.yao.care」，例如台灣站 twtxgnn.yao.care（TwTxGNN）。</p>
     </div>
   </section>
 
-  <!-- 6. 系統怎麼運作（折疊） -->
+  <!-- 系統怎麼運作（HTML/CSS 圖解） -->
   <section class="py-14 md:py-20 bg-neutral-50">
-    <div class="max-w-4xl mx-auto px-4 lg:px-6">
-      <details class="group rounded-2xl bg-white border border-neutral-200 shadow-sm">
-        <summary class="cursor-pointer list-none p-6 md:p-8 flex items-start gap-4">
-          <span class="flex-1">
-            <span class="block text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">How It Works</span>
-            <span class="block mt-2 text-xl md:text-2xl font-bold">系統怎麼運作</span>
-            <span class="block mt-1 text-sm text-[color:var(--color-ink-soft)]">想知道「預測新適應症」是怎麼算出來的，點開看六個步驟</span>
-          </span>
-          <svg class="shrink-0 w-6 h-6 mt-2 text-[color:var(--color-ink-soft)] transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="px-6 md:px-8 pb-6 md:pb-8 border-t border-neutral-100">
-          <ol class="mt-6 space-y-5">
-            {pipeline.map((p, i) => (
-              <li class="flex gap-4">
-                <span class="shrink-0 w-8 h-8 rounded-full bg-[color:var(--color-orange-100)] text-[color:var(--color-brand-deep)] flex items-center justify-center font-bold tabular-nums">{i + 1}</span>
-                <div>
-                  <h3 class="font-bold text-[color:var(--color-ink)]">{p.t}</h3>
-                  <p class="mt-1 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{p.b}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <p class="mt-6 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
-            比對已知用途時看的是疾病名稱是否完全相同，所以已知疾病的子型仍可能出現在新適應症裡。這類限制寫在<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。
-          </p>
-        </div>
-      </details>
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <header class="sec-head">
+        <p class="kicker">How It Works</p>
+        <h2 class="section-title mt-2">預測新適應症怎麼來</h2>
+        <p class="sec-lead">細節與已知限制寫在<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。</p>
+      </header>
+      <ol class="flow grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {pipeline.map((p, i) => (
+          <li class="flow-step rounded-2xl bg-white border border-neutral-200 p-5 shadow-sm">
+            <span class="flow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={p.icon} /></svg>
+            </span>
+            <p class="mt-3 text-xs font-bold text-[color:var(--color-brand)] tabular-nums">步驟 {i + 1}</p>
+            <h3 class="font-bold text-[color:var(--color-ink)]">{p.t}</h3>
+            <p class="mt-1 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{p.b}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  <!-- 7. 給醫療院所 -->
+  <!-- 給醫療院所 -->
   <section class="py-14 md:py-20">
-    <div class="max-w-4xl mx-auto px-4 lg:px-6">
-      <div class="rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] p-6 md:p-8 shadow-sm">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">For Hospitals</p>
-        <h2 class="text-xl md:text-2xl font-bold mt-2">給醫療院所：免費接進電子病歷</h2>
-        <p class="mt-3 text-base leading-relaxed">
-          SMART on FHIR 是讓外部 App 安全接進電子病歷的開放標準。TxGNN 的 SMART App 免費提供，接上以後，醫師在病歷裡打開它，
-          就看得到這位病人目前用的藥有哪些潛在的新適應症，以及對應的證據等級。
-        </p>
-        <p class="mt-3 text-base leading-relaxed">
-          {countries.length} 個站合計產出 {FHIR_RESOURCES}筆 FHIR 資源，院內系統也可以直接讀取。
-        </p>
-        <div class="mt-5 flex flex-wrap items-center gap-3">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 grid lg:grid-cols-2 gap-8 items-center">
+      <img src={IMG.smart.src} width={IMG.smart.w} height={IMG.smart.h} alt={IMG.smart.alt} loading="lazy" class="w-full h-auto rounded-2xl order-2 lg:order-1" />
+      <div class="order-1 lg:order-2">
+        <header class="sec-head mb-6">
+          <p class="kicker">For Hospitals</p>
+          <h2 class="section-title mt-2">醫院免費接進病歷</h2>
+          <p class="sec-lead">透過 SMART on FHIR（讓外部 App 安全接進電子病歷的開放標準），醫師在病歷裡就能看到病人用藥的潛在新適應症。{countries.length} 站合計 {FHIR_RESOURCES}筆 FHIR 資源，院內系統也能直接讀。</p>
+        </header>
+        <div class="flex flex-wrap items-center gap-3">
           <a href={smartAppUrl} target="_blank" rel="noopener" class="btn-brand">在 SMART 沙盒試用</a>
           <span class="text-sm text-[color:var(--color-ink-soft)]">目前為台灣站</span>
         </div>
       </div>
-      {/* 8. 給 AI 與研究者：MCP 查詢介面尚未開發，先不放。完成後在這裡加一段（說明用途＋端點文件連結）。 */}
+      {/* 給 AI 與研究者：MCP 查詢介面尚未開發，先不放。完成後在這裡加一段（說明用途＋端點文件連結）。 */}
     </div>
   </section>
 
-  <RelatedTopics product="txgnn" />
+  <RelatedTopics product="txgnn" wide />
 
   <ProductCta
     product={product}
     headline="想討論技術合作？"
-    description="想把各國藥證接進模型、在院內接 SMART App，或對資料有疑問，都歡迎 LINE 私訊。"
+    description="各國藥證串接、院內接 SMART App，或對資料有疑問，都歡迎 LINE 私訊。"
   />
 
   <Fragment slot="news">
-    <!-- 10. 模型出處與免責 -->
+    <!-- 模型出處與免責 -->
     <section class="py-14 md:py-20 border-t border-neutral-200/70">
-      <div class="max-w-4xl mx-auto px-4 lg:px-6 space-y-6">
-        <div>
-          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Credits</p>
-          <h2 class="text-2xl md:text-3xl font-bold mt-2">模型出處</h2>
-          <p class="mt-3 text-base leading-relaxed">
-            TxGNN 模型由哈佛醫學院 Zitnik Lab 開發：Huang K, … , Zitnik M. A foundation model for clinician-centered drug repurposing.
-            <em>Nature Medicine</em>, 2024.
-            DOI <a href="https://doi.org/10.1038/s41591-024-03233-x" target="_blank" rel="noopener" class="underline underline-offset-2 text-[color:var(--color-brand)]">10.1038/s41591-024-03233-x</a>。
-            模型以 MIT 授權開源。
-          </p>
-          <p class="mt-3 text-base leading-relaxed">
-            藥提醒科技（yao.care）<strong>不是模型的原作者</strong>。我們做的是把模型接上各國的藥證資料、建置 {countries.length} 個網站、
-            整合 FHIR 與 SMART on FHIR，以及收集每個預測的研究證據。
+      <div class="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-2 gap-5">
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6">
+          <h2 class="text-xl font-bold">模型出處</h2>
+          <p class="mt-3 text-sm leading-relaxed">
+            TxGNN 由哈佛醫學院 Zitnik Lab 開發（Huang K, … , Zitnik M. <em>Nature Medicine</em> 2024，
+            <a href="https://doi.org/10.1038/s41591-024-03233-x" target="_blank" rel="noopener" class="underline underline-offset-2 text-[color:var(--color-brand)]">DOI 10.1038/s41591-024-03233-x</a>），MIT 授權。
+            藥提醒科技<strong>不是原作者</strong>，負責接上各國藥證、建站、FHIR 與 SMART 整合和收集證據。
           </p>
         </div>
-        <div class="rounded-2xl bg-neutral-50 border border-neutral-200 p-6 md:p-8">
-          <h2 class="text-xl md:text-2xl font-bold">醫療免責聲明</h2>
-          <p class="mt-3 text-base leading-relaxed">
-            TxGNN 網站上的所有預測都是電腦模型算出來的研究參考，<strong>不是醫療建議</strong>，也不能拿來做診斷或治療決定。
-            多數預測還沒有經過臨床試驗驗證，任何新用途都必須經過完整的臨床試驗與主管機關核准，才能用在病人身上。
-          </p>
-          <p class="mt-3 text-base leading-relaxed">
-            請不要因為網站上的內容自行開始、停止或更換用藥。對自己的病情或用藥有疑問，請與醫師或藥師討論。
+        <div class="rounded-2xl bg-neutral-50 border border-neutral-200 p-6">
+          <h2 class="text-xl font-bold">醫療免責聲明</h2>
+          <p class="mt-3 text-sm leading-relaxed">
+            網站上的預測都是研究參考，<strong>不是醫療建議</strong>，多數還沒經臨床試驗驗證。請不要自行開始、停止或更換用藥，有疑問請與醫師或藥師討論。
           </p>
         </div>
       </div>
@@ -540,6 +489,52 @@ const tipAttrs = (code: string) => {
 </ProductLayout>
 
 <style>
+  .kicker {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+  }
+  /* 段落標頭一律靠左：小標、大標、導言同一條左緣 */
+  .sec-head {
+    max-width: 48rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+  }
+  .sec-head :global(.section-title) {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .sec-lead {
+    margin-top: 0.75rem;
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+  .stat {
+    border-radius: 0.75rem;
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-neutral-200);
+    padding: 0.75rem 1rem;
+  }
+  .stat dd {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-num {
+    font-size: var(--text-xl);
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--color-brand);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .stat-unit {
+    font-size: var(--text-xs);
+    color: var(--color-ink-soft);
+  }
   .btn-outline-brand {
     display: inline-flex;
     align-items: center;
@@ -568,21 +563,76 @@ const tipAttrs = (code: string) => {
     background: var(--color-orange-100);
     color: var(--color-brand-deep);
   }
-  .map-land {
-    fill: var(--color-neutral-100);
+  .step-num {
+    display: inline-flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    background: var(--color-brand);
+    color: var(--color-bg-base);
   }
-  .map-country {
-    fill: var(--color-orange-200);
+  .ladder-track {
+    display: block;
   }
+  .ladder-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.875rem;
+  }
+  .ladder-text {
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+  .ladder-1 { background: var(--color-brand); color: var(--color-bg-base); }
+  .ladder-2 { background: var(--color-brand-soft); color: var(--color-bg-base); }
+  .ladder-3 { background: var(--color-orange-200); color: var(--color-ink); }
+  .ladder-4 { background: var(--color-orange-100); color: var(--color-ink); }
+  .ladder-5 { background: var(--color-neutral-100); color: var(--color-ink); }
+  @media (min-width: 640px) {
+    .ladder-bar { width: var(--w); }
+  }
+  .flow-step {
+    position: relative;
+  }
+  .flow-icon {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-orange-50);
+    color: var(--color-brand);
+  }
+  .flow-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 2.75rem;
+      right: -1rem;
+      width: 1rem;
+      border-top: 2px dashed var(--color-orange-200);
+    }
+  }
+  .map-land { fill: var(--color-neutral-100); }
+  .map-country { fill: var(--color-orange-200); }
   .map-eubox {
     fill: none;
     stroke: var(--color-neutral-400);
     stroke-width: 1;
     stroke-dasharray: 4 3;
   }
-  .map-hit {
-    fill: transparent;
-  }
+  .map-hit { fill: transparent; }
   .map-dot {
     fill: var(--color-brand);
     stroke: var(--color-bg-base);
@@ -627,7 +677,7 @@ const tipAttrs = (code: string) => {
       tip.append(title);
       const rows: [string, string | undefined][] = [
         ['主管機關', d.tipReg],
-        ['藥物頁', d.tipPages ? `${d.tipPages}（${d.tipDate} 統計）` : undefined],
+        ['藥物報告', d.tipPages ? `${d.tipPages}（${d.tipDate} 統計）` : undefined],
         ['語言', d.tipLangs],
       ];
       for (const [k, v] of rows) {

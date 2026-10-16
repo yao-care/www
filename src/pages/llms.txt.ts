@@ -17,7 +17,8 @@ import { TOPICS } from '../topics.config';
 import txgnnCountries from '../data/txgnn-countries.json';
 
 // TxGNN 規模數字由各國資料檔計算，不寫死
-const TXGNN_DRUG_PAGES = txgnnCountries.reduce((a, c) => a + (c.drug_pages ?? 0), 0).toLocaleString('en-US');
+const TXGNN_DRUG_PAGES_N = txgnnCountries.reduce((a, c) => a + (c.drug_pages ?? 0), 0);
+const TXGNN_DRUG_PAGES = TXGNN_DRUG_PAGES_N.toLocaleString('en-US');
 const TXGNN_PAGES_DATE = txgnnCountries[0]?.drug_pages_date ?? '';
 const TXGNN_LANGS = new Set(txgnnCountries.flatMap((c) => (c.langs ?? []).map((t) => t.split('-')[0].toLowerCase()))).size;
 
@@ -110,7 +111,7 @@ export const GET: APIRoute = () => {
     '- 預測新適應症怎麼來：模型替每組「藥物、疾病」打 0 到 1 的分數；再和 TxGNN 知識圖譜（PrimeKG）裡該藥已記錄的適應症、仿單外用途、禁忌症比對，名稱相同的剔除，剩下的才列為預測新適應症。每個藥取分數 0.99 以上的前 10 名，到 PubMed 與 ClinicalTrials.gov 收集證據，標上 L1–L5 證據等級（L1 多個第三期試驗或系統性回顧，L5 只有模型預測）。',
   );
   lines.push(
-    `- 規模：${TXGNN_SITES.length} 個國家與地區、${TXGNN_LANGS} 種語言（含英文）、${TXGNN_DRUG_PAGES} 個藥物頁（${TXGNN_PAGES_DATE} 統計，各站合計）、32.6 萬筆 FHIR 資源。`,
+    `- 規模：${TXGNN_SITES.length} 個國家與地區、${TXGNN_LANGS} 種語言（含英文）、${TXGNN_DRUG_PAGES} 份藥物報告頁（${TXGNN_PAGES_DATE} 統計，各站可收錄頁合計）、32.6 萬筆 FHIR 資源。`,
   );
   lines.push(
     '- 醫療院所可免費接入 SMART on FHIR App，目前可在 SMART 沙盒試用台灣站版本：https://apps.smarthealthit.org/app/twtxgnn-smart-app',
