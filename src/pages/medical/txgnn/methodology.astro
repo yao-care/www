@@ -4,26 +4,76 @@ import Nav from '../../../components/Nav.astro';
 import FooterLinks from '../../../components/FooterLinks.astro';
 import ContactMap from '../../../components/ContactMap.astro';
 import { SITE } from '../../../site.config';
-import { TXGNN_SITES } from '../../../seo.config';
+import { TXGNN_SITES, txgnnSiteUrl } from '../../../seo.config';
 import countries from '../../../data/txgnn-countries.json';
 
+// 對外口徑（TxGNN 團隊 2026-10-16 確認）：不提四級信心度、不把知識圖譜寫成預測方法、
+// 不放各國流程燈號。數字一律由 txgnn-countries.json 計算。
+const FHIR_RESOURCES = '32.6 萬'; // TODO：目前沒有資料檔，團隊確認的數字；有資料檔後改成計算值
+const nf = (n: number | null) => (n == null ? '' : n.toLocaleString('en-US'));
 const flagOf = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.flag]));
-const fmt = (n: number | null) => (n == null ? '—' : n.toLocaleString('en-US'));
-const reg = (c: (typeof countries)[number]) =>
-  c.regulator.abbrev || c.regulator.name_en || c.regulator.name_local || '—';
+const nameOf = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.name]));
+type Country = (typeof countries)[number];
 
-// 全部由資料計算，避免與真實數字脫節
-const totalDrugs = countries.reduce((a, c) => a + (c.drugs ?? 0), 0);
-const langCount = new Set(countries.flatMap((c) => c.langs ?? [])).size;
-const emaProxy = countries.filter((c) => c.dataset.ema_proxy);
-const millionKG = countries.filter((c) => (c.kg_candidates ?? 0) >= 1_000_000);
-const p5part = countries.filter((c) => c.phase.P5 === 'PART');
-const p8fail = countries.filter((c) => c.phase.P8 === 'FAIL');
-const p7fail = countries.filter((c) => c.phase.P7 === 'FAIL');
-const statsDate = countries.find((c) => c.stats_date)?.stats_date ?? '2026';
-// 具完整 about.md + methodology.md 的站台（來源：30country_summary §5）
-const fullDocIso = ['br', 'eu', 'jp', 'my', 'sg', 'th', 'tw'];
+const LANG_ZH: Record<string, string> = {
+  en: '英文', zh: '繁體中文', ja: '日文', ko: '韓文', ar: '阿拉伯文', de: '德文', ms: '馬來文',
+  es: '西班牙文', pt: '葡萄牙文', fi: '芬蘭文', no: '挪威文', da: '丹麥文', fr: '法文',
+  it: '義大利文', sv: '瑞典文', th: '泰文', nl: '荷蘭文',
+};
+const baseLang = (t: string) => t.split('-')[0].toLowerCase();
+const langLabel = (tags: string[] | null) =>
+  [...new Set((tags ?? []).map(baseLang))].map((l) => LANG_ZH[l] ?? l).join('、');
+const langCount = new Set(countries.flatMap((c) => (c.langs ?? []).map(baseLang))).size;
+const totalDrugPages = countries.reduce((a, c) => a + (c.drug_pages ?? 0), 0);
+const drugPagesDate = countries[0]?.drug_pages_date ?? '';
 
+const regName = (c: Country) => {
+  const name = c.regulator.name_local ?? c.regulator.name_en;
+  const abbr = c.regulator.abbrev;
+  if (name && abbr && name !== abbr) return `${name}（${abbr}）`;
+  return name ?? abbr ?? '';
+};
+
+// dataset.last_updated 欄位裡混著「版本日期」和「來源更新頻率」兩種值，分開顯示；沒有就留空。
+const FREQ: Record<string, string> = { Weekly: '每週', Semanal: '每週' };
+const dataDate = (c: Country) => (c.dataset.last_updated && !FREQ[c.dataset.last_updated] ? c.dataset.last_updated : '');
+const dataFreq = (c: Country) => (c.dataset.last_updated ? FREQ[c.dataset.last_updated] ?? '' : '');
+
+// 2026-10-16 實測打不開（404／403／連線錯誤）的資料來源網址，先只寫名稱不連結
+const DEAD_SOURCE = new Set(['au', 'ph', 'fr', 'se']);
+
+// 已知限制：只寫資料本身看得出來的事（來源名稱、EMA 代理旗標），不推測
+const limits = (c: Country) => {
+  const out: string[] = [];
+  if (c.dataset.ema_proxy) out.push('以歐洲藥品管理局（EMA）資料代替本國藥證清單');
+  if (c.iso2 === 'ph') out.push('來源是國家基本藥物目錄，不是完整藥證清單');
+  if (c.iso2 === 'nz') out.push('來源是 PHARMAC 給付品項清單，不是完整藥證清單');
+  if (c.iso2 === 'jp') out.push('來源是健保藥價基準清單');
+  if (c.iso2 === 'it') out.push('來源只含 A 類與 H 類給付藥品');
+  if (!c.dataset.name) out.push('資料集名稱未記錄');
+  return out.join('；');
+};
+const rows = [...countries].sort((a, b) => (b.drug_pages ?? 0) - (a.drug_pages ?? 0));
+
+const LEVELS = [
+  { k: 'L1', t: '多個第三期隨機對照試驗，或系統性回顧', b: '有兩個以上第三期試驗或系統性回顧' },
+  { k: 'L2', t: '單一隨機對照試驗，或多個第二期試驗', b: '有一個隨機對照試驗，或兩個以上第二期試驗' },
+  { k: 'L3', t: '觀察性研究、大型病例系列', b: '有觀察性研究或病例系列報告' },
+  { k: 'L4', t: '前臨床研究、機轉研究、個案報告', b: '只有基礎研究或少量個案' },
+  { k: 'L5', t: '只有模型預測，沒有臨床證據', b: '沒找到相關臨床證據' },
+];
+
+const SOURCES = [
+  { t: 'TxGNN 模型', b: 'Huang K, … , Zitnik M. Nature Medicine 2024，MIT 授權。', url: 'https://doi.org/10.1038/s41591-024-03233-x', l: 'doi.org/10.1038/s41591-024-03233-x' },
+  { t: 'TxGNN 原始碼', b: '哈佛醫學院 Zitnik Lab 公開的模型程式與權重。', url: 'https://github.com/mims-harvard/TxGNN', l: 'github.com/mims-harvard/TxGNN' },
+  { t: 'PrimeKG 知識圖譜', b: 'TxGNN 使用的醫學知識圖譜，129,375 個節點、約 800 萬條關係。', url: 'https://zitniklab.hms.harvard.edu/projects/PrimeKG/', l: 'zitniklab.hms.harvard.edu/projects/PrimeKG' },
+  { t: 'PubMed', b: '美國國家醫學圖書館的文獻資料庫，用來找支持或反駁預測的論文。', url: 'https://pubmed.ncbi.nlm.nih.gov/', l: 'pubmed.ncbi.nlm.nih.gov' },
+  { t: 'ClinicalTrials.gov', b: '全球臨床試驗登記平台，用來找相關試驗與試驗階段。', url: 'https://clinicaltrials.gov/', l: 'clinicaltrials.gov' },
+  { t: 'DDInter 2.0', b: '藥物與藥物、藥物與食物、藥物與疾病的交互作用資料，CC BY-NC-SA 4.0 授權。', url: 'https://ddinter2.scbdd.com/', l: 'ddinter2.scbdd.com' },
+  { t: '各國主管機關藥證資料', b: '每個國家用自己的資料，見上方對照表。', url: '', l: '' },
+];
+
+// 頁面 title／description 暫不改（SEO 實驗判定中）。注意：description 仍寫「雙引擎、四級信心度」，判定後要改成新口徑。
 const pageTitle = '30 國老藥新用 — 方法論與資料透明度 · yao.care';
 const pageDescription =
   '我們對 30 個國家／地區的核准藥品跑同一套「知識圖譜 + 圖神經網路」雙引擎老藥新用預測流程。本頁說明共同方法論（雙引擎、L1–L5 證據等級、四級信心度），並如實列出各國主管機關、資料來源與驗證覆蓋的差異與限制。';
@@ -31,7 +81,7 @@ const canonical = `${SITE.url}/medical/txgnn/methodology/`;
 
 const articleSchema = {
   '@type': ['Article', 'TechArticle'],
-  headline: '30 國老藥新用：方法論與資料透明度',
+  headline: '30 國老藥新用：方法與資料來源',
   description: pageDescription,
   inLanguage: 'zh-TW',
   url: canonical,
@@ -40,31 +90,28 @@ const articleSchema = {
   about: '老藥新用 Drug Repurposing',
   isAccessibleForFree: true,
 };
-// Dataset（GEO）：本頁的 30 國逐國統計本身就是一份可引用的資料集——標成 Dataset 讓答案引擎
-// 能辨識「這裡有結構化資料可取用」，而非只是一篇文章。各國主管機關的原始資料集列為 isBasedOn，
-// 全部取自 txgnn-countries.json 真實欄位（不捏造授權或更新日）。
 const datasetSchema = {
   '@type': 'Dataset',
-  name: '30 國核准藥品老藥新用預測統計',
+  name: 'TxGNN 30 國藥物頁統計與資料來源',
   description:
-    '涵蓋 30 個國家／地區主管機關核准藥品清單，經同一套知識圖譜＋圖神經網路雙引擎流程產出的老藥新用候選統計：逐國藥物數、候選數、very_high 信心筆數、PubMed／ClinicalTrials 證據數與證據包數。',
+    '30 個國家與地區的 TxGNN 老藥新用站台，逐國列出主管機關、藥證資料來源、藥物頁數與網站語言。',
   url: canonical,
   inLanguage: 'zh-TW',
   isAccessibleForFree: true,
   creator: { '@id': `${SITE.url}/#organization` },
   publisher: { '@id': `${SITE.url}/#organization` },
   about: '老藥新用 Drug Repurposing',
-  temporalCoverage: statsDate,
-  variableMeasured: ['核准藥物數', '老藥新用候選數', 'very_high 信心筆數', 'PubMed 引用數', 'ClinicalTrials 試驗數', '證據包數'],
-  spatialCoverage: countries.map((c) => ({ '@type': 'Country', name: c.zh })),
+  dateModified: drugPagesDate,
+  variableMeasured: ['藥物頁數', '主管機關', '藥證資料來源', '網站語言'],
+  spatialCoverage: countries.map((c) => ({ '@type': 'Place', name: c.zh })),
   distribution: countries.map((c) => ({
     '@type': 'DataDownload',
-    name: `${c.zh} 老藥新用平台`,
-    contentUrl: c.url,
+    name: `${c.zh} 老藥新用站台`,
+    contentUrl: txgnnSiteUrl(c.iso2),
     encodingFormat: 'text/html',
   })),
   isBasedOn: countries
-    .filter((c) => c.dataset?.url)
+    .filter((c) => c.dataset?.url && !DEAD_SOURCE.has(c.iso2))
     .map((c) => ({
       '@type': 'Dataset',
       name: `${c.zh}（${c.regulator?.abbrev ?? ''}）${c.dataset.name}`,
@@ -73,9 +120,11 @@ const datasetSchema = {
     })),
   citation: [
     {
-      '@type': 'CreativeWork',
-      name: 'An explainable foundation model for drug repurposing，《Nature Medicine》2024',
-      url: 'https://www.nature.com/articles/s41591-024-03333-8',
+      '@type': 'ScholarlyArticle',
+      name: 'A foundation model for clinician-centered drug repurposing',
+      isPartOf: 'Nature Medicine',
+      datePublished: '2024',
+      url: 'https://doi.org/10.1038/s41591-024-03233-x',
     },
   ],
 };
@@ -85,45 +134,39 @@ const breadcrumb = {
     { '@type': 'ListItem', position: 1, name: '首頁', item: SITE.url },
     { '@type': 'ListItem', position: 2, name: '智慧醫療', item: `${SITE.url}/medical/` },
     { '@type': 'ListItem', position: 3, name: 'TxGNN 老藥新用', item: `${SITE.url}/medical/txgnn/` },
-    { '@type': 'ListItem', position: 4, name: '方法論與資料透明度', item: canonical },
+    { '@type': 'ListItem', position: 4, name: '方法與資料來源', item: canonical },
   ],
 };
 ---
 <BaseLayout title={pageTitle} description={pageDescription} ogImage="/assets/images/og/txgnn.png" ogType="article" extraSchema={[articleSchema, datasetSchema, breadcrumb]}>
   <Nav />
   <main class="pt-20">
-    <!-- breadcrumb -->
     <div class="max-w-7xl mx-auto px-4 lg:px-6 pt-6 text-sm text-[color:var(--color-ink-soft)]">
       <a href="/" class="hover:text-[color:var(--color-brand)]">首頁</a><span class="mx-1.5">›</span>
       <a href="/medical/" class="hover:text-[color:var(--color-brand)]">智慧醫療</a><span class="mx-1.5">›</span>
       <a href="/medical/txgnn/" class="hover:text-[color:var(--color-brand)]">TxGNN 老藥新用</a><span class="mx-1.5">›</span>
-      <span class="text-[color:var(--color-ink)]">方法論與資料透明度</span>
+      <span class="text-[color:var(--color-ink)]">方法與資料來源</span>
     </div>
 
-    <!-- hero -->
     <section class="py-12 md:py-16">
       <div class="max-w-4xl mx-auto px-4 lg:px-6">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Methodology &amp; Data Transparency</p>
-        <h1 class="mt-3 text-3xl md:text-4xl font-bold leading-tight">30 國老藥新用：方法論與資料透明度</h1>
-        <p class="mt-5 text-base md:text-lg text-[color:var(--color-ink)] leading-relaxed">
-          我們對 <strong class="text-[color:var(--color-brand)]">{countries.length} 個國家／地區</strong>的核准藥品，
-          跑<strong>同一套</strong>「知識圖譜（KG）+ 圖神經網路（DL）」雙引擎老藥新用預測流程。
-          但各國的主管機關、藥品資料來源與驗證覆蓋率其實<strong>略有不同</strong> ——
-          這一頁把方法與差異如實攤開，因為「差異被誠實列出」本身就是可信度。
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Methodology &amp; Data Sources</p>
+        <h1 class="mt-3 text-3xl md:text-4xl font-bold leading-tight">{countries.length} 國老藥新用：方法與資料來源</h1>
+        <p class="mt-5 text-base md:text-lg leading-relaxed">
+          {countries.length} 個國家與地區的站，用的是同一個 TxGNN 模型、同一套證據等級。不同的是每一國的藥證資料：
+          來源、詳細程度、更新方式都不一樣。這一頁把每一國用了什麼資料、有什麼限制列出來，方便你判斷結果能信到什麼程度。
         </p>
-        <p class="mt-3 text-sm text-[color:var(--color-ink-soft)]">統計數字擷取自各國 <code class="text-xs">integration_stats.json</code>（產出日約 {statsDate}）。</p>
       </div>
     </section>
 
-    <!-- 全球合計 -->
     <section class="pb-4">
       <div class="max-w-5xl mx-auto px-4 lg:px-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
           {[
-            { v: countries.length, u: '國家／地區' },
-            { v: langCount, u: '在地語言' },
-            { v: fmt(totalDrugs), u: '分析藥物總數（unique）' },
-            { v: '2', u: '預測引擎（KG + DL）' },
+            { v: countries.length, u: '個國家與地區' },
+            { v: langCount, u: '種語言（含英文）' },
+            { v: nf(totalDrugPages), u: `個藥物頁（${drugPagesDate}）` },
+            { v: FHIR_RESOURCES, u: '筆 FHIR 資源' },
           ].map((s) => (
             <div class="rounded-xl bg-white border border-neutral-200 px-4 py-4 shadow-sm text-center">
               <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{s.v}</div>
@@ -134,83 +177,45 @@ const breadcrumb = {
       </div>
     </section>
 
-    <!-- 共同方法論 -->
+    <!-- 方法摘要 -->
     <section class="py-12 md:py-16">
       <div class="max-w-4xl mx-auto px-4 lg:px-6">
-        <h2 class="text-2xl md:text-3xl font-bold">共同方法論（30 國一致）</h2>
-        <div class="mt-6 space-y-5 text-[color:var(--color-ink)] leading-relaxed">
-          <div>
-            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">雙引擎預測</h3>
-            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
-              以知識圖譜（KG，約 17,080 節點）結合圖神經網路（DL/GNN）對既有核准藥品預測新適應症，
-              每個「藥物–疾病」配對輸出預測分數。30 國皆同時執行 KG 與 DL 兩引擎。
-            </p>
-          </div>
-          <div>
-            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">篩選標準</h3>
-            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
-              最低預測分數 99%、每個藥物最多保留 5 個新適應症、排除已知適應症。
-            </p>
-          </div>
-          <div>
-            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">證據包（Evidence Bundle）</h3>
-            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
-              對每個預測配對自動收集臨床試驗（ClinicalTrials.gov）、學術文獻（PubMed）、
-              藥物資訊（DrugBank），以及各國主管機關上市資訊與交互作用（DDI）。
-            </p>
-          </div>
-          <div>
-            <h3 class="font-bold text-lg text-[color:var(--color-brand)]">證據等級 L1–L5 與信心度四級</h3>
-            <p class="mt-1 text-sm md:text-base text-[color:var(--color-ink-soft)]">
-              證據強度分 L1（多個 Phase 3 RCT／系統性回顧）至 L5（僅模型預測、無臨床證據）；
-              整合後預測再依信心分為 <code class="text-xs">very_high / high / medium / low</code> 四級。
-            </p>
-          </div>
+        <h2 class="text-2xl md:text-3xl font-bold">預測新適應症是怎麼來的</h2>
+        <div class="mt-5 space-y-4 text-base leading-relaxed">
+          <p>
+            TxGNN 的深度學習模型替每一組「藥物、疾病」打一個 0 到 1 的分數。接著拿 TxGNN 使用的知識圖譜 PrimeKG，
+            列出這個藥已經記錄的適應症、仿單外用途和禁忌症，和模型預測逐筆比對。疾病名稱相同的剔除，剩下的才列為「預測新適應症」。
+          </p>
+          <p>
+            知識圖譜這一步不是另一種預測方法，它的用處是對照已知用途，讓網站上標成「新」的，真的是知識圖譜裡沒有的組合。
+          </p>
+          <p>
+            每個藥取分數 0.99 以上的前 10 名，到 PubMed 與 ClinicalTrials.gov 收集文獻和臨床試驗，再依下表判定證據等級。
+          </p>
         </div>
-        <p class="mt-5 text-xs text-[color:var(--color-ink-soft)]">出處：<code>TwTxGNN/docs/methodology.md</code>。各國 methodology 頁語言與詳略不一。</p>
       </div>
     </section>
 
-    <!-- 30 國總表 -->
+    <!-- 證據等級 -->
     <section class="py-12 md:py-16 bg-neutral-50">
-      <div class="max-w-6xl mx-auto px-4 lg:px-6">
-        <h2 class="text-2xl md:text-3xl font-bold">30 國涵蓋與資料來源</h2>
-        <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">依分析藥物數排序。各國資料來源不同，<strong>標記「EMA 代理」者</strong>是以歐洲藥品管理局資料代理該國授權藥品。</p>
+      <div class="max-w-4xl mx-auto px-4 lg:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">證據等級 L1 到 L5</h2>
+        <p class="mt-2 text-base text-[color:var(--color-ink-soft)]">定義以台灣站 TwTxGNN 公開的方法說明為準，{countries.length} 國共用。</p>
         <div class="mt-6 overflow-x-auto rounded-2xl border border-neutral-200 bg-white shadow-sm">
-          <table class="w-full text-sm min-w-[720px]">
+          <table class="w-full text-sm">
             <thead>
-              <tr class="bg-neutral-50 border-b border-neutral-200 text-xs uppercase tracking-wider text-[color:var(--color-ink-soft)]">
-                <th class="text-left py-3 px-4 font-medium">國家／地區</th>
-                <th class="text-left py-3 px-4 font-medium">主管機關</th>
-                <th class="text-right py-3 px-4 font-medium">分析藥物數</th>
-                <th class="text-left py-3 px-4 font-medium">藥品資料來源</th>
-                <th class="text-left py-3 px-4 font-medium">站台</th>
+              <tr class="bg-neutral-50 border-b border-neutral-200 text-[color:var(--color-ink-soft)]">
+                <th class="text-left py-3 px-4 font-medium">等級</th>
+                <th class="text-left py-3 px-4 font-medium">證據類型</th>
+                <th class="text-left py-3 px-4 font-medium">判定條件</th>
               </tr>
             </thead>
             <tbody>
-              {countries.map((c, i) => (
-                <tr class:list={[i > 0 ? 'border-t border-neutral-100' : '']}>
-                  <td class="py-3 px-4 whitespace-nowrap">
-                    <span class="mr-1.5">{flagOf[c.iso2] ?? ''}</span>
-                    <span class="font-medium text-[color:var(--color-ink)]">{c.zh}</span>
-                    <span class="text-xs text-[color:var(--color-ink-soft)] ml-1">{c.en}</span>
-                  </td>
-                  <td class="py-3 px-4">
-                    <span class="font-medium">{reg(c)}</span>
-                    {c.regulator.name_local && c.regulator.name_local !== reg(c) && (
-                      <span class="block text-xs text-[color:var(--color-ink-soft)]">{c.regulator.name_local}</span>
-                    )}
-                  </td>
-                  <td class="py-3 px-4 text-right tabular-nums font-bold">{fmt(c.drugs)}</td>
-                  <td class="py-3 px-4 text-[color:var(--color-ink-soft)]">
-                    <span class="text-xs">{c.dataset.name ?? '—'}</span>
-                    {c.dataset.ema_proxy && (
-                      <span class="ml-1.5 inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 align-middle">EMA 代理</span>
-                    )}
-                  </td>
-                  <td class="py-3 px-4 whitespace-nowrap">
-                    <a href={c.url} target="_blank" rel="noopener" class="text-[color:var(--color-brand)] hover:underline font-mono text-xs">{c.iso2}txgnn.yao.care ↗</a>
-                  </td>
+              {LEVELS.map((l, i) => (
+                <tr class:list={[i > 0 && 'border-t border-neutral-100']}>
+                  <td class="py-3 px-4 font-bold text-[color:var(--color-brand-deep)]">{l.k}</td>
+                  <td class="py-3 px-4">{l.t}</td>
+                  <td class="py-3 px-4 text-[color:var(--color-ink-soft)]">{l.b}</td>
                 </tr>
               ))}
             </tbody>
@@ -219,79 +224,109 @@ const breadcrumb = {
       </div>
     </section>
 
-    <!-- 透明度：各國差異與限制 -->
+    <!-- 已知限制（全站共通） -->
     <section class="py-12 md:py-16">
       <div class="max-w-4xl mx-auto px-4 lg:px-6">
-        <h2 class="text-2xl md:text-3xl font-bold">透明度：各國差異與限制</h2>
-        <p class="mt-2 text-sm md:text-base text-[color:var(--color-ink-soft)]">同一套流程跑 30 國，但資料與覆蓋不一致。以下差異會影響跨國比較，我們選擇全部寫清楚。</p>
+        <h2 class="text-2xl md:text-3xl font-bold">已知限制</h2>
+        <ul class="mt-5 space-y-4 text-base leading-relaxed list-disc pl-6">
+          <li>
+            比對已知用途時，看的是疾病名稱是否<strong>完全相同</strong>。已知疾病的子型仍可能被列為新適應症，全站大約 6% 的預測屬於這種情況，
+            例如降血壓藥 lisinopril 被列出各型心肌梗塞。
+          </li>
+          <li>各國許可證上的適應症文字，目前<strong>沒有逐條</strong>拿來和預測比對。某個預測在當地可能其實已經核准。</li>
+          <li>部分國家沒有可下載的本國藥證清單，改用歐洲藥品管理局（EMA）資料代替，表中有標註。</li>
+          <li>各國藥證資料的「筆數」定義不同，有的是許可證數，有的是產品代碼數，不能直接跨國比較。</li>
+          <li>多數國家的資料集沒有記錄授權條款和最後更新日，下表查不到的欄位一律留空，不補值。</li>
+        </ul>
+      </div>
+    </section>
 
-        <div class="mt-8 space-y-6">
-          <div class="rounded-2xl border-l-4 border-amber-500 bg-amber-50/40 p-5 md:p-6">
-            <h3 class="font-bold text-base md:text-lg">1. KG 候選規模兩種量級 — 不可直接跨國比較</h3>
-            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
-              有 {millionKG.length} 國的 KG 候選數達<strong>百萬級</strong>（{millionKG.map((c) => c.zh).join('、')}），
-              其餘為<strong>千級</strong>，相差約上千倍，連帶使其 <code class="text-xs">very_high</code> 信心數遠高於其他國家。
-              這屬不同的 KG 候選生成設定／門檻批次，因此<strong>各國的 very_high／候選數不可直接相互比較</strong>，
-              本頁主表改以「分析藥物數」呈現涵蓋規模。
-            </p>
-          </div>
-
-          <div class="rounded-2xl border-l-4 border-amber-500 bg-amber-50/40 p-5 md:p-6">
-            <h3 class="font-bold text-base md:text-lg">2. 以 EMA 資料代理（非本國原生資料集）</h3>
-            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
-              {emaProxy.map((c) => c.zh).join('、')} 的藥品清單來源在資料中明確標示為「EMA Medicines Data (proxy)」，
-              即以歐洲藥品管理局資料代理該國授權藥品，而非該國主管機關自家資料集。
-              （歐盟站本身即以 EMA 為主管機關，屬原生。）
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
-            <h3 class="font-bold text-base md:text-lg">3. 藥品清單筆數（record_count）語意各國不同</h3>
-            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
-              各國所載藥品清單筆數定義不一：有的是官方許可證數（如台灣 71,552 為許可證層級、美國 104,047 為 NDC 代碼層級）、
-              有的是開放資料品項數（如哥倫比亞 159,295）、有的是匯入或已分析的藥品數。因此「筆數」不可橫向比較，
-              本頁主表採用較一致的「分析藥物數（unique drugs）」。
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
-            <h3 class="font-bold text-base md:text-lg">4. 資料集後設資料多數缺漏</h3>
-            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
-              多數國家僅記錄主管機關與（部分）資料集名稱，未記錄授權條款與最後更新日。
-              明確記錄資料集授權者僅少數（如巴西、馬來西亞 CC BY 4.0、新加坡、歐盟、日本）。
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
-            <h3 class="font-bold text-base md:text-lg">5. 文件完整度與證據覆蓋率差異</h3>
-            <ul class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed space-y-1.5 list-disc pl-5">
-              <li>具備完整 about／methodology 說明頁者 {fullDocIso.length} 國（{fullDocIso.map((i) => countries.find((c) => c.iso2 === i)?.zh).filter(Boolean).join('、')}）；其餘集中於 README。</li>
-              {p5part.length > 0 && (
-                <li>證據收集（P5）為「部分達標（PART）」者 {p5part.length} 國（{p5part.map((c) => c.zh).join('、')}）。</li>
-              )}
-              {(p8fail.length > 0 || p7fail.length > 0) && (
-                <li>在地化檢查（P8）未過者 {p8fail.length} 國；SMART on FHIR（P7）未過者 {p7fail.length} 國（{p7fail.map((c) => c.zh).join('、')}）。</li>
-              )}
-            </ul>
-          </div>
+    <!-- 30 國對照表 -->
+    <section class="py-12 md:py-16 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">{countries.length} 國對照表</h2>
+        <p class="mt-2 text-base text-[color:var(--color-ink-soft)]">依藥物頁數排序。藥物頁數為 {drugPagesDate} 統計；空白代表資料裡沒有記錄。</p>
+        <div class="mt-6 overflow-x-auto rounded-2xl border border-neutral-200 bg-white shadow-sm">
+          <table class="w-full text-sm min-w-[72rem]">
+            <thead>
+              <tr class="bg-neutral-50 border-b border-neutral-200 text-[color:var(--color-ink-soft)]">
+                <th class="text-left py-3 px-4 font-medium">國家與地區</th>
+                <th class="text-left py-3 px-4 font-medium">主管機關</th>
+                <th class="text-left py-3 px-4 font-medium">資料來源</th>
+                <th class="text-left py-3 px-4 font-medium">資料日期</th>
+                <th class="text-left py-3 px-4 font-medium">來源更新頻率</th>
+                <th class="text-right py-3 px-4 font-medium">藥物頁數</th>
+                <th class="text-left py-3 px-4 font-medium">語言</th>
+                <th class="text-left py-3 px-4 font-medium">已知限制</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((c, i) => (
+                <tr class:list={[i > 0 && 'border-t border-neutral-100', 'align-top']}>
+                  <td class="py-3 px-4 whitespace-nowrap">
+                    <a href={txgnnSiteUrl(c.iso2)} target="_blank" rel="noopener" class="font-medium text-[color:var(--color-ink)] hover:text-[color:var(--color-brand)] underline-offset-2 hover:underline">
+                      <span class="mr-1.5" aria-hidden="true">{flagOf[c.iso2] ?? ''}</span>{nameOf[c.iso2] ?? c.zh}
+                    </a>
+                  </td>
+                  <td class="py-3 px-4">{regName(c)}</td>
+                  <td class="py-3 px-4 text-[color:var(--color-ink-soft)]">
+                    {c.dataset.url && !DEAD_SOURCE.has(c.iso2) ? (
+                      <a href={c.dataset.url} target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-[color:var(--color-brand)]">{c.dataset.name ?? c.dataset.url}</a>
+                    ) : (
+                      <span>{c.dataset.name ?? ''}</span>
+                    )}
+                    {c.dataset.license && <span class="block text-xs">授權：{c.dataset.license}</span>}
+                  </td>
+                  <td class="py-3 px-4 whitespace-nowrap">{dataDate(c)}</td>
+                  <td class="py-3 px-4 whitespace-nowrap">{dataFreq(c)}</td>
+                  <td class="py-3 px-4 text-right tabular-nums font-bold">{nf(c.drug_pages)}</td>
+                  <td class="py-3 px-4">{langLabel(c.langs)}</td>
+                  <td class="py-3 px-4 text-[color:var(--color-ink-soft)]">{limits(c)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- 免責 -->
+    <!-- 資料來源清單 -->
+    <section class="py-12 md:py-16">
+      <div class="max-w-4xl mx-auto px-4 lg:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">資料來源</h2>
+        <ul class="mt-5 space-y-4">
+          {SOURCES.map((s) => (
+            <li class="rounded-xl bg-white border border-neutral-200 p-4">
+              <p class="font-bold">{s.t}</p>
+              <p class="mt-1 text-sm text-[color:var(--color-ink-soft)]">{s.b}</p>
+              {s.url && <a href={s.url} target="_blank" rel="noopener" class="mt-1 inline-block break-all text-sm text-[color:var(--color-brand)] underline underline-offset-2">{s.l}</a>}
+            </li>
+          ))}
+        </ul>
+        <p class="mt-5 text-sm text-[color:var(--color-ink-soft)]">
+          藥提醒科技（yao.care）不是 TxGNN 模型的原作者，負責的是把模型接上各國藥證資料、建站、FHIR 與 SMART on FHIR 整合，以及收集證據。
+        </p>
+      </div>
+    </section>
+
+    <!--
+      TODO(系統狀態快照)：原規劃在這裡放「系統狀態快照（附日期）」。
+      目前沒有自動產生的狀態檔，先不放；不要手寫全綠狀態。有狀態檔後再從檔案讀出並附產生日期。
+    -->
+
     <section class="py-12 md:py-16 bg-neutral-50">
       <div class="max-w-4xl mx-auto px-4 lg:px-6">
         <div class="rounded-2xl border-l-4 border-[color:var(--color-brand)] bg-white p-6 md:p-8 shadow-sm">
-          <h2 class="text-xl md:text-2xl font-bold">免責聲明</h2>
-          <p class="mt-3 text-sm md:text-base text-[color:var(--color-ink-soft)] leading-relaxed">
-            本平台所有預測<strong>僅供研究參考，不構成醫療建議</strong>。老藥新用候選屬計算預測、多數尚未經臨床驗證，
-            任何臨床或用藥決定都必須經完整臨床試驗驗證與主管機關核准，並請諮詢合格醫療專業。
-            每個國家站台另附該國在地語言的免責聲明。
+          <h2 class="text-xl md:text-2xl font-bold">醫療免責聲明</h2>
+          <p class="mt-3 text-base leading-relaxed">
+            所有預測都是電腦模型算出來的研究參考，<strong>不是醫療建議</strong>。多數預測還沒有經過臨床試驗驗證，
+            任何新用途都必須經過完整臨床試驗與主管機關核准。請不要依網站內容自行開始、停止或更換用藥，有疑問請與醫師或藥師討論。
+            每個國家的站另附當地語言的免責聲明。
           </p>
         </div>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/medical/txgnn/" class="btn-brand">← 回 TxGNN 老藥新用</a>
-          <a href="/medical/txgnn/#global-coverage" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-neutral-300 text-[color:var(--color-ink)] hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition">瀏覽 30 國站台</a>
+          <a href="/medical/txgnn/" class="btn-brand">回 TxGNN 老藥新用</a>
+          <a href="/medical/txgnn/#countries" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-neutral-300 text-[color:var(--color-ink)] hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition">看 {countries.length} 國站台</a>
         </div>
       </div>
     </section>

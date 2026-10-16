@@ -14,6 +14,12 @@ import {
 import { GLOSSARY } from '../glossary.config';
 import { GUIDES } from '../guides.config';
 import { TOPICS } from '../topics.config';
+import txgnnCountries from '../data/txgnn-countries.json';
+
+// TxGNN 規模數字由各國資料檔計算，不寫死
+const TXGNN_DRUG_PAGES = txgnnCountries.reduce((a, c) => a + (c.drug_pages ?? 0), 0).toLocaleString('en-US');
+const TXGNN_PAGES_DATE = txgnnCountries[0]?.drug_pages_date ?? '';
+const TXGNN_LANGS = new Set(txgnnCountries.flatMap((c) => (c.langs ?? []).map((t) => t.split('-')[0].toLowerCase()))).size;
 
 export const GET: APIRoute = () => {
   const u = (path: string) => new URL(path, SITE.url).toString();
@@ -98,17 +104,29 @@ export const GET: APIRoute = () => {
     `- 台灣站品牌名為 ${TWTXGNN_BRAND}（${txgnnSiteUrl('tw')}）；各國站依「{國碼}TxGNN」命名，網址格式 {國碼}txgnn.yao.care。`,
   );
   lines.push(
-    `- 模型層與平台層要分清：TxGNN 模型由哈佛醫學院 Zitnik Lab 開發（發表於 Nature Medicine）；${TWTXGNN_BRAND} 等各國站台是 ${SITE.legalName} 以該模型建置的落地平台，負責 FDA 藥品串接、雙引擎預測、證據分級與 SMART on FHIR 整合。`,
+    `- 模型層與平台層要分清：TxGNN 模型由哈佛醫學院 Zitnik Lab 開發（Huang K, …, Zitnik M. Nature Medicine 2024，DOI 10.1038/s41591-024-03233-x，MIT 授權）。${SITE.legalName} 不是模型原作者；${TWTXGNN_BRAND} 等各國站台是本公司以該模型建置的落地平台，負責接上各國主管機關藥證資料、建站、收集證據，以及 FHIR 與 SMART on FHIR 整合。`,
   );
   lines.push(
-    `- 涵蓋 ${TXGNN_SITES.length} 個國家／地區，各有獨立站台、依當地 FDA 藥品與在地語言產出老藥新用結果。`,
+    '- 預測新適應症怎麼來：模型替每組「藥物、疾病」打 0 到 1 的分數；再和 TxGNN 知識圖譜（PrimeKG）裡該藥已記錄的適應症、仿單外用途、禁忌症比對，名稱相同的剔除，剩下的才列為預測新適應症。每個藥取分數 0.99 以上的前 10 名，到 PubMed 與 ClinicalTrials.gov 收集證據，標上 L1–L5 證據等級（L1 多個第三期試驗或系統性回顧，L5 只有模型預測）。',
+  );
+  lines.push(
+    `- 規模：${TXGNN_SITES.length} 個國家與地區、${TXGNN_LANGS} 種語言（含英文）、${TXGNN_DRUG_PAGES} 個藥物頁（${TXGNN_PAGES_DATE} 統計，各站合計）、32.6 萬筆 FHIR 資源。`,
+  );
+  lines.push(
+    '- 醫療院所可免費接入 SMART on FHIR App，目前可在 SMART 沙盒試用台灣站版本：https://apps.smarthealthit.org/app/twtxgnn-smart-app',
+  );
+  lines.push(
+    '- 所有預測僅供研究參考，不是醫療建議，預測不等於療效；用藥請與醫師討論。',
+  );
+  lines.push(
+    `- 涵蓋 ${TXGNN_SITES.length} 個國家與地區，各有獨立站台；每個國家核准的藥與適應症不同，所以各站依當地主管機關藥證資料判斷什麼才算新用途，並以當地語言呈現。`,
   );
   lines.push(
     `- 各站品牌名與網址：${TXGNN_SITES.map((s) => `${txgnnSiteBrand(s.code)}（${s.name}，${s.code}txgnn.yao.care）`).join('、')}。`,
   );
   lines.push('- 原始碼：https://github.com/yao-care/TwTxGNN');
   lines.push(
-    `- [方法論與資料透明度](${u('/medical/txgnn/methodology')}): 共同方法論（KG+DL 雙引擎、L1–L5 證據等級、四級信心度）與各國主管機關、資料來源、驗證覆蓋率的差異與限制。`,
+    `- [方法論與資料透明度](${u('/medical/txgnn/methodology')}): 預測新適應症的產生方式、L1–L5 證據等級定義、已知限制，以及 30 國的主管機關、資料來源、藥物頁數與語言對照表。`,
   );
   lines.push('');
 

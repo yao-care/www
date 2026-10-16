@@ -408,15 +408,15 @@ export const GUIDES: readonly Guide[] = [
       },
     ],
     toolIntro:
-      '我們以哈佛大學 TxGNN 模型為基礎、擴展到 30 個國家的「老藥新用」平台，用知識圖譜 + 圖神經網路雙引擎，對 1,507 種藥物 × 166 種疾病評分並分四級信心度；每筆預測都附 PubMed 文獻與 ClinicalTrials 臨床試驗證據包，並可經 SMART on FHIR 在電子病歷系統內呈現，作為醫師的決策參考。',
+      '我們以哈佛醫學院 Zitnik Lab 的 TxGNN 模型為基礎，建了 30 個國家與地區的「老藥新用」網站。模型替每組藥物與疾病打分數，排除已知用途後列出可能的新適應症，再附上 PubMed 文獻與 ClinicalTrials.gov 臨床試驗，標上 L1–L5 證據等級；也可經 SMART on FHIR 在電子病歷系統內呈現，作為醫師的研究參考。',
     faqs: [
       { q: '老藥新用的預測可以直接拿去用藥嗎？', a: '不可以。預測屬研究參考、用於提出假說，是否適用個人病情、能否使用一定要由醫師評估，切勿自行用藥或停換藥。' },
-      { q: '一般人查得到嗎？', a: '可以。平台公開瀏覽，涵蓋 30 國 FDA 藥品、每藥一頁並附證據；但請把它當作「與醫師討論的素材」，不是處方。' },
+      { q: '一般人查得到嗎？', a: '可以。平台公開瀏覽，涵蓋 30 個國家與地區核准的藥、每藥一頁並附證據；但請把它當作「與醫師討論的素材」，不是處方。' },
     ],
     related: ['txgnn'],
     relatedTerms: ['drug-repurposing', 'smart-on-fhir'],
     sources: [
-      { label: 'TxGNN 原始論文：An explainable foundation model for drug repurposing，《Nature Medicine》2024', url: 'https://www.nature.com/articles/s41591-024-03333-8' },
+      { label: 'TxGNN 原始論文：A foundation model for clinician-centered drug repurposing，《Nature Medicine》2024', url: 'https://doi.org/10.1038/s41591-024-03233-x' },
       { label: 'PubMed Central — 預印本全文（PMC11326339）', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11326339/' },
       { label: '哈佛醫學院 Zitnik Lab：TxGNN 專案頁', url: 'https://zitniklab.hms.harvard.edu/projects/TxGNN/' },
       { label: 'GitHub — mims-harvard/TxGNN（原始碼）', url: 'https://github.com/mims-harvard/TxGNN' },

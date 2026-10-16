@@ -604,7 +604,7 @@ export const TOPICS: readonly Topic[] = [
       },
       {
         product: "txgnn",
-        text: "想把「每個預測都附文獻證據」的老藥新用能力接進你的系統，歡迎 LINE 私訊討論技術合作。TxGNN 平台覆蓋 30+ 國 FDA 藥品、產出 16,700+ 藥物頁面與 FHIR 資源，每個預測都附帶 PubMed 文獻與 ClinicalTrials 證據包，已上架 SMART on FHIR App Gallery、相容 Epic 與 Cerner，並以 OAuth + PKCE 認證接入 EHR。",
+        text: "想把「每個預測都附文獻證據」的老藥新用能力接進你的系統，歡迎 LINE 私訊討論技術合作。TxGNN 目前有 30 個國家與地區的站、33,337 個藥物頁（2026-10-16 統計）和 32.6 萬筆 FHIR 資源，預測附 PubMed 文獻與 ClinicalTrials.gov 試驗並標上證據等級；醫療院所可免費接入 SMART on FHIR App，台灣站版本已可在 SMART 沙盒試用。",
       },
     ],
     products: [

@@ -26,14 +26,15 @@
     "pubmed": 24327,
     "clinicaltrials": 13318,
     "evidence_bundles": 5703,
-    "drug_pages": 1501,
+    "drug_pages": 2239,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "This website provides computational predictions for research purposes only. Does NOT constitute medical advice; Should NOT be used for clinical decision-making without proper validation; Requires independent clinical trial verification before any therapeutic application. Always consult qualified healthcare professionals for medical decisions."
+    "disclaimer_local": "This website provides computational predictions for research purposes only. Does NOT constitute medical advice; Should NOT be used for clinical decision-making without proper validation; Requires independent clinical trial verification before any therapeutic application. Always consult qualified healthcare professionals for medical decisions.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "tw",
@@ -62,14 +63,15 @@
     "pubmed": 7237,
     "clinicaltrials": 3948,
     "evidence_bundles": 280,
-    "drug_pages": 279,
+    "drug_pages": 302,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "本報告僅供學術研究參考，不構成醫療建議。藥物使用請遵循醫師指示，切勿自行調整用藥。任何老藥新用決策需經過完整的臨床驗證與法規審查。"
+    "disclaimer_local": "本報告僅供學術研究參考，不構成醫療建議。藥物使用請遵循醫師指示，切勿自行調整用藥。任何老藥新用決策需經過完整的臨床驗證與法規審查。",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "hk",
@@ -98,14 +100,15 @@
     "pubmed": 16804,
     "clinicaltrials": 10121,
     "evidence_bundles": 1343,
-    "drug_pages": 1626,
+    "drug_pages": 2212,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "本專案結果僅供研究參考，不構成醫療建議。老藥新用候選需經過臨床驗證才能應用。"
+    "disclaimer_local": "本專案結果僅供研究參考，不構成醫療建議。老藥新用候選需經過臨床驗證才能應用。",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "ca",
@@ -134,14 +137,15 @@
     "pubmed": 20721,
     "clinicaltrials": 12724,
     "evidence_bundles": 1344,
-    "drug_pages": 1590,
+    "drug_pages": 2241,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-23",
-    "disclaimer_local": "This content is for research purposes only. Predictions are computational and have not been validated for clinical use. Always consult healthcare professionals before making any medical decisions."
+    "disclaimer_local": "This content is for research purposes only. Predictions are computational and have not been validated for clinical use. Always consult healthcare professionals before making any medical decisions.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "in",
@@ -170,14 +174,15 @@
     "pubmed": 23413,
     "clinicaltrials": 12910,
     "evidence_bundles": 933,
-    "drug_pages": 1215,
+    "drug_pages": 1721,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "This website is for research purposes only. The predictions shown here are computational and have not been clinically validated. They do not constitute medical advice. Always consult healthcare professionals for medical decisions."
+    "disclaimer_local": "This website is for research purposes only. The predictions shown here are computational and have not been clinically validated. They do not constitute medical advice. Always consult healthcare professionals for medical decisions.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "kr",
@@ -206,14 +211,15 @@
     "pubmed": 17665,
     "clinicaltrials": 10880,
     "evidence_bundles": 1334,
-    "drug_pages": 820,
+    "drug_pages": 1317,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "본 프로젝트의 결과는 연구 목적으로만 제공되며 의료 조언을 구성하지 않습니다."
+    "disclaimer_local": "본 프로젝트의 결과는 연구 목적으로만 제공되며 의료 조언을 구성하지 않습니다.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "sa",
@@ -242,21 +248,24 @@
     "pubmed": 17651,
     "clinicaltrials": 10634,
     "evidence_bundles": 1124,
-    "drug_pages": 1014,
+    "drug_pages": 1690,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application."
+    "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "sg",
     "zh": "新加坡",
     "en": "Singapore",
     "url": "https://sgtxgnn.yao.care",
-    "langs": null,
+    "langs": [
+      "en-SG"
+    ],
     "regulator": {
       "abbrev": "HSA",
       "name_en": "Health Sciences Authority",
@@ -276,14 +285,15 @@
     "pubmed": 38972,
     "clinicaltrials": 23060,
     "evidence_bundles": 1613,
-    "drug_pages": 1783,
+    "drug_pages": 2055,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "This report is for academic research purposes only and does not constitute medical advice. Please follow physician instructions for medication use. Any drug repurposing decisions require complete clinical validation and regulatory approval."
+    "disclaimer_local": "This report is for academic research purposes only and does not constitute medical advice. Please follow physician instructions for medication use. Any drug repurposing decisions require complete clinical validation and regulatory approval.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "ch",
@@ -312,14 +322,15 @@
     "pubmed": 71,
     "clinicaltrials": 135,
     "evidence_bundles": 1165,
-    "drug_pages": 730,
+    "drug_pages": 819,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung."
+    "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "my",
@@ -348,14 +359,15 @@
     "pubmed": 20732,
     "clinicaltrials": 20602,
     "evidence_bundles": 1199,
-    "drug_pages": 650,
+    "drug_pages": 800,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Untuk tujuan penyelidikan sahaja. Bukan nasihat perubatan."
+    "disclaimer_local": "Untuk tujuan penyelidikan sahaja. Bukan nasihat perubatan.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "es",
@@ -384,14 +396,15 @@
     "pubmed": 6935,
     "clinicaltrials": 4833,
     "evidence_bundles": 874,
-    "drug_pages": 643,
+    "drug_pages": 1502,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion."
+    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "br",
@@ -420,14 +433,15 @@
     "pubmed": 12303,
     "clinicaltrials": 7523,
     "evidence_bundles": 996,
-    "drug_pages": 526,
+    "drug_pages": 697,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Este relatório é apenas para fins de pesquisa acadêmica e não constitui aconselhamento médico. Qualquer decisão de reposicionamento de medicamentos requer validação clínica completa e aprovação regulatória."
+    "disclaimer_local": "Este relatório é apenas para fins de pesquisa acadêmica e não constitui aconselhamento médico. Qualquer decisão de reposicionamento de medicamentos requer validação clínica completa e aprovação regulatória.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "au",
@@ -456,14 +470,15 @@
     "pubmed": 29541,
     "clinicaltrials": 17737,
     "evidence_bundles": 730,
-    "drug_pages": 949,
+    "drug_pages": 1517,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-23",
-    "disclaimer_local": "The predictions provided by AuTxGNN are for research purposes only and do not constitute medical advice. All drug repurposing candidates require clinical validation before any therapeutic application. This is not a TGA-approved tool. Always consult healthcare professionals for medical decisions."
+    "disclaimer_local": "The predictions provided by AuTxGNN are for research purposes only and do not constitute medical advice. All drug repurposing candidates require clinical validation before any therapeutic application. This is not a TGA-approved tool. Always consult healthcare professionals for medical decisions.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "uk",
@@ -492,14 +507,15 @@
     "pubmed": 15344,
     "clinicaltrials": 7369,
     "evidence_bundles": 826,
-    "drug_pages": 880,
+    "drug_pages": 1354,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "This is not an MHRA-approved tool. Always consult healthcare professionals and refer to NICE guidelines for medical decisions."
+    "disclaimer_local": "This is not an MHRA-approved tool. Always consult healthcare professionals and refer to NICE guidelines for medical decisions.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "de",
@@ -528,14 +544,15 @@
     "pubmed": 8979,
     "clinicaltrials": 7094,
     "evidence_bundles": 738,
-    "drug_pages": 555,
+    "drug_pages": 983,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung."
+    "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "fi",
@@ -564,14 +581,15 @@
     "pubmed": 8578,
     "clinicaltrials": 6929,
     "evidence_bundles": 685,
-    "drug_pages": 516,
+    "drug_pages": 935,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Taemaen projektin tulokset ovat vain tutkimustarkoituksiin eivaetkae muodosta laeketieteen neuvontaa. Laaekkeiden uudelleenkaeytoeen ehdokkaat vaativat kliinisen validoinnin ennen soeveltamista."
+    "disclaimer_local": "Taemaen projektin tulokset ovat vain tutkimustarkoituksiin eivaetkae muodosta laeketieteen neuvontaa. Laaekkeiden uudelleenkaeytoeen ehdokkaat vaativat kliinisen validoinnin ennen soeveltamista.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "no",
@@ -600,14 +618,15 @@
     "pubmed": 8586,
     "clinicaltrials": 6904,
     "evidence_bundles": 685,
-    "drug_pages": 479,
+    "drug_pages": 916,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "This report is for research purposes only and does not constitute medical advice."
+    "disclaimer_local": "This report is for research purposes only and does not constitute medical advice.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "eu",
@@ -636,14 +655,15 @@
     "pubmed": 17770,
     "clinicaltrials": 12638,
     "evidence_bundles": 777,
-    "drug_pages": 710,
+    "drug_pages": 820,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "The results of this project are for research purposes only and do not constitute medical advice. Drug repurposing candidates require clinical validation before application."
+    "disclaimer_local": "The results of this project are for research purposes only and do not constitute medical advice. Drug repurposing candidates require clinical validation before application.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "co",
@@ -672,21 +692,24 @@
     "pubmed": 5636,
     "clinicaltrials": 4255,
     "evidence_bundles": 659,
-    "drug_pages": 648,
+    "drug_pages": 1079,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion."
+    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "nz",
     "zh": "紐西蘭",
     "en": "New Zealand",
     "url": "https://nztxgnn.yao.care",
-    "langs": null,
+    "langs": [
+      "en-NZ"
+    ],
     "regulator": {
       "abbrev": "Medsafe",
       "name_en": null,
@@ -706,14 +729,15 @@
     "pubmed": 11147,
     "clinicaltrials": 7151,
     "evidence_bundles": 555,
-    "drug_pages": 581,
+    "drug_pages": 923,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application."
+    "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "dk",
@@ -742,14 +766,15 @@
     "pubmed": 12239,
     "clinicaltrials": 8798,
     "evidence_bundles": 503,
-    "drug_pages": 739,
+    "drug_pages": 1399,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Resultaterne af dette projekt er kun til forskningsformaal og udgoer ikke medicinsk raadgivning. Kandidater til laegemiddelrepositionering kraever klinisk validering foer anvendelse."
+    "disclaimer_local": "Resultaterne af dette projekt er kun til forskningsformaal og udgoer ikke medicinsk raadgivning. Kandidater til laegemiddelrepositionering kraever klinisk validering foer anvendelse.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "ph",
@@ -778,14 +803,15 @@
     "pubmed": 12404,
     "clinicaltrials": 7302,
     "evidence_bundles": 466,
-    "drug_pages": 420,
+    "drug_pages": 411,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "These predictions are for research purposes only. They do not constitute medical advice and require clinical validation before any clinical application."
+    "disclaimer_local": "These predictions are for research purposes only. They do not constitute medical advice and require clinical validation before any clinical application.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "fr",
@@ -814,14 +840,15 @@
     "pubmed": 8096,
     "clinicaltrials": 4995,
     "evidence_bundles": 465,
-    "drug_pages": 479,
+    "drug_pages": 1137,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Les resultats de ce projet sont uniquement a des fins de recherche et ne constituent pas un avis medical. Les candidats au repositionnement de medicaments necessitent une validation clinique avant application."
+    "disclaimer_local": "Les resultats de ce projet sont uniquement a des fins de recherche et ne constituent pas un avis medical. Les candidats au repositionnement de medicaments necessitent une validation clinique avant application.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "za",
@@ -850,14 +877,15 @@
     "pubmed": 12640,
     "clinicaltrials": 7164,
     "evidence_bundles": 610,
-    "drug_pages": 658,
+    "drug_pages": 927,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-30",
-    "disclaimer_local": "This report is for research purposes only and does not constitute medical advice. Drug use should follow physician guidance. Any drug repurposing decisions require complete clinical validation and regulatory review."
+    "disclaimer_local": "This report is for research purposes only and does not constitute medical advice. Drug use should follow physician guidance. Any drug repurposing decisions require complete clinical validation and regulatory review.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "jp",
@@ -886,14 +914,15 @@
     "pubmed": 7824,
     "clinicaltrials": 3715,
     "evidence_bundles": 1824,
-    "drug_pages": 920,
+    "drug_pages": 1019,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "本報告は研究参考のみを目的としており、医療アドバイスを構成するものではありません。"
+    "disclaimer_local": "本報告は研究参考のみを目的としており、医療アドバイスを構成するものではありません。",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "it",
@@ -922,14 +951,15 @@
     "pubmed": 4502,
     "clinicaltrials": 2177,
     "evidence_bundles": 407,
-    "drug_pages": 539,
+    "drug_pages": 795,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "I risultati di questo progetto sono solo a scopo di ricerca e non costituiscono consulenza medica. I candidati al riposizionamento dei farmaci richiedono una validazione clinica prima dell'applicazione."
+    "disclaimer_local": "I risultati di questo progetto sono solo a scopo di ricerca e non costituiscono consulenza medica. I candidati al riposizionamento dei farmaci richiedono una validazione clinica prima dell'applicazione.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "ar",
@@ -958,14 +988,15 @@
     "pubmed": 2744,
     "clinicaltrials": 1519,
     "evidence_bundles": 414,
-    "drug_pages": 363,
+    "drug_pages": 408,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion."
+    "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "se",
@@ -994,14 +1025,15 @@
     "pubmed": 2679,
     "clinicaltrials": 1149,
     "evidence_bundles": 152,
-    "drug_pages": 139,
+    "drug_pages": 485,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-31",
-    "disclaimer_local": "Resultaten av detta projekt aer endast foer forskningsaendamaal och utgoer inte medicinsk raadgivning. Kandidater foer lakemedelsrepositionering kraever klinisk validering foere tillaempning."
+    "disclaimer_local": "Resultaten av detta projekt aer endast foer forskningsaendamaal och utgoer inte medicinsk raadgivning. Kandidater foer lakemedelsrepositionering kraever klinisk validering foere tillaempning.",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "th",
@@ -1037,7 +1069,8 @@
       "P8": "OK"
     },
     "stats_date": "2026-03-29",
-    "disclaimer_local": "รายงานนี้มีไว้เพื่อการวิจัยทางวิชาการเท่านั้น ไม่ถือเป็นคำแนะนำทางการแพทย์ การใช้ยาต้องปฏิบัติตามคำแนะนำของแพทย์ การตัดสินใจใช้ยาเก่าในข้อบ่งใช้ใหม่ต้องผ่านการตรวจสอบทางคลินิกและกฎระเบียบอย่างครบถ้วน"
+    "disclaimer_local": "รายงานนี้มีไว้เพื่อการวิจัยทางวิชาการเท่านั้น ไม่ถือเป็นคำแนะนำทางการแพทย์ การใช้ยาต้องปฏิบัติตามคำแนะนำของแพทย์ การตัดสินใจใช้ยาเก่าในข้อบ่งใช้ใหม่ต้องผ่านการตรวจสอบทางคลินิกและกฎระเบียบอย่างครบถ้วน",
+    "drug_pages_date": "2026-10-16"
   },
   {
     "iso2": "nl",
@@ -1066,13 +1099,14 @@
     "pubmed": 3666,
     "clinicaltrials": 1327,
     "evidence_bundles": 149,
-    "drug_pages": 261,
+    "drug_pages": 483,
     "phase": {
       "P5": "OK",
       "P7": "OK",
       "P8": "OK"
     },
     "stats_date": "2026-03-23",
-    "disclaimer_local": "For research purposes only. Not medical advice."
+    "disclaimer_local": "For research purposes only. Not medical advice.",
+    "drug_pages_date": "2026-10-16"
   }
 ]

@@ -225,9 +225,9 @@ export const PRODUCTS: readonly Product[] = [
     ogStatLabel: 'COUNTRIES · OPEN SOURCE',
     cardKicker: '醫療 AI · 開源 · 國際上架',
     cardBullets: [
-      '30+ 國 × 9 Phase 自動化',
-      '142K+ AI 候選 / 16.7K 藥物頁',
-      'SMART on FHIR Gallery + GitHub 開源',
+      '30 個國家與地區、17 種語言',
+      '33,337 個藥物頁，附證據等級',
+      'SMART on FHIR 免費整合，GitHub 開源',
     ],
     externalUrl: 'https://twtxgnn.yao.care/',
     repoUrl: 'https://github.com/yao-care/TwTxGNN',

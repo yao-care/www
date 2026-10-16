@@ -93,8 +93,8 @@ export const GET: APIRoute = async () => {
   p();
   p(
     `其中 ${TWTXGNN_BRAND} 為台灣站。TxGNN 模型本身由哈佛醫學院 Zitnik Lab 開發並發表於 Nature Medicine；` +
-      `${TWTXGNN_BRAND} 及其餘各國站台是 ${SITE.legalName} 以該模型建置的落地平台，負責各國 FDA 藥品串接、` +
-      `知識圖譜與深度學習雙引擎預測、PubMed／ClinicalTrials 證據分級，以及 SMART on FHIR 電子病歷整合。` +
+      `${SITE.legalName} 不是模型原作者；${TWTXGNN_BRAND} 及其餘各國站台是本公司以該模型建置的落地平台，負責接上各國主管機關藥證資料、` +
+      `建站、收集 PubMed／ClinicalTrials.gov 證據並標上 L1–L5 證據等級，以及 FHIR 與 SMART on FHIR 電子病歷整合。` +
       `原始碼開源於 https://github.com/yao-care/TwTxGNN 。`,
   );
   p();

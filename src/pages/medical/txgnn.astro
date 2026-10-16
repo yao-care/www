@@ -7,446 +7,493 @@ import RelatedTopics from '../../components/products/RelatedTopics.astro';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 import { TXGNN_SITES, txgnnSiteUrl } from '../../seo.config';
 import countries from '../../data/txgnn-countries.json';
+import worldmap from '../../data/txgnn-worldmap.json';
 
 const product = PRODUCT_BY_SLUG.txgnn;
 
-// 台灣平台統計數字：一律取自 txgnn-countries.json（各國統計的單一真實來源），不再寫死於本頁。
-// 寫死會與資料脫節（實例：very_high 曾寫死 2,995，資料實為 3,081）。且 AI 引用數字時最需要
-// 就近可追溯的出處，故頁面同時標註統計基準日與主管機關資料來源。
-const tw = countries.find((c) => c.iso2 === 'tw')!;
+// ─── 對外數字（TxGNN 團隊 2026-10-16 確認的口徑） ───────────────────────────
+// 國家數、語言數、藥物頁數一律由 txgnn-countries.json 算出，不寫死。
+// 頁面不提四級信心度（very_high／high／medium／low 是內部排序用），只講模型分數與證據等級。
+// FHIR 資源數目前沒有資料檔可讀，先照團隊確認的數字寫。TODO：有資料檔後改成計算值。
+const FHIR_RESOURCES = '32.6 萬';
 const nf = (n: number) => n.toLocaleString('en-US');
-const STATS = {
-  drugs: nf(tw.drugs),
-  kgCandidates: nf(tw.kg_candidates),
-  veryHigh: nf(tw.very_high),
-  statsDate: tw.stats_date,
-  sourceName: tw.dataset.name,
-  sourceUrl: tw.dataset.url,
-  regulator: tw.regulator.name_local ?? tw.regulator.abbrev,
+const totalDrugPages = countries.reduce((a, c) => a + (c.drug_pages ?? 0), 0);
+const drugPagesDate = countries[0]?.drug_pages_date ?? '';
+
+const LANG_ZH: Record<string, string> = {
+  en: '英文', zh: '中文', ja: '日文', ko: '韓文', ar: '阿拉伯文', de: '德文', ms: '馬來文',
+  es: '西班牙文', pt: '葡萄牙文', fi: '芬蘭文', no: '挪威文', da: '丹麥文', fr: '法文',
+  it: '義大利文', sv: '瑞典文', th: '泰文', nl: '荷蘭文',
+};
+const baseLang = (tag: string) => tag.split('-')[0].toLowerCase();
+const langCount = new Set(countries.flatMap((c) => (c.langs ?? []).map(baseLang))).size;
+const langLabel = (tags: string[] | null) =>
+  [...new Set((tags ?? []).map(baseLang))].map((l) => (l === 'zh' ? '繁體中文' : LANG_ZH[l] ?? l)).join('、');
+
+type Country = (typeof countries)[number];
+const regName = (c: Country) => {
+  const name = c.regulator.name_local ?? c.regulator.name_en;
+  const abbr = c.regulator.abbrev;
+  if (name && abbr && name !== abbr) return `${name}（${abbr}）`;
+  return name ?? abbr ?? '';
 };
 
-// 8 phases data
-const phases = [
+const siteName = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.name]));
+const siteFlag = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.flag]));
+const byIso = Object.fromEntries(countries.map((c) => [c.iso2, c]));
+const info = (code: string) => {
+  const c = byIso[code];
+  return {
+    code,
+    name: siteName[code] ?? c?.zh ?? code,
+    flag: siteFlag[code] ?? '',
+    url: txgnnSiteUrl(code),
+    regulator: c ? regName(c) : '',
+    pages: c?.drug_pages != null ? nf(c.drug_pages) : '',
+    date: c?.drug_pages_date ?? '',
+    langs: c ? langLabel(c.langs) : '',
+  };
+};
+
+const REGIONS: { label: string; codes: string[] }[] = [
+  { label: '亞洲', codes: ['tw', 'jp', 'kr', 'hk', 'sg', 'my', 'th', 'ph', 'in'] },
+  { label: '歐洲', codes: ['eu', 'uk', 'de', 'fr', 'it', 'es', 'nl', 'ch', 'se', 'no', 'dk', 'fi'] },
+  { label: '北美洲', codes: ['us', 'ca'] },
+  { label: '中南美洲', codes: ['br', 'ar', 'co'] },
+  { label: '大洋洲', codes: ['au', 'nz'] },
+  { label: '中東與非洲', codes: ['sa', 'za'] },
+];
+
+// ─── 例子卡片（資料陣列驅動，換例子只改這裡） ──────────────────────────────
+// 用戶尚未拍板最終三例（2026-10-16）。目前三例皆為「系統自己預測、知識圖譜裡沒有這組關係」，
+// 分數與頁面連結由 TxGNN 團隊提供、網址已實測 200；臨床證據逐條附權威來源。
+// systemPrediction 兩種形態：
+//   { score, level, url, site } → 顯示分數、證據等級與藥物頁連結
+//   { none: true, note }        → 顯示「系統沒有這組預測」與說明
+type Source = { label: string; url: string };
+type SystemPrediction =
+  | { none?: false; score: string; level: string; url: string; site: string }
+  | { none: true; note: string };
+type Example = {
+  drug: string;
+  original: string;
+  newUse: string;
+  evidence: string;
+  level: string;
+  systemPrediction: SystemPrediction;
+  sources: Source[];
+};
+const examples: Example[] = [
   {
-    n: '1',
-    title: '資料準備階段',
-    summary: '下載並處理所有必要的原始資料：TxGNN 知識圖譜 + 各國 FDA 詞彙表',
-    items: [
-      { kind: '資料來源', title: 'TxGNN 知識圖譜', body: 'node.csv（129,375 節點） + kg.csv（~8.0M 關係）' },
-      { kind: '處理流程', title: '詞彙表提取 (prepare_external_data.py)', body: '提取 DrugBank 藥品詞彙、疾病詞彙表、藥物-疾病關係' },
-      { kind: '輸出', title: 'External 資料', body: 'drugbank_vocab.csv / disease_vocab.csv / drug_disease_relations.csv' },
-      { kind: '子流程', title: '各國 FDA 資料處理 (process_fda_data.py)', body: 'TFDA / PMDA / EMA / FDA …→ {country}_fda_drugs.json' },
+    drug: 'Dapsone',
+    original: '痲瘋病、皰疹樣皮膚炎',
+    newUse: '肺囊蟲肺炎（PCP）',
+    evidence:
+      '這一例是模型自己找回了臨床上真的在用的用途。不能用磺胺類藥物的愛滋感染者，醫師會改用 dapsone 預防肺囊蟲肺炎，美國做過第三期試驗拿它和 atovaquone 比。2024 年的統合分析把含 dapsone 的處方列為預防選項之一，第一線仍是 TMP-SMX。',
+    level: 'L1',
+    systemPrediction: { score: '99.73%', level: 'L1', url: 'https://ustxgnn.yao.care/drugs/dapsone/', site: '美國站' },
+    sources: [
+      { label: 'MedlinePlus：Dapsone', url: 'https://medlineplus.gov/druginfo/meds/a682128.html' },
+      { label: 'Dermatol Clin 2001 回顧（PMID 11155588）', url: 'https://pubmed.ncbi.nlm.nih.gov/11155588/' },
+      { label: 'ClinicalTrials.gov NCT00000802（第三期）', url: 'https://clinicaltrials.gov/study/NCT00000802' },
+      { label: 'Clin Microbiol Infect 2024 統合分析（PMID 38583518）', url: 'https://pubmed.ncbi.nlm.nih.gov/38583518/' },
     ],
   },
   {
-    n: '2',
-    title: '預測執行階段',
-    summary: '雙引擎並行：知識圖譜（快速）+ 深度學習（精準）',
-    items: [
-      { kind: 'KG 引擎', title: '知識圖譜方法（5 步驟，快速）', body: '載入 FDA → 過濾有效藥品 → 成分映射到 DrugBank → 適應症映射到疾病 → 找老藥新用候選' },  // ai-voice-ok: KG 引擎的實際 5 個步驟
-      { kind: 'KG 結果', title: 'repurposing_candidates.csv', body: `~${STATS.kgCandidates} 候選 / ${STATS.drugs} 藥物 / 166 疾病` },
-      { kind: 'DL 引擎', title: '深度學習方法（5 步驟，精準）', body: 'Conda + PyTorch/DGL → 載入 model.pt → 建構圖 → 推論 → 過濾 score ≥ 0.5' },  // ai-voice-ok: DL 引擎的實際 5 個步驟
-      { kind: 'DL 結果', title: 'txgnn_dl_predictions.csv', body: `~3.1M 候選 / ${STATS.drugs} 藥物 / 166 疾病` },
+    drug: 'Clopidogrel',
+    original: '抗血小板藥，預防心肌梗塞、中風再發',
+    newUse: '偏頭痛',
+    evidence:
+      '證據集中在一小群人：心臟有卵圓孔未閉，或做過心房中膈缺損關閉術的偏頭痛患者。2015 年 JAMA 的隨機試驗裡，關閉術後加用 clopidogrel 的人，三個月內偏頭痛發作比較少；2026 年 BMJ 的試驗中，它對合併卵圓孔未閉的偏頭痛效果不輸常用的預防藥 metoprolol。一般偏頭痛患者的小型隨機試驗則看不出差別。',
+    level: 'L2',
+    systemPrediction: { score: '99.44%', level: 'L2', url: 'https://ustxgnn.yao.care/drugs/clopidogrel/', site: '美國站' },
+    sources: [
+      { label: 'MedlinePlus：Clopidogrel', url: 'https://medlineplus.gov/druginfo/meds/a601040.html' },
+      { label: 'JAMA 2015 CANOA 試驗（PMID 26551304）', url: 'https://pubmed.ncbi.nlm.nih.gov/26551304/' },
+      { label: 'BMJ 2026 卵圓孔未閉偏頭痛試驗（PMID 42526943）', url: 'https://pubmed.ncbi.nlm.nih.gov/42526943/' },
+      { label: 'Cephalalgia 2014 先導試驗（PMID 24836213）', url: 'https://pubmed.ncbi.nlm.nih.gov/24836213/' },
     ],
   },
+  // 第三例：用戶尚未選定（2026-10-16）。選定後照上面格式補一筆，systemPrediction 與 sources 都要有實查過的網址。
+  //   propofol（麻醉 → 偏頭痛 99.69% L2）用戶已決定不用。
+  // 備選（團隊提供分數與網址，臨床證據尚未查證，換上前要逐條補權威來源）：
+  //   ketamine（麻醉）→ 頭痛疾患 99.33% L2  https://intxgnn.yao.care/drugs/ketamine/
+  //   cyclandelate → 偏頭痛 99.69% L2       https://twtxgnn.yao.care/drugs/cyclandelate/
+  //   busulfan → 骨髓發育不良症候群 99.62% L2 https://twtxgnn.yao.care/drugs/busulfan/
+];
+
+// 證據等級定義：以台灣站 TwTxGNN docs/methodology.md 為準
+const LEVELS = [
+  { k: 'L1', t: '多個第三期隨機對照試驗，或系統性回顧', b: '找到兩個以上第三期試驗或系統性回顧' },
+  { k: 'L2', t: '單一隨機對照試驗，或多個第二期試驗', b: '有一個隨機對照試驗，或兩個以上第二期試驗' },
+  { k: 'L3', t: '觀察性研究、大型病例系列', b: '沒有隨機分組，只觀察用藥的人後來怎麼樣' },
+  { k: 'L4', t: '前臨床研究、機轉研究、個案報告', b: '只有動物、細胞實驗或少數個案' },
+  { k: 'L5', t: '只有模型預測', b: '還找不到任何臨床證據' },
+];
+const levelText = Object.fromEntries(LEVELS.map((l) => [l.k, l.t]));
+
+const steps = [
+  { t: '選國家', b: '要查台灣核准的藥，直接到台灣站。其他國家在下面的地圖或清單裡挑，每個國家有自己的站。' },
+  { t: '查一個藥', b: '用藥名搜尋，學名或英文名都可以。每個藥有一頁，最上面寫著它在這個國家原本核准治什麼。' },
+  { t: '看預測和證據', b: '頁面列出模型預測的新適應症、模型分數和證據等級，下面是找到的臨床試驗與文獻，還有交互作用和禁忌提醒。' },
+];
+
+const pipeline = [
   {
-    n: '3',
-    title: '整合階段',
-    summary: '合併兩種預測方法的結果，計算複合信心度',
-    items: [
-      { kind: '處理流程', title: '預測整合 (integrate_predictions.py)', body: '合併 KG + DL 結果、計算複合信心度、標記預測來源' },
-      { kind: '輸出', title: 'integrated_predictions.csv', body: `very_high (KG+DL, score≥0.9): ${STATS.veryHigh} 筆 · high (KG+DL 支持): ~940.9K 筆 · medium / low` },
-    ],
+    t: '準備資料',
+    b: 'TxGNN 用的知識圖譜叫 PrimeKG，可以想成一張很大的醫學關係網，有 129,375 個節點（藥物、疾病、基因等）、約 800 萬條關係。另一份是各國主管機關公開的藥證資料，決定這個國家有哪些藥。',
   },
   {
-    n: '4',
-    title: '輸出生成階段',
-    summary: '產生網站、FHIR 資源和搜尋索引',
-    items: [
-      { kind: 'FHIR', title: 'generate_fhir_resources.py', body: 'MedicationKnowledge / ClinicalUseDefinition' },
-      { kind: '頁面', title: 'generate_drug_pages.py', body: '每藥物一頁 Markdown，產出 16.7K 藥物頁面' },
-      { kind: '搜尋', title: 'generate_search_index.py', body: 'search-index.json（給站內搜尋使用）' },
-      { kind: '交互作用', title: '藥物交互作用資料整合', body: 'DDI ~302.5K · DFI 857 · DHI 35 · DDSI 8,359' },
-    ],
+    t: '模型打分數',
+    b: 'TxGNN 的深度學習模型替每一組「藥物、疾病」打一個 0 到 1 的分數，越接近 1，模型越覺得這個藥可能對這個病有用。',
   },
   {
-    n: '5',
-    title: '證據收集與驗證',
-    summary: '從外部資料源收集支持預測的證據',
-    items: [
-      { kind: '資料源', title: 'PubMed (check_pubmed.py)', body: '搜尋相關醫學文獻，~386.8K 筆引用' },
-      { kind: '資料源', title: 'ClinicalTrials (check_clinicaltrials.py)', body: '搜尋進行中/已完成的臨床試驗，~242.9K 筆' },
-      { kind: '處理', title: 'batch_collect_bundles.py', body: '為每個藥物建立證據包' },
-      { kind: '輸出', title: 'Evidence Bundle', body: 'data/bundles/{drug}/drug_bundle.json，共 28.6K 個證據包' },
-    ],
+    t: '對照已知用途',
+    b: '把知識圖譜裡這個藥已經記錄的適應症、仿單外用途和禁忌症列出來，和模型的預測一筆一筆比對。疾病名稱相同的剔除，剩下的才叫「預測新適應症」。',
   },
   {
-    n: '6',
-    title: '監控與自動更新',
-    summary: 'GitHub Actions 自動化工作流程',
-    items: [
-      { kind: '排程', title: 'news-monitor.yml', body: '每小時抓取健康新聞，關鍵字匹配藥物/疾病' },
-      { kind: '排程', title: 'check-new-evidence.yml', body: '定期檢查 PubMed/CT，發現新證據自動更新' },
-      { kind: '部署', title: 'deploy-jekyll.yml', body: '自動建構 Jekyll，部署到 GitHub Pages，30/30 Actions OK' },
-    ],
+    t: '挑出來查證據',
+    b: '每個藥取分數 0.99 以上的前 10 名，到 PubMed（美國國家醫學圖書館的文獻資料庫）和 ClinicalTrials.gov（全球臨床試驗登記平台）找相關研究，再判定 L1 到 L5 的證據等級。',
   },
   {
-    n: '7',
-    title: 'SMART on FHIR 整合',
-    summary: '與電子病歷系統（Epic / Cerner）整合，提供臨床決策支援',
-    items: [
-      { kind: 'EHR', title: 'OAuth 啟動 (launch.html)', body: 'PKCE 認證流程，相容 Epic、Cerner 等主流 EHR' },
-      { kind: '讀取', title: '讀取病人用藥', body: 'MedicationRequest / MedicationStatement' },
-      { kind: '映射', title: '藥物映射 (smart-fhir-mapper.js)', body: 'RxNorm → DrugBank' },  // ai-voice-ok: RxNorm→DrugBank 是藥品碼映射寫法
-      { kind: '輸出', title: '老藥新用建議', body: '依病患現有用藥，顯示潛在新適應症與證據' },
-    ],
+    t: '產出網站與資料',
+    b: '產出每個藥的頁面、搜尋索引，以及 FHIR 格式的資料（FHIR 是醫療系統之間交換資料的國際標準；這裡用的是 MedicationKnowledge 和 ClinicalUseDefinition 兩種）。頁面同時整合藥物和藥物、食物、草藥的交互作用，以及藥物和疾病的禁忌資料。',
   },
   {
-    n: '8',
-    title: '在地化 (i18n)',
-    summary: '15 種語言、30 個國家',
-    items: [
-      { kind: '偵測', title: '語言偵測', body: '自動檢查 lang 標籤（首頁、藥物頁、免責聲明）' },
-      { kind: '翻譯', title: '批次翻譯', body: '7,000+ 藥物頁面 × 15 種語言' },
-      { kind: '驗證', title: 'p8_i18n_check.sh', body: '在地化驗證 29/30 OK' },
-    ],
+    t: '自動更新',
+    b: '系統定期抓健康新聞、檢查有沒有新發表的文獻和試驗，有變動就自動重新部署網站。',
   },
 ];
 
-// 30 country × 9 phase status
-const heatmapData = {
-  ARTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  AuTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  BrTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  CHTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  COTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  CaTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  DETxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  DkTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  ESTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  EuTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  FITxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  FRTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  HkTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  ITTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  InTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  JpTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  KrTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  MyTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  NOTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  NZTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  NlTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  PhTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  SATxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  SETxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  SgTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  ThTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  TwTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  UkTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  UsTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-  ZaTxGNN: {P0:'OK',P1:'OK',P2:'OK',P3:'OK',P4:'OK',P5:'OK',P6:'OK',P7:'OK',P8:'OK'},
-};
+const sameItems = ['AI 模型：同一個 TxGNN', '全球文獻：PubMed、ClinicalTrials.gov', '證據等級：同一套 L1 到 L5 判定方法'];
+const diffItems = ['主管機關', '核准的藥和適應症', '網站語言'];
 
-const heatmapJson = JSON.stringify(heatmapData);
-
-// SMART on FHIR Gallery direct app URL
 const smartAppUrl = 'https://apps.smarthealthit.org/app/twtxgnn-smart-app';
-
-const stats = [
-  { value: '30+', unit: '國', label: 'FDA 藥品涵蓋' },
-  { value: '142K+', unit: '筆', label: 'AI 候選藥物' },
-  { value: '16.7K', unit: '頁', label: '藥物頁面 / FHIR 資源' },
-  { value: '~28.6K', unit: '個', label: '證據包' },
-];
+const W = worldmap.world;
+const E = worldmap.europe;
+const tipAttrs = (code: string) => {
+  const i = info(code);
+  return {
+    'data-tip-name': i.name,
+    'data-tip-reg': i.regulator,
+    'data-tip-pages': i.pages,
+    'data-tip-date': i.date,
+    'data-tip-langs': i.langs,
+  };
+};
 ---
 <ProductLayout slug="txgnn">
   <ProductHero product={product}>
     <Fragment slot="hero-extras">
-      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-        {stats.map((s) => (
-          <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
-            <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">
-              {s.value}
-              <span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">{s.unit}</span>
-            </div>
-            <div class="text-xs text-[color:var(--color-ink-soft)] mt-0.5">{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div class="mt-8 flex flex-wrap gap-3">
+      <p class="mt-6 text-lg md:text-xl font-medium text-[color:var(--color-ink)] max-w-3xl leading-relaxed">
+        已經上市的藥，可能還能治別的病。TxGNN 用 AI 找出這些可能，每一筆都附上目前找得到的研究證據。
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
         <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="btn-brand">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          瀏覽 TxGNN 平台
+          查台灣的藥
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
-        <a href={smartAppUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-[color:var(--color-brand)] text-[color:var(--color-brand)] hover:bg-[color:var(--color-brand)] hover:text-white transition">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          SMART on FHIR App 直連
-        </a>
-        <a href="https://github.com/yao-care/TwTxGNN" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium border-2 border-neutral-300 text-[color:var(--color-ink)] hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-1.94c-3.2.7-3.87-1.54-3.87-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
-          GitHub 開源
-        </a>
+        <a href="#countries" class="btn-outline-brand">選其他國家</a>
       </div>
+      <dl class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 max-w-3xl">
+        <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+          <dt class="sr-only">國家與地區</dt>
+          <dd class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{countries.length}<span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">個國家與地區</span></dd>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+          <dt class="sr-only">語言</dt>
+          <dd class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{langCount}<span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">種語言</span></dd>
+        </div>
+        <div class="rounded-xl bg-white border border-neutral-200 px-4 py-3 md:px-5 md:py-4 shadow-sm">
+          <dt class="sr-only">藥物頁</dt>
+          <dd class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{nf(totalDrugPages)}<span class="text-sm font-medium text-[color:var(--color-ink-soft)] ml-1">個藥物頁</span></dd>
+        </div>
+      </dl>
+      <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]">藥物頁數為 {countries.length} 個站合計，{drugPagesDate} 統計。語言含英文。</p>
     </Fragment>
   </ProductHero>
 
-  <!-- Intro / context -->
-  <section class="py-12 md:py-16">
-    <div class="max-w-4xl mx-auto px-4 lg:px-6 text-[color:var(--color-ink)] leading-relaxed">
-      <p class="text-base md:text-lg">
-        老藥新用（Drug Repurposing）是把已上市的藥物用於原本未核准的新適應症。
-        因為已通過安全性驗證，研發成本與時間遠低於開發新藥。
-        <strong>藥提醒科技有限公司（yao.care）</strong>以哈佛大學 TxGNN 模型為基礎建置了這個平台，
-        台灣站名為 <strong class="text-[color:var(--color-brand)]">TwTxGNN</strong>（twtxgnn.yao.care），
-        並<strong class="text-[color:var(--color-brand)]">從台灣擴展到 30 個國家</strong>，
-        把預測流程與 EHR 系統打通，讓臨床端能在病患用藥當下即時看到老藥新用建議。
-      </p>
-      <p class="mt-4 text-base md:text-lg">
-        本平台已上架 SMART on FHIR App Gallery，由 SMART Health IT（哈佛醫學院孵化的開源組織）審核，
-        相容 Epic、Cerner 等主流電子病歷系統。
-      </p>
-      <p class="mt-4 text-base md:text-lg">
-        對<strong class="text-[color:var(--color-brand)]">罕見疾病或現有療法有限</strong>的病患，
-        老藥新用提供「已通過安全性的現成藥物」這條相對快的探索路徑。平台同時服務三種人：
-        <strong>研究者</strong>篩選候選假說、<strong>臨床醫師</strong>在 EHR 內查既有用藥的潛在新適應症、
-        <strong>病友與家屬</strong>了解疾病有哪些正被研究的藥物選項。
-        每筆預測都附 PubMed 文獻與 ClinicalTrials 臨床試驗證據包，是研究參考而非臆測，實際用藥仍須由醫師評估。
-      </p>
-    </div>
-  </section>
-
-  <!-- KG vs DL dual engines -->
-  <section class="py-14 md:py-20 bg-neutral-50">
-    <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="text-center mb-12">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Dual Engines</p>
-        <h2 class="section-title mt-2">雙引擎方法論</h2>
-        <p class="section-subtitle">知識圖譜走快、深度學習走準，兩條結果再融合成複合信心度</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-        <!-- KG -->
-        <div class="rounded-2xl bg-white border-l-4 border-[#3b82f6] p-6 md:p-8 shadow-sm">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="inline-flex w-8 h-8 rounded-md items-center justify-center bg-blue-50 text-[#3b82f6] font-bold">KG</span>
-            <h3 class="text-lg md:text-xl font-bold">知識圖譜方法（快速）</h3>
-          </div>
-          <ol class="space-y-3 text-sm">
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">1</span><span>載入 FDA 藥品資料</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">2</span><span>過濾有效藥品（移除已撤銷、停產）</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">3</span><span>成分映射到 DrugBank（synonym_map 標準化）</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">4</span><span>適應症映射到標準疾病代碼</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-50 text-[#3b82f6] flex items-center justify-center text-xs font-bold">5</span><span>基於知識圖譜關係，找出未核准但有潛力的藥物-疾病配對</span></li>
-          </ol>
-          <div class="mt-5 pt-5 border-t border-neutral-200 grid grid-cols-3 gap-3 text-center">
-            <div><div class="text-xl font-bold text-[#3b82f6] tabular-nums">~{STATS.kgCandidates}</div><div class="text-xs text-[color:var(--color-ink-soft)]">候選</div></div>
-            <div><div class="text-xl font-bold text-[#3b82f6] tabular-nums">{STATS.drugs}</div><div class="text-xs text-[color:var(--color-ink-soft)]">藥物</div></div>
-            <div><div class="text-xl font-bold text-[#3b82f6] tabular-nums">166</div><div class="text-xs text-[color:var(--color-ink-soft)]">疾病</div></div>
-          </div>
-        </div>
-
-        <!-- DL -->
-        <div class="rounded-2xl bg-white border-l-4 border-[#a855f7] p-6 md:p-8 shadow-sm">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="inline-flex w-8 h-8 rounded-md items-center justify-center bg-purple-50 text-[#a855f7] font-bold">DL</span>
-            <h3 class="text-lg md:text-xl font-bold">深度學習方法（精準）</h3>
-          </div>
-          <ol class="space-y-3 text-sm">
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">1</span><span>啟動 Conda 環境（PyTorch + DGL）</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">2</span><span>載入 TxGNN 預訓練圖神經網路模型</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">3</span><span>建構藥物-疾病圖結構</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">4</span><span>對所有藥物-疾病組合推論，計算 0-1 信心分數</span></li>
-            <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-50 text-[#a855f7] flex items-center justify-center text-xs font-bold">5</span><span>過濾保留 score ≥ 0.5 的高分候選</span></li>
-          </ol>
-          <div class="mt-5 pt-5 border-t border-neutral-200 grid grid-cols-3 gap-3 text-center">
-            <div><div class="text-xl font-bold text-[#a855f7] tabular-nums">~3.1M</div><div class="text-xs text-[color:var(--color-ink-soft)]">候選</div></div>
-            <div><div class="text-xl font-bold text-[#a855f7] tabular-nums">{STATS.drugs}</div><div class="text-xs text-[color:var(--color-ink-soft)]">藥物</div></div>
-            <div><div class="text-xl font-bold text-[#a855f7] tabular-nums">166</div><div class="text-xs text-[color:var(--color-ink-soft)]">疾病</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Confidence levels -->
+  <!-- 2. 三個例子 -->
   <section class="py-14 md:py-20">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="text-center mb-12">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Confidence Levels</p>
-        <h2 class="section-title mt-2">信心度分級</h2>
-        <p class="section-subtitle">合併 KG + DL 結果後，每筆預測獲得四級信心標記</p>
-        <p class="mt-3 text-xs text-[color:var(--color-ink-soft)]">
-          台灣平台統計以 {STATS.statsDate} 為基準日，藥品清單來源：{STATS.regulator}
-          <a href={STATS.sourceUrl} target="_blank" rel="noopener" class="underline">{STATS.sourceName}</a>；
-          各國統計與方法論見<a href="/medical/txgnn/methodology/" class="underline">方法論與資料透明度</a>。
+      <div class="max-w-3xl mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Examples</p>
+        <h2 class="section-title mt-2">模型自己找出來的例子</h2>
+        <p class="mt-3 text-base md:text-lg text-[color:var(--color-ink-soft)] leading-relaxed">
+          下面幾個藥，知識圖譜裡原本都沒有記錄這組用途，是模型自己預測出來的。我們把目前查得到的臨床證據放在旁邊，證據有強有弱，照實寫。
         </p>
       </div>
-
-      <div class="grid md:grid-cols-4 gap-4 md:gap-6">
-        <div class="rounded-xl border-2 border-emerald-500/30 bg-white p-5 md:p-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-            <span class="text-xs font-bold tracking-wider text-emerald-600 uppercase">very_high</span>
-          </div>
-          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">{STATS.veryHigh}</div>
-          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">KG + DL 雙方支持，且 score ≥ 0.9</p>
-        </div>
-        <div class="rounded-xl border-2 border-blue-500/30 bg-white p-5 md:p-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
-            <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">high</span>
-          </div>
-          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">~940.9K</div>
-          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">KG + DL 雙方支持的候選</p>
-        </div>
-        <div class="rounded-xl border-2 border-amber-500/30 bg-white p-5 md:p-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-            <span class="text-xs font-bold tracking-wider text-amber-600 uppercase">medium</span>
-          </div>
-          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">—</div>
-          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">僅 KG 或僅 DL 單方支持</p>
-        </div>
-        <div class="rounded-xl border-2 border-neutral-300 bg-white p-5 md:p-6">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-3 h-3 rounded-full bg-neutral-400"></span>
-            <span class="text-xs font-bold tracking-wider text-neutral-500 uppercase">low</span>
-          </div>
-          <div class="text-3xl font-bold tabular-nums text-[color:var(--color-ink)]">—</div>
-          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">分數較低，僅作為參考</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 30 國涵蓋（列名 + 各國站連結） -->
-  <section id="global-coverage" class="py-14 md:py-20 scroll-mt-24">
-    <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="text-center mb-10">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Global Coverage</p>
-        <h2 class="section-title mt-2">涵蓋 30 個國家／地區</h2>
-        <p class="section-subtitle">每個國家／地區都有獨立站台，依當地 FDA 藥品資料與在地語言產出老藥新用結果</p>
-        <p class="mt-3">
-          <a href="/medical/txgnn/methodology/" class="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-brand)] hover:underline">
-            各國方法論與資料透明度（主管機關 · 資料來源 · 驗證差異）→
-          </a>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
-        {TXGNN_SITES.map((s) => (
-          <a
-            href={txgnnSiteUrl(s.code)}
-            target="_blank"
-            rel="noopener"
-            class="group flex items-center gap-3 rounded-xl bg-white border border-neutral-200 px-4 py-3 shadow-sm hover:border-[color:var(--color-brand)] transition-colors"
-          >
-            <span class="text-2xl leading-none" aria-hidden="true">{s.flag}</span>
-            <span class="flex-1 min-w-0">
-              <span class="block font-bold text-sm text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)] truncate">{s.name}</span>
-              <span class="block text-[11px] font-mono text-[color:var(--color-ink-soft)] truncate">{s.code}txgnn.yao.care</span>
-            </span>
-          </a>
-        ))}
-      </div>
-      <p class="mt-6 text-center text-sm text-[color:var(--color-ink-soft)]">
-        台灣站為 <a href="https://twtxgnn.yao.care/" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] underline underline-offset-2">twtxgnn.yao.care</a>，
-        站名 <strong>TwTxGNN</strong>；其餘各國依 <code>{'{'}國碼{'}'}TxGNN</code> 命名（JpTxGNN、UsTxGNN、DeTxGNN…）。
-        各國站採相同架構、獨立部署於 GitHub Pages。
-      </p>
-      <p class="mt-3 text-center text-sm text-[color:var(--color-ink-soft)]">
-        全部 {TXGNN_SITES.length} 個站台皆由 <strong>藥提醒科技有限公司（yao.care，統一編號 83620786）</strong>開發與維運，
-        原始碼開源於 <a href="https://github.com/yao-care/TwTxGNN" target="_blank" rel="noopener" class="text-[color:var(--color-brand)] underline underline-offset-2">github.com/yao-care/TwTxGNN</a>。
-        模型本身出自哈佛醫學院 Zitnik Lab；各國站台的建置、資料串接與證據分級由本公司負責。
-      </p>
-    </div>
-  </section>
-
-  <!-- 30-country radial heatmap -->
-  <section class="py-14 md:py-20 bg-neutral-50">
-    <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="text-center mb-10">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Coverage Map</p>
-        <h2 class="section-title mt-2">30 國 × 9 Phase 即時健康狀態</h2>
-        <p class="section-subtitle">由 check_all.sh 自動更新，每環為一個 Phase，每色塊為一國</p>
-      </div>
-
-      <div class="rounded-2xl bg-white border border-neutral-200 p-4 md:p-8 shadow-sm">
-        <div id="radial-heatmap" class="flex justify-center relative" data-heatmap={heatmapJson}></div>
-        <div class="mt-4 flex justify-center gap-4 md:gap-6 flex-wrap text-xs text-[color:var(--color-ink-soft)]">
-          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-emerald-500"></span> OK</span>
-          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-amber-500"></span> 進行中 / 警告</span>
-          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-red-500"></span> 錯誤</span>
-          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-neutral-300"></span> 未啟動</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8 phases accordion -->
-  <section class="py-14 md:py-20">
-    <div class="max-w-5xl mx-auto px-4 lg:px-6">
-      <div class="text-center mb-10">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Pipeline</p>
-        <h2 class="section-title mt-2">完整 8 階段流程</h2>
-        <p class="section-subtitle">原始 FDA 資料進來，一路自動跑到 EHR 系統整合</p>
-      </div>
-
-      <div class="space-y-3">
-        {phases.map((p) => (
-          <details class="group rounded-xl bg-white border border-neutral-200 shadow-sm overflow-hidden" open>
-            <summary class="cursor-pointer p-5 md:p-6 flex items-start gap-4 list-none">
-              <span class="shrink-0 w-9 h-9 rounded-lg bg-[color:var(--color-brand)] text-white flex items-center justify-center font-bold tabular-nums">
-                {p.n}
-              </span>
-              <div class="flex-1">
-                <h3 class="font-bold text-[color:var(--color-ink)]">{p.title}</h3>
-                <p class="mt-1 text-sm text-[color:var(--color-ink-soft)]">{p.summary}</p>
+      <div class="grid md:grid-cols-2 gap-5 max-w-5xl">
+        {examples.map((ex) => (
+          <article class="flex flex-col rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+            <h3 class="text-xl font-bold text-[color:var(--color-ink)]">{ex.drug}</h3>
+            <dl class="mt-4 space-y-3 text-sm">
+              <div>
+                <dt class="font-bold text-[color:var(--color-ink-soft)]">原本治什麼</dt>
+                <dd class="mt-0.5 text-[color:var(--color-ink)]">{ex.original}</dd>
               </div>
-              <svg class="shrink-0 w-5 h-5 mt-2 text-[color:var(--color-ink-soft)] transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </summary>
-            <div class="px-5 md:px-6 pb-5 md:pb-6 pt-0 border-t border-neutral-100">
-              <div class="grid md:grid-cols-2 gap-3 mt-4">
-                {p.items.map((item) => (
-                  <div class="rounded-lg bg-neutral-50 px-4 py-3">
-                    <div class="text-xs font-bold tracking-wider uppercase text-[color:var(--color-brand)] mb-1">{item.kind}</div>
-                    <div class="font-medium text-sm text-[color:var(--color-ink)]">{item.title}</div>
-                    <div class="text-xs text-[color:var(--color-ink-soft)] mt-1 leading-relaxed">{item.body}</div>
-                  </div>
+              <div>
+                <dt class="font-bold text-[color:var(--color-ink-soft)]">模型預測的新用途</dt>
+                <dd class="mt-0.5 text-[color:var(--color-ink)] font-medium">{ex.newUse}</dd>
+              </div>
+              <div>
+                <dt class="font-bold text-[color:var(--color-ink-soft)]">目前證據</dt>
+                <dd class="mt-0.5 text-[color:var(--color-ink)] leading-relaxed">{ex.evidence}</dd>
+              </div>
+              <div>
+                <dt class="font-bold text-[color:var(--color-ink-soft)]">證據等級</dt>
+                <dd class="mt-1 flex items-start gap-2">
+                  <span class="level-badge">{ex.level}</span>
+                  <span class="text-[color:var(--color-ink-soft)]">{levelText[ex.level]}</span>
+                </dd>
+              </div>
+              <div>
+                <dt class="font-bold text-[color:var(--color-ink-soft)]">系統預測</dt>
+                <dd class="mt-0.5 text-[color:var(--color-ink)]">
+                  {ex.systemPrediction.none ? (
+                    <span>系統沒有這組預測。{ex.systemPrediction.note}</span>
+                  ) : (
+                    <span>
+                      模型分數 <strong class="tabular-nums">{ex.systemPrediction.score}</strong>，
+                      <a href={ex.systemPrediction.url} target="_blank" rel="noopener" class="underline underline-offset-2 text-[color:var(--color-brand)]">看{ex.systemPrediction.site}的藥物頁</a>
+                    </span>
+                  )}
+                </dd>
+              </div>
+            </dl>
+            <details class="mt-4 text-sm">
+              <summary class="cursor-pointer font-medium text-[color:var(--color-brand)]">來源（{ex.sources.length}）</summary>
+              <ul class="mt-2 space-y-1.5 list-disc pl-5 text-[color:var(--color-ink-soft)]">
+                {ex.sources.map((s) => (
+                  <li><a href={s.url} target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-[color:var(--color-brand)]">{s.label}</a></li>
                 ))}
-              </div>
-            </div>
-          </details>
+              </ul>
+            </details>
+            <p class="mt-auto pt-5 text-xs font-medium text-[color:var(--color-critical)]">
+              研究參考，不是醫療建議。預測不等於療效，仍需臨床驗證；用藥請與醫師討論。
+            </p>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Evidence -->
+  <!-- 證據等級與反例 -->
   <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Evidence Levels</p>
+      <h2 class="section-title mt-2">為什麼要看證據等級</h2>
+      <p class="mt-4 text-base md:text-lg leading-relaxed">
+        模型分數只說明「模型覺得像」。這個藥對病人到底有沒有用，要看有沒有人做過研究、研究做得夠不夠嚴謹，所以每個預測旁邊都標了證據等級。
+      </p>
+      <ol class="mt-6 grid md:grid-cols-5 gap-3">
+        {LEVELS.map((l) => (
+          <li class="rounded-xl bg-white border border-neutral-200 p-4">
+            <span class="level-badge">{l.k}</span>
+            <p class="mt-2 text-sm font-bold text-[color:var(--color-ink)]">{l.t}</p>
+            <p class="mt-1 text-xs text-[color:var(--color-ink-soft)] leading-relaxed">{l.b}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="mt-10 rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] p-6 md:p-8 shadow-sm">
+        <h3 class="text-lg md:text-xl font-bold">一個反例：羥氯奎與新冠肺炎</h3>
+        <p class="mt-3 text-base leading-relaxed">
+          羥氯奎（hydroxychloroquine）原本用來治瘧疾、紅斑性狼瘡和類風濕性關節炎。2020 年疫情初期，它被大量推薦拿來治新冠肺炎。
+          當時被廣為引用的一篇法國研究，是沒有隨機分組的小型試驗，後來被期刊撤稿。
+        </p>
+        <p class="mt-3 text-base leading-relaxed">
+          美國 FDA 在 2020 年 3 月 28 日發出緊急使用授權，6 月 15 日就撤銷，理由是不太可能有效，心臟方面的副作用風險也大過好處。
+          之後兩個大型隨機試驗給了答案：英國 RECOVERY 試驗的住院病人，用了羥氯奎 28 天內死亡率沒有下降；
+          WHO 的 SOLIDARITY 試驗在 30 個國家、405 家醫院進行，結論也是幾乎沒有效果。
+        </p>
+        <p class="mt-3 text-base leading-relaxed">
+          早期證據放在上面的表裡，排不到 L1 或 L2。這就是我們把證據等級寫在每個預測旁邊的原因：先看證據有多強，再決定要不要往下追。
+        </p>
+        <ul class="mt-4 space-y-1.5 text-sm list-disc pl-5 text-[color:var(--color-ink-soft)]">
+          <li><a href="https://www.fda.gov/news-events/press-announcements/coronavirus-covid-19-update-fda-revokes-emergency-use-authorization-chloroquine-and" target="_blank" rel="noopener" class="underline underline-offset-2">FDA：撤銷 chloroquine 與 hydroxychloroquine 緊急使用授權（2020-06-15）</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/32205204/" target="_blank" rel="noopener" class="underline underline-offset-2">Int J Antimicrob Agents 2020 開放標籤非隨機試驗，已撤稿（PMID 32205204）</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/33031652/" target="_blank" rel="noopener" class="underline underline-offset-2">RECOVERY 試驗，NEJM 2020（PMID 33031652）</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/33264556/" target="_blank" rel="noopener" class="underline underline-offset-2">WHO SOLIDARITY 試驗期中結果，NEJM 2021（PMID 33264556）</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 怎麼用 -->
+  <section class="py-14 md:py-20">
     <div class="max-w-7xl mx-auto px-4 lg:px-6">
-      <div class="text-center mb-12">
-        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Evidence</p>
-        <h2 class="section-title mt-2">不只預測，每一筆都有證據</h2>
-        <p class="section-subtitle">PubMed 文獻 + ClinicalTrials 試驗自動關聯，每個藥物頁面都附帶證據包</p>
+      <div class="text-center mb-10">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">How to Use</p>
+        <h2 class="section-title mt-2">三個步驟查一個藥</h2>
       </div>
-      <div class="grid md:grid-cols-3 gap-4 md:gap-6">
-        <div class="rounded-xl bg-white border border-neutral-200 p-6 text-center">
-          <div class="text-4xl font-bold text-[color:var(--color-brand)] tabular-nums">~386.8K</div>
-          <div class="mt-2 font-medium">PubMed 文獻</div>
-          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">每日自動檢索新發表，與預測藥物-疾病對自動匹配</p>
+      <ol class="grid md:grid-cols-3 gap-5">
+        {steps.map((s, i) => (
+          <li class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+            <span class="inline-flex w-9 h-9 rounded-lg bg-[color:var(--color-brand)] text-white items-center justify-center font-bold tabular-nums">{i + 1}</span>
+            <h3 class="mt-3 font-bold text-lg text-[color:var(--color-ink)]">{s.t}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{s.b}</p>
+            <!-- TODO(截圖)：各步驟截圖待補，放在這裡（自託管於 public/assets/images/txgnn/） -->
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4. 為什麼分 30 國 -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-5xl mx-auto px-4 lg:px-6">
+      <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Why {countries.length} Sites</p>
+      <h2 class="section-title mt-2">為什麼要分 {countries.length} 個國家與地區</h2>
+      <p class="mt-4 text-base md:text-lg leading-relaxed">
+        每個國家核准的藥不一樣，同一個藥核准的適應症也不一樣。一個藥在這國算新用途，在另一國可能早就寫進仿單了。
+        所以我們替每個國家各做一個站，用當地主管機關的藥證資料，判斷什麼才算「新」，網站也用當地語言寫。
+      </p>
+      <div class="mt-8 grid md:grid-cols-2 gap-5">
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+          <h3 class="font-bold text-lg">各國都一樣的</h3>
+          <ul class="mt-3 space-y-2 text-base">
+            {sameItems.map((t) => <li class="flex gap-2"><span class="text-[color:var(--color-pass)] font-bold" aria-hidden="true">＝</span><span>{t}</span></li>)}
+          </ul>
         </div>
-        <div class="rounded-xl bg-white border border-neutral-200 p-6 text-center">
-          <div class="text-4xl font-bold text-[color:var(--color-brand)] tabular-nums">~242.9K</div>
-          <div class="mt-2 font-medium">ClinicalTrials 試驗</div>
-          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">追蹤進行中與已完成的臨床試驗，提供強佐證</p>
-        </div>
-        <div class="rounded-xl bg-white border border-neutral-200 p-6 text-center">
-          <div class="text-4xl font-bold text-[color:var(--color-brand)] tabular-nums">~28.6K</div>
-          <div class="mt-2 font-medium">Evidence Bundle</div>
-          <p class="mt-2 text-xs text-[color:var(--color-ink-soft)]">每藥物一個證據包，含 drug_bundle.json + 文獻摘要</p>
+        <div class="rounded-2xl bg-white border border-neutral-200 p-6 shadow-sm">
+          <h3 class="font-bold text-lg">各國不一樣的</h3>
+          <ul class="mt-3 space-y-2 text-base">
+            {diffItems.map((t) => <li class="flex gap-2"><span class="text-[color:var(--color-brand)] font-bold" aria-hidden="true">≠</span><span>{t}</span></li>)}
+          </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 5. 覆蓋地圖＋國家清單 -->
+  <section id="countries" class="py-14 md:py-20 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+      <div class="max-w-3xl mb-8">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Coverage</p>
+        <h2 class="section-title mt-2">{countries.length} 個國家與地區</h2>
+        <p class="mt-3 text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+          滑過地圖上的點可以看主管機關、藥物頁數和語言，點下去會在新分頁打開該國的站。歐洲國家比較密，放大在右邊那張圖；歐盟站標在布魯塞爾。
+          各國資料來源與限制寫在<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。
+        </p>
+      </div>
+
+      <div class="map-wrap relative hidden sm:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] gap-4">
+        <figure class="rounded-2xl bg-white border border-neutral-200 p-3 md:p-4 shadow-sm">
+          <svg viewBox={`0 0 ${W.w} ${W.h}`} class="w-full h-auto" role="group" aria-label={`TxGNN ${countries.length} 個國家與地區站台分布圖`}>
+            <path d={W.land} class="map-land" />
+            {Object.entries(W.shapes).map(([code, d]) => (
+              <path d={d as string} class="map-country" data-cc={code} />
+            ))}
+            <rect x={W.europeBox[0]} y={W.europeBox[1]} width={W.europeBox[2]} height={W.europeBox[3]} class="map-eubox" />
+            {Object.entries(W.markers).map(([code, [x, y]]) => (
+              <a href={txgnnSiteUrl(code)} target="_blank" rel="noopener" class="map-pin" aria-label={`${info(code).name}站（新分頁）`} {...tipAttrs(code)}>
+                <circle cx={x} cy={y} r="11" class="map-hit" />
+                <circle cx={x} cy={y} r="5" class="map-dot" />
+              </a>
+            ))}
+          </svg>
+          <figcaption class="mt-2 text-xs text-[color:var(--color-ink-muted)]">香港、新加坡在這個比例尺沒有輪廓，只標點。地圖底圖：Natural Earth。</figcaption>
+        </figure>
+        <figure class="rounded-2xl bg-white border border-neutral-200 p-3 md:p-4 shadow-sm">
+          <svg viewBox={`0 0 ${E.w} ${E.h}`} class="w-full h-auto" role="group" aria-label="歐洲站台放大圖">
+            <path d={E.land} class="map-land" />
+            {Object.entries(E.shapes).map(([code, d]) => (
+              <path d={d as string} class="map-country" data-cc={code} />
+            ))}
+            {Object.entries(E.markers).map(([code, [x, y]]) => (
+              <a href={txgnnSiteUrl(code)} target="_blank" rel="noopener" class:list={['map-pin', code === 'eu' && 'map-pin-eu']} aria-label={`${info(code).name}站（新分頁）`} {...tipAttrs(code)}>
+                <circle cx={x} cy={y} r="12" class="map-hit" />
+                <circle cx={x} cy={y} r={code === 'eu' ? 8 : 6} class="map-dot" />
+              </a>
+            ))}
+          </svg>
+          <figcaption class="mt-2 text-xs text-[color:var(--color-ink-muted)]">歐洲放大圖。大圓點是歐盟站（EMA）。</figcaption>
+        </figure>
+        <div id="map-tip" class="map-tip" role="tooltip" hidden></div>
+      </div>
+
+      <div class="mt-10 space-y-8">
+        {REGIONS.map((r) => (
+          <div>
+            <h3 class="text-lg font-bold text-[color:var(--color-ink)]">{r.label}<span class="ml-2 text-sm font-normal text-[color:var(--color-ink-soft)]">{r.codes.length} 個站</span></h3>
+            <ul class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {r.codes.map((code) => {
+                const i = info(code);
+                return (
+                  <li>
+                    <a href={i.url} target="_blank" rel="noopener" class="group flex h-full gap-3 rounded-xl bg-white border border-neutral-200 px-4 py-3 shadow-sm hover:border-[color:var(--color-brand)] transition-colors">
+                      <span class="text-2xl leading-none mt-0.5" aria-hidden="true">{i.flag}</span>
+                      <span class="min-w-0 flex-1">
+                        <span class="block font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)]">{i.name}</span>
+                        {i.regulator && <span class="block text-xs text-[color:var(--color-ink-soft)]">{i.regulator}</span>}
+                        <span class="block text-xs text-[color:var(--color-ink-soft)]">
+                          {i.pages && <>藥物頁 <span class="tabular-nums">{i.pages}</span></>}{i.langs && <>．{i.langs}</>}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p class="mt-6 text-sm text-[color:var(--color-ink-soft)]">藥物頁數 {drugPagesDate} 統計。各國站網址為「國碼＋txgnn.yao.care」，例如台灣站 twtxgnn.yao.care（TwTxGNN）。</p>
+    </div>
+  </section>
+
+  <!-- 6. 系統怎麼運作（折疊） -->
+  <section class="py-14 md:py-20 bg-neutral-50">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6">
+      <details class="group rounded-2xl bg-white border border-neutral-200 shadow-sm">
+        <summary class="cursor-pointer list-none p-6 md:p-8 flex items-start gap-4">
+          <span class="flex-1">
+            <span class="block text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">How It Works</span>
+            <span class="block mt-2 text-xl md:text-2xl font-bold">系統怎麼運作</span>
+            <span class="block mt-1 text-sm text-[color:var(--color-ink-soft)]">想知道「預測新適應症」是怎麼算出來的，點開看六個步驟</span>
+          </span>
+          <svg class="shrink-0 w-6 h-6 mt-2 text-[color:var(--color-ink-soft)] transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-6 md:pb-8 border-t border-neutral-100">
+          <ol class="mt-6 space-y-5">
+            {pipeline.map((p, i) => (
+              <li class="flex gap-4">
+                <span class="shrink-0 w-8 h-8 rounded-full bg-[color:var(--color-orange-100)] text-[color:var(--color-brand-deep)] flex items-center justify-center font-bold tabular-nums">{i + 1}</span>
+                <div>
+                  <h3 class="font-bold text-[color:var(--color-ink)]">{p.t}</h3>
+                  <p class="mt-1 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">{p.b}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p class="mt-6 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">
+            比對已知用途時看的是疾病名稱是否完全相同，所以已知疾病的子型仍可能出現在新適應症裡。這類限制寫在<a href="/medical/txgnn/methodology/" class="underline underline-offset-2 text-[color:var(--color-brand)]">方法與資料來源</a>。
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 7. 給醫療院所 -->
+  <section class="py-14 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 lg:px-6">
+      <div class="rounded-2xl bg-white border-l-4 border-[color:var(--color-brand)] p-6 md:p-8 shadow-sm">
+        <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">For Hospitals</p>
+        <h2 class="text-xl md:text-2xl font-bold mt-2">給醫療院所：免費接進電子病歷</h2>
+        <p class="mt-3 text-base leading-relaxed">
+          SMART on FHIR 是讓外部 App 安全接進電子病歷的開放標準。TxGNN 的 SMART App 免費提供，接上以後，醫師在病歷裡打開它，
+          就看得到這位病人目前用的藥有哪些潛在的新適應症，以及對應的證據等級。
+        </p>
+        <p class="mt-3 text-base leading-relaxed">
+          {countries.length} 個站合計產出 {FHIR_RESOURCES}筆 FHIR 資源，院內系統也可以直接讀取。
+        </p>
+        <div class="mt-5 flex flex-wrap items-center gap-3">
+          <a href={smartAppUrl} target="_blank" rel="noopener" class="btn-brand">在 SMART 沙盒試用</a>
+          <span class="text-sm text-[color:var(--color-ink-soft)]">目前為台灣站</span>
+        </div>
+      </div>
+      {/* 8. 給 AI 與研究者：MCP 查詢介面尚未開發，先不放。完成後在這裡加一段（說明用途＋端點文件連結）。 */}
     </div>
   </section>
 
@@ -455,155 +502,162 @@ const stats = [
   <ProductCta
     product={product}
     headline="想討論技術合作？"
-    description="老藥新用、TxGNN 模型在地化、EHR / FHIR 整合，任何技術討論都歡迎透過 LINE 私訊。"
+    description="想把各國藥證接進模型、在院內接 SMART App，或對資料有疑問，都歡迎 LINE 私訊。"
   />
 
-  <ProductNews slot="news" target="txgnn" />
+  <Fragment slot="news">
+    <!-- 10. 模型出處與免責 -->
+    <section class="py-14 md:py-20 border-t border-neutral-200/70">
+      <div class="max-w-4xl mx-auto px-4 lg:px-6 space-y-6">
+        <div>
+          <p class="text-xs md:text-sm font-medium tracking-widest uppercase text-[color:var(--color-brand)]">Credits</p>
+          <h2 class="text-2xl md:text-3xl font-bold mt-2">模型出處</h2>
+          <p class="mt-3 text-base leading-relaxed">
+            TxGNN 模型由哈佛醫學院 Zitnik Lab 開發：Huang K, … , Zitnik M. A foundation model for clinician-centered drug repurposing.
+            <em>Nature Medicine</em>, 2024.
+            DOI <a href="https://doi.org/10.1038/s41591-024-03233-x" target="_blank" rel="noopener" class="underline underline-offset-2 text-[color:var(--color-brand)]">10.1038/s41591-024-03233-x</a>。
+            模型以 MIT 授權開源。
+          </p>
+          <p class="mt-3 text-base leading-relaxed">
+            藥提醒科技（yao.care）<strong>不是模型的原作者</strong>。我們做的是把模型接上各國的藥證資料、建置 {countries.length} 個網站、
+            整合 FHIR 與 SMART on FHIR，以及收集每個預測的研究證據。
+          </p>
+        </div>
+        <div class="rounded-2xl bg-neutral-50 border border-neutral-200 p-6 md:p-8">
+          <h2 class="text-xl md:text-2xl font-bold">醫療免責聲明</h2>
+          <p class="mt-3 text-base leading-relaxed">
+            TxGNN 網站上的所有預測都是電腦模型算出來的研究參考，<strong>不是醫療建議</strong>，也不能拿來做診斷或治療決定。
+            多數預測還沒有經過臨床試驗驗證，任何新用途都必須經過完整的臨床試驗與主管機關核准，才能用在病人身上。
+          </p>
+          <p class="mt-3 text-base leading-relaxed">
+            請不要因為網站上的內容自行開始、停止或更換用藥。對自己的病情或用藥有疑問，請與醫師或藥師討論。
+          </p>
+        </div>
+      </div>
+    </section>
+    <ProductNews target="txgnn" />
+  </Fragment>
 </ProductLayout>
 
-<script>
-  import * as d3 from 'd3';
-
-  function renderHeatmap() {
-    const container = document.getElementById('radial-heatmap');
-    if (!container) return;
-    const dataAttr = container.getAttribute('data-heatmap');
-    if (!dataAttr) return;
-    const data = JSON.parse(dataAttr) as Record<string, Record<string, string>>;
-    const phases = ['P0', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'];
-    const countries = Object.keys(data).sort();
-
-    const colorMap: Record<string, string> = {
-      OK: '#10b981',
-      WARN: '#f59e0b',
-      ERR: '#ef4444',
-      NONE: '#d4d4d4',
-    };
-
-    // Sizing for both desktop & mobile
-    const width = Math.min(700, container.clientWidth || 700);
-    const height = width;
-    const innerRadius = width * 0.13;
-    const outerRadius = width * 0.45;
-    const labelRadius = outerRadius + width * 0.025;
-
-    // clear
-    container.innerHTML = '';
-    const tooltip = d3.select(container)
-      .append('div')
-      .style('position', 'absolute')
-      .style('pointer-events', 'none')
-      .style('background', 'rgba(34, 32, 48, 0.95)')
-      .style('color', '#fff')
-      .style('border-radius', '8px')
-      .style('padding', '6px 10px')
-      .style('font-size', '12px')
-      .style('opacity', '0')
-      .style('transition', 'opacity 0.15s')
-      .style('white-space', 'nowrap')
-      .style('z-index', '10');
-
-    const svg = d3.select(container)
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', `0 0 ${width} ${height}`)
-      .style('max-width', '100%')
-      .style('height', 'auto');
-
-    const g = svg.append('g').attr('transform', `translate(${width / 2}, ${height / 2})`);
-
-    const angleScale = d3.scaleBand<string>()
-      .domain(countries)
-      .range([0, 2 * Math.PI])
-      .padding(0.04);
-
-    const radiusScale = d3.scaleBand<string>()
-      .domain(phases)
-      .range([innerRadius, outerRadius])
-      .padding(0.08);
-
-    type Cell = { country: string; phase: string; status: string };
-    const flatData: Cell[] = [];
-    countries.forEach((c) => {
-      phases.forEach((p) => {
-        flatData.push({ country: c, phase: p, status: data[c][p] || 'NONE' });
-      });
-    });
-
-    const arc = d3.arc<Cell>()
-      .innerRadius((d) => radiusScale(d.phase) ?? innerRadius)
-      .outerRadius((d) => (radiusScale(d.phase) ?? innerRadius) + radiusScale.bandwidth())
-      .startAngle((d) => angleScale(d.country) ?? 0)
-      .endAngle((d) => (angleScale(d.country) ?? 0) + angleScale.bandwidth())
-      .padAngle(0.008)
-      .padRadius(innerRadius);
-
-    g.selectAll<SVGPathElement, Cell>('path.cell')
-      .data(flatData)
-      .join('path')
-      .attr('class', 'cell')
-      .attr('fill', (d) => colorMap[d.status] || colorMap.NONE)
-      .attr('opacity', 0.92)
-      .attr('d', arc)
-      .style('cursor', 'pointer')
-      .on('mouseover', function (event, d) {
-        d3.select(this).attr('stroke', '#222').attr('stroke-width', 1.5).attr('opacity', 1);
-        const cc = d.country.replace('TxGNN', '');
-        const statusText: Record<string, string> = { OK: '✓ OK', WARN: '⚠ Warning', ERR: '✗ Error', NONE: '— N/A' };
-        tooltip.html(`<strong>${cc}</strong> · ${d.phase}<br>${statusText[d.status] || d.status}`)
-          .style('opacity', '1');
-      })
-      .on('mousemove', function (event) {
-        const rect = container.getBoundingClientRect();
-        tooltip.style('left', (event.clientX - rect.left + 12) + 'px')
-          .style('top', (event.clientY - rect.top - 10) + 'px');
-      })
-      .on('mouseout', function () {
-        d3.select(this).attr('stroke', null).attr('opacity', 0.92);
-        tooltip.style('opacity', '0');
-      });
-
-    // country labels
-    g.selectAll('text.country')
-      .data(countries)
-      .join('text')
-      .attr('class', 'country')
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'middle')
-      .attr('font-size', '10px')
-      .attr('fill', '#666')
-      .attr('transform', (d) => {
-        const angle = (angleScale(d) ?? 0) + angleScale.bandwidth() / 2;
-        const x = Math.sin(angle) * labelRadius;
-        const y = -Math.cos(angle) * labelRadius;
-        const rot = (angle * 180) / Math.PI;
-        const flip = rot > 90 && rot < 270 ? rot + 180 : rot;
-        return `translate(${x},${y}) rotate(${flip})`;
-      })
-      .text((d) => d.replace('TxGNN', ''));
-
-    // phase labels (centered)
-    g.selectAll('text.phase')
-      .data(phases)
-      .join('text')
-      .attr('class', 'phase')
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'middle')
-      .attr('font-size', '9px')
-      .attr('fill', 'rgba(0,0,0,0.35)')
-      .attr('transform', (d) => {
-        const r = (radiusScale(d) ?? innerRadius) + radiusScale.bandwidth() / 2;
-        return `translate(0,${-r})`;
-      })
-      .text((d) => d);
+<style>
+  .btn-outline-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    border: 2px solid var(--color-brand);
+    color: var(--color-brand);
+    transition: background-color 0.15s, color 0.15s;
   }
+  .btn-outline-brand:hover,
+  .btn-outline-brand:focus-visible {
+    background: var(--color-brand);
+    color: var(--color-bg-base);
+  }
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    padding: 0 0.5rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    font-size: var(--text-xs);
+    background: var(--color-orange-100);
+    color: var(--color-brand-deep);
+  }
+  .map-land {
+    fill: var(--color-neutral-100);
+  }
+  .map-country {
+    fill: var(--color-orange-200);
+  }
+  .map-eubox {
+    fill: none;
+    stroke: var(--color-neutral-400);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+  }
+  .map-hit {
+    fill: transparent;
+  }
+  .map-dot {
+    fill: var(--color-brand);
+    stroke: var(--color-bg-base);
+    stroke-width: 1.5;
+    transition: fill 0.15s;
+  }
+  .map-pin {
+    cursor: pointer;
+    outline: none;
+  }
+  .map-pin:hover .map-dot,
+  .map-pin:focus-visible .map-dot {
+    fill: var(--color-brand-deep);
+    stroke: var(--color-ink);
+    stroke-width: 2;
+  }
+  .map-tip {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    max-width: 22rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.5rem;
+    background: var(--color-neutral-900);
+    color: var(--color-bg-base);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    box-shadow: 0 6px 20px color-mix(in oklch, var(--color-neutral-900) 30%, transparent);
+  }
+</style>
 
-  renderHeatmap();
-  // re-render on resize for responsive
-  let rt: number | undefined;
-  window.addEventListener('resize', () => {
-    if (rt) window.clearTimeout(rt);
-    rt = window.setTimeout(renderHeatmap, 200);
-  });
+<script>
+  // 地圖提示框：滑鼠移過或鍵盤 focus 到國家標點時顯示該站資料（資料在 data-tip-* 屬性裡，build 時已寫好）。
+  const wrap = document.querySelector<HTMLElement>('.map-wrap');
+  const tip = document.getElementById('map-tip');
+  if (wrap && tip) {
+    const show = (pin: Element) => {
+      const d = (pin as HTMLElement).dataset;
+      tip.replaceChildren();
+      const title = document.createElement('strong');
+      title.textContent = d.tipName ?? '';
+      tip.append(title);
+      const rows: [string, string | undefined][] = [
+        ['主管機關', d.tipReg],
+        ['藥物頁', d.tipPages ? `${d.tipPages}（${d.tipDate} 統計）` : undefined],
+        ['語言', d.tipLangs],
+      ];
+      for (const [k, v] of rows) {
+        if (!v) continue;
+        const line = document.createElement('div');
+        line.textContent = `${k}：${v}`;
+        tip.append(line);
+      }
+      const hint = document.createElement('div');
+      hint.textContent = '點一下在新分頁打開';
+      hint.style.opacity = '0.75';
+      tip.append(hint);
+      tip.hidden = false;
+      const r = (pin as SVGGraphicsElement).getBoundingClientRect();
+      const w = wrap.getBoundingClientRect();
+      let left = r.left - w.left + r.width / 2 + 12;
+      const top = r.top - w.top + r.height / 2 + 12;
+      const maxLeft = w.width - tip.offsetWidth - 8;
+      if (left > maxLeft) left = Math.max(8, r.left - w.left - tip.offsetWidth - 12);
+      tip.style.left = `${left}px`;
+      tip.style.top = `${top}px`;
+    };
+    const hide = () => {
+      tip.hidden = true;
+    };
+    wrap.querySelectorAll('.map-pin').forEach((pin) => {
+      pin.addEventListener('mouseenter', () => show(pin));
+      pin.addEventListener('focus', () => show(pin));
+      pin.addEventListener('mouseleave', hide);
+      pin.addEventListener('blur', hide);
+    });
+  }
 </script>

@@ -25,7 +25,6 @@ const LEGACY_COLOR_BUDGET = new Map([
   ["src/components/SmartHealthcare.astro", 4],
   ["src/pages/ai/intel.astro", 13],
   ["src/pages/marketing.astro", 14],
-  ["src/pages/medical/txgnn.astro", 29],
   ["src/pages/news/index.astro", 4],
 ]);
 
