@@ -1,0 +1,13 @@
+{
+  "topic": "explainable-medical-ai",
+  "products": [
+    "txgnn"
+  ],
+  "title": "圖神經網路技術突破抗菌素抗藥性預測瓶頸 - GeneOnline",
+  "url": "https://news.google.com/rss/articles/CBMiogJBVV95cUxPZVVyVUtFMlVpS2pnR0pfT3IyNE1DWDhIclNmNExYZ2NoWFNjc3A2YmdtWWdobUhsSkJ0NXQxQjM4WDhNbGNMRktXOURYWjBmY0l3WU1CYnJnVEZCTDU3V1VieVZVQlota1J4cVpxVS15X3NZOWlpS0NRTFdFRUtvWGg4SjczbVN1T3JiUXlMMHFRWkhNbTB4ZGZwTV81MHgzN01ReGZlWUxERXZENlRZN2gteDYzLU1ZQ3JSNFdOVmYwMDBmeVlPM2JqcC1VQTcxTE9UOUN2NmtRQnh5OGJOeXFrQ3VOZ3FIenVnSERvaW9yZDAwUW12cWxtX2VhalRNZG1uVzd6WjU1YktxaGtwdHRFUnBCaFExNjdXdVhXVWRyZw?oc=5",
+  "source": "Google News",
+  "publishedAt": "2026-03-06T08:00:00.000Z",
+  "fetchedAt": "2026-10-21T20:41:07.510Z",
+  "takeaway": "有研究團隊以圖神經網路（GNN）模型整合細菌基因體與蛋白質交互作用資料，分析其中複雜的非線性關聯，試圖突破抗菌素抗藥性預測過去難以處理龐大基因資料的瓶頸。",
+  "relevance": 0.9
+}
