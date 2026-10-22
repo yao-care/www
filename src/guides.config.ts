@@ -472,9 +472,9 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'clinical-frailty-scale-levels',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-23',
     topic: 'elder-care-frailty',
-    question: '臨床衰弱量表 CFS 的 1 到 9 級分別是什麼？分數怎麼評？',
+    question: 'CFS 量表（臨床衰弱量表）1 到 9 級分別是什麼？分數怎麼評？',
     searchPhrases: ['clinical frailty scale 中文', 'CFS 量表', 'CFS 分級', 'frail scale 中文', '衰弱症篩檢', 'CFS 幾分算衰弱'],
     audience: 'caregiver',
     answer:
