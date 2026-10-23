@@ -107,7 +107,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cga',
-    updatedAt: '2026-07-31',
+    updatedAt: '2026-10-24',
     topic: 'elder-care-frailty',
     term: '高齡周全性評估 CGA',
     en: 'Comprehensive Geriatric Assessment',
@@ -124,6 +124,11 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '目標是擬定整體照護計畫',
     ],
     related: ['geri', 'func'],
+    guideLink: {
+      guide: 'cga-assessment-scales',
+      lead: '想知道實際評估哪些項目、用什麼量表？',
+      label: '常用量表有哪些',
+    },
   },
   {
     slug: 'asq3',
