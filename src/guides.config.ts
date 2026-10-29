@@ -605,10 +605,10 @@ export const GUIDES: readonly Guide[] = [
   },
   {
     slug: 'atc-code-how-to-read',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-30',
     topic: 'medication-safety',
     question: 'ATC 藥品分類碼怎麼看？要怎麼查某個藥的 ATC code？',
-    searchPhrases: ['ATC code', 'ATC 碼', 'ATC 藥品分類', '藥品 ATC 代碼怎麼查', 'ATC code 查詢', '藥物分類碼'],
+    searchPhrases: ['ATC code', 'ATC 碼', 'ATC 藥品分類', '藥品 ATC 代碼怎麼查', 'ATC code 查詢', '藥物分類碼', 'ATC 代碼', 'ATC code 是什麼'],
     audience: 'b2b',
     answer:
       'ATC 碼共 7 碼，由左到右逐段縮小範圍：第 1 碼英文字母是解剖學主群（作用的器官系統），第 2、3 碼數字是治療次群，第 4 碼字母是藥理次群，第 5 碼字母是化學次群，最後 2 碼數字是個別成分。例如降血糖藥 metformin 是 A10BA02。要查某個成分的碼，可到 WHO 的 ATC/DDD Index，台灣的藥品許可證對應碼則可用食藥署在政府資料開放平臺公開的資料集。',
