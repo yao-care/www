@@ -193,13 +193,13 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'cdss',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-31',
     topic: 'explainable-medical-ai',
     term: '臨床決策支援系統 CDSS',
     en: 'Clinical Decision Support System',
     category: 'medical',
     oneLiner:
-      'CDSS 是協助醫事人員做臨床判斷的軟體，會依病人資料跳出提醒、給建議，最後仍由醫師決定。',
+      '在醫學領域，CDSS 是協助醫事人員做臨床判斷的軟體，會依病人資料跳出提醒、給建議，最後仍由醫師決定。',
     paragraphs: [
       'CDSS（Clinical Decision Support System）是輔助醫事人員臨床判斷的軟體，應用範圍涵蓋用藥安全提醒、鑑別診斷建議與治療計畫。設計良好的 CDSS 強調可解釋與可追溯：臨床人員能逐條檢視每項建議的依據，而非僅接受系統輸出。',
       '在院內實際會看到的，最基本是三種用藥提示：藥物交互作用（開了兩種合用有風險的藥）、藥物過敏（病歷記錄病人對某成分過敏，卻開了含該成分的藥）、劑量範圍（開出的劑量超出常見範圍，例如鴉片類止痛藥與胰島素）。美國衛生資訊科技辦公室（ONC）指出這類交互作用、過敏與劑量檢查做法簡單，卻能攔下重要的人為疏失。提示太多、對象不準，醫師會看到麻木而忽略，所以好的 CDSS 要挑重點提醒，這個現象叫警示疲勞。',
