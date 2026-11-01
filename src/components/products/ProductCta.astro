@@ -5,9 +5,11 @@ interface Props {
   product: Product;
   headline?: string;
   description?: string;
+  /** 主按鈕是體驗/外站時，補一顆真正的洽詢管道（文案已承諾「LINE 私訊」卻沒有按鈕的頁面用）。 */
+  secondary?: { label: string; href: string; cta?: string };
 }
 
-const { product, headline, description } = Astro.props;
+const { product, headline, description, secondary } = Astro.props;
 
 const finalHeadline = headline ?? '對這套有興趣？聊聊吧';
 const finalDescription =
@@ -37,5 +39,16 @@ const isLineCta = /lin\.ee|line\.me/.test(product.cta.href);
       )}
       {product.cta.label}
     </a>
+    {secondary && (
+      <a
+        href={secondary.href}
+        data-cta={secondary.cta}
+        target="_blank"
+        rel="noopener"
+        class:list={['mt-8 ml-3', /lin\.ee|line\.me/.test(secondary.href) ? 'btn-line' : 'btn-brand']}
+      >
+        {secondary.label}
+      </a>
+    )}
   </div>
 </section>

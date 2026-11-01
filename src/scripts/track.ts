@@ -101,6 +101,7 @@ document.addEventListener(
     try { host = new URL(href, location.href).hostname.replace(/^www\./, ''); } catch (_) {}
     let type = '';
     if (href.startsWith('mailto:')) type = 'mail';
+    else if (href.startsWith('tel:')) type = 'tel';
     else if (/lin\.ee|line\.me/.test(href)) type = 'line';
     else if (host === 'github.com') type = 'github';
     else if (host === 'ods.yao.care') type = 'ods';
@@ -119,6 +120,20 @@ document.addEventListener(
       cta_type: type,
       ...(linkContent ? { link_content: linkContent.slice(0, 80) } : {}),
     });
+    // 站上沒有表單，詢問只能走 LINE／email／電話；GA4 關鍵事件 generate_lead 過去從未被送出，
+    // 目標指標在本站恆為 0。點聯絡管道即記一次 generate_lead（是「開始聯絡」的意圖，
+    // 實際有沒有傳訊息要對 LINE／信箱收件數）。lead_location 分得出頁尾還是產品頁 CTA。
+    if (type === 'mail' || type === 'tel' || type === 'line') {
+      const where = linkContent
+        || (a.closest('footer') ? 'footer' : '')
+        || (a.closest('section[id]') as HTMLElement | null)?.id
+        || 'body';
+      send('generate_lead', {
+        cta_type: type,
+        link_url: href.slice(0, 200),
+        link_content: where.slice(0, 80),
+      });
+    }
   },
   { passive: true, capture: true },
 );
