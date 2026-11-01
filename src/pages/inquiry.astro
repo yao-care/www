@@ -1,0 +1,126 @@
+---
+// 產品詢問表單（2026-11-01 用戶拍板）。收件端＝workers/inquiry-form（Cloudflare Worker → D1 ＋ Slack）。
+// 送出成功才記 GA4 generate_lead（link_content=inquiry_form）；失敗不記，避免把擋下的機器人算成名單。
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import FooterLinks from '../components/FooterLinks.astro';
+import { PRODUCTS, LINE_TEAM } from '../products.config';
+import { SITE } from '../site.config';
+
+const ENDPOINT = 'https://yaocare-inquiry-form.lightman-chang.workers.dev';
+const SITEKEY = '0x4AAAAAAFvJqR6bRF7eB1pl';
+const options = PRODUCTS.map((p) => ({ slug: p.slug, title: p.title }));
+const canonical = new URL('/inquiry/', SITE.url).toString();
+const contactPage = {
+  '@type': 'ContactPage',
+  name: '產品詢問',
+  url: canonical,
+  inLanguage: 'zh-TW',
+};
+---
+<BaseLayout title="產品詢問 · yao.care" description="醫院、診所、長照機構與企業的產品導入詢問。留下聯絡方式，我們在 1 個工作天內回覆。" extraSchema={[contactPage]}>
+  <Nav />
+  <main class="pt-20">
+    <article class="max-w-2xl mx-auto px-4 lg:px-6 py-8 md:py-12">
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight">產品詢問</h1>
+      <p class="mt-4 text-base md:text-lg text-[color:var(--color-ink-soft)] leading-relaxed">
+        機構想導入哪套系統、要先看 demo，或只是想問價格，都可以留在這裡。我們通常 1 個工作天內回覆。
+        急的話也可以直接
+        <a href={LINE_TEAM} target="_blank" rel="noopener" data-cta="inquiry_page" class="text-[color:var(--color-brand)] font-medium hover:underline underline-offset-2">LINE 找團隊</a>
+        或寫信到
+        <a href={`mailto:${SITE.email}`} data-cta="inquiry_page" class="text-[color:var(--color-brand)] font-medium hover:underline underline-offset-2">{SITE.email}</a>。
+      </p>
+
+      <form id="inquiry-form" class="mt-8 space-y-5" novalidate data-endpoint={ENDPOINT}>
+        <label class="block">
+          <span class="text-base font-medium text-[color:var(--color-ink)]">機構名稱 <span class="text-[color:var(--color-brand)]">*</span></span>
+          <input name="org" required maxlength="120" autocomplete="organization" class="mt-1.5 w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-base" />
+        </label>
+        <label class="block">
+          <span class="text-base font-medium text-[color:var(--color-ink)]">聯絡人 <span class="text-[color:var(--color-brand)]">*</span></span>
+          <input name="contact" required maxlength="60" autocomplete="name" class="mt-1.5 w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-base" />
+        </label>
+        <label class="block">
+          <span class="text-base font-medium text-[color:var(--color-ink)]">Email 或電話 <span class="text-[color:var(--color-brand)]">*</span></span>
+          <input name="reach" required maxlength="120" autocomplete="email" class="mt-1.5 w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-base" />
+        </label>
+        <label class="block">
+          <span class="text-base font-medium text-[color:var(--color-ink)]">想了解的產品</span>
+          <select name="product" class="mt-1.5 w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-base bg-white">
+            <option value="">還不確定，想先聊聊</option>
+            {options.map((o) => <option value={o.slug}>{o.title}</option>)}
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-base font-medium text-[color:var(--color-ink)]">留言</span>
+          <textarea name="message" rows="5" maxlength="2000" class="mt-1.5 w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-base"></textarea>
+        </label>
+        <!-- 蜜罐：真人看不到 -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+        <div id="inquiry-turnstile" data-sitekey={SITEKEY}></div>
+        <button type="submit" class="btn-brand">送出詢問</button>
+        <p id="inquiry-status" role="status" class="text-base text-[color:var(--color-ink-soft)]"></p>
+      </form>
+    </article>
+  </main>
+  <FooterLinks />
+</BaseLayout>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<script>
+  const w = window as any;
+  const form = document.getElementById('inquiry-form') as HTMLFormElement;
+  const statusEl = document.getElementById('inquiry-status') as HTMLElement;
+  const box = document.getElementById('inquiry-turnstile') as HTMLElement;
+  const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+  let widgetId: string | undefined;
+
+  // 從產品頁帶 ?product=<slug> 進來時預選
+  const pre = new URLSearchParams(location.search).get('product');
+  if (pre) (form.elements.namedItem('product') as HTMLSelectElement).value = pre;
+
+  function renderWidget() {
+    if (widgetId !== undefined || !w.turnstile) return;
+    widgetId = w.turnstile.render(box, { sitekey: box.dataset.sitekey, action: 'inquiry' });
+  }
+  const poll = setInterval(() => { if (w.turnstile) { clearInterval(poll); renderWidget(); } }, 200);
+
+  const say = (t: string) => { statusEl.textContent = t; };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+    if (!data.org?.trim() || !data.contact?.trim() || !data.reach?.trim()) {
+      say('機構名稱、聯絡人、Email 或電話是必填。');
+      return;
+    }
+    const token = widgetId !== undefined ? w.turnstile.getResponse(widgetId) : '';
+    if (!token) { say('請先完成下方的人機驗證。'); return; }
+    btn.disabled = true;
+    say('送出中…');
+    try {
+      const r = await fetch(form.dataset.endpoint!, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ ...data, page: location.pathname + location.search, 'cf-turnstile-response': token }),
+      });
+      if (!r.ok) throw new Error(String(r.status));
+      if (typeof w.gtag === 'function') {
+        const page = (w.__ya && w.__ya.page) || {};
+        w.gtag('event', 'generate_lead', {
+          cta_type: 'form',
+          link_content: 'inquiry_form',
+          content_type: page.type, content_category: page.category, content_item: page.item, content_group: page.group,
+          ...(data.product ? { link_url: data.product } : {}),
+        });
+      }
+      form.reset();
+      say('收到了，我們會盡快跟你聯絡。');
+    } catch {
+      say('送出失敗，請稍後再試，或直接用 LINE／email 聯絡我們。');
+    } finally {
+      btn.disabled = false;
+      if (widgetId !== undefined) w.turnstile.reset(widgetId);
+    }
+  });
+</script>

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "yaocare-inquiry-form",
+  // 與 ods-apply-form 同帳號（$OWNER_EMAIL's Account；授權下另有 另一個 Cloudflare 帳號 帳號，勿混用）
+  "account_id": "$CLOUDFLARE_ACCOUNT_ID",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "observability": { "enabled": true },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "yaocare-inquiries", "database_id": "ad7ef948-f246-4cd1-82d1-92efafb74d82" }
+  ],
+  "vars": {
+    // 跨網域只收這兩個來源；Turnstile 回傳的 hostname 也必須在這份清單（正式環境不含 localhost）
+    "ALLOWED_ORIGINS": "https://www.yao.care,https://yao.care",
+    "TURNSTILE_HOSTNAMES": "www.yao.care,yao.care",
+    // yao.care 的 Slack 頻道（seo-ops sites/yao.care.json 的 slack.channel）
+    "SLACK_CHANNEL": "$SLACK_CHANNEL"
+  }
+}

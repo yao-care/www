@@ -7,8 +7,9 @@ const medicalProducts = productsByCategory('medical');
 const aiProducts = productsByCategory('ai');
 const careProducts = productsByCategory('care');
 const contactLinks = [
+  { href: '/inquiry/', label: '填寫產品詢問表單' },
   { href: `mailto:${SITE.email}`, label: SITE.email },
-  { href: SITE.lineLink, label: 'LINE：與工程師聯絡', external: true },
+  { href: LINE_TEAM, label: 'LINE：與工程師聯絡', external: true },
   { href: LINE_TEAM, label: 'LINE：與團隊聯絡', external: true },
   { href: SITE.mapsLink, label: SITE.address, external: true },
 ];

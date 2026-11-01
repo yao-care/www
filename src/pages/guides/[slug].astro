@@ -4,6 +4,8 @@ import Nav from '../../components/Nav.astro';
 import FooterLinks from '../../components/FooterLinks.astro';
 import ContactMap from '../../components/ContactMap.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
+import InstitutionEntry from '../../components/products/InstitutionEntry.astro';
+import { GUIDE_INSTITUTION } from '../../institution-entry.config';
 import { GUIDES, GUIDE_BY_SLUG } from '../../guides.config';
 import { PRODUCT_BY_SLUG } from '../../products.config';
 import { GLOSSARY_BY_SLUG } from '../../glossary.config';
@@ -19,6 +21,8 @@ const guide = GUIDE_BY_SLUG[slug!];
 const related = (guide.related ?? []).map((s) => PRODUCT_BY_SLUG[s]);
 const terms = (guide.relatedTerms ?? []).map((s) => GLOSSARY_BY_SLUG[s]).filter(Boolean);
 const topicOf = guide.topic ? TOPIC_BY_SLUG[guide.topic] : undefined;
+// 機構入口插在各段落的中間（前半段之後），不放頁尾。
+const entryAfter = Math.max(0, Math.ceil(guide.sections.length / 2) - 1);
 
 const pageTitle = `${guide.question} · yao.care`;
 const pageDescription = guide.answer;
@@ -99,7 +103,8 @@ const jsonLd = {
 
       <!-- sections -->
       <div class="mt-10 space-y-10">
-        {guide.sections.map((s) => (
+        {guide.sections.map((s, i) => (
+          <>
           <section>
             <h2 class="text-xl md:text-2xl font-bold text-[color:var(--color-ink)]">{s.heading}</h2>
             {s.paragraphs && (
@@ -118,6 +123,8 @@ const jsonLd = {
               </ul>
             )}
           </section>
+          {i === entryAfter && <InstitutionEntry entry={GUIDE_INSTITUTION[guide.slug]} />}
+          </>
         ))}
       </div>
 

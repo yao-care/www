@@ -1,21 +1,31 @@
 ---
-import type { Product } from '../../products.config';
+import { LINE_TEAM, type Product } from '../../products.config';
 
 interface Props {
   product: Product;
   headline?: string;
   description?: string;
-  /** 主按鈕是體驗/外站時，補一顆真正的洽詢管道（文案已承諾「LINE 私訊」卻沒有按鈕的頁面用）。 */
-  secondary?: { label: string; href: string; cta?: string };
 }
 
-const { product, headline, description, secondary } = Astro.props;
+const { product, headline, description } = Astro.props;
 
 const finalHeadline = headline ?? '對這套有興趣？聊聊吧';
 const finalDescription =
   description ??
   '把您的需求或想法用 LINE 私訊給我們，最快 1 個工作天內回覆，可安排線上 demo 或評估。';
-const isLineCta = /lin\.ee|line\.me/.test(product.cta.href);
+
+// 機構導入洽詢（2026-11-01 用戶拍板）：主按鈕若是體驗／外站，旁邊補一顆團隊 LINE 洽詢；
+// 藥提醒這段標題問的是「醫院、診所、藥局想導入？」，主按鈕直接換成洽詢（民眾體驗留在 hero）。
+// ODS 有自己的機關申請流程，不疊洽詢按鈕。點擊由 track.ts 記 generate_lead，data-cta=product_cta。
+const INQUIRY = { label: '機構導入洽詢', href: LINE_TEAM, content: 'product_cta' };
+const INQUIRY_REPLACES_PRIMARY = new Set(['yaocare']);
+const INQUIRY_SKIP = new Set(['ods']);
+const isContact = (href: string) => /^mailto:|^tel:|lin\.ee|line\.me/.test(href);
+
+const primary = INQUIRY_REPLACES_PRIMARY.has(product.slug) ? INQUIRY : product.cta;
+const primaryContent = primary.content ?? (isContact(primary.href) ? 'product_cta' : undefined);
+const showInquiry = !INQUIRY_SKIP.has(product.slug) && !isContact(primary.href);
+const isLineCta = /lin\.ee|line\.me/.test(primary.href);
 ---
 <section class="py-16 md:py-20 bg-gradient-to-b from-white to-orange-50/40">
   <div class="max-w-3xl mx-auto px-4 lg:px-6 text-center">
@@ -26,8 +36,8 @@ const isLineCta = /lin\.ee|line\.me/.test(product.cta.href);
       {finalDescription}
     </p>
     <a
-      href={product.cta.href}
-      data-cta={product.cta.content}
+      href={primary.href}
+      data-cta={primaryContent}
       target="_blank"
       rel="noopener"
       class:list={['mt-8', isLineCta ? 'btn-line' : 'btn-brand']}
@@ -37,17 +47,17 @@ const isLineCta = /lin\.ee|line\.me/.test(product.cta.href);
       ) : (
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       )}
-      {product.cta.label}
+      {primary.label}
     </a>
-    {secondary && (
+    {showInquiry && (
       <a
-        href={secondary.href}
-        data-cta={secondary.cta}
+        href={INQUIRY.href}
+        data-cta={INQUIRY.content}
         target="_blank"
         rel="noopener"
-        class:list={['mt-8 ml-3', /lin\.ee|line\.me/.test(secondary.href) ? 'btn-line' : 'btn-brand']}
+        class="mt-8 ml-3 btn-line"
       >
-        {secondary.label}
+        {INQUIRY.label}
       </a>
     )}
   </div>

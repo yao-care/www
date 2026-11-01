@@ -4,6 +4,8 @@ import Nav from '../../components/Nav.astro';
 import FooterLinks from '../../components/FooterLinks.astro';
 import ContactMap from '../../components/ContactMap.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
+import InstitutionEntry from '../../components/products/InstitutionEntry.astro';
+import { GLOSSARY_INSTITUTION } from '../../institution-entry.config';
 import { GLOSSARY, GLOSSARY_BY_SLUG } from '../../glossary.config';
 import { GUIDES } from '../../guides.config';
 import { PRODUCT_BY_SLUG } from '../../products.config';
@@ -90,6 +92,8 @@ const jsonLd = {
       <div class="mt-8 space-y-4 text-base md:text-lg text-[color:var(--color-ink-soft)] leading-relaxed">
         {term.paragraphs.map((p) => <p>{p}</p>)}
       </div>
+
+      <InstitutionEntry entry={GLOSSARY_INSTITUTION[term.slug]} />
 
       {term.keyPoints && term.keyPoints.length > 0 && (
         <ul class="mt-8 space-y-2.5">

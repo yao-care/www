@@ -1,0 +1,16 @@
+---
+// 名詞／指南內文中段的一行機構入口；對照表在 src/institution-entry.config.ts。
+import { PRODUCT_BY_SLUG, CATEGORY_BY_SLUG } from '../../products.config';
+import type { InstitutionEntry } from '../../institution-entry.config';
+
+interface Props { entry?: InstitutionEntry }
+const { entry } = Astro.props;
+const product = entry ? PRODUCT_BY_SLUG[entry.product] : undefined;
+const href = product ? `${CATEGORY_BY_SLUG[product.category].href}${product.slug}/` : '';
+---
+{entry && product && (
+  <p class="mt-8 rounded-lg bg-neutral-50 border border-neutral-200 px-4 py-3 text-base text-[color:var(--color-ink-soft)] leading-relaxed">
+    {entry.text}
+    <a href={href} data-cta="institution_entry" class="ml-1 text-[color:var(--color-brand)] font-medium hover:underline underline-offset-2">看 {product.title} 的機構方案</a>
+  </p>
+)}
