@@ -13,7 +13,7 @@
     // 跨網域只收這兩個來源；Turnstile 回傳的 hostname 也必須在這份清單（正式環境不含 localhost）
     "ALLOWED_ORIGINS": "https://www.yao.care,https://yao.care",
     "TURNSTILE_HOSTNAMES": "www.yao.care,yao.care",
-    // yao.care 的 Slack 頻道（seo-ops sites/yao.care.json 的 slack.channel）
-    "SLACK_CHANNEL": "$SLACK_CHANNEL"
+    // 2026-11-02 用戶選：詢問通知寄這個信箱，不發 Slack（原本的 #藥提醒-yao-care 會被週報洗掉）
+    "NOTIFY_TO": "service@yao.care"
   }
 }

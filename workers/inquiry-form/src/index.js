@@ -4,11 +4,12 @@
  * 站台是 nginx 直接提供的純靜態檔，收不了 POST；這支 Worker 負責：
  *   1. Turnstile siteverify（action=inquiry，hostname 必須是本站）——不過就 403
  *   2. 寫進 D1（單一真實來源；寫失敗才算送出失敗）
- *   3. 發一則 Slack 通知到 yao.care 頻道（失敗只記 log 與 slack_ok=0，不讓填表人重送）
+ *   3. 用 Brevo API 寄通知信到 NOTIFY_TO（失敗只記 log 與 mail_ok=0，不讓填表人重送；資料已在 D1）
+ *      寄件人用 Brevo 帳號已驗證的 service@weiqi.kids（service@yao.care 未驗證，當寄件人會被丟棄，見 ops/connections.md）
  *
  * secret（`wrangler secret put <名稱>`，值不進 repo）：
  *   TURNSTILE_SECRET  Turnstile widget 的 secret
- *   SLACK_BOT_TOKEN   yao.care Slack bot token（主機來源 $YAOCARE_SECRETS_DIR/slack-bot-token）
+ *   BREVO_API_KEY     Brevo HTTP API 金鑰（主機來源 secrets.md § SMTP 的 xkeysib）
  */
 
 const MAX_BODY = 16 * 1024;
@@ -54,23 +55,30 @@ async function verifyTurnstile(env, token, ip) {
   }
 }
 
-async function notifySlack(env, v, id) {
-  if (!env.SLACK_BOT_TOKEN || !env.SLACK_CHANNEL) return false;
-  const text = [
-    `*產品詢問 #${id}* ${v.org}`,
+async function notifyEmail(env, v, id) {
+  if (!env.BREVO_API_KEY || !env.NOTIFY_TO) return false;
+  const textContent = [
+    `產品詢問 #${id}`,
+    `機構名稱：${v.org}`,
     ...FIELDS.filter((f) => f.key !== 'org').map((f) => `${f.label}：${v[f.key] || '（未填）'}`),
   ].join('\n');
+  const isEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.reach);
   try {
-    const r = await fetch('https://slack.com/api/chat.postMessage', {
+    const r = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
-      headers: { authorization: `Bearer ${env.SLACK_BOT_TOKEN}`, 'content-type': 'application/json; charset=utf-8' },
-      body: JSON.stringify({ channel: env.SLACK_CHANNEL, text, unfurl_links: false }),
+      headers: { 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json', accept: 'application/json' },
+      body: JSON.stringify({
+        sender: { name: 'yao.care 產品詢問', email: 'service@weiqi.kids' },
+        to: [{ email: env.NOTIFY_TO }],
+        ...(isEmail ? { replyTo: { email: v.reach } } : {}),
+        subject: `【產品詢問 #${id}】${v.org}`,
+        textContent,
+      }),
     });
-    const d = await r.json();
-    if (!d.ok) console.error('slack_failed', d.error);
-    return d.ok === true;
+    if (!r.ok) console.error('mail_failed', r.status, await r.text());
+    return r.ok;
   } catch (err) {
-    console.error('slack_failed', String(err));
+    console.error('mail_failed', String(err));
     return false;
   }
 }
@@ -119,8 +127,8 @@ export default {
     }
 
     ctx.waitUntil((async () => {
-      const ok = await notifySlack(env, v, id);
-      if (ok) await env.DB.prepare('UPDATE inquiries SET slack_ok = 1 WHERE id = ?').bind(id).run();
+      const ok = await notifyEmail(env, v, id);
+      if (ok) await env.DB.prepare('UPDATE inquiries SET mail_ok = 1 WHERE id = ?').bind(id).run();
     })());
 
     return json({ ok: true }, 200, headers);

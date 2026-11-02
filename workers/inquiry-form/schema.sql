@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS inquiries (
   message    TEXT,
   page       TEXT,
   country    TEXT,
-  slack_ok   INTEGER NOT NULL DEFAULT 0
+  slack_ok   INTEGER NOT NULL DEFAULT 0, -- 2026-11-02 前的 Slack 通知狀態，已不再寫入
+  mail_ok    INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_inquiries_created ON inquiries(created_at);
