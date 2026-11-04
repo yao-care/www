@@ -152,7 +152,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'intrinsic-capacity',
-    updatedAt: '2026-10-10',
+    updatedAt: '2026-11-04',
     topic: 'preventive-function-health',
     term: 'WHO 內在能力（IC）',
     en: 'Intrinsic Capacity',
@@ -162,6 +162,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     paragraphs: [
       '內在能力涵蓋五個面向：行動、活力、認知、心理、感官（視聽）。WHO 在 ICOPE（高齡整合照護）框架中以它作為追蹤與介入的依據。',
       '相較於只看疾病，內在能力強調「人還能做什麼」，適合作為成人到高齡的功能健康自評基準。',
+      '在醫學上，內在能力是高齡醫學（Geriatric Medicine）與預防醫學評估的用詞，WHO 的 ICOPE 方法就是從偵測內在能力下降開始，再銜接健康與社會照護需求評估，不是單純的健檢數值。',
     ],
     keyPoints: [
       '五面向：行動 / 活力 / 認知 / 心理 / 感官',
@@ -169,7 +170,12 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       '強調功能而非僅看疾病',
     ],
     related: ['func'],
-    sources: [{ label: 'WHO 官方', url: 'https://www.who.int/' }],
+    sources: [
+      {
+        label: 'WHO ICOPE（Integrated Care for Older People）官方頁',
+        url: 'https://www.who.int/teams/maternal-newborn-child-adolescent-health-and-ageing/ageing-and-health/integrated-care-for-older-people-icope',
+      },
+    ],
   },
   {
     slug: 'drug-repurposing',
