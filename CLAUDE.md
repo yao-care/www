@@ -211,7 +211,7 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 - **`scripts/content-gaps.sh`**：cron entry，`unset CLAUDECODE…` 後跑 `--draft`，log `/var/log/yaocare-content-gaps.log`。
 - **Cron**：`0 2 1,15 * *`（UTC，每月 1/15 號 = 台灣 10:00）—— **每兩週**一次。
 - ⚠ **草稿不自動上線、不自動 commit**。`drafts/` 已 gitignore。採用流程：人工查證 `factCheckNotes` → 貼進 `src/guides.config.ts` 或 `src/glossary.config.ts` → `npm run deploy` → IndexNow。
-- 調參：門檻/頻次改 `content-gaps.ts` 檔內常數與 crontab。
+- 調參：門檻/頻次改 `content-gaps.ts` 檔內常數與 `/etc/cron.d/www-yao-care`（2026-11-09 由 root crontab 搬來）。
 
 ## § Slack 通報層（📊 數據心跳 / 🤖 大腦優化 / 📈 週報）
 
