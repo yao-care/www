@@ -72,7 +72,9 @@ fi
     git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗（不阻擋 build）"
 
     # 3) build → 同步產物到 NPM 掛載的服務目錄
-    npm run build
+    #    全站 build 走全機 build 輪流（/usr/local/lib/site-build-turn.sh；站名 yao.care 與 seo-ops 同一本帳）。
+    #    最多等 50 分；逾時 site-build-run 回 75 → set -e 中止本輪 build/rsync（commit 已推，隔天有新稿時會一併建置）。
+    SITE_BUILD_WAIT=3000 site-build-run yao.care -- npm run build
     rsync -a --delete dist/ $WWW_SITE_DIR/
 
     # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（失敗不阻擋）
