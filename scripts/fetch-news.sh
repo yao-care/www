@@ -73,8 +73,10 @@ fi
 
     # 3) build → 同步產物到 NPM 掛載的服務目錄
     #    全站 build 走全機 build 輪流（/usr/local/lib/site-build-turn.sh；站名 yao.care 與 seo-ops 同一本帳）。
-    #    最多等 50 分；逾時 site-build-run 回 75 → set -e 中止本輪 build/rsync（commit 已推，隔天有新稿時會一併建置）。
-    SITE_BUILD_WAIT=3000 site-build-run yao.care -- npm run build
+    #    最多等 10 分：排隊時本腳本仍持有 yao.care 站鎖，而 seo-ops 的 yao.care decide（台北 04:55）等站鎖上限 65 分，
+    #    本腳本自身約 45–50 分，再多等就會把 decide 整輪擠掉（2026-11-09 用戶裁示）。
+    #    逾時 site-build-run 回 75 → set -e 中止本輪 build/rsync（commit 已推，下次有新稿時會一併建置）。
+    SITE_BUILD_WAIT=600 site-build-run yao.care -- npm run build
     rsync -a --delete dist/ $WWW_SITE_DIR/
 
     # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（失敗不阻擋）
