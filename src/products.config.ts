@@ -213,7 +213,7 @@ export const PRODUCTS: readonly Product[] = [
     title: 'TxGNN 老藥新用',
     tagline: '老藥是否還有其他用途，TxGNN 用 AI 跑過 30+ 國核准藥品清單去預測候選，原始碼開源（台灣站 TwTxGNN）',
     description:
-      '老藥新用（drug repurposing）用 AI 從已上市藥物裡找其他疾病的治療線索，不必重新做新藥研發。TxGNN 以哈佛大學團隊的模型建置，藥提醒科技有限公司（yao.care）做成公開平台，台灣站 TwTxGNN（twtxgnn.yao.care）可直接查詢。涵蓋 30+ 國 FDA 藥品資料，整合 PubMed 文獻與 ClinicalTrials 臨床試驗證據，產出 16,700+ 藥物頁面與 FHIR 資源，並與 Epic、Cerner 等 EHR 系統整合，已上架 SMART on FHIR Gallery，原始碼於 GitHub 開源。',
+      'TxGNN 老藥新用：用哈佛 Zitnik Lab 的 AI 模型預測已上市藥物的新適應症，附 PubMed 與臨床試驗證據及 L1 到 L5 證據等級。30 國站約 1.7 萬份藥物報告（2026-11-12），支援 SMART on FHIR 標準，可在支援 SMART 的 EHR 中啟動，原始碼開源。',
     alternateNames: [
       'TwTxGNN',
       'TwTxGNN 老藥新用驗證報告',
@@ -226,8 +226,8 @@ export const PRODUCTS: readonly Product[] = [
     cardKicker: '醫療 AI · 開源 · 國際上架',
     cardBullets: [
       '30 個國家與地區、17 種語言',
-      '17,676 份藥物報告，附證據等級',
-      'SMART on FHIR 免費整合，GitHub 開源',
+      '約 1.7 萬份藥物報告（2026-11-12），附證據等級',
+      '支援 SMART on FHIR，30 站 repo 公開',
     ],
     externalUrl: 'https://twtxgnn.yao.care/',
     repoUrl: 'https://github.com/yao-care/TwTxGNN',

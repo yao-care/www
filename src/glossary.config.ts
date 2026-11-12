@@ -410,7 +410,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   },
   {
     slug: 'txgnn',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-12',
     term: 'TxGNN（藥物再利用圖神經網路模型）',
     en: 'TxGNN — graph foundation model for drug repurposing',
     category: 'medical',
@@ -419,13 +419,13 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     paragraphs: [
       'TxGNN 由哈佛醫學院 Zitnik Lab（Marinka Zitnik 團隊）研發，核心做法是在大型生物醫學知識圖譜上訓練圖神經網路（GNN），讓模型學習藥物、疾病、基因、蛋白質之間的關聯。它最大的特點是「zero-shot（零樣本）」能力：即使是缺乏現有療法、資料稀少的疾病，也能把已研究疾病的知識遷移過去，輸出藥物候選的預測分數與可解釋的推理路徑。相關研究於 2024 年發表在《Nature Medicine》。',
       '相較於從頭開發新藥，老藥新用以「已核准藥物的安全性資料已知」為核心優勢，通常可省去部分早期安全性試驗、縮短研發時程，對罕見疾病尤其有意義。TxGNN 的原始碼已於 GitHub（mims-harvard/TxGNN）開源，學術與臨床資訊團隊可依需求擴充。',
-      '要分清「模型規模」與「導入平台規模」：TxGNN 論文涵蓋約 8,000 種藥物 × 17,080 種疾病；而藥提醒科技有限公司（yao.care）以此模型為基礎建置的老藥新用平台，台灣站名為 TwTxGNN（twtxgnn.yao.care），其餘各國依 {國碼}TxGNN 命名。該平台目前有 30 個國家與地區的站、合計 17,676 份藥物報告頁（2026-10-16 統計），預測附 PubMed 與 ClinicalTrials.gov 證據並標上 L1–L5 證據等級，也可經 SMART on FHIR 在電子病歷系統內呈現，作為醫師的研究參考。',
+      '要分清「模型規模」與「導入平台規模」：TxGNN 論文涵蓋約 8,000 種藥物 × 17,080 種疾病；而藥提醒科技有限公司（yao.care）以此模型為基礎建置的老藥新用平台，台灣站名為 TwTxGNN（twtxgnn.yao.care），其餘各國依 {國碼}TxGNN 命名。該平台目前有 30 個國家與地區的站、合計約 1.7 萬份藥物報告頁（2026-11-12 統計），預測附 PubMed 與 ClinicalTrials.gov 證據並標上 L1–L5 證據等級，也可經 SMART on FHIR 在電子病歷系統內呈現，作為醫師的研究參考。',
       '想看某一支藥的預測與證據，到 TwTxGNN 查該藥報告；想了解平台怎麼建、怎麼接 SMART on FHIR，看本站的 TxGNN 產品頁。本頁只回答 TxGNN 這個模型是什麼。',
     ],
     keyPoints: [
       '哈佛 Zitnik Lab 開發的圖神經網路（GNN）基礎模型，2024 年發表於 Nature Medicine',
       'zero-shot：對缺乏現有療法的疾病也能預測藥物候選，並附可解釋推理路徑',
-      '開源（mims-harvard/TxGNN）；藥提醒科技有限公司（yao.care）的 TwTxGNN 平台導入 30 個國家與地區、17,676 份藥物報告頁並附文獻證據',
+      '開源（mims-harvard/TxGNN）；藥提醒科技有限公司（yao.care）的 TwTxGNN 平台導入 30 個國家與地區、約 1.7 萬份藥物報告頁（2026-11-12）並附文獻證據',
     ],
     related: ['txgnn'],
     sources: [

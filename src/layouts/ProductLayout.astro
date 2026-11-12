@@ -17,6 +17,8 @@ interface Props {
   ogImage?: string;
   /** FAQ 預設全部展開；內容多的頁面可傳 false 改成收合 */
   faqOpen?: boolean;
+  /** 頁面內容最後核對日（YYYY-MM-DD），輸出到 SoftwareApplication 的 dateModified */
+  dateModified?: string;
   /** true：FAQ 與延伸閱讀改用與正文相同的 max-w-7xl 左緣（正文段落全用 7xl 的頁面才開） */
   wide?: boolean;
   /** 延伸閱讀最多顯示幾張（預設全部） */
@@ -25,7 +27,7 @@ interface Props {
   furtherCompact?: boolean;
 }
 
-const { slug, title, description, ogImage: ogImagePath, faqOpen = true, wide = false, furtherLimit, furtherCompact = false } = Astro.props;
+const { slug, title, description, dateModified, ogImage: ogImagePath, faqOpen = true, wide = false, furtherLimit, furtherCompact = false } = Astro.props;
 const product = PRODUCT_BY_SLUG[slug];
 const category = CATEGORY_BY_SLUG[product.category];
 const faqs = PRODUCT_FAQS[slug] ?? [];
@@ -68,6 +70,7 @@ const softwareApp = {
   operatingSystem: 'Web',
   inLanguage: 'zh-TW',
   image: ogImage,
+  ...(dateModified ? { dateModified } : {}),
   sameAs: [product.externalUrl, product.repoUrl, ...(product.extraSameAs ?? [])].filter(Boolean),
   // 出處歸屬：一律引用同頁的完整 Organization 節點，而非另寫一份殘缺的內嵌組織
   publisher: { '@id': ORG_ID },
