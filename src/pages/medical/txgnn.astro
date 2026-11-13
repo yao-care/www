@@ -14,7 +14,8 @@ const product = PRODUCT_BY_SLUG.txgnn;
 // 國家數、語言數、藥物頁數、FHIR 檔數、查核紀錄筆數一律由 txgnn-countries.json 算出，不寫死。
 // 重抓方法（要更新時照做，並改 counts_date／drug_pages_date）：
 //   drug_pages     ＝ https://{cc}txgnn.yao.care/data/drugs.json 的 drugs 陣列長度（只含公開藥物頁，不含 noindex 與轉址頁）
-//   fhir_resources ＝ 各站公開 repo（github.com/yao-care/{Cc}TxGNN）docs/fhir/MedicationKnowledge 與 ClinicalUseDefinition 的 .json 檔數合計（不含彙總 Bundle）
+//   fhir_resources ＝ 各站公開 repo（github.com/yao-care/{Cc}TxGNN）docs/fhir/MedicationKnowledge 與 ClinicalUseDefinition 的 .json 檔數合計（不含彙總 Bundle）；
+//                    用 git ls-tree -z 或 core.quotepath=false 數，否則非 ASCII 檔名（如巴西的 etoposídeo.json）會被漏算
 //   review_records ＝ 同 repo docs/_data/drug_reviews.json 的 records 筆數
 //   basis_zh／basis_short ＝ 各站 /sources/ 頁寫的實際資料依據（不一定是藥監局許可證）
 // 頁面不提四級信心度（very_high／high／medium／low 是內部排序用），只講模型分數與證據等級。
