@@ -218,11 +218,13 @@ const tipAttrs = (code: string) => {
             <a href="#countries" class="btn-outline-brand">選其他國家</a>
           </div>
           <dl class="mt-8 grid grid-cols-3 gap-3">
-            <div class="stat"><dt class="sr-only">國家與地區</dt><dd><span class="stat-num">{countries.length}</span><span class="stat-unit">國家與地區</span></dd></div>
-            <div class="stat"><dt class="sr-only">語言</dt><dd><span class="stat-num">{langCount}</span><span class="stat-unit">種語言</span></dd></div>
-            <div class="stat"><dt class="sr-only">藥物報告</dt><dd><span class="stat-num">{wan(totalDrugPages)}</span><span class="stat-unit">份藥物報告</span></dd></div>
+            <div class="stat"><dt class="sr-only">國家與地區</dt><dd><span class="stat-num" data-count={countries.length}>{countries.length}</span><span class="stat-unit">國家與地區</span></dd></div>
+            <div class="stat"><dt class="sr-only">語言</dt><dd><span class="stat-num" data-count={langCount}>{langCount}</span><span class="stat-unit">種語言</span></dd></div>
+            <div class="stat"><dt class="sr-only">藥物報告</dt><dd><span class="stat-num" data-count={totalDrugPages} data-live-total>{nf(totalDrugPages)}</span><span class="stat-unit">份藥物報告</span></dd></div>
           </dl>
-          <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]">資料日期 {drugPagesDate}：藥物報告為 {countries.length} 站公開藥物頁合計 <span class="tabular-nums">{nf(totalDrugPages)}</span> 份（各站 drugs.json，不含 noindex 與轉址頁）。</p>
+          <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]" data-live-note aria-live="polite">資料日期 {drugPagesDate}：藥物報告為 {countries.length} 站公開藥物頁合計 <span class="tabular-nums">{nf(totalDrugPages)}</span> 份（各站 drugs.json，不含 noindex 與轉址頁）。</p>
+          {/* 即時更新用：各站 drugs.json 網址與建置時的記錄值。前端抓到最新值後，總數與國家卡用動畫跳過去；抓不到的站沿用記錄值。 */}
+          <script type="application/json" id="txgnn-live-sites" set:html={JSON.stringify({ date: drugPagesDate, sites: countries.map((c) => ({ cc: c.iso2, url: `${txgnnSiteUrl(c.iso2)}data/drugs.json`, n: c.drug_pages ?? 0 })) })} />
         </div>
         <img src={IMG.hero.src} width={IMG.hero.w} height={IMG.hero.h} alt={IMG.hero.alt} fetchpriority="high" class="w-full h-auto rounded-2xl" />
       </div>
@@ -421,7 +423,7 @@ const tipAttrs = (code: string) => {
                       <span class="min-w-0 flex-1">
                         <span class="block font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)]">{i.name} TxGNN（{i.brand}）</span>
                         <span class="block text-xs text-[color:var(--color-ink-soft)] truncate">{i.basisShort}</span>
-                        {i.pages && <span class="block text-xs text-[color:var(--color-ink-soft)]"><span class="tabular-nums">{i.pages}</span> 份藥物報告</span>}
+                        {i.pages && <span class="block text-xs text-[color:var(--color-ink-soft)]"><span class="tabular-nums" data-live-cc={code}>{i.pages}</span> 份藥物報告</span>}
                       </span>
                     </a>
                   </li>
@@ -756,6 +758,94 @@ const tipAttrs = (code: string) => {
     box-shadow: 0 6px 20px color-mix(in oklch, var(--color-neutral-900) 30%, transparent);
   }
 </style>
+
+<script>
+  // 數字動畫＋即時校正：
+  // 1. 先從 0 跑向建置時記錄的值（data-count），讓畫面馬上有東西動
+  // 2. 同時抓 30 站的 drugs.json（各站都回 access-control-allow-origin: *），數 drugs 陣列長度
+  // 3. 抓到就把動畫目標改成最新總數；某站失敗就用該站記錄值補，說明文字寫明幾站是即時
+  // 沒開 JS 或爬蟲看到的是 HTML 裡的記錄值與資料日期。偏好減少動態時不跑動畫，直接換數字。
+  const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+  type Anim = { el: HTMLElement; from: number; to: number; start: number; dur: number; cur: number };
+  const anims = new Map<HTMLElement, Anim>();
+  const tick = (now: number) => {
+    let running = false;
+    for (const a of anims.values()) {
+      const t = Math.min(1, (now - a.start) / a.dur);
+      a.cur = a.from + (a.to - a.from) * ease(t);
+      a.el.textContent = fmt(a.cur);
+      if (t < 1) running = true;
+    }
+    if (running) requestAnimationFrame(tick);
+  };
+  const animateTo = (el: HTMLElement, to: number, dur: number, from?: number) => {
+    if (reduce) {
+      el.textContent = fmt(to);
+      return;
+    }
+    const prev = anims.get(el);
+    const start = performance.now();
+    const wasIdle = ![...anims.values()].some((a) => performance.now() - a.start < a.dur);
+    anims.set(el, { el, from: from ?? prev?.cur ?? to, to, start, dur, cur: from ?? prev?.cur ?? to });
+    if (wasIdle) requestAnimationFrame(tick);
+  };
+
+  // 第一段：從 0 跑到記錄值
+  document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+    const n = Number(el.dataset.count);
+    if (Number.isFinite(n)) animateTo(el, n, n > 1000 ? 1600 : 900, 0);
+  });
+
+  // 第二段：抓即時資料校正
+  const cfgEl = document.getElementById('txgnn-live-sites');
+  const totalEl = document.querySelector<HTMLElement>('[data-live-total]');
+  const noteEl = document.querySelector<HTMLElement>('[data-live-note]');
+  if (cfgEl && totalEl && noteEl) {
+    const cfg = JSON.parse(cfgEl.textContent || '{}') as { date: string; sites: { cc: string; url: string; n: number }[] };
+    const getCount = async (url: string) => {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), 12000);
+      try {
+        const r = await fetch(url, { signal: ctl.signal });
+        if (!r.ok) throw new Error(String(r.status));
+        const d = await r.json();
+        const arr = Array.isArray(d) ? d : d?.drugs;
+        if (!Array.isArray(arr)) throw new Error('bad shape');
+        return arr.length;
+      } finally {
+        clearTimeout(timer);
+      }
+    };
+    Promise.allSettled(cfg.sites.map((s) => getCount(s.url))).then((results) => {
+      let total = 0;
+      let live = 0;
+      results.forEach((r, i) => {
+        const s = cfg.sites[i];
+        const n = r.status === 'fulfilled' ? r.value : s.n;
+        if (r.status === 'fulfilled') live++;
+        total += n;
+        document.querySelectorAll<HTMLElement>(`[data-live-cc="${s.cc}"]`).forEach((el) => {
+          if (n !== s.n) animateTo(el, n, 900, s.n);
+        });
+        // 地圖提示框也換成最新值
+        if (r.status === 'fulfilled') {
+          document.querySelectorAll<HTMLElement>(`.map-pin[href*="//${s.cc}txgnn."]`).forEach((pin) => {
+            pin.dataset.tipPages = fmt(n);
+            pin.dataset.tipDate = '即時';
+          });
+        }
+      });
+      if (live === 0) return; // 全部失敗：保留記錄值與建置日期
+      animateTo(totalEl, total, 1200);
+      const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' });
+      const scope = live === cfg.sites.length ? `${live} 站` : `${live} 站即時、其餘 ${cfg.sites.length - live} 站沿用 ${cfg.date} 記錄`;
+      noteEl.textContent = `即時資料（${today} 讀取，${scope}）：藥物報告為 ${cfg.sites.length} 站公開藥物頁合計 ${fmt(total)} 份（各站 drugs.json，不含 noindex 與轉址頁）。頁面原始記錄為 ${cfg.date}。`;
+    });
+  }
+</script>
 
 <script>
   // 地圖提示框：滑鼠移過或鍵盤 focus 到國家標點時顯示該站資料（資料在 data-tip-* 屬性裡，build 時已寫好）。
