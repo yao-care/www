@@ -35,11 +35,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "This website provides computational predictions for research purposes only. Does NOT constitute medical advice; Should NOT be used for clinical decision-making without proper validation; Requires independent clinical trial verification before any therapeutic application. Always consult qualified healthcare professionals for medical decisions.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 7503,
     "review_records": 1261,
     "counts_date": "2026-11-12",
     "basis_zh": "美國 FDA（NDC Directory、Drugs@FDA）",
-    "basis_short": "FDA"
+    "basis_short": "FDA",
+    "fhir_resources": 7503
   },
   {
     "iso2": "tw",
@@ -77,11 +77,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "本報告僅供學術研究參考，不構成醫療建議。藥物使用請遵循醫師指示，切勿自行調整用藥。任何老藥新用決策需經過完整的臨床驗證與法規審查。",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 2252,
     "review_records": 658,
     "counts_date": "2026-11-12",
     "basis_zh": "衛福部食藥署（TFDA）藥品許可證",
-    "basis_short": "TFDA 許可證"
+    "basis_short": "TFDA 許可證",
+    "fhir_resources": 2251
   },
   {
     "iso2": "hk",
@@ -119,11 +119,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "本專案結果僅供研究參考，不構成醫療建議。老藥新用候選需經過臨床驗證才能應用。",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 13130,
     "review_records": 1,
     "counts_date": "2026-11-12",
     "basis_zh": "衞生署藥物辦公室藥劑製品註冊資料（DrugList.xml）",
-    "basis_short": "藥物辦公室 DrugList"
+    "basis_short": "藥物辦公室 DrugList",
+    "fhir_resources": 13129
   },
   {
     "iso2": "ca",
@@ -161,11 +161,11 @@
     "stats_date": "2026-03-23",
     "disclaimer_local": "This content is for research purposes only. Predictions are computational and have not been validated for clinical use. Always consult healthcare professionals before making any medical decisions.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 11442,
     "review_records": 166,
     "counts_date": "2026-11-12",
     "basis_zh": "加拿大衛生部藥品資料庫（DPD）",
-    "basis_short": "Health Canada DPD"
+    "basis_short": "Health Canada DPD",
+    "fhir_resources": 11441
   },
   {
     "iso2": "in",
@@ -203,11 +203,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "This website is for research purposes only. The predictions shown here are computational and have not been clinically validated. They do not constitute medical advice. Always consult healthcare professionals for medical decisions.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 6672,
     "review_records": 60,
     "counts_date": "2026-11-12",
     "basis_zh": "印度藥品資料集（GitHub junioralive/Indian-Medicine-Dataset），不是 CDSCO 許可",
-    "basis_short": "Indian Medicine Dataset"
+    "basis_short": "Indian Medicine Dataset",
+    "fhir_resources": 6672
   },
   {
     "iso2": "kr",
@@ -245,11 +245,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "본 프로젝트의 결과는 연구 목적으로만 제공되며 의료 조언을 구성하지 않습니다.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 5184,
     "review_records": 97,
     "counts_date": "2026-11-12",
     "basis_zh": "韓國食品醫藥品安全處 의약품안전나라",
-    "basis_short": "MFDS 의약품안전나라"
+    "basis_short": "MFDS 의약품안전나라",
+    "fhir_resources": 5184
   },
   {
     "iso2": "sa",
@@ -287,11 +287,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 6768,
     "review_records": 706,
     "counts_date": "2026-11-12",
     "basis_zh": "沙烏地 SFDA 藥品註冊",
-    "basis_short": "SFDA"
+    "basis_short": "SFDA",
+    "fhir_resources": 6768
   },
   {
     "iso2": "sg",
@@ -329,11 +329,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "This report is for academic research purposes only and does not constitute medical advice. Please follow physician instructions for medication use. Any drug repurposing decisions require complete clinical validation and regulatory approval.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 5189,
     "review_records": 339,
     "counts_date": "2026-11-12",
     "basis_zh": "新加坡 HSA 藥品註冊",
-    "basis_short": "HSA"
+    "basis_short": "HSA",
+    "fhir_resources": 5188
   },
   {
     "iso2": "ch",
@@ -371,11 +371,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 681,
     "review_records": 0,
     "counts_date": "2026-11-12",
     "basis_zh": "Swissmedic 核准包裝清單",
-    "basis_short": "Swissmedic 包裝清單"
+    "basis_short": "Swissmedic 包裝清單",
+    "fhir_resources": 681
   },
   {
     "iso2": "my",
@@ -413,11 +413,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Untuk tujuan penyelidikan sahaja. Bukan nasihat perubatan.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 4099,
     "review_records": 201,
     "counts_date": "2026-11-12",
     "basis_zh": "馬來西亞 NPRA 藥品註冊",
-    "basis_short": "NPRA"
+    "basis_short": "NPRA",
+    "fhir_resources": 4099
   },
   {
     "iso2": "es",
@@ -455,11 +455,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 6387,
     "review_records": 250,
     "counts_date": "2026-11-12",
     "basis_zh": "西班牙 AEMPS 藥品資料庫（CIMA）",
-    "basis_short": "AEMPS CIMA"
+    "basis_short": "AEMPS CIMA",
+    "fhir_resources": 6387
   },
   {
     "iso2": "br",
@@ -497,11 +497,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Este relatório é apenas para fins de pesquisa acadêmica e não constitui aconselhamento médico. Qualquer decisão de reposicionamento de medicamentos requer validação clínica completa e aprovação regulatória.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3664,
     "review_records": 689,
     "counts_date": "2026-11-12",
     "basis_zh": "巴西 ANVISA 藥品註冊",
-    "basis_short": "ANVISA"
+    "basis_short": "ANVISA",
+    "fhir_resources": 3663
   },
   {
     "iso2": "au",
@@ -539,11 +539,11 @@
     "stats_date": "2026-03-23",
     "disclaimer_local": "The predictions provided by AuTxGNN are for research purposes only and do not constitute medical advice. All drug repurposing candidates require clinical validation before any therapeutic application. This is not a TGA-approved tool. Always consult healthcare professionals for medical decisions.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 4164,
     "review_records": 3,
     "counts_date": "2026-11-12",
     "basis_zh": "PBS 給付清單（PBS Schedule），不含 TGA（ARTG）註冊狀態",
-    "basis_short": "PBS 給付清單"
+    "basis_short": "PBS 給付清單",
+    "fhir_resources": 4163
   },
   {
     "iso2": "uk",
@@ -581,11 +581,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "This is not an MHRA-approved tool. Always consult healthcare professionals and refer to NICE guidelines for medical decisions.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 5644,
     "review_records": 465,
     "counts_date": "2026-11-12",
     "basis_zh": "NHSBSA BNF 處方代碼清單，不是 MHRA 許可證",
-    "basis_short": "NHSBSA BNF 代碼"
+    "basis_short": "NHSBSA BNF 代碼",
+    "fhir_resources": 5643
   },
   {
     "iso2": "de",
@@ -623,11 +623,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Die Ergebnisse dieses Projekts dienen ausschliesslich zu Forschungszwecken und stellen keine medizinische Beratung dar. Kandidaten fuer die Arzneimittel-Repositionierung erfordern eine klinische Validierung vor der Anwendung.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3783,
     "review_records": 346,
     "counts_date": "2026-11-12",
     "basis_zh": "EMA 歐盟集中許可資料，不是 BfArM 國家許可",
-    "basis_short": "EMA 集中許可"
+    "basis_short": "EMA 集中許可",
+    "fhir_resources": 3783
   },
   {
     "iso2": "fi",
@@ -665,11 +665,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Taemaen projektin tulokset ovat vain tutkimustarkoituksiin eivaetkae muodosta laeketieteen neuvontaa. Laaekkeiden uudelleenkaeytoeen ehdokkaat vaativat kliinisen validoinnin ennen soeveltamista.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3568,
     "review_records": 779,
     "counts_date": "2026-11-12",
     "basis_zh": "EMA 歐盟集中許可資料，不是 Fimea 國家許可",
-    "basis_short": "EMA 集中許可"
+    "basis_short": "EMA 集中許可",
+    "fhir_resources": 3568
   },
   {
     "iso2": "no",
@@ -707,11 +707,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "This report is for research purposes only and does not constitute medical advice.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3603,
     "review_records": 217,
     "counts_date": "2026-11-12",
     "basis_zh": "EMA 歐盟集中許可資料，不是 DMP 國家許可",
-    "basis_short": "EMA 集中許可"
+    "basis_short": "EMA 集中許可",
+    "fhir_resources": 3603
   },
   {
     "iso2": "eu",
@@ -749,11 +749,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "The results of this project are for research purposes only and do not constitute medical advice. Drug repurposing candidates require clinical validation before application.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3173,
     "review_records": 448,
     "counts_date": "2026-11-12",
     "basis_zh": "歐洲藥品管理局（EMA）集中許可資料",
-    "basis_short": "EMA"
+    "basis_short": "EMA",
+    "fhir_resources": 3173
   },
   {
     "iso2": "co",
@@ -791,11 +791,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 4624,
     "review_records": 965,
     "counts_date": "2026-11-12",
     "basis_zh": "哥倫比亞 INVIMA 藥品代碼（CUM）",
-    "basis_short": "INVIMA CUM"
+    "basis_short": "INVIMA CUM",
+    "fhir_resources": 4624
   },
   {
     "iso2": "nz",
@@ -833,11 +833,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "This content is for research purposes only and does not constitute medical advice. All drug repurposing predictions require clinical validation before application.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3703,
     "review_records": 531,
     "counts_date": "2026-11-12",
     "basis_zh": "Pharmac 給付清單（Pharmaceutical Schedule），不是 Medsafe 許可證",
-    "basis_short": "Pharmac 給付清單"
+    "basis_short": "Pharmac 給付清單",
+    "fhir_resources": 3703
   },
   {
     "iso2": "dk",
@@ -875,11 +875,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Resultaterne af dette projekt er kun til forskningsformaal og udgoer ikke medicinsk raadgivning. Kandidater til laegemiddelrepositionering kraever klinisk validering foer anvendelse.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 5718,
     "review_records": 138,
     "counts_date": "2026-11-12",
     "basis_zh": "丹麥 Lægemiddelstyrelsen 藥品登錄",
-    "basis_short": "Lægemiddelstyrelsen"
+    "basis_short": "Lægemiddelstyrelsen",
+    "fhir_resources": 5717
   },
   {
     "iso2": "ph",
@@ -917,11 +917,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "These predictions are for research purposes only. They do not constitute medical advice and require clinical validation before any clinical application.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 2290,
     "review_records": 472,
     "counts_date": "2026-11-12",
     "basis_zh": "菲律賓國家處方集（Philippine National Formulary），不是 DOH-FDA 註冊",
-    "basis_short": "國家處方集 PNF"
+    "basis_short": "國家處方集 PNF",
+    "fhir_resources": 2289
   },
   {
     "iso2": "fr",
@@ -959,11 +959,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Les resultats de ce projet sont uniquement a des fins de recherche et ne constituent pas un avis medical. Les candidats au repositionnement de medicaments necessitent une validation clinique avant application.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 5786,
     "review_records": 828,
     "counts_date": "2026-11-12",
     "basis_zh": "法國藥品公開資料庫（BDPM，ANSM）",
-    "basis_short": "BDPM"
+    "basis_short": "BDPM",
+    "fhir_resources": 5786
   },
   {
     "iso2": "za",
@@ -1001,11 +1001,11 @@
     "stats_date": "2026-03-30",
     "disclaimer_local": "This report is for research purposes only and does not constitute medical advice. Drug use should follow physician guidance. Any drug repurposing decisions require complete clinical validation and regulatory review.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3072,
     "review_records": 400,
     "counts_date": "2026-11-12",
     "basis_zh": "SAHPRA 註冊（medapps）＋MPR 價格登錄",
-    "basis_short": "SAHPRA＋MPR"
+    "basis_short": "SAHPRA＋MPR",
+    "fhir_resources": 3071
   },
   {
     "iso2": "jp",
@@ -1043,11 +1043,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "本報告は研究参考のみを目的としており、医療アドバイスを構成するものではありません。",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 2930,
     "review_records": 222,
     "counts_date": "2026-11-12",
     "basis_zh": "医薬品マスター（薬価基準収載品目）＋PMDA",
-    "basis_short": "薬価基準＋PMDA"
+    "basis_short": "薬価基準＋PMDA",
+    "fhir_resources": 2929
   },
   {
     "iso2": "it",
@@ -1085,11 +1085,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "I risultati di questo progetto sono solo a scopo di ricerca e non costituiscono consulenza medica. I candidati al riposizionamento dei farmaci richiedono una validazione clinica prima dell'applicazione.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 3230,
     "review_records": 509,
     "counts_date": "2026-11-12",
     "basis_zh": "AIFA 包裝清單（confezioni）",
-    "basis_short": "AIFA confezioni"
+    "basis_short": "AIFA confezioni",
+    "fhir_resources": 3230
   },
   {
     "iso2": "ar",
@@ -1127,11 +1127,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Los resultados de este proyecto son solo para fines de investigacion y no constituyen consejo medico. Los candidatos a reposicionamiento de medicamentos requieren validacion clinica antes de su aplicacion.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 1763,
     "review_records": 23,
     "counts_date": "2026-11-12",
     "basis_zh": "PAMI 給付清單，不是 ANMAT 註冊",
-    "basis_short": "PAMI 給付清單"
+    "basis_short": "PAMI 給付清單",
+    "fhir_resources": 1763
   },
   {
     "iso2": "se",
@@ -1169,11 +1169,11 @@
     "stats_date": "2026-03-31",
     "disclaimer_local": "Resultaten av detta projekt aer endast foer forskningsaendamaal och utgoer inte medicinsk raadgivning. Kandidater foer lakemedelsrepositionering kraever klinisk validering foere tillaempning.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 2957,
     "review_records": 565,
     "counts_date": "2026-11-12",
     "basis_zh": "瑞典 Läkemedelsverket 藥品登錄",
-    "basis_short": "Läkemedelsverket"
+    "basis_short": "Läkemedelsverket",
+    "fhir_resources": 2957
   },
   {
     "iso2": "th",
@@ -1211,11 +1211,11 @@
     "stats_date": "2026-03-29",
     "disclaimer_local": "รายงานนี้มีไว้เพื่อการวิจัยทางวิชาการเท่านั้น ไม่ถือเป็นคำแนะนำทางการแพทย์ การใช้ยาต้องปฏิบัติตามคำแนะนำของแพทย์ การตัดสินใจใช้ยาเก่าในข้อบ่งใช้ใหม่ต้องผ่านการตรวจสอบทางคลินิกและกฎระเบียบอย่างครบถ้วน",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 911,
     "review_records": 267,
     "counts_date": "2026-11-12",
     "basis_zh": "Thai FDA 藥品查詢系統（pertento）",
-    "basis_short": "Thai FDA pertento"
+    "basis_short": "Thai FDA pertento",
+    "fhir_resources": 910
   },
   {
     "iso2": "nl",
@@ -1253,10 +1253,10 @@
     "stats_date": "2026-03-23",
     "disclaimer_local": "For research purposes only. Not medical advice.",
     "drug_pages_date": "2026-11-12",
-    "fhir_files": 2837,
     "review_records": 354,
     "counts_date": "2026-11-12",
     "basis_zh": "CBG-MEB Geneesmiddeleninformatiebank 現行登記（metadata.csv）",
-    "basis_short": "CBG-MEB 登記"
+    "basis_short": "CBG-MEB 登記",
+    "fhir_resources": 2836
   }
 ]

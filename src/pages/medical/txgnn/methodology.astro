@@ -9,8 +9,8 @@ import countries from '../../../data/txgnn-countries.json';
 
 // 對外口徑（TxGNN 團隊 2026-10-16 確認）：不提四級信心度、不把知識圖譜寫成預測方法、
 // 不放各國流程燈號。數字一律由 txgnn-countries.json 計算。
-// FHIR 檔數＝各站公開 repo docs/fhir 底下的 .json 檔數合計（txgnn-countries.json 的 fhir_files）
-const FHIR_RESOURCES = `約 ${(countries.reduce((a, c) => a + (c.fhir_files ?? 0), 0) / 10000).toFixed(1)} 萬`;
+// FHIR 資源數＝各站 MedicationKnowledge＋ClinicalUseDefinition 合計（txgnn-countries.json 的 fhir_resources）
+const FHIR_RESOURCES = `約 ${(countries.reduce((a, c) => a + (c.fhir_resources ?? 0), 0) / 10000).toFixed(1)} 萬`;
 const nf = (n: number | null) => (n == null ? '' : n.toLocaleString('en-US'));
 const flagOf = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.flag]));
 const nameOf = Object.fromEntries(TXGNN_SITES.map((s) => [s.code, s.name]));
@@ -167,7 +167,7 @@ const breadcrumb = {
             { v: countries.length, u: '個國家與地區' },
             { v: langCount, u: '種語言（含英文）' },
             { v: nf(totalDrugPages), u: `份藥物報告頁（${drugPagesDate}）` },
-            { v: FHIR_RESOURCES, u: `個 FHIR JSON 檔（${drugPagesDate}）` },
+            { v: FHIR_RESOURCES, u: `筆 FHIR 資源（${drugPagesDate}）` },
           ].map((s) => (
             <div class="rounded-xl bg-white border border-neutral-200 px-4 py-4 shadow-sm text-center">
               <div class="text-2xl md:text-3xl font-bold text-[color:var(--color-brand)] tabular-nums">{s.v}</div>

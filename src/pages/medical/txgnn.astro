@@ -14,14 +14,14 @@ const product = PRODUCT_BY_SLUG.txgnn;
 // 國家數、語言數、藥物頁數、FHIR 檔數、查核紀錄筆數一律由 txgnn-countries.json 算出，不寫死。
 // 重抓方法（要更新時照做，並改 counts_date／drug_pages_date）：
 //   drug_pages     ＝ https://{cc}txgnn.yao.care/data/drugs.json 的 drugs 陣列長度（只含公開藥物頁，不含 noindex 與轉址頁）
-//   fhir_files     ＝ 各站公開 repo（github.com/yao-care/{Cc}TxGNN）預設分支 docs/fhir/ 底下的 .json 檔數
+//   fhir_resources ＝ 各站公開 repo（github.com/yao-care/{Cc}TxGNN）docs/fhir/MedicationKnowledge 與 ClinicalUseDefinition 的 .json 檔數合計（不含彙總 Bundle）
 //   review_records ＝ 同 repo docs/_data/drug_reviews.json 的 records 筆數
 //   basis_zh／basis_short ＝ 各站 /sources/ 頁寫的實際資料依據（不一定是藥監局許可證）
 // 頁面不提四級信心度（very_high／high／medium／low 是內部排序用），只講模型分數與證據等級。
 const nf = (n: number) => n.toLocaleString('en-US');
-const sum = (k: 'drug_pages' | 'fhir_files' | 'review_records') => countries.reduce((a, c) => a + (c[k] ?? 0), 0);
+const sum = (k: 'drug_pages' | 'fhir_resources' | 'review_records') => countries.reduce((a, c) => a + (c[k] ?? 0), 0);
 const totalDrugPages = sum('drug_pages');
-const totalFhir = sum('fhir_files');
+const totalFhir = sum('fhir_resources');
 const totalReviews = sum('review_records');
 const drugPagesDate = countries[0]?.drug_pages_date ?? '';
 const countsDate = countries[0]?.counts_date ?? '';
@@ -220,11 +220,11 @@ const tipAttrs = (code: string) => {
           <dl class="mt-8 grid grid-cols-3 gap-3">
             <div class="stat"><dt class="sr-only">國家與地區</dt><dd><span class="stat-num" data-count={countries.length}>{countries.length}</span><span class="stat-unit">國家與地區</span></dd></div>
             <div class="stat"><dt class="sr-only">語言</dt><dd><span class="stat-num" data-count={langCount}>{langCount}</span><span class="stat-unit">種語言</span></dd></div>
-            <div class="stat"><dt class="sr-only">藥物報告</dt><dd><span class="stat-num" data-count={totalDrugPages} data-live-total>{nf(totalDrugPages)}</span><span class="stat-unit">份藥物報告</span></dd></div>
+            <div class="stat"><dt class="sr-only">藥物報告</dt><dd><span class="stat-num" data-count={totalDrugPages} data-live-total="drugs">{nf(totalDrugPages)}</span><span class="stat-unit">份藥物報告</span></dd></div>
           </dl>
-          <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]" data-live-note aria-live="polite">資料日期 {drugPagesDate}：藥物報告為 {countries.length} 站公開藥物頁合計 <span class="tabular-nums">{nf(totalDrugPages)}</span> 份（各站 drugs.json，不含 noindex 與轉址頁）。</p>
+          <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]" data-live-note="drugs" aria-live="polite">資料日期 {drugPagesDate}：藥物報告為 {countries.length} 站公開藥物頁合計 <span class="tabular-nums">{nf(totalDrugPages)}</span> 份（各站 drugs.json，不含 noindex 與轉址頁）。</p>
           {/* 即時更新用：各站 drugs.json 網址與建置時的記錄值。前端抓到最新值後，總數與國家卡用動畫跳過去；抓不到的站沿用記錄值。 */}
-          <script type="application/json" id="txgnn-live-sites" set:html={JSON.stringify({ date: drugPagesDate, sites: countries.map((c) => ({ cc: c.iso2, url: `${txgnnSiteUrl(c.iso2)}data/drugs.json`, n: c.drug_pages ?? 0 })) })} />
+          <script type="application/json" id="txgnn-live-sites" set:html={JSON.stringify({ date: drugPagesDate, fhirDate: countsDate, sites: countries.map((c) => ({ cc: c.iso2, base: txgnnSiteUrl(c.iso2), n: c.drug_pages ?? 0, fhir: c.fhir_resources ?? 0 })) })} />
         </div>
         <img src={IMG.hero.src} width={IMG.hero.w} height={IMG.hero.h} alt={IMG.hero.alt} fetchpriority="high" class="w-full h-auto rounded-2xl" />
       </div>
@@ -510,7 +510,8 @@ const tipAttrs = (code: string) => {
           <p class="kicker">For Hospitals</p>
           <h2 class="section-title mt-2">醫院免費接進病歷</h2>
           <p class="sec-lead">TxGNN 支援 SMART on FHIR 標準（讓外部 App 安全接進電子病歷的開放標準），可在支援 SMART 的 EHR 中啟動，醫師在病歷裡就能看到病人用藥的潛在新適應症。台灣站的 SMART App 已上架 SMART App Gallery。</p>
-          <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">各站也把藥物與預測輸出成 FHIR 資源，{countries.length} 站合計{wan(totalFhir)}個 FHIR JSON 檔（資料日期 {countsDate}，以各站公開 repo 的 docs/fhir 計算），院內系統可以直接讀。</p>
+          <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">各站也把藥物與預測輸出成 FHIR 資源，院內系統可以直接讀。{countries.length} 站合計 <strong class="tabular-nums text-[color:var(--color-ink)]" data-count={totalFhir} data-live-total="fhir">{nf(totalFhir)}</strong> 筆（MedicationKnowledge 與 ClinicalUseDefinition）。</p>
+          <p class="mt-1 text-xs text-[color:var(--color-ink-muted)]" data-live-note="fhir" aria-live="polite">資料日期 {countsDate}：以各站公開 repo 的 docs/fhir 計算。</p>
         </header>
         <div class="flex flex-wrap items-center gap-3">
           <a href={smartAppUrl} target="_blank" rel="noopener" class="btn-brand">看 SMART App Gallery 上的台灣站 App</a>
@@ -793,57 +794,135 @@ const tipAttrs = (code: string) => {
     if (wasIdle) requestAnimationFrame(tick);
   };
 
-  // 第一段：從 0 跑到記錄值
-  document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+  // 第一段：數字進到畫面時從 0 跑到目標（記錄值；若即時值先到，就直接跑到即時值）
+  const revealed = new WeakSet<HTMLElement>();
+  const reveal = (el: HTMLElement) => {
+    if (revealed.has(el)) return;
+    revealed.add(el);
     const n = Number(el.dataset.count);
     if (Number.isFinite(n)) animateTo(el, n, n > 1000 ? 1600 : 900, 0);
-  });
-
-  // 第二段：抓即時資料校正
-  const cfgEl = document.getElementById('txgnn-live-sites');
-  const totalEl = document.querySelector<HTMLElement>('[data-live-total]');
-  const noteEl = document.querySelector<HTMLElement>('[data-live-note]');
-  if (cfgEl && totalEl && noteEl) {
-    const cfg = JSON.parse(cfgEl.textContent || '{}') as { date: string; sites: { cc: string; url: string; n: number }[] };
-    const getCount = async (url: string) => {
-      const ctl = new AbortController();
-      const timer = setTimeout(() => ctl.abort(), 12000);
-      try {
-        const r = await fetch(url, { signal: ctl.signal });
-        if (!r.ok) throw new Error(String(r.status));
-        const d = await r.json();
-        const arr = Array.isArray(d) ? d : d?.drugs;
-        if (!Array.isArray(arr)) throw new Error('bad shape');
-        return arr.length;
-      } finally {
-        clearTimeout(timer);
+  };
+  // 即時值到了：已出現的數字用動畫跳過去；還沒出現的只改目標，等出現時再跑
+  const setTarget = (el: HTMLElement, n: number, dur: number, from?: number) => {
+    el.dataset.count = String(n);
+    if (revealed.has(el)) animateTo(el, n, dur, from);
+    else el.textContent = fmt(n);
+  };
+  const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          reveal(e.target as HTMLElement);
+          io.unobserve(e.target);
+        }
       }
-    };
-    Promise.allSettled(cfg.sites.map((s) => getCount(s.url))).then((results) => {
+    }, { threshold: 0.6 });
+    counters.forEach((el) => io.observe(el));
+  } else {
+    counters.forEach(reveal);
+  }
+
+  // 第二段：抓即時資料校正（兩個指標，各自獨立成功或失敗）
+  //   drugs：各站 /data/drugs.json 的 drugs 陣列長度
+  //   fhir ：各站 /fhir/metadata（CapabilityStatement）裡的 extension
+  //          url = FHIR_COUNTS_URL，子 extension MedicationKnowledge／ClinicalUseDefinition（valueInteger）＋countedAt（valueDate）
+  //          只認這個欄位、不解析 description 文字；countedAt 早於官網記錄日、或數字跟記錄值差超過一半，都視為不可信，沿用記錄值
+  const FHIR_COUNTS_URL = 'https://yao.care/fhir/StructureDefinition/txgnn-resource-counts';
+  type Site = { cc: string; base: string; n: number; fhir: number };
+  const cfgEl = document.getElementById('txgnn-live-sites');
+  const cfg = cfgEl ? (JSON.parse(cfgEl.textContent || '{}') as { date: string; fhirDate: string; sites: Site[] }) : null;
+
+  const getJson = async (url: string) => {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 12000);
+    try {
+      const r = await fetch(url, { signal: ctl.signal });
+      if (!r.ok) throw new Error(String(r.status));
+      return await r.json();
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+  const drugsCount = async (s: Site) => {
+    const d = await getJson(`${s.base}data/drugs.json`);
+    const arr = Array.isArray(d) ? d : d?.drugs;
+    if (!Array.isArray(arr)) throw new Error('bad shape');
+    return arr.length;
+  };
+  const isInt = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 0;
+  const fhirCount = async (s: Site) => {
+    const d = await getJson(`${s.base}fhir/metadata`);
+    const ext = (d?.extension ?? []).find((e: { url?: string }) => e?.url === FHIR_COUNTS_URL);
+    if (!ext) throw new Error('no counts extension');
+    const sub = (k: string) => (ext.extension ?? []).find((e: { url?: string }) => e?.url === k);
+    const mk = sub('MedicationKnowledge')?.valueInteger;
+    const cud = sub('ClinicalUseDefinition')?.valueInteger;
+    const at = sub('countedAt')?.valueDate;
+    if (!isInt(mk) || !isInt(cud) || typeof at !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(at)) throw new Error('bad counts');
+    if (cfg && at < cfg.fhirDate) throw new Error(`stale ${at}`);
+    const n = mk + cud;
+    if (s.fhir > 0 && Math.abs(n - s.fhir) > s.fhir * 0.5) throw new Error(`out of range ${n} vs ${s.fhir}`);
+    return n;
+  };
+
+  const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' });
+  const run = (
+    key: 'drugs' | 'fhir',
+    getter: (s: Site) => Promise<number>,
+    recorded: (s: Site) => number,
+    recordedDate: string,
+    note: (total: number, scope: string) => string,
+    perSite?: (s: Site, n: number, live: boolean) => void,
+  ) => {
+    const totalEl = document.querySelector<HTMLElement>(`[data-live-total="${key}"]`);
+    const noteEl = document.querySelector<HTMLElement>(`[data-live-note="${key}"]`);
+    if (!cfg || !totalEl || !noteEl) return;
+    Promise.allSettled(cfg.sites.map(getter)).then((results) => {
       let total = 0;
       let live = 0;
       results.forEach((r, i) => {
         const s = cfg.sites[i];
-        const n = r.status === 'fulfilled' ? r.value : s.n;
-        if (r.status === 'fulfilled') live++;
+        const ok = r.status === 'fulfilled';
+        const n = ok ? r.value : recorded(s);
+        if (ok) live++;
+        else console.debug(`[txgnn-live] ${key} ${s.cc} 沿用記錄值：`, r.reason?.message ?? r.reason);
         total += n;
+        perSite?.(s, n, ok);
+      });
+      if (live === 0) return; // 全部失敗：保留記錄值與記錄日期
+      setTarget(totalEl, total, 1200);
+      const scope = live === cfg.sites.length ? `${live} 站全部即時` : `${live} 站即時、其餘 ${cfg.sites.length - live} 站沿用 ${recordedDate} 記錄`;
+      noteEl.textContent = note(total, scope);
+    });
+  };
+
+  if (cfg) {
+    run(
+      'drugs',
+      drugsCount,
+      (s) => s.n,
+      cfg.date,
+      (total, scope) => `即時資料（${today} 讀取，${scope}）：藥物報告為 ${cfg.sites.length} 站公開藥物頁合計 ${fmt(total)} 份（各站 drugs.json，不含 noindex 與轉址頁）。頁面原始記錄為 ${cfg.date}。`,
+      (s, n, ok) => {
         document.querySelectorAll<HTMLElement>(`[data-live-cc="${s.cc}"]`).forEach((el) => {
           if (n !== s.n) animateTo(el, n, 900, s.n);
         });
-        // 地圖提示框也換成最新值
-        if (r.status === 'fulfilled') {
+        if (ok) {
           document.querySelectorAll<HTMLElement>(`.map-pin[href*="//${s.cc}txgnn."]`).forEach((pin) => {
             pin.dataset.tipPages = fmt(n);
             pin.dataset.tipDate = '即時';
           });
         }
-      });
-      if (live === 0) return; // 全部失敗：保留記錄值與建置日期
-      animateTo(totalEl, total, 1200);
-      const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' });
-      const scope = live === cfg.sites.length ? `${live} 站` : `${live} 站即時、其餘 ${cfg.sites.length - live} 站沿用 ${cfg.date} 記錄`;
-      noteEl.textContent = `即時資料（${today} 讀取，${scope}）：藥物報告為 ${cfg.sites.length} 站公開藥物頁合計 ${fmt(total)} 份（各站 drugs.json，不含 noindex 與轉址頁）。頁面原始記錄為 ${cfg.date}。`;
-    });
+      },
+    );
+    run(
+      'fhir',
+      fhirCount,
+      (s) => s.fhir,
+      cfg.fhirDate,
+      (_total, scope) => `即時資料（${today} 讀取，${scope}）：各站 /fhir/metadata 回報的資源數。頁面原始記錄為 ${cfg.fhirDate}。`,
+    );
   }
 </script>
 

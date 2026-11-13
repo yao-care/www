@@ -604,7 +604,7 @@ export const TOPICS: readonly Topic[] = [
       },
       {
         product: "txgnn",
-        text: "想把「每個預測都附文獻證據」的老藥新用能力接進你的系統，歡迎 LINE 私訊討論技術合作。TxGNN 目前有 30 個國家與地區的站、約 1.7 萬份藥物報告頁和約 13.7 萬個 FHIR JSON 檔（2026-11-12 統計），預測附 PubMed 文獻與 ClinicalTrials.gov 試驗並標上證據等級；醫療院所可免費接入 SMART on FHIR App，台灣站版本已可在 SMART 沙盒試用。",
+        text: "想把「每個預測都附文獻證據」的老藥新用能力接進你的系統，歡迎 LINE 私訊討論技術合作。TxGNN 目前有 30 個國家與地區的站、約 1.7 萬份藥物報告頁和約 13.7 萬筆 FHIR 資源（2026-11-12 統計），預測附 PubMed 文獻與 ClinicalTrials.gov 試驗並標上證據等級；醫療院所可免費接入 SMART on FHIR App，台灣站版本已可在 SMART 沙盒試用。",
       },
     ],
     products: [
