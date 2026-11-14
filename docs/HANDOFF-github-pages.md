@@ -5,9 +5,12 @@
 
 ## 目前進度（2026-11-14）
 
-- 階段 0、A、R、B（B1 org 網域驗證除外）、D 都已完成：**www.yao.care 已由 GitHub Pages 提供**，repo 已公開，改寫前的歷史封存在 private 的 `yao-care/www-private-archive`。
-- 雲端用 lockfile 建置後 `TARGET=live ./scripts/verify-pages.sh`：PASS 499／FAIL 0。
-- 待辦：B1 org 網域驗證、E4（明早新聞排程推 main → Actions 部署、作者是公開身分）、E5～E8。
+- 階段 0、A、R、B、D 都已完成：**www.yao.care 已由 GitHub Pages 提供**，repo 已公開，改寫前的歷史封存在 private 的 `yao-care/www-private-archive`。
+- B1：GitHub org 的 `yao.care` 已 Verified（Linode 上那筆 `_github-pages-challenge-yao-care` TXT 要保留）。
+- D1 的 TTL 已降到 300；HTTPS 憑證涵蓋 www.yao.care 與 yao.care，到期日 2027-02-12（GitHub 自動續）。
+- E1、E2：主機與雲端各自用 `verify-pages.sh` 驗證，都是 PASS 499／FAIL 0；apex 301 到 www。
+- E3：雲端推 main 觸發 Actions 部署成功（2026-11-14）。
+- 待辦：E4（明早新聞排程推 main → Actions 部署、作者是公開身分）、E5 詢問表單實際送出一筆、E7 Search Console（1～2 週）、E8 主機備援去留。
 
 ## 做完之後的樣子
 
