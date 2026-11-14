@@ -4,11 +4,13 @@
 # 手動：./scripts/entity-audit.sh
 set -uo pipefail
 
-cd $WWW_REPO_DIR
+. "$(dirname "$0")/lib/host-env.sh"
+cd "$WWW_REPO_DIR"
 
 STAMP="$(TZ=Asia/Taipei date +%Y-%m-%d)"
 OUT="reports/entity-audit-${STAMP}.md"
-CHANNEL="${SLACK_CHANNEL:-$SLACK_CHANNEL}"   # #藥提醒-yao-care
+need SLACK_CHANNEL
+CHANNEL="$SLACK_CHANNEL"
 
 mkdir -p reports
 node scripts/entity-audit.mjs --out "$OUT" > /dev/null 2>&1
@@ -29,7 +31,7 @@ ${HEAD_ICON} 實體歸屬驗收 ${STAMP}
 
 ${SUMMARY}
 
-完整報告：${OUT}（主機 $WWW_REPO_DIR）
+完整報告：${OUT}（主機 repo 目錄）
 還有一項機器驗不了：實際去問 LLM「台灣做老藥新用研究報告的公司是哪一間」，看會不會講出藥提醒科技有限公司。報告末尾有建議提問清單。
 EOF
 )" || true

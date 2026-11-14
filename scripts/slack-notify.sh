@@ -13,7 +13,8 @@
 # 設計：缺 token / 失敗都「不中斷呼叫端」，印警告並回非零，呼叫端應以 `|| true` 包住。
 set -uo pipefail
 
-TOKEN_FILE="${YAOCARE_SLACK_TOKEN_FILE:-$YAOCARE_SECRETS_DIR/slack-bot-token}"
+. "$(dirname "$0")/lib/host-env.sh"
+TOKEN_FILE="${YAOCARE_SLACK_TOKEN_FILE:-${YAOCARE_SECRETS_DIR:-}/slack-bot-token}"
 
 CHANNEL="${1:-}"
 if [ -z "$CHANNEL" ]; then

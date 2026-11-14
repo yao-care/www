@@ -13,8 +13,9 @@
 //   node scripts/slack-heartbeat.mjs --dry      # 只印訊息、不發送
 //   node scripts/slack-heartbeat.mjs 2026-06-30 # 指定日期
 // 憑證：env SLACK_BOT_TOKEN，否則 $YAOCARE_SECRETS_DIR/slack-bot-token。
-// 頻道：env SLACK_CHANNEL，否則預設 $SLACK_CHANNEL（#藥提醒-yao-care）。
+// 頻道：env SLACK_CHANNEL（主機設定）。
 
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
@@ -26,8 +27,8 @@ const repo = join(here, '..');
 const DRY = process.argv.includes('--dry');
 const dateArg = process.argv.slice(2).find((a) => /^\d{4}-\d{2}-\d{2}$/.test(a));
 
-const TOKEN_FILE = '$YAOCARE_SECRETS_DIR/slack-bot-token';
-const CHANNEL = process.env.SLACK_CHANNEL || '$SLACK_CHANNEL';
+const TOKEN_FILE = secretPath('slack-bot-token');
+const CHANNEL = requireEnv('SLACK_CHANNEL');
 const NEWS_LOG = process.env.YAOCARE_NEWS_LOG || '/var/log/yaocare-news.log';
 const BASE = 'https://www.yao.care';
 

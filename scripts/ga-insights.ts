@@ -12,14 +12,15 @@
  * 內建維度/指標一定能跑；自訂維度（content_category / traffic_category…）
  * 需先在 GA4 註冊且有資料，未就緒時會標示「尚未就緒」而非中斷。
  */
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getGscInsights, type GscInsights } from './gsc.ts';
 
-const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || '$YAOCARE_SECRETS_DIR/ga4-sa.json';
-const PROPERTY_ID = process.env.GA_PROPERTY_ID || '$GA_PROPERTY_ID';
+const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || secretPath('ga4-sa.json');
+const PROPERTY_ID = requireEnv('GA_PROPERTY_ID');
 const DAYS = Number(process.env.GA_DAYS || 28);
 const property = `properties/${PROPERTY_ID}`;
 const dateRanges = [{ startDate: `${DAYS}daysAgo`, endDate: 'today' }];

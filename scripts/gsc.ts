@@ -2,10 +2,11 @@
  * Search Console（搜尋需求）抓取模組。供 ga-insights.ts 取用。
  * 用同一把 service account 金鑰（已加入 GSC 使用者）。scope: webmasters.readonly。
  */
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { GoogleAuth } from 'google-auth-library';
 import { NEWS_TARGETS } from '../src/news.config';
 
-const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || '$YAOCARE_SECRETS_DIR/ga4-sa.json';
+const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || secretPath('ga4-sa.json');
 const DAYS = Number(process.env.GA_DAYS || 28);
 const SITE_HOST = 'www.yao.care'; // 網域資源涵蓋所有子網域 → 只取主站
 const TARGET_SLUGS = new Set<string>(NEWS_TARGETS.map((t) => t.slug));

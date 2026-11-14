@@ -1,6 +1,6 @@
 #!/bin/bash
 # 推 main 自動上線（2026-11-14 新增）
-# cron（/etc/cron.d/www-yao-care）：*/5 * * * * root $WWW_REPO_DIR/scripts/deploy-from-main.sh
+# cron（/etc/cron.d/www-yao-care）：*/5 * * * * root <repo 目錄>/scripts/deploy-from-main.sh
 #
 # 目的：在 Claude 雲端 session（或任何地方）把改動推到 GitHub main，主機 5 分鐘內自動拉下來、
 #       建置（含全部守門檢查）、rsync 上線、通知 IndexNow。不必再登入主機跑 npm run deploy。
@@ -30,8 +30,11 @@ if ! command -v node >/dev/null 2>&1 && [ -d /root/.nvm/versions/node ]; then
 fi
 unset CLAUDECODE CLAUDE_CODE_ENTRYPOINT CLAUDE_CODE_SSE_PORT
 
+# 主機設定（網站目錄、commit 身分）見 docs/HOST-CONFIG.md；REPO／TARGET 可用環境變數覆蓋（測試用）
+. "$(dirname "$0")/lib/host-env.sh"
 REPO=${REPO:-$WWW_REPO_DIR}
-TARGET=${TARGET:-$WWW_SITE_DIR/}
+TARGET=${TARGET:-${WWW_SITE_DIR:-}/}
+[ "$TARGET" != "/" ] || { echo "缺主機設定 WWW_SITE_DIR" >&2; exit 1; }
 STATE_DIR=${STATE_DIR:-/var/lib/yaocare}
 LOG=${LOG:-/var/log/yaocare-deploy.log}
 LOCK=${LOCK:-/tmp/seo-claude-yao.care.lock}

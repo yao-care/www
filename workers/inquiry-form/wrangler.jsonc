@@ -1,8 +1,7 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "yaocare-inquiry-form",
-  // 與 ods-apply-form 同帳號（$OWNER_EMAIL's Account；授權下另有 另一個 Cloudflare 帳號 帳號，勿混用）
-  "account_id": "$CLOUDFLARE_ACCOUNT_ID",
+  // Cloudflare 帳號 ID 不寫在 repo：部署前設環境變數 CLOUDFLARE_ACCOUNT_ID（主機設定，見 docs/HOST-CONFIG.md；與 ods-apply-form 同帳號）
   "main": "src/index.js",
   "compatibility_date": "2026-11-01",
   "observability": { "enabled": true },

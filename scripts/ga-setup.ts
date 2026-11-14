@@ -5,10 +5,11 @@
  *
  *   ./node_modules/.bin/tsx scripts/ga-setup.ts
  */
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { AnalyticsAdminServiceClient } from '@google-analytics/admin';
 
-const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || '$YAOCARE_SECRETS_DIR/ga4-sa.json';
-const PROPERTY_ID = process.env.GA_PROPERTY_ID || '$GA_PROPERTY_ID';
+const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || secretPath('ga4-sa.json');
+const PROPERTY_ID = requireEnv('GA_PROPERTY_ID');
 const parent = `properties/${PROPERTY_ID}`;
 const client = new AnalyticsAdminServiceClient({ keyFilename: KEY });
 

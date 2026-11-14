@@ -29,7 +29,9 @@ cd "$REPO" || exit 1
 
 DRY_RUN="${DRY_RUN:-0}"
 DATE="$(date +%F)"   # TZ=Asia/Taipei → 已是台灣日期
-CHANNEL="${SLACK_CHANNEL:-$SLACK_CHANNEL}"   # #藥提醒-yao-care
+. "$REPO/scripts/lib/host-env.sh"
+need SLACK_CHANNEL WWW_SITE_DIR GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
+CHANNEL="$SLACK_CHANNEL"
 SLACK_NOTIFY="$REPO/scripts/slack-notify.sh"
 MODEL="${BRAIN_MODEL:-claude-sonnet-5}"
 
@@ -47,7 +49,7 @@ PROMPT="$(cat <<PROMPTEOF
 2. 每天最多改 5 個檔，寧少勿多。聚焦「今天 GA/GSC 數據指出的具體機會」，不為動而動、不亂改全站。
 3. 可改範圍僅限：src/guides.config.ts、src/glossary.config.ts、src/seo.config.ts（FAQ/knowsAbout）、src/pages/**（頁面 meta／標題／內鏈）、src/products.config.ts（僅描述/bullets 措辭，不動結構與路由）。**不要**動 scripts/、astro.config、layout 結構、track/Analytics。
 4. 改完自我驗證：npm run build。非零（build 失敗）→ git checkout -- src、今日不 push/deploy、跳步驟6發 Slack 標 🔴。
-5. 內容改動集中成一個 commit、訊息前綴 [auto-claude-seo]；commit 用作者 LightChang <$OWNER_EMAIL>（git 沒設 global identity，務必 -c 帶上）。
+5. 內容改動集中成一個 commit、訊息前綴 [auto-claude-seo]；commit 作者由主機設定的 GIT_AUTHOR_*／GIT_COMMITTER_* 環境變數提供，直接 git commit 即可。
 6. 文風（去 AI 腔，與 scripts/style-guide.mjs 的 STYLE_RULES 同步）：改寫任何對外文字（guides/glossary/meta/描述）時——(a) 開頭別用「面對這類議題…」「在…的今天」公式，也別用模板化第一人稱開場（「我認為」「讓我們」「在這篇文章中」）；(b) 結尾別拔高（「整體邏輯是…」「正是…的關鍵」「才是…所在」）也別空泛收束（「總的來說」「綜上所述」「總而言之」「歸根結底」「整體而言」）；(c) 別用對比公式「不是X，而是Y」「並非…而是」「不僅…更/還」「不只是…而是」；(d) 別用「值得注意的是」「值得一提的是」「換句話說」作文腔轉折；(e) 別用「至關重要／不可或缺／舉足輕重」程度詞堆疊，也少用「結構性／系統性」等抽象詞；(f) 別用「研究顯示／有研究指出／專家認為／普遍認為」模糊引用，有具體來源就寫出、查不到就不寫；(g) 破折號下定義與「可A可B」排比三連收斂、句長交錯、講台灣口語人話。改動內容時順手蓋該頁對應資料的 updatedAt（若有此欄）以對 Google 發新鮮度訊號。
 
 # DRY_RUN
@@ -73,10 +75,10 @@ PROMPT="$(cat <<PROMPTEOF
 - 鐵則內改 ≤5 檔；事實型先 WebSearch 查證、來源寫進設定檔欄位或文內。
 - npm run build。失敗 → git checkout -- src、不 push/deploy、跳步驟5（Slack 標 🔴）。
 - 有內容改動且 DRY_RUN=0：
-  - git add -A src && git -c user.email=$OWNER_EMAIL -c user.name=LightChang commit -m \"[auto-claude-seo] $DATE: <一句摘要>\"
+  - git add -A src && git commit -m \"[auto-claude-seo] $DATE: <一句摘要>\"
   - git pull --rebase origin main（防搶先；衝突無法自動解 → git rebase --abort、放棄今日 push、跳步驟5）
   - git push origin main（被拒 non-fast-forward → git pull --rebase 後再 push）
-  - 上線：npm run deploy（= astro build && rsync dist/ → $WWW_SITE_DIR/）
+  - 上線：npm run deploy（= astro build && rsync dist/ → 網站目錄 $WWW_SITE_DIR）
   - 通知收錄：node scripts/indexnow-urls.mjs <本次改動頁的路徑或完整 URL，空白分隔>（no-op／無 URL 可推則略過；失敗不影響）
 - 本站部署＝rsync 到 NPM 掛載點，push 與 deploy 已涵蓋，無需觸發任何 GitHub workflow。
 

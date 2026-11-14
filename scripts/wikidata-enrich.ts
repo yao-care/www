@@ -8,11 +8,12 @@
  *
  * 設計為冪等：已存在的 claim 值會跳過；別名修正會移除「含全形頓號的整串壞別名」並補上乾淨別名。
  */
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { readFileSync } from 'node:fs';
 
 const DRY = process.argv.includes('--dry-run');
 const CRED = JSON.parse(
-  readFileSync('$YAOCARE_SECRETS_DIR/wikidata.json', 'utf8'),
+  readFileSync(secretPath('wikidata.json'), 'utf8'),
 );
 const API: string = CRED.apiUrl;
 const QID: string = CRED.entity;

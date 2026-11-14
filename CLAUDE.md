@@ -59,8 +59,8 @@ curl -sI https://www.yao.care/ | head -3   # 驗證 200
 
 # 4. Commit + push
 git add -A
-git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
-    commit -m "..."
+set -a; . /etc/yaocare/www.env; set +a   # 主機：載入 commit 身分（GIT_AUTHOR_*／GIT_COMMITTER_*）
+git commit -m "..."
 git push                 # main 直推，或 push -u origin <branch> + PR
 ```
 
@@ -68,7 +68,9 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 >
 > ⚠ **不要手動編輯產物目錄 `$WWW_SITE_DIR/`**。下次 deploy 會被 `rsync --delete` 覆蓋。本地 `dist/` 同理（gitignored）。
 >
-> ⚠ **沒設定 git global identity**。每個 commit 都要帶 `-c user.email=... -c user.name=...`，或在這個 repo 設 `git config user.email/name`。
+> ⚠ **commit 身分**：主機沒設 git global identity，排程腳本從主機設定 `/etc/yaocare/www.env` 的 `GIT_AUTHOR_*`／`GIT_COMMITTER_*` 取得（公開身分，不用個人信箱）。雲端 session 用 `git -c user.name="LightChang" -c user.email="service@yao.care" commit`。
+>
+> 🔓 **本 repo 準備公開（2026-11，見 docs/HANDOFF-github-pages.md）**：主機路徑、IP、帳號 ID、個人信箱**一律不准寫進 repo**（含 commit 訊息），改用 `docs/HOST-CONFIG.md` 的設定名稱（例如 `$WWW_SITE_DIR`、`$YAOCARE_SECRETS_DIR`）。實際值只在主機的 `/etc/yaocare/www.env`；主機 repo 的 pre-commit hook 會用 `scripts/redact-host-details.mjs --check` 擋。
 
 ## § 重要事實
 

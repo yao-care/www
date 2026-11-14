@@ -20,6 +20,7 @@
  *   node scripts/entity-audit.mjs --out report.md # 另存 markdown 報告
  */
 
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { writeFileSync } from 'node:fs';
 
 const ORG_ID = 'https://www.yao.care/#organization';
@@ -294,7 +295,7 @@ async function auditGsc() {
   try { ({ GoogleAuth } = await import('google-auth-library')); }
   catch { say('⚠️  google-auth-library 未安裝，略過。'); say(''); return null; }
 
-  const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS || '$YAOCARE_SECRETS_DIR/ga4-sa.json';
+  const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS || secretPath('ga4-sa.json');
   try {
     const auth = new GoogleAuth({ keyFilename: keyFile, scopes: ['https://www.googleapis.com/auth/webmasters.readonly'] });
     const client = await auth.getClient();
