@@ -17,12 +17,13 @@
  *
  * 冪等：先用 label 搜尋既有項目；已存在的 claim 值一律跳過，重跑不會產生重複。
  */
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { readFileSync } from 'node:fs';
 
 const DRY = process.argv.includes('--dry-run');
 /** 輸出 QuickStatements V1 批次語法（供未被封鎖的網路在瀏覽器執行） */
 const QS = process.argv.includes('--quickstatements');
-const CRED = JSON.parse(readFileSync('$YAOCARE_SECRETS_DIR/wikidata.json', 'utf8'));
+const CRED = JSON.parse(readFileSync(secretPath('wikidata.json'), 'utf8'));
 const API: string = CRED.apiUrl;
 /** 公司項目（藥提醒科技有限公司） */
 const ORG_QID: string = CRED.entity;

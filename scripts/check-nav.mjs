@@ -43,7 +43,7 @@ if (violations.length > 0) {
   }
   console.error('修法：把該項從 NAV 移除（或改指仍在更新的頁面）。');
   console.error('若這條規則本身該退役，改 scripts/check-nav.mjs 的 FORBIDDEN_HREFS，');
-  console.error('並同步更新 $SEO_OPS_DIR/playbooks/yao.care.md 的導覽註記。\n');
+  console.error('並同步更新主機 seo-ops 的 playbooks/yao.care.md 導覽註記。\n');
   process.exit(1);
 }
 

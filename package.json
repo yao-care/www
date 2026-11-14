@@ -12,8 +12,8 @@
     "check:content:all": "node scripts/check-content.mjs --all",
     "check:ai-voice": "node scripts/check-ai-voice.mjs",
     "check:ai-voice:all": "node scripts/check-ai-voice.mjs --all",
-    "publish": "rsync -a --delete dist/ $WWW_SITE_DIR/",
-    "deploy": "npm run build && rsync -a --delete dist/ $WWW_SITE_DIR/",
+    "publish": "bash scripts/publish.sh",
+    "deploy": "npm run build && bash scripts/publish.sh",
     "preview": "astro preview",
     "astro": "astro",
     "fetch-news": "tsx scripts/fetch-news.ts"

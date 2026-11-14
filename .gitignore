@@ -26,3 +26,6 @@ Thumbs.db
 *-credentials.json
 reports/
 drafts/
+
+# 主機維運備忘（含主機實際路徑等，不公開；見 docs/HOST-CONFIG.md）
+CLAUDE.local.md

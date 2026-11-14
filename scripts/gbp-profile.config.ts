@@ -3,7 +3,7 @@
  *  - 既供「手動貼上」對照，也供日後 scripts/gbp-update.ts 程式化同步（待 API 核可後建）。
  *  - 產品清單直接衍生自 src/products.config.ts → 官網改產品時，商家檔案內容同步更新。
  *
- * GCP 專案：yaocare（編號 $GCP_PROJECT_NUMBER）。擁有者帳號：$OWNER_EMAIL。
+ * GCP 專案：yaocare（專案編號與擁有者帳號見主機設定 GCP_PROJECT_NUMBER、OWNER_EMAIL）。
  * Maps 既有 listing CID：12025785010180313919。
  */
 import { PRODUCTS, CATEGORY_BY_SLUG } from '../src/products.config';

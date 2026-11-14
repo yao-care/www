@@ -1,6 +1,6 @@
 #!/bin/bash
 # www.yao.care: 每兩週掃 GSC 內容缺口 → 列補題候選 + 為 top1（對應自家產品者）產草稿
-# crontab(Asia/Taipei): 0 5 1,15 * *  $WWW_REPO_DIR/scripts/content-gaps.sh
+# crontab(Asia/Taipei): 0 5 1,15 * *  <repo 目錄>/scripts/content-gaps.sh
 #
 # ⚠ 只產『草稿』到 drafts/（gitignored），不自動上線、不自動 commit。
 #    人工查證事實 → 貼進 src/guides.config.ts 或 src/glossary.config.ts → npm run deploy → IndexNow。
@@ -18,7 +18,8 @@ elif [ -d /root/.nvm/versions/node ]; then
   export PATH=/root/.nvm/versions/node/${NODE_VER}/bin:$PATH
 fi
 
-cd $WWW_REPO_DIR
+. "$(dirname "$0")/lib/host-env.sh"
+cd "$WWW_REPO_DIR"
 
 LOG=/var/log/yaocare-content-gaps.log
 {

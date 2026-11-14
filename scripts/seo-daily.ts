@@ -10,14 +10,15 @@
  *   ./node_modules/.bin/tsx scripts/seo-daily.ts            # 產今日 JSON
  *   ./node_modules/.bin/tsx scripts/seo-daily.ts --dry      # 印 JSON 不寫檔
  */
+import { secretPath, requireEnv } from './lib/host-env.mjs';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { GoogleAuth } from 'google-auth-library';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || '$YAOCARE_SECRETS_DIR/ga4-sa.json';
-const PROPERTY_ID = process.env.GA_PROPERTY_ID || '$GA_PROPERTY_ID';
+const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS || secretPath('ga4-sa.json');
+const PROPERTY_ID = requireEnv('GA_PROPERTY_ID');
 const SITE = process.env.GSC_SITE_URL || 'sc-domain:yao.care'; // 鎖死 yao.care（SA 同時掛多站，勿誤抓 vuko.life）
 const HOST = 'www.yao.care';
 const DRY = process.argv.includes('--dry');

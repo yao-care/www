@@ -1,6 +1,6 @@
 #!/bin/bash
 # 自動議題評論引擎 — cron entry
-# crontab: 30 20 * * * $WWW_REPO_DIR/scripts/fetch-news.sh
+# crontab: 30 20 * * * <repo 目錄>/scripts/fetch-news.sh
 set -euo pipefail
 
 # cron PATH 很乾淨，需要顯式擴充
@@ -13,7 +13,9 @@ elif [ -d /root/.nvm/versions/node ]; then
   export PATH=/root/.nvm/versions/node/${NODE_VER}/bin:$PATH
 fi
 
-cd $WWW_REPO_DIR
+. "$(dirname "$0")/lib/host-env.sh"
+cd "$WWW_REPO_DIR"
+need WWW_SITE_DIR GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
 
 # 系統時區是 UTC；本站面向台灣，日期標籤（commit message / log 起訖）一律用台北時間，
 # 否則台北清晨 04:30 發的文會被標成前一天（UTC 此刻仍是前一日 20:30）。
@@ -71,8 +73,8 @@ fi
     CHANGED_NEWS=$(git diff --cached --name-only -- src/content/news)
     CHANGED_FEED=$(git diff --cached --name-only -- src/content/topicFeed)
 
-    git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
-      commit -m "chore(news): auto fetch $(TWDATE '+%Y-%m-%d')"
+    # 作者身分由主機設定 GIT_AUTHOR_*／GIT_COMMITTER_* 提供
+    git commit -m "chore(news): auto fetch $(TWDATE '+%Y-%m-%d')"
     # 抓新聞要 45~50 分，這段期間 main 可能又有人推；先 rebase 再推
     git pull -q --rebase origin main || { git rebase --abort 2>/dev/null; echo "  ⚠ rebase 衝突，放棄 rebase"; }
     git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗（不阻擋 build）"
@@ -83,7 +85,7 @@ fi
     #    本腳本自身約 45–50 分，再多等就會把 decide 整輪擠掉（2026-11-09 用戶裁示）。
     #    逾時 site-build-run 回 75 → set -e 中止本輪 build/rsync（commit 已推，下次有新稿時會一併建置）。
     SITE_BUILD_WAIT=600 site-build-run yao.care -- npm run build
-    rsync -a --delete dist/ $WWW_SITE_DIR/
+    rsync -a --delete dist/ "$WWW_SITE_DIR/"
     # 告訴 deploy-from-main.sh 這版已上線，免得它 5 分鐘後再建置一次
     mkdir -p /var/lib/yaocare && git rev-parse HEAD > /var/lib/yaocare/www-deployed-sha
 
@@ -106,10 +108,10 @@ fi
 } 2>&1 | tee -a "$LOG" || echo "  ⚠ news 引擎失敗（不阻擋通報層；心跳會把失敗報出來）" | tee -a "$LOG"
 
 # ════════════════════════════════════════════════════════════
-# 通報層已於 2026-07-02 移交統一框架 $SEO_OPS_DIR（/etc/cron.d/seo-ops）：
+# 通報層已於 2026-07-02 移交統一框架 seo-ops（主機 $SEO_OPS_DIR，排程 /etc/cron.d/seo-ops）：
 #   收集 20:00 UTC → 📊 心跳 20:20 → 🤖 大腦 21:30 → 📈 週報 週一 03:00
 # 本檔只保留上方 news 引擎本體。回滾：還原本區塊（備份見
-# $HOST_BACKUP_DIR/seo-cutover-20260702-023954/fetch-news.sh.bak）並移除 seo-ops 對應排程。
+# 主機備份目錄的 seo-cutover-20260702-023954/fetch-news.sh.bak）並移除 seo-ops 對應排程。
 # 註：「✍️ 文章撰寫」訊號由 seo-ops 內容產出層統一發送（/etc/cron.d/seo-ops，
 #     adapter＝$SEO_OPS_DIR/adapters/yao.care.mjs，台 05:50），本檔不再掛任何通報。
 # ════════════════════════════════════════════════════════════
