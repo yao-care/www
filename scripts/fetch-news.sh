@@ -50,6 +50,10 @@ fi
   echo " fetch-news start: $(TWDATE '+%Y-%m-%d %H:%M:%S') (台北)"
   echo "════════════════════════════════════════"
 
+  # 0) 先拉 origin/main（2026-11-14 新增）：雲端 session 也會推 main（見 deploy-from-main.sh），
+  #    不先拉，等一下用舊版建置會把別人剛上線的改版蓋回去，推送也會被拒。
+  git pull -q --rebase --autostash origin main || echo "  ⚠ git pull 失敗（續行，用本機版本）"
+
   # 1) 抓新聞 + 寫檔
   ./node_modules/.bin/tsx scripts/fetch-news.ts
 
@@ -69,6 +73,8 @@ fi
 
     git -c user.email="$OWNER_EMAIL" -c user.name="LightChang" \
       commit -m "chore(news): auto fetch $(TWDATE '+%Y-%m-%d')"
+    # 抓新聞要 45~50 分，這段期間 main 可能又有人推；先 rebase 再推
+    git pull -q --rebase origin main || { git rebase --abort 2>/dev/null; echo "  ⚠ rebase 衝突，放棄 rebase"; }
     git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗（不阻擋 build）"
 
     # 3) build → 同步產物到 NPM 掛載的服務目錄
@@ -78,6 +84,8 @@ fi
     #    逾時 site-build-run 回 75 → set -e 中止本輪 build/rsync（commit 已推，下次有新稿時會一併建置）。
     SITE_BUILD_WAIT=600 site-build-run yao.care -- npm run build
     rsync -a --delete dist/ $WWW_SITE_DIR/
+    # 告訴 deploy-from-main.sh 這版已上線，免得它 5 分鐘後再建置一次
+    mkdir -p /var/lib/yaocare && git rev-parse HEAD > /var/lib/yaocare/www-deployed-sha
 
     # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（失敗不阻擋）
     if [ -n "$CHANGED_NEWS" ]; then

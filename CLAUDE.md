@@ -9,6 +9,7 @@
 | 原始碼目錄 | `$WWW_REPO_DIR/`（即本目錄；與其他專案慣例一致） |
 | 服務（產物）目錄 | `$WWW_SITE_DIR/`（NPM 唯讀掛載點；build 產物 rsync 到這） |
 | 部署方式 | `npm run deploy` → build 到本地 `dist/` → rsync 同步到服務目錄 → nginx 直接提供 |
+| 推 main 自動上線（2026-11-14 起） | 主機 cron 每 5 分鐘跑 `scripts/deploy-from-main.sh`：GitHub main 有新版本就 pull → `npm run build`（含全部守門）→ rsync → IndexNow（只送真的變動的頁）。**雲端 session 改版只要推到 main，不必上主機**。Log `/var/log/yaocare-deploy.log`；狀態 `/var/lib/yaocare/www-deployed-sha`（`fetch-news.sh` 部署後也會寫）。共用站鎖 fd 200；工作樹不乾淨或鎖被佔用就跳過；建置失敗的版本不重試，推新 commit 才會再跑。主機設定步驟見 `docs/HANDOFF-auto-deploy.md` |
 | 版本控制 | Git → https://github.com/yao-care/www（private） |
 | Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
 | Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
@@ -32,6 +33,8 @@
 > 界線速記：**「機器怎麼跑」在本檔；「對外做了什麼、效果如何」在 `README.md`。** 本檔下文的 GA4 / GSC / SEO / GEO 章節講的是**腳本與引擎機制**；對應的「對外帳號總表、看成效指令、站外曝光素材」請看 `README.md`。
 
 ## § 改版 SOP（最常用）
+
+> **在 Claude 雲端 session 改版**：在分支上改、`npm run build` 通過，合併推到 `main` 即可；主機的 `deploy-from-main.sh` 會在 5 分鐘內自動建置上線，並送 IndexNow。推完用 `curl -s https://www.yao.care/<頁面>/` 確認。下面是在主機上直接改的流程。
 
 從乾淨狀態開始改版的標準流程：
 
