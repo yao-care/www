@@ -1,0 +1,121 @@
+name: Deploy to GitHub Pages
+
+# push main 就建置（含全部守門）並發布到 GitHub Pages（2026-11-14 新增）。
+# 兩個 repo 變數（Settings → Secrets and variables → Actions → Variables）控制：
+#   PAGES_ENABLED=true     開 Pages 之後才設；沒設時整個流程跳過，不會留下失敗紀錄
+#   INDEXNOW_ENABLED=true  DNS 切到 Pages 之後才設；之前正式站還在主機，由主機送 IndexNow
+# 主機排程（新聞、seo-ops 反思／大腦）照常產出內容並推 main，推上來就由這裡上線。
+# 交接步驟見 docs/HANDOFF-github-pages.md
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 主機一天會推好幾次，不能互相取消到半途
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: vars.PAGES_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout（完整歷史）
+        uses: actions/checkout@v4
+        with:
+          # 🔴 sitemap lastmod（scripts/lib/page-git-date.mjs）、內容守門（origin/main）、
+          #    舊新聞轉址清單（gen-news-redirects.mjs）都要讀 git 歷史，淺 clone 會全錯
+          fetch-depth: 0
+          lfs: false
+
+      # 46MB 的 public/藥提醒Line民眾服務.ppsx 走 LFS。免費 LFS 頻寬每月 1GB，每次重抓約 20 次就用完，所以快取
+      - name: LFS 清單
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+      - name: LFS 快取
+        uses: actions/cache@v4
+        with:
+          path: .git/lfs
+          key: lfs-${{ hashFiles('.lfs-assets-id') }}
+      - name: LFS 下載
+        run: |
+          git lfs pull
+          size=$(stat -c %s "public/藥提醒Line民眾服務.ppsx")
+          echo "ppsx $size bytes"
+          [ "$size" -gt 1000000 ] || { echo "::error::ppsx 只有 $size bytes，LFS 沒拉到實檔"; exit 1; }
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: 安裝相依套件
+        run: pnpm install --frozen-lockfile
+
+      - name: 舊新聞轉址清單與 git 歷史一致
+        run: node scripts/gen-news-redirects.mjs --check
+
+      - name: 建置（含設計、內容、AI 腔、導覽、內鏈、sitemap 守門）
+        run: pnpm run build
+
+      - name: 取回上次的 build 產物（算變動頁用）
+        uses: actions/cache/restore@v4
+        with:
+          path: .prev-dist
+          key: prev-dist-${{ github.run_id }}
+          restore-keys: prev-dist-
+      - name: 算出內容有變的頁面
+        run: node scripts/changed-pages.mjs dist .prev-dist > changed-pages.txt
+      - name: 保存這次的 build 產物
+        run: rm -rf .prev-dist && cp -r dist .prev-dist
+      - uses: actions/cache/save@v4
+        with:
+          path: .prev-dist
+          key: prev-dist-${{ github.run_id }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: changed-pages
+          path: changed-pages.txt
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Checkout（只要 IndexNow 腳本）
+        if: vars.INDEXNOW_ENABLED == 'true'
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+          lfs: false
+      - uses: actions/download-artifact@v4
+        if: vars.INDEXNOW_ENABLED == 'true'
+        with:
+          name: changed-pages
+      - name: IndexNow（只送這次內容有變的頁，失敗不擋）
+        if: vars.INDEXNOW_ENABLED == 'true'
+        run: |
+          if [ -s changed-pages.txt ]; then
+            # Pages 上線後 CDN 要一點時間更新，稍等再通知爬蟲
+            sleep 60
+            head -1000 changed-pages.txt | xargs node scripts/indexnow-urls.mjs || echo "::warning::IndexNow 提交失敗"
+          else
+            echo "沒有內容變動的頁面"
+          fi

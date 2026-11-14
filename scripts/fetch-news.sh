@@ -88,6 +88,10 @@ fi
     mkdir -p /var/lib/yaocare && git rev-parse HEAD > /var/lib/yaocare/www-deployed-sha
 
     # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（失敗不阻擋）
+    #    網站改由 GitHub Pages 提供後（存在 /var/lib/yaocare/www-served-by-pages），改由 GitHub Actions 部署完再送，這裡跳過
+    if [ -f /var/lib/yaocare/www-served-by-pages ]; then
+      CHANGED_NEWS=""; CHANGED_FEED=""
+    fi
     if [ -n "$CHANGED_NEWS" ]; then
       node scripts/indexnow.mjs $CHANGED_NEWS || echo "  ⚠ IndexNow 提交失敗（不阻擋）"
     fi

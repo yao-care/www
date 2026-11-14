@@ -88,6 +88,9 @@ export default defineConfig({
   ],
   vite: { plugins: [tailwindcss()] },
   redirects: {
+    // 已收斂的 /news/<分類>/ 舊網址（250 篇＋7 個分類首頁）→ 主題頁。清單由 scripts/gen-news-redirects.mjs
+    // 從 git 歷史產生。主機上 NPM #46 的 301 前綴規則會先攔下這些路徑；搬到 GitHub Pages 後由這些靜態轉址頁接手。
+    ...JSON.parse(fs.readFileSync('./src/data/news-redirects.json', 'utf8')),
     '/works': '/',
     '/works/twtxgnn': '/medical/txgnn/',
     '/works/intel': '/ai/intel/',

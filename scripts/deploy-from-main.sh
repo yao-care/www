@@ -142,7 +142,8 @@ URLS=$(echo "$CHANGED" | awk '$1 ~ /^>f/ && $2 ~ /(^|\/)index\.html$/ {print $2}
   | sed -E 's#(^|/)index\.html$#\1#; s#^#/#' | head -1000)
 N=$(echo "$CHANGED" | grep -c '^>f' || true)
 log "上線完成 ${HEAD_SHA:0:7}：同步 $N 個檔"
-if [ -n "$URLS" ]; then
+# 網站改由 GitHub Pages 提供後（存在 www-served-by-pages），IndexNow 由 GitHub Actions 送，主機只當備援
+if [ -n "$URLS" ] && [ ! -f "$STATE_DIR/www-served-by-pages" ]; then
   # shellcheck disable=SC2086
   node scripts/indexnow-urls.mjs $URLS >>"$LOG" 2>&1 || log "IndexNow 失敗（不阻擋）"
 fi
