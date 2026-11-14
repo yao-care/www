@@ -24,7 +24,7 @@
 | `GCP_PROJECT_NUMBER` | GCP 專案編號（只在文件中引用） | — |
 | `OWNER_EMAIL` | 帳號擁有者信箱（只在文件中引用，不當 commit 作者） | — |
 | `HOST_IPV4`、`HOST_IPV6` | 主機 IP（DNS 設定、回滾時參考） | — |
-| `GIT_AUTHOR_NAME`、`GIT_AUTHOR_EMAIL`、`GIT_COMMITTER_NAME`、`GIT_COMMITTER_EMAIL` | 排程 commit 的作者身分。**會公開**，用公司對外信箱 | `fetch-news.sh`、`deploy-from-main.sh`（rebase）、seo-ops |
+| `GIT_AUTHOR_NAME`、`GIT_AUTHOR_EMAIL`、`GIT_COMMITTER_NAME`、`GIT_COMMITTER_EMAIL` | 排程 commit 的作者身分。**會公開**，用公司對外信箱。主機上本 repo 另以 `git config user.email` 設同一組本地身分（蓋過全域的個人信箱），所以沒載入 www.env 的程式（例如 seo-ops）commit 也是這組 | `fetch-news.sh`、`deploy-from-main.sh`（rebase）、seo-ops |
 
 ## 文件中的代稱
 

@@ -95,7 +95,7 @@
   ```bash
   git status                        # 應該沒有未提交的改動
   git branch --show-current         # 應該是 main
-  set -a; . /etc/yaocare/www.env; set +a     # 載入 commit 身分（主機沒設 git global identity）
+  set -a; . /etc/yaocare/www.env; set +a     # 載入 commit 身分（全域 git 設定是個人信箱，要蓋過）
   git pull --rebase origin main
   git fetch origin claude/txgnn-intro-page-update-rk51y9
   git merge --no-edit origin/claude/txgnn-intro-page-update-rk51y9
@@ -114,6 +114,13 @@
   ```bash
   printf '#!/bin/sh\n[ -f /etc/yaocare/redact-rules.txt ] || exit 0\nexec node scripts/redact-host-details.mjs --check\n' > .git/hooks/pre-commit
   chmod +x .git/hooks/pre-commit
+  ```
+
+- [ ] **0.4b 本 repo 設本地 commit 身分**（主機的全域 git 設定是個人信箱；本地設定只影響本 repo）
+  ```bash
+  git config user.name LightChang
+  git config user.email service@yao.care
+  git config user.email        # 應印出 service@yao.care
   ```
 
 - [ ] **0.5 寫主機備忘 `CLAUDE.local.md`**（repo 根目錄，已 gitignore）：主機上的 Claude Code 會自動載入。把 `www.env` 的值、NPM 容器名、NPM 設定位置、主機維運手冊位置記在這裡，作為 `docs/HOST-CONFIG.md` 代稱的實際對照。
