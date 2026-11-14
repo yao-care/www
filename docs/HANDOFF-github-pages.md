@@ -3,6 +3,12 @@
 > 2026-11-14，由雲端 session 準備。照階段順序做，每一步做完把 `[ ]` 改成 `[x]` 並記日期。
 > 順序：階段 0 → A → R → B → C → D → E。**階段 0 一定要最先做**（見下方「先看」）。
 
+## 目前進度（2026-11-14）
+
+- 階段 0、A、R、B（B1 org 網域驗證除外）、D 都已完成：**www.yao.care 已由 GitHub Pages 提供**，repo 已公開，改寫前的歷史封存在 private 的 `yao-care/www-private-archive`。
+- 雲端用 lockfile 建置後 `TARGET=live ./scripts/verify-pages.sh`：PASS 499／FAIL 0。
+- 待辦：B1 org 網域驗證、E4（明早新聞排程推 main → Actions 部署、作者是公開身分）、E5～E8。
+
 ## 做完之後的樣子
 
 ```
@@ -32,7 +38,7 @@
 | 前綴規則本來連「不存在的 id」都轉 | 搬完那些網址會變 404。它們本來就不存在，正常 |
 | 之後收斂新的新聞分類（批次三） | 不再改 NPM：在 `gen-news-redirects.mjs` 的 BUCKETS 加一行、重跑、commit |
 | 沒有伺服器 access log | 只剩 GA4／GSC。若 seo-ops 有讀 NPM log，見 A5 |
-| 不能自訂回應標頭 | GitHub Pages 自帶 HSTS（較短、沒有 preload）。網站有沒有用到其他自訂標頭，A3 確認 |
+| 不能自訂回應標頭 | **GitHub Pages 對自訂網域不送 HSTS 標頭**（2026-11-14 切換後實測；先前「自帶 HSTS」的說法有誤）。http→https 改由 Enforce HTTPS 的 301 處理，已生效。主機時期送過 `max-age` 兩年的 HSTS，舊訪客的瀏覽器在期限內仍會自動走 https。A3 確認網站沒用到其他自訂標頭 |
 | GitHub Pages 用量上限 | 軟上限每月 100GB 流量、網站 1GB（目前 19MB）、每小時 10 次建置。本站一天推不到 10 次，夠用 |
 
 ## repo 裡已經做好的（雲端 session 2026-11-14）

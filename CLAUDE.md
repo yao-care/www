@@ -8,9 +8,9 @@
 | 類型 | 純靜態網站（公司級多產品 hub：智慧醫療 / AI 系統 / 高齡友善 / 數位行銷） |
 | 原始碼目錄 | `$WWW_REPO_DIR/`（即本目錄；與其他專案慣例一致） |
 | 服務（產物）目錄 | `$WWW_SITE_DIR/`（NPM 唯讀掛載點；build 產物 rsync 到這） |
-| 部署方式 | `npm run deploy` → build 到本地 `dist/` → rsync 同步到服務目錄 → nginx 直接提供 |
+| 部署方式（2026-11-14 起） | **push main → GitHub Actions（`.github/workflows/pages.yml`，含全部守門）→ GitHub Pages**，部署完只對內容有變的頁送 IndexNow。DNS：www 是 CNAME 到 `yao-care.github.io`，apex 指 GitHub Pages。主機的 `npm run deploy`／`deploy-from-main.sh` 改當備援（網站目錄持續保持最新，切回主機只要改 DNS）。GitHub Pages 對自訂網域不送 HSTS、不能自訂標頭、沒有伺服器端 301（舊新聞轉址改由 `src/data/news-redirects.json` 產生靜態轉址頁）。細節見 `docs/HANDOFF-github-pages.md` |
 | 推 main 自動上線（2026-11-14 起） | 主機 cron 每 5 分鐘跑 `scripts/deploy-from-main.sh`：GitHub main 有新版本就 pull → `npm run build`（含全部守門）→ rsync → IndexNow（只送真的變動的頁）。**雲端 session 改版只要推到 main，不必上主機**。Log `/var/log/yaocare-deploy.log`；狀態 `/var/lib/yaocare/www-deployed-sha`（`fetch-news.sh` 部署後也會寫）。共用站鎖 fd 200；工作樹不乾淨或鎖被佔用就跳過；建置失敗的版本不重試，推新 commit 才會再跑。主機設定與搬到 GitHub Pages 的步驟見 `docs/HANDOFF-github-pages.md`（搬完後正式站由 GitHub Pages 提供，本腳本改當備援） |
-| 版本控制 | Git → https://github.com/yao-care/www（private） |
+| 版本控制 | Git → https://github.com/yao-care/www（**public**，2026-11-14 起；改寫前的歷史封存在 private 的 `yao-care/www-private-archive`） |
 | Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
 | Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
 | Build gate（2026-07-28 起） | `npm run build` 第三段跑 `scripts/check-nav.mjs`（單獨跑：`npm run check:nav`）：**主導覽 `src/nav.config.ts` 的 NAV 不得指向已凍結/已收斂路由**（目前禁 `/news/`）。存在理由：`nav.config.ts` 在 seo-ops reflect 白名單內，反思每天有權改主導覽，純靠 playbook 文字約束不可靠；反思/大腦 gate 都含 `npm run build`，違反即 gate fail 並自行 `git checkout -- src` 撤回（`bin/seo-reflect.sh:157-161`）。`scripts/` 與 `package.json` 都在反思 scope 外，故 gate 本身動不到。要退役規則：改 `FORBIDDEN_HREFS` 並同步 `$SEO_OPS_DIR/playbooks/yao.care.md` |
@@ -69,7 +69,7 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 >
 > ⚠ **commit 身分**：主機的全域 git 設定是個人信箱，**本 repo 另設了本地身分** `git config user.name LightChang`、`git config user.email service@yao.care`（只影響本 repo，蓋過全域），排程與 seo-ops 的 commit 都用它；`www.env` 的 `GIT_AUTHOR_*`／`GIT_COMMITTER_*` 是同一組。**commit 時不要帶 `-c user.email=…`**（會蓋過本地身分）。雲端 session 用 `git -c user.name="LightChang" -c user.email="service@yao.care" commit`。
 >
-> 🔓 **本 repo 準備公開（2026-11，見 docs/HANDOFF-github-pages.md）**：主機路徑、IP、帳號 ID、個人信箱**一律不准寫進 repo**（含 commit 訊息），改用 `docs/HOST-CONFIG.md` 的設定名稱（例如 `$WWW_SITE_DIR`、`$YAOCARE_SECRETS_DIR`）。實際值只在主機的 `/etc/yaocare/www.env`；主機 repo 的 pre-commit hook 會用 `scripts/redact-host-details.mjs --check` 擋。
+> 🔓 **本 repo 是公開的（2026-11-14 起）**：主機路徑、IP、帳號 ID、個人信箱**一律不准寫進 repo**（含 commit 訊息），改用 `docs/HOST-CONFIG.md` 的設定名稱（例如 `$WWW_SITE_DIR`、`$YAOCARE_SECRETS_DIR`）。實際值只在主機的 `/etc/yaocare/www.env`；主機 repo 的 pre-commit hook 會用 `scripts/redact-host-details.mjs --check` 擋。
 
 ## § 重要事實
 

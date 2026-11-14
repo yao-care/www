@@ -4,7 +4,9 @@
 #   ./scripts/verify-pages.sh                 # 打 GitHub Pages（DNS 切換前用，走 http）
 #   TARGET=live ./scripts/verify-pages.sh     # 打目前正式站（DNS 切換後，走 https）
 #
-# 前提：在 repo 根目錄、已 npm run build（用本地 dist/ 當標準答案）。
+# 前提：在 repo 根目錄、已建置（用本地 dist/ 當標準答案）。
+# ⚠ 套件要照 lockfile 裝（pnpm install --frozen-lockfile，跟 GitHub Actions 一樣）。用 npm 裝會拿到不同版本，
+#   打包檔名雜湊與 sitemap-index 的 lastmod 都會跟正式站不同，產生假的 FAIL（2026-11-14 實際踩到）。
 # 原理：GitHub Pages 依 Host 標頭回應已設定的自訂網域，所以 DNS 還沒指過去，也能用 --resolve 先驗證。
 # 結果：最後印出 PASS／FAIL 統計；任何 FAIL 都要處理完才能切 DNS。
 set -uo pipefail
