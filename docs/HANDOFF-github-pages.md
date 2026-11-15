@@ -10,7 +10,9 @@
 - D1 的 TTL 已降到 300；HTTPS 憑證涵蓋 www.yao.care 與 yao.care，到期日 2027-02-12（GitHub 自動續）。
 - E1、E2：主機與雲端各自用 `verify-pages.sh` 驗證，都是 PASS 499／FAIL 0；apex 301 到 www。
 - E3：雲端推 main 觸發 Actions 部署成功（2026-11-14）。
-- 待辦：E4（明早新聞排程推 main → Actions 部署、作者是公開身分）、E5 詢問表單實際送出一筆、E7 Search Console（1～2 週）、E8 主機備援去留。
+- E4：2026-11-15 04:30 新聞排程 commit `8f0dcba` 作者／提交者都是公開身分，Actions 自動部署成功、IndexNow 送出 3 筆。
+- E5：2026-11-15 實際送出一筆詢問，頁面顯示成功、通知信欄位正確；沒帶人機驗證 token 的請求會被拒（403）。
+- 待辦：E7 Search Console（約 2026-11-28 看 404 與轉址）、E8 主機備援去留。
 
 ## 做完之後的樣子
 
