@@ -39,7 +39,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "美國 FDA（NDC Directory、Drugs@FDA）",
     "basis_short": "FDA",
-    "fhir_resources": 7503
+    "fhir_resources": 6293,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "tw",
@@ -81,7 +82,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "衛福部食藥署（TFDA）藥品許可證",
     "basis_short": "TFDA 許可證",
-    "fhir_resources": 2251
+    "fhir_resources": 2251,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "hk",
@@ -123,7 +125,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "衞生署藥物辦公室藥劑製品註冊資料（DrugList.xml）",
     "basis_short": "藥物辦公室 DrugList",
-    "fhir_resources": 13129
+    "fhir_resources": 6000,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "ca",
@@ -165,7 +168,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "加拿大衛生部藥品資料庫（DPD）",
     "basis_short": "Health Canada DPD",
-    "fhir_resources": 11441
+    "fhir_resources": 6019,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "in",
@@ -207,7 +211,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "印度藥品資料集（GitHub junioralive/Indian-Medicine-Dataset），不是 CDSCO 許可",
     "basis_short": "Indian Medicine Dataset",
-    "fhir_resources": 6672
+    "fhir_resources": 5454,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "kr",
@@ -249,7 +254,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "韓國食品醫藥品安全處 의약품안전나라",
     "basis_short": "MFDS 의약품안전나라",
-    "fhir_resources": 5184
+    "fhir_resources": 4402,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "sa",
@@ -291,7 +297,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "沙烏地 SFDA 藥品註冊",
     "basis_short": "SFDA",
-    "fhir_resources": 6768
+    "fhir_resources": 5603,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "sg",
@@ -333,7 +340,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "新加坡 HSA 藥品註冊",
     "basis_short": "HSA",
-    "fhir_resources": 5188
+    "fhir_resources": 5182,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "ch",
@@ -375,7 +383,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "Swissmedic 核准包裝清單",
     "basis_short": "Swissmedic 包裝清單",
-    "fhir_resources": 681
+    "fhir_resources": 617,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "my",
@@ -417,7 +426,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "馬來西亞 NPRA 藥品註冊",
     "basis_short": "NPRA",
-    "fhir_resources": 4099
+    "fhir_resources": 4033,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "es",
@@ -459,7 +469,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "西班牙 AEMPS 藥品資料庫（CIMA）",
     "basis_short": "AEMPS CIMA",
-    "fhir_resources": 6387
+    "fhir_resources": 5525,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "br",
@@ -501,7 +512,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "巴西 ANVISA 藥品註冊",
     "basis_short": "ANVISA",
-    "fhir_resources": 3686
+    "fhir_resources": 3206,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "au",
@@ -543,7 +555,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "PBS 給付清單（PBS Schedule），不含 TGA（ARTG）註冊狀態",
     "basis_short": "PBS 給付清單",
-    "fhir_resources": 4163
+    "fhir_resources": 4163,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "uk",
@@ -585,7 +598,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "NHSBSA BNF 處方代碼清單，不是 MHRA 許可證",
     "basis_short": "NHSBSA BNF 代碼",
-    "fhir_resources": 5643
+    "fhir_resources": 3698,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "de",
@@ -627,7 +641,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "EMA 歐盟集中許可資料，不是 BfArM 國家許可",
     "basis_short": "EMA 集中許可",
-    "fhir_resources": 3783
+    "fhir_resources": 3161,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "fi",
@@ -669,7 +684,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "EMA 歐盟集中許可資料，不是 Fimea 國家許可",
     "basis_short": "EMA 集中許可",
-    "fhir_resources": 3568
+    "fhir_resources": 3000,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "no",
@@ -711,7 +727,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "EMA 歐盟集中許可資料，不是 DMP 國家許可",
     "basis_short": "EMA 集中許可",
-    "fhir_resources": 3603
+    "fhir_resources": 3000,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "eu",
@@ -753,7 +770,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "歐洲藥品管理局（EMA）集中許可資料",
     "basis_short": "EMA",
-    "fhir_resources": 3173
+    "fhir_resources": 3173,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "co",
@@ -795,7 +813,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "哥倫比亞 INVIMA 藥品代碼（CUM）",
     "basis_short": "INVIMA CUM",
-    "fhir_resources": 4624
+    "fhir_resources": 3989,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "nz",
@@ -837,7 +856,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "Pharmac 給付清單（Pharmaceutical Schedule），不是 Medsafe 許可證",
     "basis_short": "Pharmac 給付清單",
-    "fhir_resources": 3703
+    "fhir_resources": 3064,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "dk",
@@ -879,7 +899,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "丹麥 Lægemiddelstyrelsen 藥品登錄",
     "basis_short": "Lægemiddelstyrelsen",
-    "fhir_resources": 5717
+    "fhir_resources": 5199,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "ph",
@@ -921,7 +942,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "菲律賓國家處方集（Philippine National Formulary），不是 DOH-FDA 註冊",
     "basis_short": "國家處方集 PNF",
-    "fhir_resources": 2289
+    "fhir_resources": 2268,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "fr",
@@ -963,7 +985,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "法國藥品公開資料庫（BDPM，ANSM）",
     "basis_short": "BDPM",
-    "fhir_resources": 5786
+    "fhir_resources": 5222,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "za",
@@ -1005,7 +1028,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "SAHPRA 註冊（medapps）＋MPR 價格登錄",
     "basis_short": "SAHPRA＋MPR",
-    "fhir_resources": 3071
+    "fhir_resources": 2240,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "jp",
@@ -1047,7 +1071,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "医薬品マスター（薬価基準収載品目）＋PMDA",
     "basis_short": "薬価基準＋PMDA",
-    "fhir_resources": 2929
+    "fhir_resources": 2018,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "it",
@@ -1089,7 +1114,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "AIFA 包裝清單（confezioni）",
     "basis_short": "AIFA confezioni",
-    "fhir_resources": 3230
+    "fhir_resources": 2864,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "ar",
@@ -1131,7 +1157,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "PAMI 給付清單，不是 ANMAT 註冊",
     "basis_short": "PAMI 給付清單",
-    "fhir_resources": 1763
+    "fhir_resources": 1043,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "se",
@@ -1173,7 +1200,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "瑞典 Läkemedelsverket 藥品登錄",
     "basis_short": "Läkemedelsverket",
-    "fhir_resources": 2957
+    "fhir_resources": 2918,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "th",
@@ -1215,7 +1243,8 @@
     "counts_date": "2026-11-12",
     "basis_zh": "Thai FDA 藥品查詢系統（pertento）",
     "basis_short": "Thai FDA pertento",
-    "fhir_resources": 910
+    "fhir_resources": 888,
+    "fhir_date": "2026-11-15"
   },
   {
     "iso2": "nl",
@@ -1257,6 +1286,7 @@
     "counts_date": "2026-11-12",
     "basis_zh": "CBG-MEB Geneesmiddeleninformatiebank 現行登記（metadata.csv）",
     "basis_short": "CBG-MEB 登記",
-    "fhir_resources": 2836
+    "fhir_resources": 2176,
+    "fhir_date": "2026-11-15"
   }
 ]

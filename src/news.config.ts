@@ -122,7 +122,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     proofPoints: [
       'TxGNN 深度學習模型打分數，再對照知識圖譜裡的已知用途，只列出新的適應症',
       '30 個國家與地區、17 種語言，每站接該國的藥品註冊或給付清單資料建站',
-      '約 1.7 萬份公開藥物報告頁、約 13.7 萬筆 FHIR 資源（2026-11-12 統計）',
+      '約 1.7 萬份公開藥物報告頁、約 10.9 萬筆 FHIR 資源（2026-11-15 統計）',
       '每個藥取模型分數 0.99 以上的前 10 個預測，附 PubMed 文獻與 ClinicalTrials.gov 試驗，標上 L1–L5 證據等級',
       `免費的 SMART on FHIR App，可在支援 SMART 的電子病歷中啟動；${TXGNN_GALLERY_SENTENCE}`,
       '原始碼以 MIT 授權於 GitHub 開源',

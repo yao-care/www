@@ -13,10 +13,12 @@ const product = PRODUCT_BY_SLUG.txgnn;
 
 // ─── 對外數字（2026-11-12 自線上資料重抓） ───────────────────────────────────
 // 國家數、語言數、藥物頁數、FHIR 檔數、查核紀錄筆數一律由 txgnn-countries.json 算出，不寫死。
-// 重抓方法（要更新時照做，並改 counts_date／drug_pages_date）：
+// 重抓方法（要更新時照做，並改 counts_date／drug_pages_date／fhir_date）：
 //   drug_pages     ＝ https://{cc}txgnn.yao.care/data/drugs.json 的 drugs 陣列長度（只含公開藥物頁，不含 noindex 與轉址頁）
-//   fhir_resources ＝ 各站公開 repo（github.com/yao-care/{Cc}TxGNN）docs/fhir/MedicationKnowledge 與 ClinicalUseDefinition 的 .json 檔數合計（不含彙總 Bundle）；
-//                    用 git ls-tree -z 或 core.quotepath=false 數，否則非 ASCII 檔名（如巴西的 etoposídeo.json）會被漏算
+//   fhir_resources ＝ 各站 /fhir/metadata 的 txgnn-resource-counts extension：MedicationKnowledge＋ClinicalUseDefinition（日期＝countedAt，記在 fhir_date）。
+//                    2026-11-15 站群把沒有公開藥物頁的藥從 FHIR 拿掉，合計由 136,737 降為 108,669；
+//                    這兩個數也等於各站公開 repo docs/fhir 下兩個資料夾的 .json 檔數（不含彙總 Bundle），用 git ls-tree -z 數才不會漏非 ASCII 檔名
+//   ⚠ 下方 fhirCount 的防呆是「跟記錄值差超過一半就退回記錄值」，站群再大幅下修時要先換記錄值，否則線上數字會被判不可信
 //   review_records ＝ 同 repo docs/_data/drug_reviews.json 的 records 筆數
 //   basis_zh／basis_short ＝ 各站 /sources/ 頁寫的實際資料依據（不一定是藥監局許可證）
 // 頁面不提四級信心度（very_high／high／medium／low 是內部排序用），只講模型分數與證據等級。
@@ -27,6 +29,7 @@ const totalFhir = sum('fhir_resources');
 const totalReviews = sum('review_records');
 const drugPagesDate = countries[0]?.drug_pages_date ?? '';
 const countsDate = countries[0]?.counts_date ?? '';
+const fhirDate = countries[0]?.fhir_date ?? countsDate;
 // 「約 1.7 萬」這種寫法：四捨五入到千位，以萬為單位
 const wan = (n: number, digits = 1) => `約 ${(n / 10000).toFixed(digits)} 萬`;
 // 這一頁內容最後核對日（JSON-LD dateModified 用）
@@ -229,7 +232,7 @@ const tipAttrs = (code: string) => {
           </dl>
           <p class="mt-3 text-xs text-[color:var(--color-ink-muted)]" data-live-note="drugs" aria-live="polite">資料日期 {drugPagesDate}：藥物報告為 {countries.length} 站公開藥物頁合計 <span class="tabular-nums">{nf(totalDrugPages)}</span> 份（各站 drugs.json，不含 noindex 與轉址頁）。</p>
           {/* 即時更新用：各站 drugs.json 網址與建置時的記錄值。前端抓到最新值後，總數與國家卡用動畫跳過去；抓不到的站沿用記錄值。 */}
-          <script type="application/json" id="txgnn-live-sites" set:html={JSON.stringify({ date: drugPagesDate, fhirDate: countsDate, sites: countries.map((c) => ({ cc: c.iso2, base: txgnnSiteUrl(c.iso2), n: c.drug_pages ?? 0, fhir: c.fhir_resources ?? 0 })) })} />
+          <script type="application/json" id="txgnn-live-sites" set:html={JSON.stringify({ date: drugPagesDate, fhirDate, sites: countries.map((c) => ({ cc: c.iso2, base: txgnnSiteUrl(c.iso2), n: c.drug_pages ?? 0, fhir: c.fhir_resources ?? 0 })) })} />
         </div>
         <img src={IMG.hero.src} width={IMG.hero.w} height={IMG.hero.h} alt={IMG.hero.alt} fetchpriority="high" class="w-full h-auto rounded-2xl" />
       </div>
@@ -517,7 +520,7 @@ const tipAttrs = (code: string) => {
           <h2 class="section-title mt-2">醫院免費接進病歷</h2>
           <p class="sec-lead">TxGNN 支援 SMART on FHIR 標準（讓外部 App 安全接進電子病歷的開放標準），可在支援 SMART 的 EHR 中啟動，醫師在病歷裡就能看到病人用藥的潛在新適應症。目前有 {galleryApps.length} 個國家站的 SMART App 已上架 SMART App Gallery：{galleryApps.map((a) => a.label).join('、')}。</p>
           <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">各站也把藥物與預測輸出成 FHIR 資源，院內系統可以直接讀。{countries.length} 站合計 <strong class="tabular-nums text-[color:var(--color-ink)]" data-count={totalFhir} data-live-total="fhir">{nf(totalFhir)}</strong> 筆（MedicationKnowledge 與 ClinicalUseDefinition）。</p>
-          <p class="mt-1 text-xs text-[color:var(--color-ink-muted)]" data-live-note="fhir" aria-live="polite">資料日期 {countsDate}：以各站公開 repo 的 docs/fhir 計算。</p>
+          <p class="mt-1 text-xs text-[color:var(--color-ink-muted)]" data-live-note="fhir" aria-live="polite">資料日期 {fhirDate}：各站 /fhir/metadata 回報的資源數，只含有公開藥物頁的藥。</p>
         </header>
         <div class="flex flex-wrap items-center gap-3">
           <a href={galleryOrgUrl} target="_blank" rel="noopener" class="btn-brand">在 SMART App Gallery 看全部 {galleryApps.length} 個 App</a>
