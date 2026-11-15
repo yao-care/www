@@ -33,7 +33,7 @@ export type GlossaryTerm = {
 export const GLOSSARY: readonly GlossaryTerm[] = [
   {
     slug: 'smart-on-fhir',
-    updatedAt: '2026-06-14',
+    updatedAt: '2026-11-15',
     topic: 'explainable-medical-ai',
     term: 'SMART on FHIR',
     en: 'Substitutable Medical Apps, Reusable Technology on FHIR',
@@ -41,12 +41,12 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     oneLiner:
       '一套開放標準，讓第三方應用程式能安全地「掛載」進電子病歷系統，並透過 FHIR API 存取健康資料。',
     paragraphs: [
-      'SMART on FHIR 由哈佛醫學院孵化的 SMART Health IT 提出，建立在 HL7 的 FHIR 資料標準之上，搭配 OAuth 2.0 授權，讓外部 App 能在 Epic、Cerner 等主流電子病歷（EHR）中啟動並讀寫資料，而不必為每家醫院客製介接。',
+      'SMART on FHIR 由哈佛醫學院孵化的 SMART Health IT 提出，建立在 HL7 的 FHIR 資料標準之上，搭配 OAuth 2.0 授權，讓外部 App 能在 Epic、Oracle Health（原 Cerner）等主流電子病歷（EHR）中啟動並讀寫資料，而不必為每家醫院客製介接。',
       'FHIR（Fast Healthcare Interoperability Resources）是 HL7 制定的醫療資料交換標準，把病人、用藥、檢驗、問卷回應等資訊定義成可用 API 存取的「資源」；R4 是其正式（normative）版本。',
     ],
     keyPoints: [
       '建立在 HL7 FHIR 標準 + OAuth 2.0 授權',
-      'App 可在 Epic / Cerner 等 EHR 內直接啟動',
+      'App 可在 Epic、Oracle Health（原 Cerner）等 EHR 內直接啟動',
       '常以 OAuth + PKCE 流程安全交換資料',
     ],
     related: ['txgnn', 'func', 'geri', 'pedi', 'goalkeeper', 'fhir-server'],
