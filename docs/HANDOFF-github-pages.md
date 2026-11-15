@@ -12,7 +12,7 @@
 - E3：雲端推 main 觸發 Actions 部署成功（2026-11-14）。
 - E4：2026-11-15 04:30 新聞排程 commit `8f0dcba` 作者／提交者都是公開身分，Actions 自動部署成功、IndexNow 送出 3 筆。
 - E5：2026-11-15 實際送出一筆詢問，頁面顯示成功、通知信欄位正確；沒帶人機驗證 token 的請求會被拒（403）。
-- E8：**不留主機備援**（用戶 2026-11-15 決定）。repo 端已改（fetch-news 不再 build／rsync／送 IndexNow，`npm run deploy` 只剩 build，刪除 `deploy-from-main.sh`）；主機端由 yaocare session 拆除：cron、NPM host #46 與其憑證、主機網站目錄、seo-ops 的部署與 IndexNow 步驟。
+- E8：**不留主機備援**（用戶 2026-11-15 決定）。repo 端已改（fetch-news 不再 build／rsync／送 IndexNow，`npm run deploy` 只剩 build，刪除 `deploy-from-main.sh`）；主機端已於 2026-11-15 拆除完成：自動部署 cron、NPM host #46 與憑證 #58（API 刪除，未重啟容器）、docker-compose 的網站目錄掛載、主機網站目錄、狀態檔與 `WWW_SITE_DIR` 設定；seo-ops playbook 改為 push 即上線、不自送 IndexNow；主機維運手冊已更新。
 - 待辦：E7 Search Console（約 2026-11-28 看 404 與轉址）。
 - ⚠ 下方階段 A 的 `deploy-from-main.sh`、回滾段的「主機網站目錄已保持最新」都是搬遷過程的紀錄，**已不適用**：現在要退回主機，得重新建 NPM 代理與網站目錄。
 
