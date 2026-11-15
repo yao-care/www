@@ -16,7 +16,7 @@ export const GLOSSARY_INSTITUTION: Record<string, InstitutionEntry> = {
   'contactless-checkin': { product: 'sign', text: '日照中心、社區關懷站要用的話，系統每天自動產出簽到名冊，可以直接貼進政府社政平台。' },
   cdss: { product: 'huatuo', text: '中醫診所想試 CDSS，AI 華佗有給中醫師用的工作站，每一步辨證都追得到對應規則。' },
   'smart-on-fhir': { product: 'fhir-server', text: '機構要收 Smart Func、Geri、Pedi 的評估結果，可以接我們的收案伺服器。GCM 預防醫學發展協會已經在用。' },
-  'drug-repurposing': { product: 'txgnn', text: '研究團隊或醫院想串 TxGNN 的預測結果，它已上架 SMART on FHIR Gallery，原始碼也開源。' },
+  'drug-repurposing': { product: 'txgnn', text: '研究團隊或醫院想串 TxGNN 的預測結果，台灣站的 SMART App 已上架 SMART App Gallery，原始碼也開源。' },
   txgnn: { product: 'txgnn', text: '想把 TxGNN 接進院內 EHR？它能走 SMART on FHIR 免費整合，技術合作細節直接找我們談。' },
   'genai-medical-guidance': { product: 'goalkeeper', text: '醫療機構要讓 AI 寫的衛教內容先過一道合規檢查，goalkeeper 依這份指引等法規回報五道檢查，有 REST API 可串。' },
   mcp: { product: 'goalkeeper', text: '想讓 AI agent 發醫療內容前先查合規，goalkeeper 有現成的 MCP Server。' },

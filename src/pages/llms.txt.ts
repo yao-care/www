@@ -115,7 +115,7 @@ export const GET: APIRoute = () => {
     `- 規模：${TXGNN_SITES.length} 個國家與地區、${TXGNN_LANGS} 種語言（含英文）、${TXGNN_DRUG_PAGES} 份公開藥物報告頁（${TXGNN_PAGES_DATE} 統計，各站 drugs.json 合計）、約 ${(TXGNN_FHIR / 10000).toFixed(1)} 萬筆 FHIR 資源（${TXGNN_PAGES_DATE}，MedicationKnowledge 與 ClinicalUseDefinition 合計）。`,
   );
   lines.push(
-    '- 醫療院所可免費接入 SMART on FHIR App，目前可在 SMART 沙盒試用台灣站版本：https://apps.smarthealthit.org/app/twtxgnn-smart-app',
+    '- 醫療院所可免費接入 SMART on FHIR App，台灣站版本已上架 SMART App Gallery：https://apps.smarthealthit.org/app/twtxgnn-smart-app',
   );
   lines.push(
     '- 所有預測僅供研究參考，不是醫療建議，預測不等於療效；用藥請與醫師討論。',

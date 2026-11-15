@@ -8,11 +8,11 @@
   "fetchedAt": "2026-05-19T21:00:17.045Z",
   "newsBrief": "有醫院把 FHIR 標準真的用進臨床第一線了，病歷查詢、用藥紀錄、診療決策都跑在這套標準上，不只是系統對接測試。這代表 HL7 FHIR 在台灣不再是紙上談兵，AI 工具要接臨床資料，門檻也跟著降低。",
   "issueAnalysis": "醫院系統長期各自為政，資料鎖在各自的孤島裡，AI 工具就算做得再好也很難跨出實驗室，因為根本拿不到完整的臨床資料流。FHIR 真的落地之後，這道牆才開始鬆動——AI 接入 EHR 有了制度上的通道，藥物預測這類應用也才有機會拿到夠完整的資料去支撐判斷。",
-  "designResponse": "EHR 要串得起來，光有標準還不夠，得從系統架構去對接。TxGNN 已經上架 SMART on FHIR App Gallery，跟 Epic、Cerner 都相容(#5)，認證走 OAuth + PKCE(#7)，等院內 FHIR 基礎設施就緒，接進去走的是標準流程，不用另外客製一套對接邏輯。每筆預測也都附上 PubMed 文獻跟 ClinicalTrials 試驗索引(#4)，臨床端不用只信演算法吐出來的結果，可以自己回頭查證據在哪裡。能嵌進既有系統、能查得到來源，這兩件事是這套設計一開始就定下的底線。",
+  "designResponse": "EHR 要串得起來，光有標準還不夠，得從系統架構去對接。TxGNN 支援 SMART on FHIR 標準，台灣站的 App 已上架 SMART App Gallery(#5)，認證走 OAuth + PKCE(#7)，等院內 FHIR 基礎設施就緒，接進去走的是標準流程，不用另外客製一套對接邏輯。每筆預測也都附上 PubMed 文獻跟 ClinicalTrials 試驗索引(#4)，臨床端不用只信演算法吐出來的結果，可以自己回頭查證據在哪裡。能嵌進既有系統、能查得到來源，這兩件事是這套設計一開始就定下的底線。",
   "tags": [],
   "relevance": 0.8,
   "highlight": false,
   "criticPasses": 2,
-  "updatedAt": "2026-07-11T20:56:20.991Z",
+  "updatedAt": "2026-11-15T02:34:05.000Z",
   "voiceRev": 1
 }

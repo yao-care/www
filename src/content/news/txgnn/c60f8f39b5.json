@@ -8,11 +8,11 @@
   "fetchedAt": "2026-05-08T20:47:42.895Z",
   "newsBrief": "台灣第一批 50 款 SMART on FHIR 應用程式上線了。規格公告本身不稀奇，這次真正不一樣的是真的有一批 App 能被臨床端打開來用；醫療數位化走不走得下去，看的向來是這件事。",
   "issueAnalysis": "SMART on FHIR 在台灣推了好幾年，卡關的地方一直不是有沒有支援標準協定，而是市面上到底有多少能用的 App。EHR 系統裝好介面卻沒內容，等於高速公路蓋好了，沒有車上路。臨床端更實際的問題是：現有的決策輔助工具大多各自為政，嵌不進日常看診流程；再加上跨國藥品資料本身就有缺口，AI 工具遇到複雜病例常常給不出讓人敢信的建議。App 生態系要多元起來，這段落差才補得上。",
-  "designResponse": "SMART on FHIR 這套標準到底有沒有用，得看 App 能不能真的嵌進臨床工作流程裡。平台走 OAuth + PKCE 流程接 EHR（proofPoint #7），機構不用動既有架構就能合規上線，門檻降下來了。藥品資料庫涵蓋 30 多國的 FDA 資料（proofPoint #2），跨國用藥決策不用再東拼西湊查來源。設計上鎖定相容 Epic、Cerner，並上架 App Gallery（proofPoint #5），走標準流程啟用，不靠客製化整合硬接。",
+  "designResponse": "SMART on FHIR 這套標準到底有沒有用，得看 App 能不能真的嵌進臨床工作流程裡。平台走 OAuth + PKCE 流程接 EHR（proofPoint #7），機構不用動既有架構就能合規上線，門檻降下來了。藥品資料庫涵蓋 30 個國家與地區的藥品註冊或給付清單（proofPoint #2），跨國用藥決策不用再東拼西湊查來源。設計上支援 SMART on FHIR 標準，台灣站的 App 已上架 SMART App Gallery（proofPoint #5），走標準流程啟用，不靠客製化整合硬接。",
   "tags": [],
   "relevance": 0.85,
   "highlight": true,
   "criticPasses": 2,
-  "updatedAt": "2026-07-03T20:59:47.136Z",
+  "updatedAt": "2026-11-15T02:34:05.000Z",
   "voiceRev": 1
 }

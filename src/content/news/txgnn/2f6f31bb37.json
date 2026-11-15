@@ -8,11 +8,11 @@
   "fetchedAt": "2026-05-09T20:49:20.958Z",
   "newsBrief": "雅芳醫療AI平台這輪A輪募得千萬美元，主打把臨床知識即時整合進電子病歷系統，讓市場又開始期待AI嵌進EHR工作流程真的能商業化。",
   "issueAnalysis": "醫師常遇到一個尷尬情況：AI給了建議，卻說不出為什麼，只能選擇信或不信。這是第一個障礙。第二個更麻煩：各大EHR系統各自設一套認證門檻，AI平台若不用標準協定接進去，床邊根本用不起來。這兩件事，幾乎是每個臨床決策支援工具想商業化都會撞上的牆。",
-  "designResponse": "這兩個痛點，設計上是分開處理的。黑箱問題靠可查證的證據鏈解決：每條預測後面都掛著PubMed文獻和ClinicalTrials紀錄，醫師想追根究柢，點進去就看得到依據，不是憑空一個分數（proofPoint #4）。整合門檻則靠標準協定，平台走SMART on FHIR接入EHR，已經上架App Gallery，跟Epic、Cerner都相容，認證流程用OAuth加PKCE，醫院端不用大動作改架構就能接上（proofPoint #5, #7）。",
+  "designResponse": "這兩個痛點，設計上是分開處理的。黑箱問題靠可查證的證據鏈解決：每條預測後面都掛著PubMed文獻和ClinicalTrials紀錄，醫師想追根究柢，點進去就看得到依據，不是憑空一個分數（proofPoint #4）。整合門檻則靠標準協定，平台走SMART on FHIR接入EHR，台灣站的App已上架SMART App Gallery，可在支援SMART的電子病歷中啟動，認證流程用OAuth加PKCE，醫院端不用大動作改架構就能接上（proofPoint #5, #7）。",
   "tags": [],
   "relevance": 0.65,
   "highlight": true,
   "criticPasses": 2,
-  "updatedAt": "2026-07-04T20:56:41.834Z",
+  "updatedAt": "2026-11-15T02:34:05.000Z",
   "voiceRev": 1
 }

@@ -8,11 +8,11 @@
   "fetchedAt": "2026-05-07T21:04:10.527Z",
   "newsBrief": "雅芳醫療 AI 平台完成 A 輪千萬美元融資，主打把臨床知識直接嵌進電子病歷系統。這輪資金也反映出市場對「AI 嵌入 EHR 工作流程」這條路線的高度興趣，臨床決策支援工具正從獨立部署，走向跟既有醫療資訊架構深度綁定的階段。",
   "issueAnalysis": "電子病歷系統跟 AI 臨床決策支援工具兜不起來，一直是醫療資訊化的痛點。多數 AI 工具是獨立介面，醫師得在系統間跳來跳去，採用率始終偏低。現在業界流行把 AI 知識直接嵌進 EHR 介面，逼各家工具想辦法跟 Epic、Cerner 接軌。但 EHR 整合不只是技術問題，還牽涉認證流程、資料標準跟跨院部署一致性，沒有標準化接口，每次導入都可能變成昂貴的客製工程。",
-  "designResponse": "EHR 整合真正卡關的地方是沒有標準化接口，搞得每次導入都要重新客製一輪。這平台的做法是走標準協定，不是硬碰硬去做系統整合。它已經上架 SMART on FHIR App Gallery，直接相容 Epic 跟 Cerner（proofPoint #5），醫師不用跳出熟悉的介面就能看到預測結果。認證走 OAuth + PKCE（proofPoint #7），符合醫療資安規範，醫院端比較不用擔心合規問題。每筆藥物預測都附 PubMed 文獻跟 ClinicalTrials 試驗證據（proofPoint #4），醫師要判斷有東西可查，不是看一個黑箱分數就得信。",
+  "designResponse": "EHR 整合真正卡關的地方是沒有標準化接口，搞得每次導入都要重新客製一輪。這平台的做法是走標準協定，不是硬碰硬去做系統整合。台灣站的 App 已上架 SMART App Gallery，支援 SMART on FHIR 標準、可在支援 SMART 的電子病歷中啟動（proofPoint #5），醫師不用跳出熟悉的介面就能看到預測結果。認證走 OAuth + PKCE（proofPoint #7），符合醫療資安規範，醫院端比較不用擔心合規問題。每筆藥物預測都附 PubMed 文獻跟 ClinicalTrials 試驗證據（proofPoint #4），醫師要判斷有東西可查，不是看一個黑箱分數就得信。",
   "tags": [],
   "relevance": 0.75,
   "highlight": false,
   "criticPasses": 2,
-  "updatedAt": "2026-07-02T20:57:58.848Z",
+  "updatedAt": "2026-11-15T02:34:05.000Z",
   "voiceRev": 1
 }

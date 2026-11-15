@@ -211,7 +211,7 @@ export const PRODUCTS: readonly Product[] = [
     category: 'medical',
     group: 'clinical',
     title: 'TxGNN 老藥新用',
-    tagline: '老藥是否還有其他用途，TxGNN 用 AI 跑過 30+ 國核准藥品清單去預測候選，原始碼開源（台灣站 TwTxGNN）',
+    tagline: '老藥是否還有其他用途，TxGNN 用 AI 對 30 個國家與地區的藥品清單預測候選，原始碼開源（台灣站 TwTxGNN）',
     description:
       'TxGNN 老藥新用：用哈佛 Zitnik Lab 的 AI 模型預測已上市藥物的新適應症，附 PubMed 與臨床試驗證據及 L1 到 L5 證據等級。30 國站約 1.7 萬份藥物報告（2026-11-12），支援 SMART on FHIR 標準，可在支援 SMART 的 EHR 中啟動，原始碼開源。',
     alternateNames: [

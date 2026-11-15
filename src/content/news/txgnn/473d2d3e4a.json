@@ -8,11 +8,11 @@
   "fetchedAt": "2026-07-03T20:44:41.839Z",
   "newsBrief": "華安醫學旗下源華智醫最近連續在兩場國際場合亮相，秀出AI藥物研發的成果。這類消息不算特例，用AI找候選藥物或新適應症，這幾年生技圈一直在做。",
   "issueAnalysis": "新藥研發要花的錢和時間，本來就攔不住，這也是為什麼一堆團隊在拿AI篩選候選藥物或找新適應症。問題是，模型跑出一份名單只是開始，臨床端還得自己翻文獻核對證據，各國藥品資料庫格式又不一樣，接進醫院系統更是另一關。AI藥物研發要真的派上用場，預測得有根據、資料庫得跨得了國界、還得接得進臨床流程，三件事都要顧到。",
-  "designResponse": "老藥新用要讓人信，得先讓人看到根據，不是丟一個分數就要人埋單。作法是知識圖譜和深度學習兩套方法一起跑，交叉比對出的候選藥物，比單一模型自己猜的站得住腳(proofPoint #1)。每筆預測都附PubMed文獻和ClinicalTrials證據包，醫師想查隨時能核對，不用只信一個黑盒子分數(proofPoint #4)。資料庫涵蓋30多國FDA藥品，產出大量藥物頁面，讓不同國家用藥資訊能放進同一套架構比對(proofPoint #2, #3)。系統已上架SMART on FHIR App Gallery，相容Epic和Cerner，接入走OAuth加PKCE認證(proofPoint #5, #7)。",
+  "designResponse": "老藥新用要讓人信，得先讓人看到根據，不是丟一個分數就要人埋單。作法是讓 TxGNN 模型替每組藥物與疾病打分數，再剔除知識圖譜裡的已知用途，只留下新的適應症(proofPoint #1)。每筆預測都附PubMed文獻和ClinicalTrials證據包，醫師想查隨時能核對，不用只信一個黑盒子分數(proofPoint #4)。資料庫涵蓋30個國家與地區的藥品資料，產出大量藥物頁面，讓不同國家用藥資訊能放進同一套架構比對(proofPoint #2, #3)。系統支援SMART on FHIR標準，台灣站的App已上架SMART App Gallery，接入走OAuth加PKCE認證(proofPoint #5, #7)。",
   "tags": [],
   "relevance": 0.95,
   "highlight": true,
   "criticPasses": 2,
-  "updatedAt": "2026-07-03T20:44:41.839Z",
+  "updatedAt": "2026-11-15T02:34:05.000Z",
   "voiceRev": 1
 }
