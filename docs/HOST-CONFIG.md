@@ -15,7 +15,7 @@
 
 | 欄位 | 用途 | 用到的地方 |
 |------|------|-----------|
-| `WWW_SITE_DIR` | nginx 提供的網站目錄（rsync 目標） | `npm run deploy`／`publish`、`fetch-news.sh`、`deploy-from-main.sh` |
+| `WWW_SITE_DIR` | ~~主機網站目錄~~：2026-11-15 起網站由 GitHub Pages 提供，主機不再備援，已不使用（可從 www.env 刪掉） | — |
 | `YAOCARE_SECRETS_DIR` | 金鑰目錄（`ga4-sa.json`、`slack-bot-token`、`wikidata.json`） | GA／GSC／Slack／Wikidata 腳本 |
 | `SEO_OPS_DIR` | seo-ops 框架目錄（只在文件中引用） | — |
 | `GA_PROPERTY_ID` | GA4 Property ID（後台用，不是頁面上的 `G-` 評估 ID） | `ga-insights.ts`、`ga-setup.ts`、`seo-daily.ts`、`seo-weekly.ts` |
@@ -24,7 +24,7 @@
 | `GCP_PROJECT_NUMBER` | GCP 專案編號（只在文件中引用） | — |
 | `OWNER_EMAIL` | 帳號擁有者信箱（只在文件中引用，不當 commit 作者） | — |
 | `HOST_IPV4`、`HOST_IPV6` | 主機 IP（DNS 設定、回滾時參考） | — |
-| `GIT_AUTHOR_NAME`、`GIT_AUTHOR_EMAIL`、`GIT_COMMITTER_NAME`、`GIT_COMMITTER_EMAIL` | 排程 commit 的作者身分。**會公開**，用公司對外信箱。主機上本 repo 另以 `git config user.email` 設同一組本地身分（蓋過全域的個人信箱），所以沒載入 www.env 的程式（例如 seo-ops）commit 也是這組 | `fetch-news.sh`、`deploy-from-main.sh`（rebase）、seo-ops |
+| `GIT_AUTHOR_NAME`、`GIT_AUTHOR_EMAIL`、`GIT_COMMITTER_NAME`、`GIT_COMMITTER_EMAIL` | 排程 commit 的作者身分。**會公開**，用公司對外信箱。主機上本 repo 另以 `git config user.email` 設同一組本地身分（蓋過全域的個人信箱），所以沒載入 www.env 的程式（例如 seo-ops）commit 也是這組 | `fetch-news.sh`、seo-ops |
 
 ## 文件中的代稱
 

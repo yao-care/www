@@ -7,17 +7,15 @@
 | 網址 | https://www.yao.care / https://yao.care |
 | 類型 | 純靜態網站（公司級多產品 hub：智慧醫療 / AI 系統 / 高齡友善 / 數位行銷） |
 | 原始碼目錄 | `$WWW_REPO_DIR/`（即本目錄；與其他專案慣例一致） |
-| 服務（產物）目錄 | `$WWW_SITE_DIR/`（NPM 唯讀掛載點；build 產物 rsync 到這） |
-| 部署方式（2026-11-14 起） | **push main → GitHub Actions（`.github/workflows/pages.yml`，含全部守門）→ GitHub Pages**，部署完只對內容有變的頁送 IndexNow。DNS：www 是 CNAME 到 `yao-care.github.io`，apex 指 GitHub Pages。主機的 `npm run deploy`／`deploy-from-main.sh` 改當備援（網站目錄持續保持最新，切回主機只要改 DNS）。GitHub Pages 對自訂網域不送 HSTS、不能自訂標頭、沒有伺服器端 301（舊新聞轉址改由 `src/data/news-redirects.json` 產生靜態轉址頁）。細節見 `docs/HANDOFF-github-pages.md` |
-| 推 main 自動上線（2026-11-14 起） | 主機 cron 每 5 分鐘跑 `scripts/deploy-from-main.sh`：GitHub main 有新版本就 pull → `npm run build`（含全部守門）→ rsync → IndexNow（只送真的變動的頁）。**雲端 session 改版只要推到 main，不必上主機**。Log `/var/log/yaocare-deploy.log`；狀態 `/var/lib/yaocare/www-deployed-sha`（`fetch-news.sh` 部署後也會寫）。共用站鎖 fd 200；工作樹不乾淨或鎖被佔用就跳過；建置失敗的版本不重試，推新 commit 才會再跑。主機設定與搬到 GitHub Pages 的步驟見 `docs/HANDOFF-github-pages.md`（搬完後正式站由 GitHub Pages 提供，本腳本改當備援） |
+| 網站提供方式（2026-11-15 起） | **GitHub Pages**（主機不再提供、也不留備援；舊的主機網站目錄、NPM 代理設定已移除） |
+| 部署方式（2026-11-14 起） | **push main → GitHub Actions（`.github/workflows/pages.yml`，含全部守門）→ GitHub Pages**，部署完只對內容有變的頁送 IndexNow。DNS：www 是 CNAME 到 `yao-care.github.io`，apex 指 GitHub Pages。GitHub Pages 對自訂網域不送 HSTS、不能自訂標頭、沒有伺服器端 301（舊新聞轉址改由 `src/data/news-redirects.json` 產生靜態轉址頁）。主機只負責產內容（新聞、seo-ops）並推 main。搬遷過程見 `docs/HANDOFF-github-pages.md` |
 | 版本控制 | Git → https://github.com/yao-care/www（**public**，2026-11-14 起；改寫前的歷史封存在 private 的 `yao-care/www-private-archive`） |
-| Build 流程 | `npm run build` 產生本地 `dist/`，再 rsync 到 `$WWW_SITE_DIR/`（`npm run publish` 或一鍵 `npm run deploy`） |
+| Build 流程 | `npm run build`（含全部守門）產生本地 `dist/` 供檢查；上線一律靠 push main。`npm run deploy` 現在＝build＋一行提示（`scripts/publish.sh` 不再 rsync），保留給 seo-ops 與舊指令相容 |
 | Build gate（2026-07-17 起） | `npm run build`/`deploy` 內建 `scripts/check-internal-links.mjs`：掃 `dist/` 全部 HTML 的 href/src/meta-refresh，**站內目錄式連結缺結尾斜線或含雙斜線即 build fail**（歷史上斜線混用曾讓 GSC 把同頁拆成雙網址）。被擋時修 href 來源（config/元件/頁面），勿改 dist。NAV 已拆至 `src/nav.config.ts`（開放給 seo-ops 反思白名單） |
 | Build gate（2026-07-28 起） | `npm run build` 第三段跑 `scripts/check-nav.mjs`（單獨跑：`npm run check:nav`）：**主導覽 `src/nav.config.ts` 的 NAV 不得指向已凍結/已收斂路由**（目前禁 `/news/`）。存在理由：`nav.config.ts` 在 seo-ops reflect 白名單內，反思每天有權改主導覽，純靠 playbook 文字約束不可靠；反思/大腦 gate 都含 `npm run build`，違反即 gate fail 並自行 `git checkout -- src` 撤回（`bin/seo-reflect.sh:157-161`）。`scripts/` 與 `package.json` 都在反思 scope 外，故 gate 本身動不到。要退役規則：改 `FORBIDDEN_HREFS` 並同步 `$SEO_OPS_DIR/playbooks/yao.care.md` |
 | Build gate（2026-07-20 起） | `npm run build` 最前段先跑 `scripts/check-design.mjs`（**設計規範守門 v2**，見下「§ 修改外觀」五條）；違規即 build fail。`npm run deploy` 亦改為經由 `npm run build`（同日修，守門不可繞過）。存量 64 處硬編色以 `LEGACY_COLOR_BUDGET` per-檔凍結（禁再擴充），清理後同步下修預算 |
 | Build gate（2026-09-05 起） | `npm run build` 第三段跑 `scripts/check-ai-voice.mjs`（單獨跑：`npm run check:ai-voice`，盤點全部命中：`npm run check:ai-voice:all`）：**去 AI 味守門（文案層）**，掃 `.astro` / `*.config.ts` 裡人看得到的中文文案。抓的是**結構性 AI 腔**（破折號當萬用接續、`×` 連接概念、`→` 串流程、「從 A 到 B」涵蓋句型、「閉環／一條龍／生態系」收尾、「以 X 為核心」、「可 A、可 B、可 C」三連、「被 A、被 B」排比），與 `style-guide.mjs` 的**逐字口頭禪**黑名單互補。詳見下「§ 去 AI 味守門（文案層）」 |
 | 技術棧 | Astro 5 + Tailwind v4 + D3 v7 + TypeScript |
-| NPM Proxy Host ID | 46（憑證 ID 58） |
 | 主機維運手冊 | `$HOST_RUNBOOK` |
 
 ## § 文件分工（先讀這段，再決定看哪一份）
@@ -34,7 +32,7 @@
 
 ## § 改版 SOP（最常用）
 
-> **在 Claude 雲端 session 改版**：在分支上改、`npm run build` 通過，合併推到 `main` 即可；主機的 `deploy-from-main.sh` 會在 5 分鐘內自動建置上線，並送 IndexNow。推完用 `curl -s https://www.yao.care/<頁面>/` 確認。下面是在主機上直接改的流程。
+> **改版一律推 main 上線**（雲端 session 或主機都一樣）：在分支上改、`npm run build` 通過，合併推到 `main`，GitHub Actions 幾分鐘內建置並發布到 GitHub Pages，也會送 IndexNow。推完用 `curl -s https://www.yao.care/<頁面>/` 確認，部署紀錄看 repo 的 Actions 分頁。
 
 從乾淨狀態開始改版的標準流程：
 
@@ -53,28 +51,23 @@ npm run dev              # http://localhost:4321
 # 編輯 src/components/*.astro 或 src/pages/index.astro
 # 改完後 Ctrl+C 結束 dev server
 
-# 3. build + 發佈 → 上線（一鍵）
-npm run deploy           # = npm run build（含設計守門+內鏈檢查）&& rsync dist/ → $WWW_SITE_DIR/
-curl -sI https://www.yao.care/ | head -3   # 驗證 200
+# 3. build（含設計守門+內鏈檢查）
+npm run build
 
-# 4. Commit + push
+# 4. Commit + push → GitHub Actions 自動上線
 git add -A
 git commit -m "..."
 git push                 # main 直推，或 push -u origin <branch> + PR
+curl -sI https://www.yao.care/ | head -3   # 幾分鐘後驗證 200
 ```
 
-> ⚠ **原始碼在 `$WWW_REPO_DIR`，產物在 `$WWW_SITE_DIR`**（NPM 掛載點）。兩者已分離 —— 改完 `src/` 只 `npm run build` 還不夠，要 `npm run deploy`（或 build 後 `npm run publish`）把 `dist/` rsync 到服務目錄才會上線。
->
-> ⚠ **不要手動編輯產物目錄 `$WWW_SITE_DIR/`**。下次 deploy 會被 `rsync --delete` 覆蓋。本地 `dist/` 同理（gitignored）。
+> ⚠ **只 `npm run build` 不會上線**，要推到 main。`dist/` 是本地產物（gitignored），不要手改。
 >
 > ⚠ **commit 身分**：主機的全域 git 設定是個人信箱，**本 repo 另設了本地身分** `git config user.name LightChang`、`git config user.email service@yao.care`（只影響本 repo，蓋過全域），排程與 seo-ops 的 commit 都用它；`www.env` 的 `GIT_AUTHOR_*`／`GIT_COMMITTER_*` 是同一組。**commit 時不要帶 `-c user.email=…`**（會蓋過本地身分）。雲端 session 用 `git -c user.name="LightChang" -c user.email="service@yao.care" commit`。
 >
-> 🔓 **本 repo 是公開的（2026-11-14 起）**：主機路徑、IP、帳號 ID、個人信箱**一律不准寫進 repo**（含 commit 訊息），改用 `docs/HOST-CONFIG.md` 的設定名稱（例如 `$WWW_SITE_DIR`、`$YAOCARE_SECRETS_DIR`）。實際值只在主機的 `/etc/yaocare/www.env`；主機 repo 的 pre-commit hook 會用 `scripts/redact-host-details.mjs --check` 擋。
+> 🔓 **本 repo 是公開的（2026-11-14 起）**：主機路徑、IP、帳號 ID、個人信箱**一律不准寫進 repo**（含 commit 訊息），改用 `docs/HOST-CONFIG.md` 的設定名稱（例如 `$YAOCARE_SECRETS_DIR`、`$SEO_OPS_DIR`）。實際值只在主機的 `/etc/yaocare/www.env`；主機 repo 的 pre-commit hook 會用 `scripts/redact-host-details.mjs --check` 擋。
 
 ## § 重要事實
-
-### nginx 掛載點
-`$PLATFORM_DIR/docker-compose.yml` line 38 把 `$WWW_SITE_DIR`（整個服務目錄，**非** `dist/` 子層）掛進 NPM 容器唯讀為 `/data/static-sites/www.yao.care`。改 mount 路徑要 `cd $PLATFORM_DIR && docker compose up -d npm` 重建容器。平時 `npm run deploy`（rsync 進這個目錄）**不需動容器**。
 
 ### LFS（簡報檔）
 46MB 的 `public/藥提醒Line民眾服務.ppsx` 透過 Git LFS 管理。clone 後若沒看到實檔，跑 `git lfs pull`。`.gitattributes` 已設定 `*.ppsx` 走 LFS。
@@ -117,11 +110,11 @@ git push                 # main 直推，或 push -u origin <branch> + PR
 
 Prompt 模板在 `scripts/news-prompts.mjs`，CLI 旗標：`--target <slug>` / `--dry-run` / `--debug` / `--max-items <n>`。
 
-### Cron + 自動部署
+### Cron（產內容；上線交給 GitHub Actions）
 ```
 30 20 * * *  $WWW_REPO_DIR/scripts/fetch-news.sh
 ```
-台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：**取 seo-ops 共用鎖** → 抓新聞 → 若 `src/content/news` 有變化 → 自動 commit（作者 LightChang）+ push + `npm run build` + `rsync dist/ → $WWW_SITE_DIR/` → **IndexNow 即時通知**。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。實測全程 **45~50 分鐘**（07-12 44 分 / 07-13 45 分 / 07-15 50 分），不是一瞬間。
+台灣時間 04:30 每日跑一次。`fetch-news.sh` wrapper 流程：**取 seo-ops 共用鎖** → 先 `git pull --rebase` → 抓新聞 → 若 `src/content/news`／`topicFeed` 有變化 → 自動 commit（作者是本 repo 的公開身分）+ push。**2026-11-15 起不再在主機上 build／rsync／送 IndexNow**：push 後由 GitHub Actions 建置、發布 Pages、送 IndexNow。Log: `/var/log/yaocare-news.log`。Commit message 格式 `chore(news): auto fetch YYYY-MM-DD`。抓新聞全程約 **45~50 分鐘**。
 
 > 🔒 **開頭的 `flock` 不可拿掉（2026-07-15 新增）**：本腳本與 seo-ops 的反思（台 04:55）/大腦（台 05:30）**共寫同一個工作樹**，三方靠 `/tmp/seo-claude-yao.care.lock`（fd 200）序列化。
 > 拿掉的後果有實例：本腳本 04:30→05:20 的窗把反思 04:55 整個包住 → 反思護欄看到本腳本新生的 `src/content/news/**` 判定「改動越界」→ **反思 07-10~07-15 連 5 天全被回退**，且反思回退用的 `git clean -fdq` 把本腳本剛寫出、尚未 commit 的文章**刪掉 3 篇**。
@@ -243,7 +236,7 @@ GA4 評估 ID `G-W7ZNBYKJHJ`（在 `src/site.config.ts` 的 `SITE.gaId`，單一
 ## § 檔案結構
 
 ```
-$WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_SITE_DIR/
+$WWW_REPO_DIR/            ← 原始碼（本目錄）；push main 由 GitHub Actions 發布到 GitHub Pages
 ├── astro.config.mjs           ← Astro + sitemap + Tailwind v4 設定
 ├── tsconfig.json
 ├── package.json
@@ -347,7 +340,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 │       └── (yaocare 專屬，仍只在 medical/yaocare.astro 引用)
 │           SmartHealthcare / Advantages / SixServices / Verification / Screenshots
 ├── reports/                   ← GA/GSC 訊號輸出（gitignored）：news-insights.json 餵 fetch-news
-└── dist/                      ← 本地 build 產物（gitignored）；deploy 時 rsync 到 $WWW_SITE_DIR/（後者才是 nginx mount 點）
+└── dist/                      ← 本地 build 產物（gitignored），只供檢查；正式站由 GitHub Actions 建置
 ```
 
 > 改文案優先順序：先看 `src/products.config.ts`（產品標題、描述、bullets、CTA 都在這） → 再看對應頁面 `src/pages/<category>/<slug>.astro` → 全站共用字串看 `src/site.config.ts`。
@@ -428,7 +421,7 @@ $WWW_REPO_DIR/            ← 原始碼（本目錄）；產物 rsync 到 $WWW_S
 - **內頁「近期動態」顯示（2026-07-28）**：不再 `slice(0, 10)`——**全部**條目都渲染進 HTML，前端預設顯示前 `FEED_INITIAL`(10) 筆，「看更多」每次展開 `FEED_STEP`(10) 筆直到全部顯示、按鈕自動消失（兩個常數在 `topics/[slug].astro` 檔內）。三個踩過的坑：(a) **摺疊不能用 `hidden` 屬性**——Tailwind v4 preflight 對 `[hidden]` 下的 `display:none` 帶強制旗標，無 JS 的覆寫贏不了它，而 check-design 規則 3 禁該旗標，故改用自有屬性 `data-collapsed` + 元件內 `<style is:inline>`；(b) `<style>`／`<script>` **必須 `is:inline`**，否則 Astro 會把 style 抽成打包 CSS、脫離 `<noscript>`，變成任何情況都全展開；(c) check-design 掃的是**整份原始碼含註解**，註解裡寫出該旗標字樣也會被擋（實際踩到，已改寫措辭）。無 JS／不執行 JS 的爬蟲由 `<noscript>` 全部攤開；無頭瀏覽器實測：38 則的主題 10→20→30→38（3 次點擊、按鈕消失）、12 則的主題 10→12（1 次），無 JS 兩者皆 38/38、12/12
 - **總覽頁排序（2026-07-28）**：`/topics/` 不用 config 順序，改**依各主題最新動態日新→舊**排序，並在卡片顯示「更新 YYYY-MM-DD · 動態 N 則」、hero 顯示主題數/累計則數/最後更新日。更新日＝該主題 `topicFeed` 最新一筆的 `fetchedAt`，與 `astro.config.mjs` 餵 sitemap `<lastmod>` **同源算法**（改一邊要改另一邊，否則頁面與 sitemap 對不上）。日期一律用 `toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' })`——主機跑 UTC，產線在台北 04:30 抓的動態若用主機本地日會顯示成前一天；`topics/index.astro` 與 `topics/[slug].astro` 各有一份 `fmtDate`，兩處要一起改
 - 鐵則：已查證數字與來源連結不可亂改；新增事實先查權威來源；文風禁 AI 味（比照 style-guide 精神）
-- 改完 `npm run deploy` 上線，並用 `node scripts/indexnow-urls.mjs <改動頁URL>` 通知收錄
+- 改完推 main 上線（GitHub Actions 部署後會自動對內容有變的頁送 IndexNow）
 
 ### RSS 訂閱源（2026-07-28）
 產線每天餵新動態進 `/topics/`，但**訪客沒有「追蹤」的方法**——只能自己回來看。補了兩支 feed（build 時由 endpoint 產出靜態 XML，無執行期成本）：
@@ -481,13 +474,11 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 3. GA 拉到空 → GA4 標準報表延遲 24–48h，或資源剛建/事件未進；GSC 拉到空 → 確認 SA 仍在 GSC 使用者
 4. fetch-news 沒依喜好調整 → 看 `reports/news-insights.json` 的 `enoughData` 與各 target `weight`（全 1 = 資料未達門檻，屬正常）
 
-### 502 / 403
-1. NPM 容器是否正常：`docker ps | grep $NPM_CONTAINER`
-2. 產物是否存在：`ls $WWW_SITE_DIR/index.html`（沒有 → 跑 `npm run deploy`）
-3. 掛載確認：`docker exec $NPM_CONTAINER ls /data/static-sites/www.yao.care/`（應直接看到 index.html，非 dist/ 子層）
-
-### 想看 NPM Advanced Config
-透過 SSH tunnel 連到 NPM Web UI（見 `$HOST_RUNBOOK` 的 NPM 章節），Proxy Host #46。
+### 網站打不開 / 沒更新
+1. repo 的 Actions 分頁看最新一次 **Deploy to GitHub Pages**：紅燈多半是守門沒過，看 build job 的 log
+2. Settings → Pages：自訂網域是 `www.yao.care`、Enforce HTTPS 有勾、DNS 檢查是綠的
+3. DNS：`www` 應是 CNAME `yao-care.github.io`，apex 是 GitHub Pages 的 4 筆 A／AAAA（Linode DNS）
+4. 逐頁比對：`pnpm install --frozen-lockfile && pnpm run build && TARGET=live ./scripts/verify-pages.sh`（一定要照 lockfile 裝，否則打包檔名不同會出現假 FAIL）
 
 ## § 改進待辦
 
@@ -500,7 +491,7 @@ curl -sI https://www.yao.care/news/ | head -3                     # 議題追蹤
 - [ ] **觀察中**：B（CTA 加成）/ C（低完成率提示）。**2026-06-16 修正一個從部署以來的 bug**：`define:vars` 把 Analytics.astro 的 inline gtag 包進 IIFE，`function gtag` 沒掛上 window，導致 track.ts 的 `read_complete/scroll_depth/cta_click/page_engagement` 全部送不出去（GA4 只有 page_view）。已顯式 `window.gtag = gtag` 修好（commit a3dd707，無頭瀏覽器實測 scroll_depth 已送達）。故 B/C 訊號是「**從 2026-06-16 起才開始有資料**」，約 1–2 天後 `reports/news-insights.json` 的 `quality.readComplete` 應 > 0（A 搜尋字、GSC 需求早已生效）
 - [ ] **站外實體權威**（Wikidata 條目、Google 商家檔案）— GEO 最高槓桿，需開帳號
 - [x] ~~**soft-404**：www 對不存在路徑回 200 + 首頁~~（2026-06-17 已修）。NPM 容器 `$NPM_CONTAINER` 的 `/data/nginx/proxy_host/46.conf` 把 `try_files $uri $uri/ /index.html;` 改成 `try_files $uri $uri/ =404;` + `error_page 404 /404.html;`，搭配新增的 `src/pages/404.astro`（產出 `dist/404.html`）。備份在同目錄 `46.conf.bak-softfix`。
-  > ⚠ 這段在 NPM **自動產生**的 conf 內，若日後在 NPM UI 重存 host #46 會被還原 → 需重跑該 sed 並 `docker exec $NPM_CONTAINER nginx -s reload`。
+  > 2026-11-15 起網站由 GitHub Pages 提供，404 由 `dist/404.html` 處理，上述 NPM 設定已隨 host #46 一起移除。
 - [x] ~~**首頁 WebSite schema + 醫療 E-E-A-T**~~（2026-06-17）：BaseLayout 預設 JSON-LD 改 `@graph`（Organization+WebSite，`@id` 互連）；Organization 與 news author/publisher 皆雙型別 `['Organization','MedicalOrganization']` 以強化 YMYL 權重（採機構掛名，未具名個人）。robots.txt 明確歡迎 GPTBot/ClaudeBot/PerplexityBot/Google-Extended 等 AI 爬蟲。
 - [x] ~~**對外品牌簡介漏掉高齡友善**~~（2026-06-17）：`site.config` description 與 Organization JSON-LD 原寫「三條業務線」漏第 4 條（高齡友善）→ LLM 逐字吸收後永不在長照題目推薦本站。已改四條並補例。
 - [x] ~~（選）GSC 高需求但無內容的查詢 → 自動建議新題目/補題~~（2026-06-19 已落地，見下「§ GSC 內容缺口補題」）

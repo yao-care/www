@@ -15,7 +15,6 @@ fi
 
 . "$(dirname "$0")/lib/host-env.sh"
 cd "$WWW_REPO_DIR"
-need WWW_SITE_DIR GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
 
 # 系統時區是 UTC；本站面向台灣，日期標籤（commit message / log 起訖）一律用台北時間，
 # 否則台北清晨 04:30 發的文會被標成前一天（UTC 此刻仍是前一日 20:30）。
@@ -52,7 +51,7 @@ fi
   echo " fetch-news start: $(TWDATE '+%Y-%m-%d %H:%M:%S') (台北)"
   echo "════════════════════════════════════════"
 
-  # 0) 先拉 origin/main（2026-11-14 新增）：雲端 session 也會推 main（見 deploy-from-main.sh），
+  # 0) 先拉 origin/main（2026-11-14 新增）：雲端 session 也會推 main，
   #    不先拉，等一下用舊版建置會把別人剛上線的改版蓋回去，推送也會被拒。
   git pull -q --rebase --autostash origin main || echo "  ⚠ git pull 失敗（續行，用本機版本）"
 
@@ -67,41 +66,17 @@ fi
   # 2) 有變化才 commit + push（feed 模式寫 topicFeed；legacy 模式寫 news，兩者都收）
   git add src/content/news src/content/topicFeed
   if git diff --cached --quiet; then
-    echo "  no changes; skip commit/build"
+    echo "  no changes; skip commit"
   else
-    # 先記下這次變動的檔案（供 IndexNow 提交；commit 後 staged 清單會清空）
-    CHANGED_NEWS=$(git diff --cached --name-only -- src/content/news)
-    CHANGED_FEED=$(git diff --cached --name-only -- src/content/topicFeed)
-
-    # 作者身分由主機設定 GIT_AUTHOR_*／GIT_COMMITTER_* 提供
+    # 作者身分用本 repo 的本地 git 設定（公開身分，見 CLAUDE.md「commit 身分」）
     git commit -m "chore(news): auto fetch $(TWDATE '+%Y-%m-%d')"
     # 抓新聞要 45~50 分，這段期間 main 可能又有人推；先 rebase 再推
     git pull -q --rebase origin main || { git rebase --abort 2>/dev/null; echo "  ⚠ rebase 衝突，放棄 rebase"; }
-    git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗（不阻擋 build）"
+    git push 2>&1 | tee -a "$LOG" || echo "  ⚠ git push 失敗"
 
-    # 3) build → 同步產物到 NPM 掛載的服務目錄
-    #    全站 build 走全機 build 輪流（/usr/local/lib/site-build-turn.sh；站名 yao.care 與 seo-ops 同一本帳）。
-    #    最多等 10 分：排隊時本腳本仍持有 yao.care 站鎖，而 seo-ops 的 yao.care decide（台北 04:55）等站鎖上限 65 分，
-    #    本腳本自身約 45–50 分，再多等就會把 decide 整輪擠掉（2026-11-09 用戶裁示）。
-    #    逾時 site-build-run 回 75 → set -e 中止本輪 build/rsync（commit 已推，下次有新稿時會一併建置）。
-    SITE_BUILD_WAIT=600 site-build-run yao.care -- npm run build
-    rsync -a --delete dist/ "$WWW_SITE_DIR/"
-    # 告訴 deploy-from-main.sh 這版已上線，免得它 5 分鐘後再建置一次
-    mkdir -p /var/lib/yaocare && git rev-parse HEAD > /var/lib/yaocare/www-deployed-sha
-
-    # 4) IndexNow：即時通知 Bing/Yandex 收錄當天變動（失敗不阻擋）
-    #    網站改由 GitHub Pages 提供後（存在 /var/lib/yaocare/www-served-by-pages），改由 GitHub Actions 部署完再送，這裡跳過
-    if [ -f /var/lib/yaocare/www-served-by-pages ]; then
-      CHANGED_NEWS=""; CHANGED_FEED=""
-    fi
-    if [ -n "$CHANGED_NEWS" ]; then
-      node scripts/indexnow.mjs $CHANGED_NEWS || echo "  ⚠ IndexNow 提交失敗（不阻擋）"
-    fi
-    # feed 模式：有新動態的主題頁提交收錄（動態＝頁面實質更新）
-    if [ -n "$CHANGED_FEED" ]; then
-      TOPIC_URLS=$(echo "$CHANGED_FEED" | sed -E 's#src/content/topicFeed/([^/]+)/.*#https://www.yao.care/topics/\1/#' | sort -u)
-      node scripts/indexnow-urls.mjs $TOPIC_URLS || echo "  ⚠ IndexNow(topics) 提交失敗（不阻擋）"
-    fi
+    # 3) 上線與 IndexNow 都由 GitHub Actions 負責（2026-11-15 起，網站由 GitHub Pages 提供、主機不再備援）：
+    #    push 到 main → .github/workflows/pages.yml 建置（含全部守門）→ 發布 Pages → 只對內容有變的頁送 IndexNow。
+    #    主機這裡不再 build、rsync，也不送 IndexNow（push 後馬上送，爬蟲會抓到 Pages 還沒更新的舊版）。
   fi
 
   echo " fetch-news end: $(TWDATE '+%Y-%m-%d %H:%M:%S') (台北)"

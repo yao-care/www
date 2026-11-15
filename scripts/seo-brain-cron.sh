@@ -4,7 +4,7 @@
 #
 # 流程：git 同步 → headless claude 讀當日 GA/GSC（reports/seo-daily/<日>.json）→ 驗昨日賭注 →
 #   定 ≤5 檔優化（guides/glossary/seo/產品頁 meta／內鏈）→ gate（npm run build）→
-#   commit [auto-claude-seo] → push → npm run deploy（build+rsync 上線）→ indexnow-urls 通知收錄 →
+#   commit [auto-claude-seo] → push（GitHub Actions 自動上線並送 IndexNow）→
 #   寫 reports/seo-daily/<日>-actions.md 留痕 → 發 🤖 Slack。claude 全程自理；本包裝只做
 #   環境/同步/殘留清理/失敗保底通報。
 #
@@ -30,7 +30,7 @@ cd "$REPO" || exit 1
 DRY_RUN="${DRY_RUN:-0}"
 DATE="$(date +%F)"   # TZ=Asia/Taipei → 已是台灣日期
 . "$REPO/scripts/lib/host-env.sh"
-need SLACK_CHANNEL WWW_SITE_DIR GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
+need SLACK_CHANNEL GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
 CHANNEL="$SLACK_CHANNEL"
 SLACK_NOTIFY="$REPO/scripts/slack-notify.sh"
 MODEL="${BRAIN_MODEL:-claude-sonnet-5}"
@@ -78,9 +78,9 @@ PROMPT="$(cat <<PROMPTEOF
   - git add -A src && git commit -m \"[auto-claude-seo] $DATE: <一句摘要>\"
   - git pull --rebase origin main（防搶先；衝突無法自動解 → git rebase --abort、放棄今日 push、跳步驟5）
   - git push origin main（被拒 non-fast-forward → git pull --rebase 後再 push）
-  - 上線：npm run deploy（= astro build && rsync dist/ → 網站目錄 $WWW_SITE_DIR）
-  - 通知收錄：node scripts/indexnow-urls.mjs <本次改動頁的路徑或完整 URL，空白分隔>（no-op／無 URL 可推則略過；失敗不影響）
-- 本站部署＝rsync 到 NPM 掛載點，push 與 deploy 已涵蓋，無需觸發任何 GitHub workflow。
+  - 上線：push 到 main 即由 GitHub Actions 建置、發布到 GitHub Pages（不用 npm run deploy）
+  - 通知收錄：不用做。GitHub Actions 部署完會自己對內容有變的頁送 IndexNow（push 後馬上送，爬蟲會抓到還沒更新的舊版）
+- 本站部署＝push main 觸發 GitHub Actions（.github/workflows/pages.yml），IndexNow 也由它在部署後送出。
 
 ## 5. 留痕（供明日驗證）
 - 寫 reports/seo-daily/$DATE-actions.md：① 昨日賭注勝負 ② 今日判讀摘要 ③ 改了哪些檔、賭哪些 query/page、預期效果。技術細節（commit、build、deploy、indexnow）寫這裡，不寫進 Slack。
