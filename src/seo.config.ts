@@ -2,6 +2,7 @@
 //  - KNOWS_ABOUT: Organization.knowsAbout（告訴 LLM 我們在哪些主題是權威）
 //  - ORG_SAME_AS: Organization.sameAs（所有官方據點 + 產品子網域 + repo）
 //  - PRODUCT_FAQS: 各產品 FAQ（同時渲染為可見區塊與 FAQPage schema）
+import { TXGNN_GALLERY_SENTENCE } from './lib/smart-gallery';
 import { PRODUCTS, LINE_PERSONAL, LINE_TEAM, type ProductSlug } from './products.config';
 import { SITE } from './site.config';
 
@@ -241,7 +242,7 @@ export const PRODUCT_FAQS: Partial<Record<ProductSlug, readonly Faq[]>> = {
     { q: 'TwTxGNN 是誰開發的？', a: '藥提醒科技有限公司（yao.care，統一編號 83620786，台中市西區）開發與維運。30 個站（TwTxGNN、JpTxGNN、UsTxGNN 等，網址 {國碼}txgnn.yao.care）同屬一套系統，30 站各自有公開的 GitHub repo，例如 github.com/yao-care/TwTxGNN、github.com/yao-care/UsTxGNN。' },
     { q: 'TwTxGNN 跟哈佛的 TxGNN 是同一個東西嗎？', a: '不是。TxGNN 模型是哈佛 Zitnik Lab 開發、發表於 Nature Medicine 2024（DOI 10.1038/s41591-024-03233-x）、MIT 授權；藥提醒科技不是原作者，負責接上各國藥品註冊或給付清單資料、建站、收集證據與 FHIR／SMART 整合。' },
     { q: '預測有證據佐證嗎？', a: '每個藥取模型分數 0.99 以上的前 10 個預測，去 PubMed 和 ClinicalTrials.gov 找研究，標上 L1 到 L5 證據等級。有些找得到第三期試驗，有些只有模型分數，頁面照實標。' },
-    { q: '能跟醫院系統整合嗎？', a: '可以。TxGNN 支援 SMART on FHIR 標準，可在支援 SMART 的 EHR 中啟動，醫師能看到病人用藥的潛在新適應症。台灣站的 SMART App 已上架 SMART App Gallery（apps.smarthealthit.org/app/twtxgnn-smart-app）。' },
+    { q: '能跟醫院系統整合嗎？', a: `可以。TxGNN 支援 SMART on FHIR 標準，可在支援 SMART 的 EHR 中啟動，醫師能看到病人用藥的潛在新適應症。目前${TXGNN_GALLERY_SENTENCE}（apps.smarthealthit.org，搜尋「藥提醒科技有限公司」）。` },
     { q: '一般民眾可以查嗎？', a: '可以，各國站都公開。但預測只是研究參考，不是醫療建議；請與醫師討論，不要自行開始、停止或更換用藥。' },
     { q: '涵蓋多少藥物？分數代表什麼？', a: '30 站合計約 1.7 萬份公開藥物報告頁（2026-11-12 統計，精確數 17,184），17 種語言。模型分數（0 到 1）是模型覺得像不像，證據等級（L1 到 L5）是研究有多強，分數高不代表有效。' },
     { q: '為什麼各國的結果不同？', a: '每國核准的藥和適應症不同，同一個藥在這國算新用途，在別國可能早已核准，所以每站接該國的藥品註冊或給付清單資料來判斷。模型、文獻來源和證據等級方法各國共用。' },

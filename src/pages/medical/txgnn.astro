@@ -7,6 +7,7 @@ import { PRODUCT_BY_SLUG } from '../../products.config';
 import { TXGNN_SITES, txgnnSiteUrl, txgnnSiteBrand } from '../../seo.config';
 import countries from '../../data/txgnn-countries.json';
 import worldmap from '../../data/txgnn-worldmap.json';
+import { TXGNN_GALLERY_APPS, GALLERY_ORG_URL } from '../../lib/smart-gallery';
 
 const product = PRODUCT_BY_SLUG.txgnn;
 
@@ -179,7 +180,10 @@ const pipeline = [
   { t: '產出網站', b: '藥物報告頁、FHIR 資料與交互作用提醒，定期自動更新。', icon: 'M4 4h16v16H4zM4 9h16M9 9v11' },
 ];
 
-const smartAppUrl = 'https://apps.smarthealthit.org/app/twtxgnn-smart-app';
+// SMART App Gallery 上架清單：每天自動同步（.github/workflows/smart-gallery.yml），整理在 src/lib/smart-gallery.ts，這裡不寫死
+const galleryApps = TXGNN_GALLERY_APPS;
+const gallerySites = new Set(galleryApps.map((a) => a.site));
+const galleryOrgUrl = GALLERY_ORG_URL;
 // 各站 repo 名＝品牌名（TwTxGNN、UsTxGNN…），頁面舉兩個例子
 const REPO_EXAMPLES = ['tw', 'us'].map(txgnnSiteBrand);
 // 近期更新：日期取自各站 drug_reviews.json 的 checked 欄位與 repo 的 data-YYYYMMDD tag；查不到日期的寫 date: ''
@@ -425,6 +429,7 @@ const tipAttrs = (code: string) => {
                         <span class="block font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-brand)]">{i.name} TxGNN（{i.brand}）</span>
                         <span class="block text-xs text-[color:var(--color-ink-soft)] truncate">{i.basisShort}</span>
                         {i.pages && <span class="block text-xs text-[color:var(--color-ink-soft)]"><span class="tabular-nums" data-live-cc={code}>{i.pages}</span> 份藥物報告</span>}
+                        {gallerySites.has(code) && <span class="mt-1 inline-block rounded px-1.5 text-xs font-medium bg-[color:var(--color-orange-50)] text-[color:var(--color-brand-deep)]" title="這一站的 SMART App 已上架 SMART App Gallery">SMART App 已上架</span>}
                       </span>
                     </a>
                   </li>
@@ -510,14 +515,18 @@ const tipAttrs = (code: string) => {
         <header class="sec-head mb-6">
           <p class="kicker">For Hospitals</p>
           <h2 class="section-title mt-2">醫院免費接進病歷</h2>
-          <p class="sec-lead">TxGNN 支援 SMART on FHIR 標準（讓外部 App 安全接進電子病歷的開放標準），可在支援 SMART 的 EHR 中啟動，醫師在病歷裡就能看到病人用藥的潛在新適應症。台灣站的 SMART App 已上架 SMART App Gallery。</p>
+          <p class="sec-lead">TxGNN 支援 SMART on FHIR 標準（讓外部 App 安全接進電子病歷的開放標準），可在支援 SMART 的 EHR 中啟動，醫師在病歷裡就能看到病人用藥的潛在新適應症。目前有 {galleryApps.length} 個國家站的 SMART App 已上架 SMART App Gallery：{galleryApps.map((a) => a.label).join('、')}。</p>
           <p class="mt-3 text-sm text-[color:var(--color-ink-soft)] leading-relaxed">各站也把藥物與預測輸出成 FHIR 資源，院內系統可以直接讀。{countries.length} 站合計 <strong class="tabular-nums text-[color:var(--color-ink)]" data-count={totalFhir} data-live-total="fhir">{nf(totalFhir)}</strong> 筆（MedicationKnowledge 與 ClinicalUseDefinition）。</p>
           <p class="mt-1 text-xs text-[color:var(--color-ink-muted)]" data-live-note="fhir" aria-live="polite">資料日期 {countsDate}：以各站公開 repo 的 docs/fhir 計算。</p>
         </header>
         <div class="flex flex-wrap items-center gap-3">
-          <a href={smartAppUrl} target="_blank" rel="noopener" class="btn-brand">看 SMART App Gallery 上的台灣站 App</a>
-          <span class="text-sm text-[color:var(--color-ink-soft)]">目前為台灣站</span>
+          <a href={galleryOrgUrl} target="_blank" rel="noopener" class="btn-brand">在 SMART App Gallery 看全部 {galleryApps.length} 個 App</a>
         </div>
+        <ul class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+          {galleryApps.map((a) => (
+            <li><a href={a.galleryUrl} target="_blank" rel="noopener" class="underline underline-offset-2 text-[color:var(--color-brand)]">{a.label}站 App</a>{a.listedAt && <span class="ml-1 text-xs text-[color:var(--color-ink-muted)] tabular-nums">（{a.listedAt} 上架）</span>}</li>
+          ))}
+        </ul>
       </div>
       {/* 給 AI 與研究者：MCP 查詢介面尚未開發，先不放。完成後在這裡加一段（說明用途＋端點文件連結）。 */}
     </div>

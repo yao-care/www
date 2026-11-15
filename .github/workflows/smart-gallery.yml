@@ -1,0 +1,51 @@
+name: Sync SMART App Gallery listings
+
+# 每天檢查 SMART App Gallery 上「藥提醒科技有限公司」名下已發布的 App（2026-11-15 新增）。
+# 清單有變（新 App 通過審核、改名、下架）→ 更新 src/data/smart-gallery.json、commit、觸發網站部署。
+# 新 App 通過審核後想馬上上網站：Actions → Sync SMART App Gallery listings → Run workflow。
+# Gallery 上的 App 資料填錯（例如網址指到別國站）會出現在這個流程的警告裡。
+
+on:
+  schedule:
+    - cron: '17 1 * * *'   # 每天 UTC 01:17（台北 09:17）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: smart-gallery
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 抓 Gallery 清單
+        run: node scripts/fetch-smart-gallery.mjs
+      - name: 有變化就 commit 並觸發部署
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- src/data/smart-gallery.json; then
+            echo "Gallery 清單沒有變化"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/smart-gallery.json
+          git commit -m "chore(smart-gallery): 同步 SMART App Gallery 上架清單"
+          # 主機排程也會推 main，先 rebase 再推
+          for i in 1 2 3; do
+            git pull --rebase -q origin main && git push origin HEAD:main && break
+            sleep 10
+          done
+          # 用 GITHUB_TOKEN 推的 commit 不會自動觸發其他 workflow，所以手動叫部署
+          gh workflow run pages.yml --ref main

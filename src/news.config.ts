@@ -5,6 +5,7 @@
 // proofPoints: 白名單 — designResponse 段落只能引用這些事實，每條附 #N 索引
 // ctaText/ctaHref: 全文頁底部 CTA
 
+import { TXGNN_GALLERY_SENTENCE } from './lib/smart-gallery';
 import type { ProductSlug } from './products.config';
 import { LINE_PERSONAL, LINE_TEAM } from './products.config';
 
@@ -102,7 +103,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
     category: 'medical',
     categoryLabel: '智慧醫療',
     serviceContext:
-      '以哈佛 TxGNN 模型為基礎的老藥新用平台，30 個國家與地區各自接當地的藥品註冊或給付清單；預測附 PubMed 與 ClinicalTrials.gov 證據；支援 SMART on FHIR，台灣站 App 已上架 SMART App Gallery；原始碼於 GitHub 開源。',
+      `以哈佛 TxGNN 模型為基礎的老藥新用平台，30 個國家與地區各自接當地的藥品註冊或給付清單；預測附 PubMed 與 ClinicalTrials.gov 證據；支援 SMART on FHIR，${TXGNN_GALLERY_SENTENCE}；原始碼於 GitHub 開源。`,
     queries: [
       '老藥新用',
       'drug repurposing',
@@ -123,7 +124,7 @@ export const NEWS_TARGETS: readonly NewsTarget[] = [
       '30 個國家與地區、17 種語言，每站接該國的藥品註冊或給付清單資料建站',
       '約 1.7 萬份公開藥物報告頁、約 13.7 萬筆 FHIR 資源（2026-11-12 統計）',
       '每個藥取模型分數 0.99 以上的前 10 個預測，附 PubMed 文獻與 ClinicalTrials.gov 試驗，標上 L1–L5 證據等級',
-      '免費的 SMART on FHIR App，台灣站版本已上架 SMART App Gallery，可在支援 SMART 的電子病歷中啟動',
+      `免費的 SMART on FHIR App，可在支援 SMART 的電子病歷中啟動；${TXGNN_GALLERY_SENTENCE}`,
       '原始碼以 MIT 授權於 GitHub 開源',
     ],
     ctaText: '討論技術合作 → LINE 私訊',

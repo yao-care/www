@@ -1,0 +1,42 @@
+{
+  "source": "https://apps.smarthealthit.org/apps/search?q=%E8%97%A5%E6%8F%90%E9%86%92%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&organization=%E8%97%A5%E6%8F%90%E9%86%92%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8",
+  "organization": "藥提醒科技有限公司",
+  "apps": [
+    {
+      "slug": "brtxgnn-drug-repurposing-explorer",
+      "name": "BrTxGNN - Drug Repurposing Explorer",
+      "galleryUrl": "https://apps.smarthealthit.org/app/brtxgnn-drug-repurposing-explorer",
+      "product": "txgnn",
+      "site": "br",
+      "launchUrl": "https://thtxgnn.yao.care/smart/launch.html",
+      "listedAt": "2026-04-12"
+    },
+    {
+      "slug": "jptxgnn-explorer",
+      "name": "JpTxGNN - 医薬品リポジショニング Explorer",
+      "galleryUrl": "https://apps.smarthealthit.org/app/jptxgnn-explorer",
+      "product": "txgnn",
+      "site": "jp",
+      "launchUrl": "https://jptxgnn.yao.care/smart/launch.html",
+      "listedAt": "2026-04-12"
+    },
+    {
+      "slug": "thtxgnn-drug-repurposing-explorer",
+      "name": "ThTxGNN - Drug Repurposing Explorer",
+      "galleryUrl": "https://apps.smarthealthit.org/app/thtxgnn-drug-repurposing-explorer",
+      "product": "txgnn",
+      "site": "th",
+      "launchUrl": "https://thtxgnn.yao.care/smart/launch.html",
+      "listedAt": "2026-04-12"
+    },
+    {
+      "slug": "twtxgnn-smart-app",
+      "name": "TwTxGNN - Drug Repurposing Explorer",
+      "galleryUrl": "https://apps.smarthealthit.org/app/twtxgnn-smart-app",
+      "product": "txgnn",
+      "site": "tw",
+      "launchUrl": "https://twtxgnn.yao.care/smart/launch.html",
+      "listedAt": "2026-02-26"
+    }
+  ]
+}

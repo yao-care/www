@@ -1,3 +1,4 @@
+import { TXGNN_GALLERY_APPS } from './lib/smart-gallery';
 // Products & categories configuration
 // 三大分類：智慧醫療 / AI 系統 / 數位行銷
 // 替代舊的 works.config.ts；舊檔在所有頁面遷移後刪除。
@@ -235,7 +236,8 @@ export const PRODUCTS: readonly Product[] = [
     // 官網 → Wikidata 這條邊是實體鏈的最後一環，見 docs/wikidata-txgnn.md
     extraSameAs: [
       'https://www.wikidata.org/wiki/Q140692750',
-      'https://apps.smarthealthit.org/app/twtxgnn-smart-app',
+      // SMART App Gallery 各國站 App（每天自動同步，見 src/lib/smart-gallery.ts）
+      ...TXGNN_GALLERY_APPS.map((a) => a.galleryUrl),
     ],
     cta: { label: '討論技術合作', href: LINE_PERSONAL },
   },

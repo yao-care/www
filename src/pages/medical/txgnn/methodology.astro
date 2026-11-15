@@ -71,13 +71,13 @@ const SOURCES = [
   { t: 'PubMed', b: '美國國家醫學圖書館的文獻資料庫，用來找支持或反駁預測的論文。', url: 'https://pubmed.ncbi.nlm.nih.gov/', l: 'pubmed.ncbi.nlm.nih.gov' },
   { t: 'ClinicalTrials.gov', b: '全球臨床試驗登記平台，用來找相關試驗與試驗階段。', url: 'https://clinicaltrials.gov/', l: 'clinicaltrials.gov' },
   { t: 'DDInter 2.0', b: '藥物與藥物、藥物與食物、藥物與疾病的交互作用資料，CC BY-NC-SA 4.0 授權。', url: 'https://ddinter2.scbdd.com/', l: 'ddinter2.scbdd.com' },
-  { t: '各國主管機關藥證資料', b: '每個國家用自己的資料，見上方對照表。', url: '', l: '' },
+  { t: '各國藥品註冊或給付清單資料', b: '每個國家用自己的資料，有的是藥監機關的許可證，有的是給付清單，見上方對照表。', url: '', l: '' },
 ];
 
-// 頁面 title／description 暫不改（SEO 實驗判定中）。注意：description 仍寫「雙引擎、四級信心度」，判定後要改成新口徑。
+// 2026-11-15 用戶決定結束 SEO 實驗：description 改成現行口徑（不提雙引擎、四級信心度）；title 原本就沒有舊說法，維持。
 const pageTitle = '30 國老藥新用 — 方法論與資料透明度 · yao.care';
 const pageDescription =
-  '我們對 30 個國家／地區的核准藥品跑同一套「知識圖譜 + 圖神經網路」雙引擎老藥新用預測流程。本頁說明共同方法論（雙引擎、L1–L5 證據等級、四級信心度），並如實列出各國主管機關、資料來源與驗證覆蓋的差異與限制。';
+  '30 個國家與地區的 TxGNN 老藥新用站，共用同一套模型與 L1 到 L5 證據等級。本頁說明預測方法，並逐國列出藥品資料來源（註冊或給付清單）與已知限制。';
 const canonical = `${SITE.url}/medical/txgnn/methodology/`;
 
 const articleSchema = {
