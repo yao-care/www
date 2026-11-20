@@ -43,6 +43,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     paragraphs: [
       'SMART on FHIR 由哈佛醫學院孵化的 SMART Health IT 提出，建立在 HL7 的 FHIR 資料標準之上，搭配 OAuth 2.0 授權，讓外部 App 能在 Epic、Oracle Health（原 Cerner）等主流電子病歷（EHR）中啟動並讀寫資料，而不必為每家醫院客製介接。',
       'FHIR（Fast Healthcare Interoperability Resources）是 HL7 制定的醫療資料交換標準，把病人、用藥、檢驗、問卷回應等資訊定義成可用 API 存取的「資源」；R4 是其正式（normative）版本。',
+      '應用要進醫院上線前，通常得先通過互通性測試：先用 HL7 官方的 FHIR Validator 驗證資源是否符合規格，再以 ONC 的 Inferno 測試套件確認 SMART on FHIR 的啟動與 OAuth 2.0（含 PKCE）授權流程能正確跑通，這類測試活動常稱為 FHIR 聯測（Connectathon）。',
     ],
     keyPoints: [
       '建立在 HL7 FHIR 標準 + OAuth 2.0 授權',
