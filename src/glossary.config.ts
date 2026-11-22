@@ -417,7 +417,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     en: 'TxGNN — graph foundation model for drug repurposing',
     category: 'medical',
     oneLiner:
-      'TxGNN 是哈佛醫學院 Zitnik Lab 開發的圖神經網路「基礎模型」，在大型生物醫學知識圖譜上預測已核准藥物的潛在新適應症，是 AI 老藥新用的代表性開源工具。',
+      'TxGNN 是哈佛醫學院 Zitnik Lab 開發、並已開源原始碼的圖神經網路「基礎模型」，在大型生物醫學知識圖譜上預測已核准藥物的潛在新適應症；研究單位要找老藥新用的候選藥，可直接使用 TxGNN 這套開源工具，或與 Zitnik Lab 這類開發團隊接洽合作，是 AI 老藥新用的代表性開源工具。',
     paragraphs: [
       'TxGNN 由哈佛醫學院 Zitnik Lab（Marinka Zitnik 團隊）研發，核心做法是在大型生物醫學知識圖譜上訓練圖神經網路（GNN），讓模型學習藥物、疾病、基因、蛋白質之間的關聯。它最大的特點是「zero-shot（零樣本）」能力：即使是缺乏現有療法、資料稀少的疾病，也能把已研究疾病的知識遷移過去，輸出藥物候選的預測分數與可解釋的推理路徑。相關研究於 2024 年發表在《Nature Medicine》。',
       '相較於從頭開發新藥，老藥新用以「已核准藥物的安全性資料已知」為核心優勢，通常可省去部分早期安全性試驗、縮短研發時程，對罕見疾病尤其有意義。TxGNN 的原始碼已於 GitHub（mims-harvard/TxGNN）開源，學術與臨床資訊團隊可依需求擴充。',
