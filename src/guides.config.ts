@@ -542,7 +542,7 @@ export const GUIDES: readonly Guide[] = [
     searchPhrases: ['CGA 評估', 'CGA 評估量表', 'CGA 是什麼', '老人周全性評估', 'comprehensive geriatric assessment 中文', 'CGA 醫學'],
     audience: 'caregiver',
     answer:
-      'CGA 評估（高齡周全性評估）由跨專業團隊進行，一般會盤點病史與用藥、日常生活功能、行動與平衡、認知、情緒、營養和社會支持，最後整合成一份照護計畫。常見的量表有 Katz ADL 與 Lawton IADL（生活功能）、MMSE（認知）、GDS（憂鬱）、MNA（營養）、TUG（行動）。各院所選用的量表不完全一樣，量表只是工具，重點是評完之後有人依結果調整照護。',
+      'CGA 評估量表泛指一組工具，由跨專業團隊依病史與用藥、日常生活功能、行動與平衡、認知、情緒、營養和社會支持等面向分別評估，最後整合成一份照護計畫。常見的有 Katz ADL 與 Lawton IADL（生活功能）、MMSE（認知）、GDS（憂鬱）、MNA（營養）、TUG（行動）。各院所選用的量表不完全一樣，量表只是工具，重點是評完之後有人依結果調整照護。',
     sections: [
       {
         heading: '評估面向與常用量表',
